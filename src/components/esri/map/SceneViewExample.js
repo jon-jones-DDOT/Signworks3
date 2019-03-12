@@ -115,8 +115,7 @@ class SceneViewExample extends Component {
       // extent to the returned extent of all features.
 
       featureLayer.when(function() {
-        featureLayer.definitionExpression = createDefinitionExpression(
-          "");
+        
         zoomToLayer(featureLayer);
       });
 
@@ -129,28 +128,7 @@ class SceneViewExample extends Component {
       // definitionExpressions used by each action
       // listed in the LayerList
 
-      const expressions = new Collection([{
-        id: "75+",
-        expression: "TEMP > 75"
-      }, {
-        id: "50-75",
-        expression: "TEMP > 50 AND TEMP <=75"
-      }, {
-        id: "25-50",
-        expression: "TEMP > 25 AND TEMP <=50"
-      }, {
-        id: "25-",
-        expression: "TEMP <= 25"
-      }, {
-        id: "arctic-circle",
-        expression: "LATITUDE >= 66.5"
-      }, {
-        id: "north-temperate-zone",
-        expression: "LATITUDE < 66.5 AND LATITUDE >= 23.5"
-      }, {
-        id: "torrid-zone",
-        expression: "LATITUDE < 23.5 AND LATITUDE >= -23.5"
-      }]);
+     
 
       // When an action is triggered, the definitionExpression
       // is set on the layer and the view's extent updates
@@ -161,13 +139,8 @@ class SceneViewExample extends Component {
         const actionId = event.action.id;
         const layer = event.item.layer;
 
-        const subExpression = expressions.find(function(item) {
-          return item.id === actionId;
-        }).expression;
+       
 
-        const definitionExpression = createDefinitionExpression(
-          subExpression);
-        layer.definitionExpression = definitionExpression;
 
         zoomToLayer(layer);
       });
