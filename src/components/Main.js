@@ -28,6 +28,7 @@ import SceneViewExample from './esri/map/SceneViewExample';
 import LoadScreen from './LoadScreen';
 import UserAccount from './UserAccount';
 import logo from '../styles/images/Esri-React-Logo.svg';
+import RightBar from "./myModules/RightBar";
 
 // Styled Components
 import styled from 'styled-components';
@@ -44,10 +45,11 @@ const Container = styled.div`
 const MapWrapper = styled.div`
   display: flex;
   flex: 1;
-  flex-direction: column;
+  flex-direction: row;
   position: relative;
   z-index: 0;
-  overflow: hidden;
+  
+
 `;
 
 const Logo = styled(TopNavBrand)`
@@ -58,7 +60,7 @@ const Logo = styled(TopNavBrand)`
 `;
 
 const Nav = styled(TopNav)`
-  background-color: ${props => props.theme.palette.offWhite};
+  background-color: ${props => props.theme.palette.gray};
   z-index: 5
 `;
 
@@ -96,6 +98,7 @@ class Main extends Component {
             signIn={this.signIn}
             signOut={this.signOut}
           />
+          
         </Nav>
 
         <MapWrapper>
@@ -104,7 +107,9 @@ class Main extends Component {
             mapConfig={this.props.config.mapConfig}
             is3DScene={false}
           />
+           <RightBar/>
         </MapWrapper>
+       
       </Container>
     )
   }
