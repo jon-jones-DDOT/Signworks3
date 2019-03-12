@@ -119,89 +119,17 @@ class SceneViewExample extends Component {
         zoomToLayer(featureLayer);
       });
 
-      const layerList = new LayerList({
-        view: this.view,
-        listItemCreatedFunction: createActions
-      });
-      this.view.ui.add(layerList, "top-right");
+      
 
-      // definitionExpressions used by each action
-      // listed in the LayerList
 
      
-
-      // When an action is triggered, the definitionExpression
-      // is set on the layer and the view's extent updates
-      // to match the features visible in the layer
-
-      layerList.on("trigger-action", function(event) {
-
-        const actionId = event.action.id;
-        const layer = event.item.layer;
-
-       
-
-
-        zoomToLayer(layer);
-      });
-
-      function createActions(event) {
-        const item = event.item;
-
-        item.actionsOpen = true;
-        item.actionsSections = [
-          [{
-            title: "> 75°F",
-            className: "esri-icon-zoom-out-fixed",
-            id: "75+"
-          }, {
-            title: "50°-75°F",
-            className: "esri-icon-zoom-out-fixed",
-            id: "50-75"
-          }, {
-            title: "25°-50°F",
-            className: "esri-icon-zoom-out-fixed",
-            id: "25-50"
-          }, {
-            title: "< 25°F",
-            className: "esri-icon-zoom-out-fixed",
-            id: "25-"
-          }],
-          [{
-            title: "Above Arctic Circle",
-            className: "esri-icon-zoom-out-fixed",
-            id: "arctic-circle"
-          }, {
-            title: "North Temperate Zone",
-            className: "esri-icon-zoom-out-fixed",
-            id: "north-temperate-zone"
-          }, {
-            title: "Torrid Zone",
-            className: "esri-icon-zoom-out-fixed",
-            id: "torrid-zone"
-          }]
-        ];
-      }
 
       // Appends a definitionExpression to a base expression
       // the base expression only returns freatures in
       // Canada, USA, and Mexico. It excludes some US territories
       // located on the other side of the dateline
 
-      function createDefinitionExpression(subExpression) {
-        const baseExpression =
-          "( COUNTRY LIKE '%United States Of America%' OR " +
-          "COUNTRY LIKE '%Canada%' OR " +
-          "COUNTRY LIKE '%Mexico%') AND NOT" +
-          "(COUNTRY LIKE '%Johnston/Wake/Xmas%' OR " +
-          "COUNTRY LIKE '%Hawaii%' OR " +
-          "COUNTRY LIKE '%Marshall Islands%' OR " +
-          "STATION_NAME = 'Eareckson/Shemya' OR " +
-          "COUNTRY LIKE '%Guam%' )";
-
-        return subExpression ? baseExpression + " AND (" + subExpression +
-          ")" : baseExpression;
-      }
+   
 
       // Zooms to the extent of the layer as defined by
       // its definitionExpression
