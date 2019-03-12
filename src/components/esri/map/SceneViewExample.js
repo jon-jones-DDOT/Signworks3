@@ -101,11 +101,7 @@ class SceneViewExample extends Component {
       Collection,
     ]) => {
       const featureLayer = new FeatureLayer({
-        outFields: ["STATION_NAME", "COUNTRY", "TEMP"],
-        portalItem: { // autocasts as new PortalItem()
-          id: "3a177da3f6524d61980fb41125b2349c"
-        },
-        title: "Temperature on Jan, 4, 2017"
+        url: "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/0", outFields: ["*"]
       });
       this.map.add(featureLayer);
 
