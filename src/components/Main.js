@@ -77,8 +77,9 @@ class Main extends Component {
   signOut = () => {
     this.props.logout();
   }
-
+ 
   render() {
+ 
     return (
       <Container>
         <LoadScreen isLoading={this.props.mapLoaded} />
@@ -103,6 +104,7 @@ class Main extends Component {
 
         <MapWrapper>
           <SceneViewExample
+          onMapClicked = {this.props.mapClicked}
             onMapLoaded={this.props.mapLoaded}
             mapConfig={this.props.config.mapConfig}
             is3DScene={false}

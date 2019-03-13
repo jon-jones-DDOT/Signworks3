@@ -57,6 +57,7 @@ class SceneViewExample extends Component {
   }
 
   render() {
+   
     return (
       <Container ref="mapDiv" id={containerID}></Container>
     );
@@ -67,6 +68,7 @@ class SceneViewExample extends Component {
     createView(mapConfig, node, isScene).then(
       response => {
         this.init(response);
+        
         this.setupEventHandlers(this.map);
         this.setupWidgetsAndLayers();
         this.finishedLoading();
@@ -83,7 +85,10 @@ class SceneViewExample extends Component {
     // Update app state only after map and widgets are loaded
     this.props.onMapLoaded();
   }
-
+  mapClicked = () =>{
+    this.props.onMapClicked();
+    console.log('map clicked')
+  }
   init = (response) => {
     this.view = response.view
     this.map = response.view.map;
@@ -100,6 +105,7 @@ class SceneViewExample extends Component {
       LayerList,
       Collection,
     ]) => {
+      
       const featureLayer = new FeatureLayer({
         url: "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/0", outFields: ["*"]
       });
@@ -110,6 +116,7 @@ class SceneViewExample extends Component {
       // definitionExpression. Then set the view's
       // extent to the returned extent of all features.
 
+      this.view.on("click", this.mapClicked)
       featureLayer.when(function() {
         
         zoomToLayer(featureLayer);
@@ -143,15 +150,15 @@ class SceneViewExample extends Component {
 
   setupEventHandlers = (map) => {
     loadModules([
-
+      'esri/core/Collection'
     ], (
-
+Collection
     ) => {
 
       //
       // JSAPI Map Event Handlers go here!
       //
-
+     
     });
   }
 }

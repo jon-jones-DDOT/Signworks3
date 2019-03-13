@@ -57,6 +57,7 @@ class Map extends Component {
   }
 
   render() {
+    
     return (
       <Container ref="mapDiv" id={containerID}></Container>
     );
@@ -67,11 +68,13 @@ class Map extends Component {
     createView(mapConfig, node, isScene).then(
       response => {
         this.init(response);
+       
         this.setupEventHandlers(this.map);
         this.setupWidgetsAndLayers();
         this.finishedLoading();
       },
       error => {
+        
         console.error("maperr", error);
         window.setTimeout( () => {
           this.startup(mapConfig, node);
@@ -82,6 +85,10 @@ class Map extends Component {
   finishedLoading = () => {
     // Update app state only after map and widgets are loaded
     this.props.onMapLoaded();
+  }
+
+  mapClicked = () =>{
+    this.props.onMapClicked();
   }
 
   init = (response) => {
@@ -100,7 +107,7 @@ class Map extends Component {
       //
       // JSAPI Map Widgets and Layers get loaded here!
       //
-
+      console.log(map)
     });
   }
 
@@ -114,7 +121,8 @@ class Map extends Component {
       //
       // JSAPI Map Event Handlers go here!
       //
-
+      console.log(this.view)
+     // this.onMapClicked  = this.view.
     });
   }
 }

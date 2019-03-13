@@ -12,7 +12,8 @@
 // ACTION TYPES //
 export const types = {
   MAP_LOADED: "MAP_LOADED",
-  SET_FEATURES: "SET_FEATURES"
+  SET_FEATURES: "SET_FEATURES",
+  MAP_CLICKED: "MAP_CLICKED"
 };
 
 // REDUCERS //
@@ -33,6 +34,8 @@ export default (state = initialState, action) => {
         ...state,
         features: action.payload.features
       };
+      case types.MAP_CLICKED:
+        return state;
     default:
       return state;
   }
@@ -43,6 +46,11 @@ export const actions = {
   mapLoaded: () => ({
     type: types.MAP_LOADED,
     payload: {}
+  }),
+  mapClicked:() => ({
+    type:types.MAP_CLICKED,
+    payload:{}
+
   }),
   setFeatures: features => ({
     type: types.SET_FEATURES,
