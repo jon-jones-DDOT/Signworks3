@@ -68,6 +68,7 @@ function getRequestBody(data, isFormData) {
  * @return { Promise}        Promise returned by fetch()
  */
 export function makeRequest(params) {
+ 
   return new Promise((resolve, reject) => {
     let url = params.url;
     const data = params.data || {};

@@ -33,6 +33,9 @@ import { createView } from '../../../utils/esriHelper';
 // Styled Components
 import styled from 'styled-components';
 
+import {getSupportById} from  '../../../utils/JSAPI';
+
+
 const Container = styled.div`
   height: 100%;
   width: 100%;
@@ -85,9 +88,9 @@ class SceneViewExample extends Component {
     // Update app state only after map and widgets are loaded
     this.props.onMapLoaded();
   }
-  mapClicked = () =>{
-    this.props.onMapClicked();
-    console.log('map clicked')
+  mapClicked = (evt) =>{
+    this.props.onMapClicked(evt.mapPoint, this.map.findLayerById('support'));
+    
   }
   init = (response) => {
     this.view = response.view
@@ -107,9 +110,12 @@ class SceneViewExample extends Component {
     ]) => {
       
       const featureLayer = new FeatureLayer({
-        url: "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/0", outFields: ["*"]
+        url: "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/0", outFields: ["*"], id:"support"
       });
       this.map.add(featureLayer);
+     
+
+      // getSupportById(28216, featureLayer)
 
       // When the layer is loaded, query for the extent
       // of all features in the layer that satisfy the

@@ -32,3 +32,4 @@ export function logout(portalUrl) {
     }).then(resp => resolve(resp), error => reject(error));
   });
 }
+

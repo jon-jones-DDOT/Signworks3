@@ -17,6 +17,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actions as authActions } from '../redux/reducers/auth';
 import { actions as configActions } from '../redux/reducers/config';
+import { actions as mapActions}  from '../redux/reducers/map';
 
 // Components
 import AuthManager from './esri/auth/AuthManager';

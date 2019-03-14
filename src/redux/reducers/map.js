@@ -13,13 +13,15 @@
 export const types = {
   MAP_LOADED: "MAP_LOADED",
   SET_FEATURES: "SET_FEATURES",
-  MAP_CLICKED: "MAP_CLICKED"
+  MAP_CLICKED: "MAP_CLICKED",
+  SET_SELECTED_SUPPORT:"SET_SELECTED_SUPPORT"
 };
 
 // REDUCERS //
 export const initialState = {
   loaded: false,
-  features: []
+  features: [],
+  selSupport:null
 };
 
 export default (state = initialState, action) => {
@@ -34,7 +36,13 @@ export default (state = initialState, action) => {
         ...state,
         features: action.payload.features
       };
-      case types.MAP_CLICKED:
+    case types.SET_SELECTED_SUPPORT:
+    
+    return{
+      ...state,
+      selSupport: action.payload.feature
+    }
+     
         return state;
     default:
       return state;
@@ -47,15 +55,12 @@ export const actions = {
     type: types.MAP_LOADED,
     payload: {}
   }),
-  mapClicked:() => ({
+  mapClicked:(id, layer) => ({
     type:types.MAP_CLICKED,
-    payload:{}
-
-  }),
-  setFeatures: features => ({
-    type: types.SET_FEATURES,
-    payload: {
-      features
+    payload:{
+      id,
+      layer
     }
+
   })
 };

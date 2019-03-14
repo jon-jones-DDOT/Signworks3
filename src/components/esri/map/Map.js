@@ -87,9 +87,7 @@ class Map extends Component {
     this.props.onMapLoaded();
   }
 
-  mapClicked = () =>{
-    this.props.onMapClicked();
-  }
+ 
 
   init = (response) => {
     this.view = response.view
@@ -121,8 +119,7 @@ class Map extends Component {
       //
       // JSAPI Map Event Handlers go here!
       //
-      console.log(this.view)
-     // this.onMapClicked  = this.view.
+   
     });
   }
 }
