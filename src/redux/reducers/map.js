@@ -25,22 +25,19 @@ export const initialState = {
 };
 
 export default (state = initialState, action) => {
+  console.log('action payload', action.payload)
   switch (action.type) {
     case types.MAP_LOADED:
       return {
         ...state,
         loaded: true
       };
-    case types.SET_FEATURES:
-      return {
-        ...state,
-        features: action.payload.features
-      };
+   
     case types.SET_SELECTED_SUPPORT:
     
     return{
       ...state,
-      selSupport: action.payload.feature
+      ... action.payload
     }
      
         
