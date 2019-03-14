@@ -33,7 +33,7 @@ import { createView } from '../../../utils/esriHelper';
 // Styled Components
 import styled from 'styled-components';
 
-import {getSupportById} from  '../../../utils/JSAPI';
+import {pointToExtent} from  '../../../utils/JSAPI';
 
 
 const Container = styled.div`
@@ -88,10 +88,19 @@ class SceneViewExample extends Component {
     // Update app state only after map and widgets are loaded
     this.props.onMapLoaded();
   }
+
+  getSelectedSupport = (expandedMapPoint) =>{
+    this.props.onMapClicked(expandedMapPoint, this.map.findLayerById('support'));
+  }
+
+
   mapClicked = (evt) =>{
-    this.props.onMapClicked(evt.mapPoint, this.map.findLayerById('support'));
+    
+    pointToExtent(this.view,evt.mapPoint,40,this.getSelectedSupport);  
     
   }
+
+
   init = (response) => {
     this.view = response.view
     this.map = response.view.map;

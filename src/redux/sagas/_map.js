@@ -3,7 +3,7 @@
 
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { types as mapTypes } from '../reducers/map';
-import {getSupportById, getSupportByExtent} from '../../utils/JSAPI';
+import { getSupportByExtent} from '../../utils/JSAPI';
 
 
 //WORKER
@@ -12,7 +12,7 @@ import {getSupportById, getSupportByExtent} from '../../utils/JSAPI';
 function* setSelectSupport (action) {
    
     try {
-       console.log(action)
+       console.log('action in saga',action)
         // call API to fetch config
         const feature = yield call(getSupportByExtent,[action.payload.geom,action.payload.layer]);
 

@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
       selSupport: action.payload.feature
     }
      
-        return state;
+        
     default:
       return state;
   }
@@ -55,11 +55,11 @@ export const actions = {
     type: types.MAP_LOADED,
     payload: {}
   }),
-  mapClicked:(id, layer) => ({
+  mapClicked:(geom, layer) => ({
     type:types.MAP_CLICKED,
     payload:{
-      id,
-      layer
+      geom:geom,
+      layer:layer
     }
 
   })

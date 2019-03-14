@@ -2,24 +2,9 @@ import { loadModules } from 'esri-loader';
 
 
 
-const err = (e) =>{ alert ('an error occurred in JSAPI  ' + e.message)}
+const err = (e) =>{ console.log('an error occurred in JSAPI  ' + e.message)}
 
-const getSupportLayer = () => {
-    alert('geting souport layer')
-    loadModules([   'esri/layers/FeatureLayer'])
-    .then(([ FeatureLayer]) => {
 
-     const fLayer =   new FeatureLayer({
-        url: "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/0", outFields: ["*"]
-      });
-      
-      return fLayer;
-    })
-    .catch(err => {
-      // handle any errors
-      console.error(err);
-    });
-}
 
 
 export function  getSupportById (args) {
@@ -56,8 +41,10 @@ export function  getSupportById (args) {
  
 export function getSupportByExtent(args) {
     const extent = args[0];
+    console.log('extent is JSAPI',extent)
     const supportLayer = args[1];
- alert('in JSAPI')
+   // console.log(supportLayer);
+
     loadModules([
 "esri/tasks/support/Query"
     ])
@@ -80,4 +67,32 @@ Query
     });
    
 
+}
+
+
+export function pointToExtent  ( view, point, toleranceInPixel ,callback) {
+    
+    loadModules([
+        "esri/geometry/Extent"
+    ])
+    .then( ([
+Extent
+    ]) => {
+ 
+        //calculate map coords represented per pixel
+        let pixelWidth = view.extent.width / view.width;
+        
+        //calculate map coords for tolerance in pixel
+        let toleraceInMapCoords = toleranceInPixel * pixelWidth;
+        //calculate & return computed extent
+       
+        callback( new Extent(point.x - toleraceInMapCoords,
+            point.y - toleraceInMapCoords,
+            point.x + toleraceInMapCoords,
+            point.y + toleraceInMapCoords,
+            view.spatialReference)
+            )
+      
+    })
+    
 }
