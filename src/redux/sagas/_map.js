@@ -11,7 +11,7 @@ function * setSelectSupport(action) {
         // call API to fetch config
         const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layer]);
         const feature = {selSupport:features.features[0]} ;
-        console.log ('feature returned from JSAPI', feature)
+       
         // Put config in store
         yield put({type: mapTypes.SET_SELECTED_SUPPORT, payload:feature});
 

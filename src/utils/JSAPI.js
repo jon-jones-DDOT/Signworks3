@@ -36,9 +36,9 @@ export function getSupportByExtent(args) {
     return new Promise((resolve, reject) => {
 
         const extent = args[0];
-        console.log('extent is JSAPI', extent)
+      
         const supportLayer = args[1];
-        // console.log(supportLayer);
+        
 
         loadModules(["esri/tasks/support/Query"]).then(([Query]) => {
 
@@ -46,7 +46,7 @@ export function getSupportByExtent(args) {
             query.geometry = extent;
             query.outFields = ["*"];
             query.returnGeometry = true;
-            console.log('inside load modules')
+          
             supportLayer
                 .queryFeatures(query)
                 .then(resp => resolve(resp), error => reject(error));

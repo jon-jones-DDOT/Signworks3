@@ -25,7 +25,7 @@ export const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log('action payload', action.payload)
+ 
   switch (action.type) {
     case types.MAP_LOADED:
       return {
@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
     
     return{
       ...state,
-      ... action.payload
+      ...action.payload
     }
      
         

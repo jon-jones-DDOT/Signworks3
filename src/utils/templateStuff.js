@@ -5,8 +5,5 @@ loadModules([
 
 ]) => {
 
-  //
-  // JSAPI Map Widgets and Layers get loaded here!
-  //
-  console.log(map)
+  
 });

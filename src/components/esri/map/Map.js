@@ -105,7 +105,7 @@ class Map extends Component {
       //
       // JSAPI Map Widgets and Layers get loaded here!
       //
-      console.log(map)
+     
     });
   }
 
