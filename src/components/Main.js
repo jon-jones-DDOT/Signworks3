@@ -28,7 +28,7 @@ import TopNavLink from 'calcite-react/TopNav/TopNavLink';
 import SceneViewExample from './esri/map/SceneViewExample';
 import LoadScreen from './LoadScreen';
 import UserAccount from './UserAccount';
-import logo from '../styles/images/Esri-React-Logo.svg';
+
 import RightBar from "./myModules/RightBar";
 
 // Styled Components
@@ -86,7 +86,7 @@ class Main extends Component {
         <LoadScreen isLoading={this.props.mapLoaded} />
 
         <Nav>
-          <Logo href="#" src={logo} />
+         
           <TopNavTitle href="#">ArcGIS JS API + React Boot</TopNavTitle>
           <NavList>
             <TopNavLink href="https://github.com/Esri/esri-react-boot">Github</TopNavLink>

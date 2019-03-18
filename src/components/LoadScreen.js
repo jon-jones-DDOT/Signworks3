@@ -14,8 +14,6 @@ import React, { Component } from 'react';
 
 // Components
 import Loader from 'calcite-react/Loader';
-import background from '../styles/images/Topo-Abs-BG.svg';
-import logo from '../styles/images/Esri-React-Logo.svg';
 
 // Styled Components
 import styled, { keyframes } from 'styled-components';
@@ -30,8 +28,7 @@ const Container = styled.div`
   z-index: 10;
   height: 100%;
   width: 100%;
-  background: rgba(255,255,255,0.1) url(${background}) no-repeat center/cover;
-  background-blend-mode: screen;
+  
 `;
 
 const FadingContainer = styled(Container)`
@@ -104,7 +101,7 @@ class LoadScreen extends Component {
             <Loader/>
           </Wrapper>
           <Title>
-            <Logo src={logo}></Logo>
+           
             <Label>Esri-React-Boot</Label>
           </Title>
         </Container>
