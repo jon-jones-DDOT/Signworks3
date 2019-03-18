@@ -25,9 +25,15 @@ export default function Support(props) {
         <div className="Support">
           
             <img src={getImage()} className="SupportImage"/>
-            <p>
+            <p> Sign Type:
                 {props.sel
                     ? SBT.name(props.sel.attributes.SUPPORTTYPE, "SUPPORTTYPE")
+                    : 'null '}
+            </p>
+            <p>
+              Sign Status:
+            {props.sel
+                    ? SBT.name(props.sel.attributes.SUPPORTSTATUS, "SUPPORTSTATUS")
                     : 'null '}
             </p>
         </div>

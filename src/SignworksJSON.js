@@ -5,6 +5,9 @@ export class SupportType {
             case 'SUPPORTTYPE':
              codedValue = this._codedValuesSupportType;
              break;
+             case 'SUPPORTSTATUS':
+             codedValue = this._codedValuesSupportStatus;
+             break;
             default:
               codedValue = null;
 
@@ -70,5 +73,39 @@ export class SupportType {
             "code": 6
         }
     ]
-
+ 
+    _codedValuesSupportStatus =  [
+        {
+         "name": "Active",
+         "code": 1
+        },
+        {
+         "name": "Prospective",
+         "code": 2
+        },
+        {
+         "name": "Temporarily Out of Service",
+         "code": 3
+        },
+        {
+         "name": "Temporary",
+         "code": 4
+        },
+        {
+         "name": "Retired",
+         "code": 5
+        },
+        {
+         "name": "Requested (New)",
+         "code": 6
+        },
+        {
+         "name": "Requested (Change)",
+         "code": 7
+        },
+        {
+         "name": "Requested (Remove)",
+         "code": 8
+        }
+       ]
 }

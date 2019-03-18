@@ -64,11 +64,7 @@ const Label = styled.h1 `
   text-shadow: -2px 2px 8px rgba(0,0,0,0.25);
 `;
 
-const Logo = styled.img `
-  width: 5em;
-  height: 100%;
-  margin-right: 1em;
-`;
+
 
 // Animation durations in millisecondss -- Change these to adjust animation
 const delayAmount = 1000;
