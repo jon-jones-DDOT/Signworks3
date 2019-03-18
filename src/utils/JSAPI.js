@@ -36,9 +36,8 @@ export function getSupportByExtent(args) {
     return new Promise((resolve, reject) => {
 
         const extent = args[0];
-      
+
         const supportLayer = args[1];
-        
 
         loadModules(["esri/tasks/support/Query"]).then(([Query]) => {
 
@@ -46,7 +45,7 @@ export function getSupportByExtent(args) {
             query.geometry = extent;
             query.outFields = ["*"];
             query.returnGeometry = true;
-          
+
             supportLayer
                 .queryFeatures(query)
                 .then(resp => resolve(resp), error => reject(error));
@@ -54,6 +53,8 @@ export function getSupportByExtent(args) {
 
     })
 }
+
+
 
 export function pointToExtent(view, point, toleranceInPixel, callback) {
 

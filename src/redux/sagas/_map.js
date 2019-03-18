@@ -24,3 +24,22 @@ function * setSelectSupport(action) {
 export function * watchLayers() {
     yield takeLatest(mapTypes.MAP_CLICKED, setSelectSupport);
 }
+
+
+// WORKER //
+
+function * setCodedDomains(action) {
+
+    try {
+       
+           
+
+    } catch (e) {
+        console.log('SAGA ERROR: map/setCodedDomains, ', e);
+    }
+}
+
+// WATCHER //
+export function * watchLoaded() {
+    yield takeLatest(mapTypes.MAP_LOADED, setCodedDomains);
+}
