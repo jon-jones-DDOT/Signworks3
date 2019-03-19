@@ -1,7 +1,9 @@
 import React from 'react'
 import "./Support.css"
 import {SupportType} from '../../../SignworksJSON'
-
+import {faBinoculars} from '@fortawesome/free-solid-svg-icons';
+import {faGoogle} from '@fortawesome/free-brands-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 export default function Support(props) {
     //console.log('props', props)
     const SBT = new SupportType();
@@ -36,6 +38,18 @@ export default function Support(props) {
                     ? SBT.name(props.sel.attributes.SUPPORTSTATUS, "SUPPORTSTATUS")
                     : 'null '}
             </p>
+            <p>
+              <button ><FontAwesomeIcon
+            icon={faBinoculars}
+            title="StreetSmart"
+            /></button>
+              <button><FontAwesomeIcon
+            icon={faGoogle}
+            title="Needs Arrow"
+            /></button>
+              
+            </p>
+
         </div>
     )
 }
