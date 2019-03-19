@@ -1,7 +1,7 @@
 .Sign{
     height: 150px;
-    border:2px solid black;
+    border:20px solid lightgreen;
     padding:10px ;
-    background: lightblue;
-    background-clip: content-box;
+    background-color: lightgray;
+    
 }

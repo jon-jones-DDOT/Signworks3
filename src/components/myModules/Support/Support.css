@@ -2,9 +2,9 @@
 
     height: 220px;
     padding:10px ;
-   border : 2px black solid;
-    background-clip: content-box;
-    background-color: lightcoral;
+   border : 20px lightcoral solid;
+   background-color: lightgrey;
+    
 }
 
 .SupportImage{
