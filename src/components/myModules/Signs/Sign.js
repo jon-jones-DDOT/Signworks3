@@ -1,9 +1,10 @@
 import React from 'react'
+import './Sign.css'
 
-export default function Sign() {
+export default function Sign(props) {
   return (
-    <div>
-      I'm a sign
+    <div className="Sign">
+      I'm a sign {props.feature.OBJECTID}
     </div>
   )
 }

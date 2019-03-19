@@ -14,10 +14,10 @@ export class SupportType {
 
         }
         try {
-            console.log('index', codedValue)
+           
             for (var i = 0; i < codedValue.length; i++) {
 
-                if (codedValue[i].code == index) {
+                if (codedValue[i].code === index) {
                     return codedValue[i].name;
                 }
             }

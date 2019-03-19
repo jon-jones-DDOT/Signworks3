@@ -21,7 +21,7 @@ import { actions as authActions } from '../redux/reducers/auth';
 
 // Components
 import TopNav from 'calcite-react/TopNav';
-import TopNavBrand from 'calcite-react/TopNav/TopNavBrand';
+
 import TopNavTitle from 'calcite-react/TopNav/TopNavTitle';
 import TopNavList from 'calcite-react/TopNav/TopNavList';
 import TopNavLink from 'calcite-react/TopNav/TopNavLink';
@@ -53,12 +53,7 @@ const MapWrapper = styled.div`
 
 `;
 
-const Logo = styled(TopNavBrand)`
-  justify-content: center;
-  & img {
-    height: 55px;
-  }
-`;
+
 
 const Nav = styled(TopNav)`
   background-color: ${props => props.theme.palette.gray};

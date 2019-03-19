@@ -17,8 +17,8 @@ export const types = {
 // REDUCERS //
 export const initialState = {
     loaded: false,
-    features: [],
-    selSupport: null
+    support:null,
+    signs:null
 };
 
 export default(state = initialState, action) => {

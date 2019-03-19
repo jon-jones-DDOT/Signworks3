@@ -54,7 +54,26 @@ export function getSupportByExtent(args) {
     })
 }
 
+export function getRelatedSigns(args) {
 
+    return new Promise((resolve, reject) => {
+        const feature = args[0]
+       
+        const layer = args[1]
+
+        loadModules(["esri/request"]).then(([esriRequest]) => {
+            esriRequest(layer, {
+                query: {
+                    where: "SUPPORTID='" + feature.selSupport.attributes.GLOBALID + "'",
+                    outFields: '*', // attribute fields to return
+                    token: null, // token
+                    f: "json" // format
+                }
+            }).then(resp => resolve(resp), error => reject(error));
+
+        });
+    })
+}
 
 export function pointToExtent(view, point, toleranceInPixel, callback) {
 

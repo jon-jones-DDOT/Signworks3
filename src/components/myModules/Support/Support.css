@@ -1,7 +1,9 @@
 .Support{
 
-    min-height: 200px;
-    
+    height: 220px;
+    padding:10px ;
+   border : 2px black solid;
+    background-clip: content-box;
     background-color: lightcoral;
 }
 
