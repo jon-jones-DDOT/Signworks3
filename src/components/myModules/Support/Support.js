@@ -45,7 +45,7 @@ export default function Support(props) {
             </p>
             <p>
                 <button >
-                    <FontAwesomeIcon icon={faUserEdit} title="Google Street View"/>
+                    <FontAwesomeIcon icon={faUserEdit} title="Edit Support"/>
                 </button>
             </p>
 
