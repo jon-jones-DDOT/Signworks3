@@ -10,7 +10,7 @@ function * setSelectSupport(action) {
 
         // call API to fetch config
         const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layer]);
-        console.log('feature', features.features.length)
+        
         if (features.features.length === 0) {
             const support = { selSupport:null};
             const signs = {signs:[]};
