@@ -9,6 +9,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.7.2",
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "array-move": "^2.0.0",
     "calcite-react": "^0.29.4",
     "classnames": "^2.2.6",
     "detect-browser-language": "0.0.1",
