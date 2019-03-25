@@ -7,6 +7,7 @@ const err = (e) => {
 export function getSupportById(args) {
     const id = args[0];
     const layer = args[1];
+    //needs a Promis here
 
     loadModules(["esri/tasks/support/Query"]).then(([Query]) => {
         let query = new Query();
@@ -75,6 +76,31 @@ export function getRelatedSigns(args) {
         });
     })
 }
+
+export function saveSignOrder (args) {
+    const features = args[0]
+   
+    return new Promise((resolve, reject) => {
+        loadModules([ 
+            "esri/request"
+        ]).then(([
+    esriRequest
+         ]) => {
+            esriRequest('https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/1/applyEdits', {
+                method: 'post',
+                query: {
+                    f: "json", // format
+                    "updates": JSON.stringify(features)
+                }
+            }).then(resp => resolve(resp), error => reject(error))
+         })
+    })
+   
+
+}
+
+
+
 
 export function pointToExtent(view, point, toleranceInPixel, callback) {
 

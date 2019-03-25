@@ -10,15 +10,17 @@ export const types = {
     MAP_LOADED: "MAP_LOADED",
     SET_FEATURES: "SET_FEATURES",
     MAP_CLICKED: "MAP_CLICKED",
-    SET_SELECTED_SUPPORT: "SET_SELECTED_SUPPORT"
-    
+    SET_SELECTED_SUPPORT: "SET_SELECTED_SUPPORT",
+    SIGN_ORDER_CHANGED: "SIGN_ORDER_CHANGED",
+    SET_SIGN_ORDER: "SET_SIGN_ORDER"
+
 };
 
 // REDUCERS //
 export const initialState = {
     loaded: false,
-    support:null,
-    signs:null
+    support: null,
+    signs: null
 };
 
 export default(state = initialState, action) => {
@@ -51,7 +53,14 @@ export const actions = {
             geom: geom,
             layer: layer
         }
-
     }),
-    domainsLoaded: () => ({type: types.MAP_LOADED, payload: {}})
+    signOrderChanged: (features, support) => ({
+        type: types.SIGN_ORDER_CHANGED,
+        payload: {
+            features,
+            support
+
+        }
+    })
+
 }

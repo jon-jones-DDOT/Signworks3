@@ -59,7 +59,7 @@ class RightBar extends Component {
 
             <RightDiv >
           
-                <Support sel={this.props.map.support} ham="I like ham"/>
+                <Support sel={this.props.map.support}/>
                 <Signs signs={this.props.map.signs}></Signs>
             </RightDiv>
         )
