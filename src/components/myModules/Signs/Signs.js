@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { actions as mapActions } from '../../../redux/reducers/map';
 
 //console.log('map actions', mapActions)
-const SortableItem = SortableElement(({value}) => <Sign feature={value}></Sign>);
+const SortableItem = SortableElement(({value}) => <Sign sign={value}></Sign>);
 const SortableList = SortableContainer(({items}) => {
 // console.log ('items', items)
     return (

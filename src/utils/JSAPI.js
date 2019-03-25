@@ -59,14 +59,14 @@ export function getRelatedSigns(args) {
 
     return new Promise((resolve, reject) => {
         const feature = args[0]
-       
+
         const layer = args[1]
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(layer, {
                 query: {
                     where: "SUPPORTID='" + feature.selSupport.attributes.GLOBALID + "'",
-                    orderByFields:"SIGNORDER",
+                    orderByFields: "SIGNORDER",
                     outFields: '*', // attribute fields to return
                     token: null, // token
                     f: "json" // format
@@ -77,30 +77,42 @@ export function getRelatedSigns(args) {
     })
 }
 
-export function saveSignOrder (args) {
-    const features = args[0]
-   
+export function getRelatedTimebands(args) {
     return new Promise((resolve, reject) => {
-        loadModules([ 
-            "esri/request"
-        ]).then(([
-    esriRequest
-         ]) => {
-            esriRequest('https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/1/applyEdits', {
+        loadModules(["esri/request"]).then(([esriRequest]) => {
+            esriRequest('https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
+                        'er/2/query', {
+                    query: {
+                        where: "SIGNID='" + args[0].attributes.GLOBALID + "'",
+
+                        outFields: '*', // attribute fields to return
+                        token: null, // token
+                        f: "json" // format
+                    }
+                })
+                .then(resp => resolve(resp), error => reject(error));
+        })
+    })
+
+}
+
+export function saveSignOrder(args) {
+    const features = args[0]
+
+    return new Promise((resolve, reject) => {
+        loadModules(["esri/request"]).then(([esriRequest]) => {
+            esriRequest('https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
+                    'er/1/applyEdits', {
                 method: 'post',
                 query: {
                     f: "json", // format
                     "updates": JSON.stringify(features)
                 }
             }).then(resp => resolve(resp), error => reject(error))
-         })
+        })
     })
-   
 
 }
-
-
-
 
 export function pointToExtent(view, point, toleranceInPixel, callback) {
 
@@ -117,4 +129,20 @@ export function pointToExtent(view, point, toleranceInPixel, callback) {
 
     })
 
+}
+
+//NON-ESRI DATA CALLS
+
+export async function getMUTCDS(args) {
+    const baseUrl = "http://ddotgisapp01/SignCatalog/api/mutcd?code=" + args[0];
+    try {
+        const response = await fetch(baseUrl);
+        if (response.ok) {
+            const results = await response.json();
+            return results;
+        }
+    } catch (err) {
+        console.error('Something went wrong');
+        throw new Error('Bad stuff happened.');
+    }
 }
