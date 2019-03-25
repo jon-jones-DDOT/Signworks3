@@ -2,11 +2,11 @@ import React from 'react'
 import './Sign.css'
 
 export default function Sign(props) {
-  
+   console.log("inside Sign Component", props.sign)
   return (
     <div className="Sign">
-      I'm a sign {props.sign.feature.attributes.OBJECTID}
-      <p> Sign Order {props.sign.feature.attributes.SIGNORDER } </p>
+   {props.sign.feature.attributes.OBJECTID}
+    
     </div>
   )
 }

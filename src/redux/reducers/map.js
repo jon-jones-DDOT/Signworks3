@@ -39,6 +39,23 @@ export default(state = initialState, action) => {
                 ...action.payload
             }
 
+        case types.SET_SIGN_ORDER:
+            console.log('payload', action.payload.signs.features[0].attributes.OBJECTID)
+            const newState = {
+                ...state
+            }
+            console.log('newState', newState.signs.signs[0].feature.attributes.SIGNORDER);
+
+            console.log('legnth', newState.signs.signs.length)
+            for (let i = 0; i < newState.signs.signs.length; i++) {
+                newState.signs.signs[i].feature = action.payload.signs.features[i]
+            }
+            console.log('newState dos', newState.signs.signs[0].feature.attributes.SIGNORDER);
+            return {
+                ...state,
+                ...newState
+            }
+
         default:
             return state;
     }

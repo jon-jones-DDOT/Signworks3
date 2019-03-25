@@ -98,7 +98,11 @@ export function getRelatedTimebands(args) {
 
 export function saveSignOrder(args) {
     const features = args[0]
-
+    let pureFeatures = [];
+    for ( let i = 0;i < features.length; i++){
+        pureFeatures.push(features[i].feature)
+    }
+  
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest('https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
@@ -106,7 +110,7 @@ export function saveSignOrder(args) {
                 method: 'post',
                 query: {
                     f: "json", // format
-                    "updates": JSON.stringify(features)
+                    "updates": JSON.stringify(pureFeatures)
                 }
             }).then(resp => resolve(resp), error => reject(error))
         })

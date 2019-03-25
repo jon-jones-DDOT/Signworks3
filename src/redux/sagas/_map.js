@@ -66,7 +66,7 @@ function * setSelectSupport(action) {
               //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS
               sign.MUTCD = {};
               signs.signs.push(sign)
-              console.log("timebandit", signs)
+            //  console.log("timebandit", signs)
           }
 
             // Put config in store
@@ -107,14 +107,14 @@ function * setSignOrder(action) {
         ])
 
         const signs = {
-            signs: signsREsp.data.features
+            features: signsREsp.data.features
         };
 
         // Put config in store
         yield put({
-            type: mapTypes.SET_SELECTED_SUPPORT,
+            type: mapTypes.SET_SIGN_ORDER,
             payload: {
-                support,
+                
                 signs
             }
         });
