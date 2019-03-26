@@ -13,7 +13,7 @@ function * setSignOrder(action) {
         const resp = yield call(saveSignOrder, [action.payload.features]);
 
         const support =  action.payload.support;
-       // console.log( 'support', support)
+      
         const signsREsp = yield call(getRelatedSigns, [
             support, 'https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
                     'er/1/query'

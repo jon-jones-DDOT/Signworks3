@@ -59,7 +59,7 @@ export function getRelatedSigns(args) {
 
     return new Promise((resolve, reject) => {
         const feature = args[0]
-       //  console.log('feature in related signs', feature)
+      
         const layer = args[1]
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
@@ -139,7 +139,7 @@ export function pointToExtent(view, point, toleranceInPixel, callback) {
 
 export async function getMUTCDS(args) {
     const baseUrl = "http://ddotgisapp01/SignCatalog/api/mutcd?code=" + args[0];
-    console.log('baseUrl', baseUrl)
+   
     try {
         const response = await fetch(baseUrl);
         if (response.ok) {

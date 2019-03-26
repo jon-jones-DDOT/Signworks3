@@ -3,19 +3,23 @@ import Img from 'react-image'
 import './Sign.css'
 
 export default function Sign(props) {
- const imgErrorPath = props.sign.MUTCD.serverImagePath.substring(0,props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
-    console.log('img', props.sign.MUTCD.serverImagePath)
+    const imgErrorPath = props
+        .sign
+        .MUTCD
+        .serverImagePath
+        .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
+  
     return (
         <div className="Sign">
             <Img
-                src={[props.sign.MUTCD.serverImagePath,imgErrorPath]}
+                src={[props.sign.MUTCD.serverImagePath, imgErrorPath]}
                 className="SignImage"
-                alt="sign"
-                ></Img>
+                alt="sign"></Img>
 
-            <p>{props.sign.feature.attributes.OBJECTID}</p>
             <p>{props.sign.feature.attributes.SIGNCODE}
             </p>
+            <p> {props.sign.MUTCD.name}</p>
+            <p>number of timebands={props.sign.timebands.length}</p>
 
         </div>
     )

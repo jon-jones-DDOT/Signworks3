@@ -41,7 +41,7 @@ function * setSelectSupport(action) {
             // create a string to get back MUTCD metadata for all signs on post
 
             let muttQueryString = "";
-             console.log('signCode', signArray)
+           
              if(signArray.length < 1){
                  muttQueryString = "PR-OTHER"
              }
@@ -53,11 +53,10 @@ function * setSelectSupport(action) {
                 }
             }
             muttQueryString = muttQueryString.replace(/,\s*$/, "");
-            console.log('mutString', muttQueryString)
+           
             // call out to Sign Catalog API to get MUTCD metadata
             const muttData = yield call(getMUTCDS, [muttQueryString])
-         //  console.log('mutts', muttData)
-
+       
             //loop through globalIDS and get timebands
             for (let i = 0; i < signArray.length; i++) {
                 let sign = {
@@ -68,7 +67,7 @@ function * setSelectSupport(action) {
                 //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS
                 sign.MUTCD = muttData[i];
                 signs.push(sign)
-                //  console.log("timebandit", signs)
+              
             }
 
             // Put config in store

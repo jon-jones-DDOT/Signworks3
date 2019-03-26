@@ -6,10 +6,10 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {actions as mapActions} from '../../../redux/reducers/map';
 
-//console.log('map actions', mapActions)
+
 const SortableItem = SortableElement(({value}) => <Sign sign={value}></Sign>);
 const SortableList = SortableContainer(({items}) => {
-    // console.log ('items', items)
+   
     return (
         <div>
             {items.map((value, index) => (<SortableItem key={`item-${index}`} index={index} value={value}/>))}
@@ -22,12 +22,12 @@ class Signs extends Component {
 
     onSortEnd = ({oldIndex, newIndex}) => {
 
-        //     console.log('indices, old, new', [oldIndex, newIndex])
+       
         let newOrder = [...this.props.signs]
-        //  console.log('newOrder', newOrder)
+       
         newOrder = arrayMove(newOrder, oldIndex, newIndex)
 
-        //     console.log('new array', newOrder)
+      
         for (let i = 0; i < newOrder.length; i++) {
 
             newOrder[i].feature.attributes.SIGNORDER = i;
