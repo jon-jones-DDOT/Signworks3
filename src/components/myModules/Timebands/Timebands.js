@@ -1,5 +1,6 @@
 import React from 'react'
 import Timeband from "./Timeband"
+import './Timebands.css'
 
 export default function Timebands(props) {
 

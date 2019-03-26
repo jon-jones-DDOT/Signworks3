@@ -1,15 +1,18 @@
 import React from 'react'
+import './Timeband.css'
 
 export default function Timeband(props) {
   let bob=  props.value.attributes.OBJECTID
+
   return (
-    <div className= "TimebandRow">
-    <select><option>5AM</option></select>
-    <select><option>5AM</option></select>
-    <select><option>5AM</option></select>
-    <select><option>5AM</option></select>
-    <select><option>5AM</option></select>
+    <span className= "TimebandRow">
+
+    <span className="timebandElement">5 AM</span>
+    <span className="timebandElement">5 AM</span>
+    <span className="timebandElement">5 AM</span>
+    <span className="timebandElement">5 AM</span>
+    <span className="timebandElement">5 AM</span>
      
-    </div>
+    </span>
   )
 }

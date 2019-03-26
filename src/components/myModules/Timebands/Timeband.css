@@ -1,7 +1,11 @@
 .Timeband{
-    display:block;
+    display:flex;
 }
 
 TimebandRow{
-    display:flex;
+    display:inline;
+  
+}
+.timebandElement{
+    border:solid black 1px;
 }
