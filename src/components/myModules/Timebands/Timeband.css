@@ -1,3 +1,7 @@
 .Timeband{
     display:block;
 }
+
+TimebandRow{
+    display:flex;
+}
