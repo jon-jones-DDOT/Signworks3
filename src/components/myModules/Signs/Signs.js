@@ -23,7 +23,7 @@ class Signs extends Component {
     onSortEnd = ({oldIndex, newIndex}) => {
 
         //     console.log('indices, old, new', [oldIndex, newIndex])
-        let newOrder = [...this.props.signs.signs]
+        let newOrder = [...this.props.signs]
         //  console.log('newOrder', newOrder)
         newOrder = arrayMove(newOrder, oldIndex, newIndex)
 
@@ -36,7 +36,7 @@ class Signs extends Component {
 
         this
             .props
-            .signOrderChanged(newOrder, this.props.map.support.selSupport);
+            .signOrderChanged(newOrder, this.props.map.support);
         /* */
     };
     render() {

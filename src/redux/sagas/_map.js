@@ -27,7 +27,7 @@ function * setSelectSupport(action) {
         } else {
             //create support payload from support returned
             const support = features.features[0];
-            console.log('support', support)
+          
             //retrieve associated sign features from AGS
             const signsREsp = yield call(getRelatedSigns, [
                 support, 'https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
@@ -49,7 +49,7 @@ function * setSelectSupport(action) {
 
             // call out to Sign Catalog API to get MUTCD metadata
             const muttData = yield call(getMUTCDS, [muttQueryString])
-            console.log('mutts', muttData)
+           // console.log('mutts', muttData)
 
             //loop through globalIDS and get timebands
             for (let i = 0; i < signArray.length; i++) {
@@ -93,9 +93,8 @@ function * setSignOrder(action) {
 
         const resp = yield call(saveSignOrder, [action.payload.features]);
 
-        const support = {
-            selSupport: action.payload.support
-        };
+        const support =  action.payload.support;
+       // console.log( 'support', support)
         const signsREsp = yield call(getRelatedSigns, [
             support, 'https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
                     'er/1/query'

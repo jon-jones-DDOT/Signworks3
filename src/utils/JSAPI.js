@@ -59,7 +59,7 @@ export function getRelatedSigns(args) {
 
     return new Promise((resolve, reject) => {
         const feature = args[0]
-
+       //  console.log('feature in related signs', feature)
         const layer = args[1]
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
