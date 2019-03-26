@@ -65,7 +65,7 @@ export function getRelatedSigns(args) {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(layer, {
                 query: {
-                    where: "SUPPORTID='" + feature.selSupport.attributes.GLOBALID + "'",
+                    where: "SUPPORTID='" + feature.attributes.GLOBALID + "'",
                     orderByFields: "SIGNORDER",
                     outFields: '*', // attribute fields to return
                     token: null, // token

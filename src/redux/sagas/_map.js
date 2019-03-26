@@ -13,12 +13,9 @@ function * setSelectSupport(action) {
 
         //if nothing comes back, set sign info in store to empty or null
         if (features.features.length === 0) {
-            const support = {
-                selSupport: null
-            };
-            const signs = {
-                signs: []
-            };
+            const support = null;
+            const signs = [];
+
             yield put({
                 type: mapTypes.SET_SELECTED_SUPPORT,
                 payload: {
@@ -26,48 +23,46 @@ function * setSelectSupport(action) {
                     signs
                 }
             });
-        //if a support is returned...
+            //if a support is returned...
         } else {
             //create support payload from support returned
-            const support = {
-                selSupport: features.features[0]
-            };
+            const support = features.features[0];
+            console.log('support', support)
             //retrieve associated sign features from AGS
             const signsREsp = yield call(getRelatedSigns, [
                 support, 'https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
                         'er/1/query'
             ])
             const signArray = signsREsp.data.features;
-            
+
             // start creating sign payload
-            const signs = {
-                signs: []
-            };
+            const signs = [];
 
             // create a string to get back MUTCD metadata for all signs on post
-            
+
             let muttQueryString = "";
-           
+
             for (let i = 0; i < signArray.length; i++) {
-                    muttQueryString += signsREsp.data.features[i].attributes.SIGNCODE + ",";                  
+                muttQueryString += signsREsp.data.features[i].attributes.SIGNCODE + ",";
             }
             muttQueryString = muttQueryString.replace(/,\s*$/, "");
 
-
             // call out to Sign Catalog API to get MUTCD metadata
-          //  const muttData = yield call(getMUTCDS,[muttQueryString])
-          //  console.log('mutts', muttData)
+            const muttData = yield call(getMUTCDS, [muttQueryString])
+            console.log('mutts', muttData)
 
-          //loop through globalIDS and get timebands
-          for (let i =0;i <signArray.length; i++){
-              let sign = {feature:signArray[i]}
-              const results = yield call(getRelatedTimebands,[signArray[i]])
-              sign.timebands = results.data.features;
-              //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS
-              sign.MUTCD = {};
-              signs.signs.push(sign)
-            //  console.log("timebandit", signs)
-          }
+            //loop through globalIDS and get timebands
+            for (let i = 0; i < signArray.length; i++) {
+                let sign = {
+                    feature: signArray[i]
+                }
+                const results = yield call(getRelatedTimebands, [signArray[i]])
+                sign.timebands = results.data.features;
+                //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS
+                sign.MUTCD = {};
+                signs.push(sign)
+                //  console.log("timebandit", signs)
+            }
 
             // Put config in store
             yield put({
@@ -97,7 +92,7 @@ function * setSignOrder(action) {
         // call API to fetch config
 
         const resp = yield call(saveSignOrder, [action.payload.features]);
-       
+
         const support = {
             selSupport: action.payload.support
         };
@@ -111,13 +106,10 @@ function * setSignOrder(action) {
         };
 
         // Put config in store
-        yield put({
-            type: mapTypes.SET_SIGN_ORDER,
-            payload: {
-                
+        yield put({type: mapTypes.SET_SIGN_ORDER, payload: {
+
                 signs
-            }
-        });
+            }});
 
     } catch (e) {
         console.log('SAGA ERROR: map/setSignOrder, ', e);

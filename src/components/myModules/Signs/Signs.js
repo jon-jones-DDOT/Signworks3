@@ -41,7 +41,7 @@ class Signs extends Component {
     };
     render() {
         if (this.props.signs) {
-            return <SortableList items={this.props.signs.signs} onSortEnd={this.onSortEnd}/>;
+            return <SortableList items={this.props.signs} onSortEnd={this.onSortEnd}/>;
         } else 
             return <p>Sorry</p>
     }
