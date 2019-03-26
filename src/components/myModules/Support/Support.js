@@ -1,4 +1,5 @@
 import React from 'react'
+import Img from 'react-image'
 import "./Support.css"
 import {SupportType} from '../../../SignworksJSON'
 import {faBinoculars, faUserEdit} from '@fortawesome/free-solid-svg-icons';
@@ -9,20 +10,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 export default function Support(props) {
     
     const SBT = new SupportType();
-    let myImage = null;
-    const getImage = () => {
-        if (props.sel) {
+    
+ 
 
-            if (props.sel.attributes.SUPPORTTYPE) {
-                myImage = window.location.origin + "/img/supports/" + props.sel.attributes.SUPPORTTYPE + ".png"
-            } else {
-                myImage = window.location.origin + "/img/supports/666.png"
-            }
-        } else {
-            myImage = window.location.origin + "/img/supports/666.png"
-        }
-        return myImage;
-    }
+    
     const supportInnards=()=>{
         if(props.sel === null){
             return 'no support found'
@@ -31,11 +22,13 @@ export default function Support(props) {
             return 'no support found...'
         }
         else{
+            const myImage = window.location.origin + "/img/supports/" + props.sel.attributes.SUPPORTTYPE + ".png";    
+            const errImage = window.location.origin + "/img/supports/666.png";
             return (
 
                 <div className="Support">
                    
-                    <img src={getImage()} alt="support" className="SupportImage"/>
+                    <Img src={[myImage,errImage]} alt="support" className="SupportImage"/>
                     <p>
                         Sign Type: {props.sel
                             ? SBT.name(props.sel.attributes.SUPPORTTYPE, "SUPPORTTYPE")
