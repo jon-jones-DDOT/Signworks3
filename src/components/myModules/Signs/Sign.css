@@ -1,12 +1,30 @@
-.Sign{
+.Sign {
     height: 150px;
-    border:20px solid lightgreen;
-    padding:10px ;
+    border: 20px solid lightgreen;
+    padding: 10px;
     background-color: lightgray;
+    display: blick;
+
+}
+.SignMUTCDdiv {
+    display: flex;
+    text-align: left;
     
 }
+.SignMutcdText{
+    flex:100px;
+}
 
-.SignImage{
+.SignImage {
     height: 40px;
     width: 40px;
+    margin-right:10px;
+    
+    
+}
+.SignArrowImage {
+    height: 40px;
+    width: 60px;
+    position:relative;
+    
 }

@@ -25,10 +25,8 @@ class Signs extends Component {
 onSortEnd = ({oldIndex, newIndex}) => {
 
 let newOrder = [...this.props.signs]
-console.log('* newOrder', newOrder)
 
 newOrder = arrayMove(newOrder, oldIndex, newIndex)
-console.log('* newOrder 2', newOrder)
 
 for (let i = 0; i < newOrder.length; i++) {
 

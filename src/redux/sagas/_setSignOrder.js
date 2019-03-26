@@ -11,7 +11,6 @@ function * setSignOrder(action) {
         // call API to fetch config
 
          yield call(saveSignOrder, [action.payload.features]);
-console.log('* payload', action.payload)
         const support =  action.payload.support;
       
         const signsREsp = yield call(getRelatedSigns, [
