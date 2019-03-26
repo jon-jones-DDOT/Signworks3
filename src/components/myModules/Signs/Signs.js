@@ -6,10 +6,9 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {actions as mapActions} from '../../../redux/reducers/map';
 
-
 const SortableItem = SortableElement(({value}) => <Sign sign={value}></Sign>);
 const SortableList = SortableContainer(({items}) => {
-   
+
     return (
         <div>
             {items.map((value, index) => (<SortableItem key={`item-${index}`} index={index} value={value}/>))}
@@ -18,41 +17,44 @@ const SortableList = SortableContainer(({items}) => {
     );
 });
 
+
+
+
 class Signs extends Component {
 
-    onSortEnd = ({oldIndex, newIndex}) => {
+onSortEnd = ({oldIndex, newIndex}) => {
 
-       
-        let newOrder = [...this.props.signs]
-       
-        newOrder = arrayMove(newOrder, oldIndex, newIndex)
+let newOrder = [...this.props.signs]
+console.log('* newOrder', newOrder)
 
-      
-        for (let i = 0; i < newOrder.length; i++) {
+newOrder = arrayMove(newOrder, oldIndex, newIndex)
+console.log('* newOrder 2', newOrder)
 
-            newOrder[i].feature.attributes.SIGNORDER = i;
+for (let i = 0; i < newOrder.length; i++) {
 
-        }
+    newOrder[i].feature.attributes.SIGNORDER = i;
 
-        this
-            .props
-            .signOrderChanged(newOrder, this.props.map.support);
-        /* */
-    };
-    render() {
-        if (this.props.signs) {
-            return <SortableList items={this.props.signs} onSortEnd={this.onSortEnd}/>;
-        } else 
-            return <p>Sorry</p>
-    }
+}
+
+this
+    .props
+    .signOrderChanged(newOrder, this.props.map.support);
+/* */
+};
+render() {
+if (this.props.signs) {
+    return <SortableList items={this.props.signs} onSortEnd={this.onSortEnd}/>;
+} else 
+    return <p>Sorry</p>
+}
 }
 
 const mapStateToProps = state => ({map: state.map});
 
 const mapDispatchToProps = function (dispatch) {
-    return bindActionCreators({
-        ...mapActions
-    }, dispatch);
+return bindActionCreators({
+...mapActions
+}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signs);
