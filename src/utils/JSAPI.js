@@ -139,6 +139,7 @@ export function pointToExtent(view, point, toleranceInPixel, callback) {
 
 export async function getMUTCDS(args) {
     const baseUrl = "http://ddotgisapp01/SignCatalog/api/mutcd?code=" + args[0];
+    console.log('baseUrl', baseUrl)
     try {
         const response = await fetch(baseUrl);
         if (response.ok) {

@@ -41,12 +41,19 @@ function * setSelectSupport(action) {
             // create a string to get back MUTCD metadata for all signs on post
 
             let muttQueryString = "";
-
+             console.log('signCode', signArray)
+             if(signArray.length < 1){
+                 muttQueryString = "PR-OTHER"
+             }
             for (let i = 0; i < signArray.length; i++) {
-                muttQueryString += signsREsp.data.features[i].attributes.SIGNCODE + ",";
+                if(signsREsp.data.features[i].attributes.SIGNCODE){
+                muttQueryString += signsREsp.data.features[i].attributes.SIGNCODE + ",";}
+                else{
+                    muttQueryString += "PR-OTHER,"
+                }
             }
             muttQueryString = muttQueryString.replace(/,\s*$/, "");
-
+            console.log('mutString', muttQueryString)
             // call out to Sign Catalog API to get MUTCD metadata
             const muttData = yield call(getMUTCDS, [muttQueryString])
          //  console.log('mutts', muttData)
