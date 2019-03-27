@@ -7,7 +7,10 @@ import { getRelatedSigns, saveSignOrder, getMUTCDS, getRelatedTimebands} from '.
 function * setSignOrder(action) {
 
     try {
-
+        const errorMUTCD = {
+            name: "MUTCD not found",
+            serverImagePath: "none"
+        }
         // call API to save signs with new SIGNORDER
 
          yield call(saveSignOrder, [action.payload.features]);
@@ -42,17 +45,28 @@ function * setSignOrder(action) {
       //  console.log('signArray', signArray)
      //   console.log( 'muttDatas', muttData)
         
-            //loop through globalIDS and get timebands
-            for (let i = 0; i < signArray.length; i++) {
+               //loop through globalIDS and get timebands
+               for (let i = 0; i < signArray.length; i++) {
                 let sign = {
                     feature: signArray[i]
+                    
                 }
                 const results = yield call(getRelatedTimebands, [signArray[i]])
                 sign.timebands = results.data.features;
-                //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS
-                sign.MUTCD = muttData[i];
+                for (let j = 0; j < muttData.length;j++){
+              //      console.log('does ' + signArray[i].attributes.SIGNCODE.toUpperCase() + " equal " + muttData[j].code.toUpperCase())
+                    if( signArray[i].attributes.SIGNCODE.toUpperCase() === muttData[j].code.toUpperCase() ){
+                        sign.MUTCD = muttData[j];
+                //        console.log('apparently it does')
+                    }
+                }
+                if ( sign.MUTCD === undefined){
+                    sign.MUTCD = errorMUTCD;
+             //       console.log ('MUTCD not found for '+ signArray[i].attributes.SIGNCODE)
+                }
+                //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS sign.MUTCD = muttData[i];
                 signs.push(sign)
-              
+
             }
 
 
