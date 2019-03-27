@@ -85,7 +85,7 @@ class SceneViewExample extends Component {
 
     mapClicked = (evt) => {
 
-        pointToExtent(this.view, evt.mapPoint, 40, this.getSelectedSupport);
+        pointToExtent(this.view, evt.mapPoint, 12, this.getSelectedSupport);
 
     }
 
