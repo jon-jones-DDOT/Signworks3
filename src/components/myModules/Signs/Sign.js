@@ -9,12 +9,13 @@ export default function Sign(props) {
         .MUTCD
         .serverImagePath
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
-
+    const imgServerDown = window.location.origin + "/img/PR-OTHER.png"    
+ //console.log('img', imgErrorPath)
     return (
         <div className="Sign">
             <div className="SignMUTCDdiv">
                 <Img
-                    src={[props.sign.MUTCD.serverImagePath, imgErrorPath]}
+                    src={[props.sign.MUTCD.serverImagePath, imgErrorPath, imgServerDown]}
                     className="SignImage"
                     alt="sign"></Img>
                 <div className="SignMutcdText">

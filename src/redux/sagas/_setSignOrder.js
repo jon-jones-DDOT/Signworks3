@@ -8,11 +8,11 @@ function * setSignOrder(action) {
 
     try {
 
-        // call API to fetch config
+        // call API to save signs with new SIGNORDER
 
          yield call(saveSignOrder, [action.payload.features]);
         const support =  action.payload.support;
-      
+      // retrieve the new related signs with a call to AGS
         const signsREsp = yield call(getRelatedSigns, [
             support, 'https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
                     'er/1/query'
@@ -29,8 +29,8 @@ function * setSignOrder(action) {
              muttQueryString = "PR-OTHER"
          }
         for (let i = 0; i < signArray.length; i++) {
-            if(signsREsp.data.features[i].attributes.SIGNCODE){
-            muttQueryString += signsREsp.data.features[i].attributes.SIGNCODE + ",";}
+            if(signArray[i].attributes.SIGNCODE){
+            muttQueryString += signArray[i].attributes.SIGNCODE + ",";}
             else{
                 muttQueryString += "PR-OTHER,"
             }
@@ -39,7 +39,8 @@ function * setSignOrder(action) {
        
         // call out to Sign Catalog API to get MUTCD metadata
         const muttData = yield call(getMUTCDS, [muttQueryString])
-
+      //  console.log('signArray', signArray)
+     //   console.log( 'muttDatas', muttData)
         
             //loop through globalIDS and get timebands
             for (let i = 0; i < signArray.length; i++) {
@@ -56,7 +57,7 @@ function * setSignOrder(action) {
 
 
 
-console.log("* updated features", signs)
+//console.log("* updated features", signs)
         // Put config in store
         yield put({
             type: mapTypes.SET_SELECTED_SUPPORT,

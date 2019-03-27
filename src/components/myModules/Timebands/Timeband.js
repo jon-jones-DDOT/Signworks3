@@ -3,7 +3,7 @@ import './Timeband.css'
 import {SignType} from './../../../SignworksJSON'
 
 export default function Timeband(props) {
-  let bob=  props.value.attributes.OBJECTID
+ 
  const domains  = new SignType();
   return (
     <span className= "TimebandRow">

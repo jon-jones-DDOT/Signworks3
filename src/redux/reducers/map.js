@@ -40,20 +40,8 @@ export default(state = initialState, action) => {
             }
 
         case types.SET_SIGN_ORDER:
-          
-            const newState = {
-                ...state
-            }
-            
-          
-            for (let i = 0; i < newState.signs.length; i++) {
-                newState.signs[i].feature = action.payload.signs.features[i]
-            }
-           
-            return {
-                ...state,
-                ...newState
-            }
+
+            break;
 
         default:
             return state;
