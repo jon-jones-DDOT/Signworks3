@@ -8,17 +8,17 @@
 // governing permissions and limitations under the License.​ ACTION TYPES //
 export const types = {
     MAP_LOADED: "MAP_LOADED",
-    SET_FEATURES: "SET_FEATURES",
     MAP_CLICKED: "MAP_CLICKED",
     SET_SELECTED_SUPPORT: "SET_SELECTED_SUPPORT",
     SIGN_ORDER_CHANGED: "SIGN_ORDER_CHANGED",
-    SET_SIGN_ORDER: "SET_SIGN_ORDER"
+    MODAL: "MODAL"
 
 };
 
 // REDUCERS //
 export const initialState = {
     loaded: false,
+    showModal: false,
     support: null,
     signs: null
 };
@@ -39,9 +39,11 @@ export default(state = initialState, action) => {
                 ...action.payload
             }
 
-        case types.SET_SIGN_ORDER:
-
-            break;
+        case types.MODAL:
+            return {
+                ...state,
+                ...action.payload
+            }
 
         default:
             return state;
@@ -64,6 +66,12 @@ export const actions = {
             features,
             support
 
+        }
+    }),
+    modalClicked: (show) => ({
+        type: types.MODAL,
+        payload: {
+            showModal: show
         }
     })
 

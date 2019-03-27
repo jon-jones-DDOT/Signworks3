@@ -56,34 +56,30 @@ function * setSelectSupport(action) {
                 }
             }
             muttQueryString = muttQueryString.replace(/,\s*$/, "");
-            console.log('qryStr', muttQueryString)
+
             // call out to Sign Catalog API to get MUTCD metadata
             const muttData = yield call(getMUTCDS, [muttQueryString])
 
-            for (let i = 0; i < signArray.length; i++) {
-           
-            }
+            for (let i = 0; i < signArray.length; i++) {}
 
-            console.log('muttdata before', muttData)
-            console.log('signArray before', signArray)
             //loop through globalIDS and get timebands
             for (let i = 0; i < signArray.length; i++) {
                 let sign = {
                     feature: signArray[i]
-                    
+
                 }
                 const results = yield call(getRelatedTimebands, [signArray[i]])
                 sign.timebands = results.data.features;
-                for (let j = 0; j < muttData.length;j++){
-              //      console.log('does ' + signArray[i].attributes.SIGNCODE.toUpperCase() + " equal " + muttData[j].code.toUpperCase())
-                    if( signArray[i].attributes.SIGNCODE.toUpperCase() === muttData[j].code.toUpperCase() ){
+                for (let j = 0; j < muttData.length; j++) {
+
+                    if (signArray[i].attributes.SIGNCODE.toUpperCase() === muttData[j].code.toUpperCase()) {
                         sign.MUTCD = muttData[j];
-                //        console.log('apparently it does')
+
                     }
                 }
-                if ( sign.MUTCD === undefined){
+                if (sign.MUTCD === undefined) {
                     sign.MUTCD = errorMUTCD;
-             //       console.log ('MUTCD not found for '+ signArray[i].attributes.SIGNCODE)
+
                 }
                 //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS sign.MUTCD = muttData[i];
                 signs.push(sign)

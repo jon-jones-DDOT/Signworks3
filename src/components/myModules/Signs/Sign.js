@@ -10,7 +10,7 @@ export default function Sign(props) {
         .serverImagePath
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
     const imgServerDown = window.location.origin + "/img/PR-OTHER.png"    
- //console.log('img', imgErrorPath)
+ 
     return (
         <div className="Sign">
             <div className="SignMUTCDdiv">
@@ -30,6 +30,7 @@ export default function Sign(props) {
             </div>
 <hr/>
            <Timebands bands = {props.sign.timebands}></Timebands>
+           <p>{props.sign.feature.attributes.OBJECTID}</p>
 
         </div>
     )
