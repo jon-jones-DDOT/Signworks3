@@ -17,6 +17,7 @@ constructor(props) {
         this
             .props
             .modalClicked(false, null)
+            
         this
             .props
             .saveSupport(this.state.editedSupport, this.props.config.featureURLs)

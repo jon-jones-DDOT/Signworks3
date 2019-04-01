@@ -128,22 +128,25 @@ export function saveSignOrder(args) {
 
 export function saveSupport(args/*updateFeature, isNew, layer */) {
     const updateFeature = args[0];
+    console.log('editedFeature', updateFeature)
     const isNew = args[1];
     const layer = args[2];
+   
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             let set = null;
             if (isNew) {
                 set = {
                     f: "json",
-                    addFeatures: [updateFeature]
+                    "adds":  JSON.stringify([updateFeature])
                 };
             } else {
                 set = {
                     f: "json",
-                    updateFeatures: [updateFeature]
+                    "updates": JSON.stringify([updateFeature])
                 }
             }
+            console.log('set', set)
             esriRequest(layer + '/applyEdits', {
                 method: 'post',
                 query: set

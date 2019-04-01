@@ -17,15 +17,19 @@ import { all, fork } from 'redux-saga/effects';
 
 import * as authSagas from './_auth';
 import * as configSagas from './_config';
-import * as supportSagas from './_setSupport';
-import * as signOrderSagas from './_setSignOrder';
+import * as setSupportSaga from './_setSupport';
+import * as signOrderSaga from './_setSignOrder';
+import * as saveSupportSaga from './_saveSupport';
+
 
 export default function* rootSaga() {
   yield all([
     ...Object.values(authSagas),
     ...Object.values(configSagas),
-    ...Object.values(supportSagas),
-    ...Object.values(signOrderSagas)
+    ...Object.values(setSupportSaga),
+    ...Object.values(signOrderSaga),
+    ...Object.values(saveSupportSaga)
+
     // more sagas from different files
   ].map(fork));
 }
