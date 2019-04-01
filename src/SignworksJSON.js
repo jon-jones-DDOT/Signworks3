@@ -1,3 +1,5 @@
+import React from "react"
+
 export class SupportType {
     name = (index, domain) => {
         let codedValue = "but";
@@ -77,7 +79,7 @@ export class SupportType {
         {
             "name": "Active",
             "code": 1
-        }, {
+        },/* {
             "name": "Prospective",
             "code": 2
         }, {
@@ -86,10 +88,10 @@ export class SupportType {
         }, {
             "name": "Temporary",
             "code": 4
-        }, {
+        },*/ {
             "name": "Retired",
             "code": 5
-        }, {
+        }, /* {
             "name": "Requested (New)",
             "code": 6
         }, {
@@ -98,7 +100,7 @@ export class SupportType {
         }, {
             "name": "Requested (Remove)",
             "code": 8
-        }
+        } */
     ]
 }
 
@@ -112,7 +114,7 @@ export class SignType {
             case 'TIMEBAND_HOURS':
                 codedValue = this._codedValuesTimebandHours;
                 break;
-                case "TIMEBAND_HOUR_LIMITS":
+            case "TIMEBAND_HOUR_LIMITS":
                 codedValue = this._codedValuesHourLimits;
                 break;
             default:
@@ -508,4 +510,8 @@ export class SignType {
             name: "5 hour"
         }
     ]
+}
+
+export function addOptionsToSelect(options) {
+   return  options.map((value, index) => (<option  key={`item-${index}`}  value={value.code}> {value.name}</option>))
 }

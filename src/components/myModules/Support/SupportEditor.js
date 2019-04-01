@@ -1,26 +1,31 @@
 import React, {Component} from 'react'
 import './SupportEditor.css'
 import ModalWrapper from '../Modals/ModalWrapper';
+import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
 
 export default class SupportEditor extends Component {
 
-constructor(props) {
-  super(props)
+    constructor(props) {
+        super(props)
 
-  this.state = {
-     editedSupport : {...this.props.support}
-  }
-}
+        this.state = {
 
+            ...this.props.support.attributes
+
+        }
+    }
 
     saveClickHandler = () => {
         this
             .props
-            .modalClicked(false, null)
-            
+            .modalClicked(false, null);
+
+   let tempFeature = {...this.props.support};
+   tempFeature.attributes = {...this.state};
+
         this
             .props
-            .saveSupport(this.state.editedSupport, this.props.config.featureURLs)
+            .saveSupport(tempFeature, this.props.config.featureURLs);
 
     }
 
@@ -30,8 +35,22 @@ constructor(props) {
             .modalClicked(false, null)
     }
 
+    supportTypeChangeHandler = (evt) => {
+        this.setState({
+            "SUPPORTTYPE": Number(evt.target.value)
+        })
+    }
+
+    supportStatusChangeHandler = (evt) => {
+        this.setState({
+            "SUPPORTSTATUS": Number(evt.target.value)
+        })
+    }
+
+    supportTypes = new SupportType();
+
     render() {
-      
+
         return (
 
             <ModalWrapper
@@ -44,7 +63,15 @@ constructor(props) {
                     <p>
                         I am the Editor Pane.
                     </p>
-                    <p>{this.state.editedSupport.attributes.OBJECTID}</p>
+                    <p>{this.state.OBJECTID}</p>
+                    <p>Support Type:<select value={this.state.SUPPORTTYPE} onChange={this.supportTypeChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportType)}</select>
+                    </p>
+                    <p>Support Status:
+                        <select
+                            value={this.state.SUPPORTSTATUS}
+                            onChange={this.supportStatusChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportStatus)}</select>
+                    </p>
+
                     <button onClick={this.cancelClickHandler}>CANCEL</button>
                     <button onClick={this.saveClickHandler}>SAVE</button>
 
