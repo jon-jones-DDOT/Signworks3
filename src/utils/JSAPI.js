@@ -129,18 +129,25 @@ export function saveSignOrder(args) {
 export function saveSupport(args/*updateFeature, isNew, layer */) {
     const updateFeature = args[0];
     const isNew = args[1];
+    const layer = args[2];
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) =>  {   
             let set = null;
             if (isNew) {
-                set = {
+                set = {f:"json",
                     addFeatures: [updateFeature]
                 };
             } else {
-                set = {
+                set = { f:"json",
                     updateFeatures: [updateFeature]
                 }
             }
+            esriRequest(layer + '/applyEdits', {
+                method: 'post',
+                query: set
+                }
+            ).then(resp => resolve(resp), error => reject(error))
+
           /*  const id = this
                 .supportLayer
                 .applyEdits(set)
