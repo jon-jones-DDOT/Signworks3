@@ -11,7 +11,8 @@ export const types = {
     MAP_CLICKED: "MAP_CLICKED",
     SET_SELECTED_SUPPORT: "SET_SELECTED_SUPPORT",
     SIGN_ORDER_CHANGED: "SIGN_ORDER_CHANGED",
-    MODAL: "MODAL"
+    MODAL: "MODAL",
+    SAVE_SUPPORT:"SAVE_SUPPORT"
 
 };
 
@@ -19,8 +20,11 @@ export const types = {
 export const initialState = {
     loaded: false,
     showModal: false,
+    currentModal: null,
     support: null,
-    signs: null
+    signs: null,
+    okDisabled:false,
+    showOk:true
 };
 
 export default(state = initialState, action) => {
@@ -33,7 +37,6 @@ export default(state = initialState, action) => {
             };
 
         case types.SET_SELECTED_SUPPORT:
-
             return {
                 ...state,
                 ...action.payload
@@ -53,11 +56,12 @@ export default(state = initialState, action) => {
 // ACTIONS //
 export const actions = {
     mapLoaded: () => ({type: types.MAP_LOADED, payload: {}}),
-    mapClicked: (geom, layer) => ({
+    mapClicked: (geom, layers) => ({
+        
         type: types.MAP_CLICKED,
         payload: {
             geom: geom,
-            layer: layer
+            layers: layers
         }
     }),
     signOrderChanged: (features, support) => ({
@@ -68,10 +72,17 @@ export const actions = {
 
         }
     }),
-    modalClicked: (show) => ({
+    modalClicked: (show, type) => ({
         type: types.MODAL,
         payload: {
-            showModal: show
+            showModal: show,
+            currentModal: type
+        }
+    }),
+    saveSupport:(support)=>({
+        type:types.SAVE_SUPPORT,
+        payload:{
+            support
         }
     })
 

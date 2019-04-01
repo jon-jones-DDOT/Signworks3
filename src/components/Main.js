@@ -33,6 +33,7 @@ import RightBar from "./myModules/RightBar";
 
 // Styled Components
 import styled from 'styled-components';
+import ModalConductor from './myModules/Modals/ModalConductor';
 
 const Container = styled.div`
   display: flex;
@@ -106,6 +107,7 @@ class Main extends Component {
             is3DScene={false}
           />
            <RightBar/>
+           <ModalConductor {...this.props.map}  />
         </MapWrapper>
        
       </Container>

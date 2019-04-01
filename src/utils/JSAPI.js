@@ -4,6 +4,7 @@ const err = (e) => {
     console.log('an error occurred in JSAPI  ' + e.message)
 }
 
+//currently not being used, needs a slight rewrite
 export function getSupportById(args) {
     const id = args[0];
     const layer = args[1];
@@ -40,16 +41,24 @@ export function getSupportByExtent(args) {
 
         const supportLayer = args[1];
 
-        loadModules(["esri/tasks/support/Query"]).then(([Query]) => {
+        loadModules(["esri/request"]).then(([esriRequest]) => {
+            esriRequest(supportLayer + '/query', {
+                query: {
+                    geometry: JSON.stringify(extent),
+                    outFields: '*', // attribute fields to return
+                    token: null, // token
+                    f: "json" // format
+                }
+            }).then(resp => resolve(resp), error => reject(error));
 
-            let query = new Query();
+            /*     let query = new Query();
             query.geometry = extent;
             query.outFields = ["*"];
             query.returnGeometry = true;
 
             supportLayer
                 .queryFeatures(query)
-                .then(resp => resolve(resp), error => reject(error));
+                .then(resp => resolve(resp), error => reject(error)); */
         });
 
     })
@@ -59,11 +68,11 @@ export function getRelatedSigns(args) {
 
     return new Promise((resolve, reject) => {
         const feature = args[0]
-      
+
         const layer = args[1]
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
-            esriRequest(layer, {
+            esriRequest(layer + "/query", {
                 query: {
                     where: "SUPPORTID='" + feature.attributes.GLOBALID + "'",
                     orderByFields: "SIGNORDER",
@@ -78,19 +87,18 @@ export function getRelatedSigns(args) {
 }
 
 export function getRelatedTimebands(args) {
+    const layer = args[1]
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
-            esriRequest('https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
-                        'er/2/query', {
-                    query: {
-                        where: "SIGNID='" + args[0].attributes.GLOBALID + "'",
+            esriRequest(layer + '/query', {
+                query: {
+                    where: "SIGNID='" + args[0].attributes.GLOBALID + "'",
 
-                        outFields: '*', // attribute fields to return
-                        token: null, // token
-                        f: "json" // format
-                    }
-                })
-                .then(resp => resolve(resp), error => reject(error));
+                    outFields: '*', // attribute fields to return
+                    token: null, // token
+                    f: "json" // format
+                }
+            }).then(resp => resolve(resp), error => reject(error));
         })
     })
 
@@ -99,10 +107,10 @@ export function getRelatedTimebands(args) {
 export function saveSignOrder(args) {
     const features = args[0]
     let pureFeatures = [];
-    for ( let i = 0;i < features.length; i++){
+    for (let i = 0; i < features.length; i++) {
         pureFeatures.push(features[i].feature)
     }
-  
+
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest('https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
@@ -113,6 +121,53 @@ export function saveSignOrder(args) {
                     "updates": JSON.stringify(pureFeatures)
                 }
             }).then(resp => resolve(resp), error => reject(error))
+        })
+    })
+
+}
+
+export function saveSupport(args/*updateFeature, isNew, layer */) {
+    const updateFeature = args[0];
+    const isNew = args[1];
+    return new Promise((resolve, reject) => {
+        loadModules([]).then(([]) => {
+            let set = null;
+            if (isNew) {
+                set = {
+                    addFeatures: [updateFeature]
+                };
+            } else {
+                set = {
+                    updateFeatures: [updateFeature]
+                }
+            }
+            const id = this
+                .supportLayer
+                .applyEdits(set)
+                .then(function (rslt) {
+                    let fakeBanner = {
+                        clickEvent: "selectSupport"
+                    };
+                    let evt = null;
+                    if (!isNew) {
+                        if (rslt.updateFeatureResults[0].error) {
+                            alert(rslt.updateFeatureResults[0].error.message);
+                        } else {
+                            evt = {
+                                id: rslt.updateFeatureResults[0].objectId
+                            };
+                        }
+                    } else {
+                        if (rslt.addFeatureResults[0].error) {
+                            alert(rslt.addFeatureResults[0].error.message);
+                        } else {
+                            evt = {
+                                id: rslt.addFeatureResults[0].objectId
+                            };
+                        }
+                    }
+
+                });
         })
     })
 
@@ -139,7 +194,7 @@ export function pointToExtent(view, point, toleranceInPixel, callback) {
 
 export async function getMUTCDS(args) {
     const baseUrl = "http://ddotgisapp01/SignCatalog/api/mutcd?code=" + args[0];
-   
+
     try {
         const response = await fetch(baseUrl);
         if (response.ok) {

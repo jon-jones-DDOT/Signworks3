@@ -1,34 +1,34 @@
 {
-  "appVersion": "0.0.1",
+    "appVersion": "0.0.1",
 
-  "apiUrl": "api",
-  "loginUrl": "api/auth/arcgis",
-  "logoutUrl": "api/logout",
-  "jsapiUrl": "https://js.arcgis.com/4.10/",
-  "jsapiV4": true,
-  "loginWithPopup": false,
+    "apiUrl": "api",
+    "loginUrl": "api/auth/arcgis",
+    "logoutUrl": "api/logout",
+    "jsapiUrl": "https://js.arcgis.com/4.10/",
+    "jsapiV4": true,
+    "loginWithPopup": false,
 
-  "appId": "hkdtqXBMmZ8JJ5tD",
+    "appId": "hkdtqXBMmZ8JJ5tD",
 
+    "mapConfig": {
+        "basemap": "streets",
+        "zoom": 18,
+        "center": [-76.98, 38.888686]
+    },
 
-  "mapConfig": {
-    "basemap": "streets",
-    "zoom": 18,
-    "center": [-76.98, 38.888686]
-  },
+    "sceneConfig": {
+        "basemap": "dark-gray-vector",
+        "ground": "world-elevation"
+    },
 
- 
+    "webSceneConfig": {
+        "id": "2c831005fd7b437787e3fd9ea53788e6"
+    },
 
-  "sceneConfig": {
-    "basemap": "dark-gray-vector",
-    "ground": "world-elevation"
-  },
+    "featureURLs": {
+        "supports": "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/0",
+        "signs":  "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/1",
+        "timebands":"https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/2"
 
-  "webSceneConfig": {
-    "id": "2c831005fd7b437787e3fd9ea53788e6"
-  },
-
-  "featureURLs": [
-    "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/Landscape_Trees/FeatureServer/0"
-  ]
+    }
 }

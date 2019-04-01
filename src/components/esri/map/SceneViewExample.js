@@ -80,7 +80,7 @@ class SceneViewExample extends Component {
     getSelectedSupport = (expandedMapPoint) => {
         this
             .props
-            .onMapClicked(expandedMapPoint, this.map.findLayerById('support'));
+            .onMapClicked(expandedMapPoint, this.props.config.featureURLs);
     }
 
     mapClicked = (evt) => {

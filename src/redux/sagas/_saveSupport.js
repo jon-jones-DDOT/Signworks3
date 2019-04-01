@@ -4,18 +4,18 @@ import {getSupportByExtent, getRelatedSigns, getMUTCDS, getRelatedTimebands} fro
 
 // WORKER //
 
-function * setSelectSupport(action) {
-    console.log('config layers', action.payload.layers.supports)
+function * saveSelectSupport(action) {
+
     try {
         const errorMUTCD = {
             name: "MUTCD not found",
             serverImagePath: "none"
         }
         // call API to fetch support
-        const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layers.supports]);
-        console.log('features', features)
+        const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layer]);
+
         //if nothing comes back, set sign info in store to empty or null
-        if (features.data.features.length === 0) {
+        if (features.features.length === 0) {
             const support = null;
             const signs = [];
 
@@ -29,10 +29,13 @@ function * setSelectSupport(action) {
             //if a support is returned...
         } else {
             //create support payload from support returned
-            const support = features.data.features[0];
+            const support = features.features[0];
 
             //retrieve associated sign features from AGS
-            const signsREsp = yield call(getRelatedSigns, [support, action.payload.layers.signs])
+            const signsREsp = yield call(getRelatedSigns, [
+                support, 'https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
+                        'er/1/query'
+            ])
             const signArray = signsREsp.data.features;
 
             // start creating sign payload
@@ -65,8 +68,7 @@ function * setSelectSupport(action) {
                     feature: signArray[i]
 
                 }
-                console.log(signArray[i])
-                const results = yield call(getRelatedTimebands, [signArray[i],action.payload.layers.timebands ])
+                const results = yield call(getRelatedTimebands, [signArray[i]])
                 sign.timebands = results.data.features;
                 for (let j = 0; j < muttData.length; j++) {
 
@@ -100,5 +102,5 @@ function * setSelectSupport(action) {
 
 // WATCHER //
 export function * watchLayers() {
-    yield takeLatest(mapTypes.MAP_CLICKED, setSelectSupport);
+    yield takeLatest(mapTypes.SAVE_SUPPORT, saveSelectSupport);
 }

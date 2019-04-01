@@ -43,7 +43,7 @@ export default function Support(props) {
                         <button ><FontAwesomeIcon icon={faBinoculars} title="StreetSmart"/></button>
                         <button><FontAwesomeIcon icon={faGoogle} title="Google Street View"/></button>
                     
-                        <button >
+                        <button onClick = {(evt) => props.editClick(evt, 'SUPPORT')} >
                             <FontAwesomeIcon icon={faUserEdit} title="Edit Support"/>
                         </button>
                     </p>

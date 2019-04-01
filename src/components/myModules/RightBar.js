@@ -14,38 +14,8 @@ const RightDiv = styled.div `
 `
 class RightBar extends Component {
 
-    constructor(props) {
-        super(props);
-        if (this.props.map.selSupport) {
-            //       console.log('constructor', this.props.map.selSupport)
-        } else {
-            //      console.log('constructor', this.props.map.selSupport)
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.map.selSupport) {
-            //     console.log('did mount', this.props.map.selSupport)
-        } else {
-            //    console.log('did mount', this.props.map.selSupport)
-        }
-    }
-
-    componentDidUpdate() {
-        if (this.props.map.selSupport) {
-            //   console.log( 'did update', this.props.map.selSupport)
-        } else {
-            //  console.log('did update', this.props.map.selSupport)
-        }
-    }
-
-    componentWillUnmount() {
-        if (this.props.map.selSupport) {
-            //   console.log( 'will unmount', this.props.map.selSupport)
-        } else {
-            //  console.log('will unmount', this.props.map.selSupport)
-        }
-
+    handleModalClicked = (evt, type) => {
+        this.props.modalClicked(true, type)
     }
 
     render() {
@@ -58,8 +28,8 @@ class RightBar extends Component {
         return (
 
             <RightDiv >
-          
-                <Support sel={this.props.map.support}/>
+
+                <Support sel={this.props.map.support} editClick= {this.handleModalClicked}></Support>
                 <Signs signs={this.props.map.signs}></Signs>
             </RightDiv>
         )
