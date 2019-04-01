@@ -15,7 +15,7 @@ function ModalConductor(props) {
     }
 }
 
-const mapStateToProps = state => ({map: state.map});
+const mapStateToProps = state => ({map: state.map, config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

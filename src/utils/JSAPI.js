@@ -70,7 +70,7 @@ export function getRelatedSigns(args) {
         const feature = args[0]
 
         const layer = args[1]
-        
+
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(layer + "/query", {
                 query: {
@@ -131,51 +131,24 @@ export function saveSupport(args/*updateFeature, isNew, layer */) {
     const isNew = args[1];
     const layer = args[2];
     return new Promise((resolve, reject) => {
-        loadModules(["esri/request"]).then(([esriRequest]) =>  {   
+        loadModules(["esri/request"]).then(([esriRequest]) => {
             let set = null;
             if (isNew) {
-                set = {f:"json",
+                set = {
+                    f: "json",
                     addFeatures: [updateFeature]
                 };
             } else {
-                set = { f:"json",
+                set = {
+                    f: "json",
                     updateFeatures: [updateFeature]
                 }
             }
             esriRequest(layer + '/applyEdits', {
                 method: 'post',
                 query: set
-                }
-            ).then(resp => resolve(resp), error => reject(error))
-
-          /*  const id = this
-                .supportLayer
-                .applyEdits(set)
-                .then(function (rslt) {
-                    let fakeBanner = {
-                        clickEvent: "selectSupport"
-                    };
-                    let evt = null;
-                    if (!isNew) {
-                        if (rslt.updateFeatureResults[0].error) {
-                            alert(rslt.updateFeatureResults[0].error.message);
-                        } else {
-                            evt = {
-                                id: rslt.updateFeatureResults[0].objectId
-                            };
-                        }
-                    } else {
-                        if (rslt.addFeatureResults[0].error) {
-                            alert(rslt.addFeatureResults[0].error.message);
-                        } else {
-                            evt = {
-                                id: rslt.addFeatureResults[0].objectId
-                            };
-                        }
-                    }
-
-                });
-            */  })
+            }).then(resp => resolve(resp), error => reject(error))
+        })
     })
 
 }

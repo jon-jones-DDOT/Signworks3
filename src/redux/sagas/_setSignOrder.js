@@ -12,13 +12,13 @@ function * setSignOrder(action) {
             serverImagePath: "none"
         }
         // call API to save signs with new SIGNORDER
-        
-        const result =  yield call(saveSignOrder, [action.payload.features, action.payload.layers.signs]);
-       
+
+        yield call(saveSignOrder, [action.payload.features, action.payload.layers.signs]);
+
         const support = action.payload.support;
         // retrieve the new related signs with a call to AGS
         const signsREsp = yield call(getRelatedSigns, [support, action.payload.layers.signs])
-        
+
         const signArray = signsREsp.data.features;
 
         // start creating sign payload
@@ -48,8 +48,8 @@ function * setSignOrder(action) {
                 feature: signArray[i]
 
             }
-            const results = yield call(getRelatedTimebands, [signArray[i],action.payload.layers.timebands])
-          
+            const results = yield call(getRelatedTimebands, [signArray[i], action.payload.layers.timebands])
+
             sign.timebands = results.data.features;
             for (let j = 0; j < muttData.length; j++) {
 

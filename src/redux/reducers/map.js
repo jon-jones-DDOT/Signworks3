@@ -80,10 +80,11 @@ export const actions = {
             currentModal: type
         }
     }),
-    saveSupport:(support)=>({
+    saveSupport:(support, layers)=>({
         type:types.SAVE_SUPPORT,
         payload:{
-            support
+            support,
+            layers
         }
     })
 
