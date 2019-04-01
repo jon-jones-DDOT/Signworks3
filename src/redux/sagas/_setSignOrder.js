@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
-import { getRelatedSigns, saveSignOrder, getMUTCDS, getRelatedTimebands} from '../../utils/JSAPI';
+import {getRelatedSigns, saveSignOrder, getMUTCDS, getRelatedTimebands} from '../../utils/JSAPI';
 
 // WORKER //
 
@@ -12,63 +12,60 @@ function * setSignOrder(action) {
             serverImagePath: "none"
         }
         // call API to save signs with new SIGNORDER
-
-         yield call(saveSignOrder, [action.payload.features]);
-        const support =  action.payload.support;
-      // retrieve the new related signs with a call to AGS
-        const signsREsp = yield call(getRelatedSigns, [
-            support, 'https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
-                    'er/1/query'
-        ])
+        
+        const result =  yield call(saveSignOrder, [action.payload.features, action.payload.layers.signs]);
+       
+        const support = action.payload.support;
+        // retrieve the new related signs with a call to AGS
+        const signsREsp = yield call(getRelatedSigns, [support, action.payload.layers.signs])
+        
         const signArray = signsREsp.data.features;
 
         // start creating sign payload
         const signs = [];
-         // create a string to get back MUTCD metadata for all signs on post
+        // create a string to get back MUTCD metadata for all signs on post
 
-         let muttQueryString = "";
-           
-         if(signArray.length < 1){
-             muttQueryString = "PR-OTHER"
-         }
+        let muttQueryString = "";
+
+        if (signArray.length < 1) {
+            muttQueryString = "PR-OTHER"
+        }
         for (let i = 0; i < signArray.length; i++) {
-            if(signArray[i].attributes.SIGNCODE){
-            muttQueryString += signArray[i].attributes.SIGNCODE + ",";}
-            else{
+            if (signArray[i].attributes.SIGNCODE) {
+                muttQueryString += signArray[i].attributes.SIGNCODE + ",";
+            } else {
                 muttQueryString += "PR-OTHER,"
             }
         }
         muttQueryString = muttQueryString.replace(/,\s*$/, "");
-       
+
         // call out to Sign Catalog API to get MUTCD metadata
         const muttData = yield call(getMUTCDS, [muttQueryString])
-    
-        
-               //loop through globalIDS and get timebands
-               for (let i = 0; i < signArray.length; i++) {
-                let sign = {
-                    feature: signArray[i]
-                    
-                }
-                const results = yield call(getRelatedTimebands, [signArray[i]])
-                sign.timebands = results.data.features;
-                for (let j = 0; j < muttData.length;j++){
-              
-                    if( signArray[i].attributes.SIGNCODE.toUpperCase() === muttData[j].code.toUpperCase() ){
-                        sign.MUTCD = muttData[j];
-               
-                    }
-                }
-                if ( sign.MUTCD === undefined){
-                    sign.MUTCD = errorMUTCD;
-             
-                }
-                //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS sign.MUTCD = muttData[i];
-                signs.push(sign)
+
+        //loop through globalIDS and get timebands
+        for (let i = 0; i < signArray.length; i++) {
+            let sign = {
+                feature: signArray[i]
 
             }
+            const results = yield call(getRelatedTimebands, [signArray[i],action.payload.layers.timebands])
+          
+            sign.timebands = results.data.features;
+            for (let j = 0; j < muttData.length; j++) {
 
+                if (signArray[i].attributes.SIGNCODE.toUpperCase() === muttData[j].code.toUpperCase()) {
+                    sign.MUTCD = muttData[j];
 
+                }
+            }
+            if (sign.MUTCD === undefined) {
+                sign.MUTCD = errorMUTCD;
+
+            }
+            //WILL POPULATE WHEN SIGNWORKS CATALOG WORKS sign.MUTCD = muttData[i];
+            signs.push(sign)
+
+        }
 
         // Put config in store
         yield put({

@@ -19,11 +19,11 @@ class RightBar extends Component {
     }
 
     render() {
-        // console.log('state', this.props.map)
+        
         if (this.props.map.selSupport) {
-            //      console.log('rendered', this.props.map.selSupport)
+            
         } else {
-            //      console.log('rendered', this.props.map.selSupport)
+           
         }
         return (
 

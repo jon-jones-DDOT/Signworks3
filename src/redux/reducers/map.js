@@ -64,11 +64,12 @@ export const actions = {
             layers: layers
         }
     }),
-    signOrderChanged: (features, support) => ({
+    signOrderChanged: (features, support, layers) => ({
         type: types.SIGN_ORDER_CHANGED,
         payload: {
             features,
-            support
+            support,
+            layers
 
         }
     }),

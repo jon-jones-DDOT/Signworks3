@@ -36,7 +36,7 @@ for (let i = 0; i < newOrder.length; i++) {
 
 this
     .props
-    .signOrderChanged(newOrder, this.props.map.support);
+    .signOrderChanged(newOrder, this.props.map.support, this.props.config.featureURLs);
 /* */
 };
 render() {
@@ -47,7 +47,7 @@ if (this.props.signs) {
 }
 }
 
-const mapStateToProps = state => ({map: state.map});
+const mapStateToProps = state => ({map: state.map, config:state.config});
 
 const mapDispatchToProps = function (dispatch) {
 return bindActionCreators({

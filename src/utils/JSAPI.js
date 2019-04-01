@@ -70,7 +70,7 @@ export function getRelatedSigns(args) {
         const feature = args[0]
 
         const layer = args[1]
-
+        
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(layer + "/query", {
                 query: {
@@ -105,7 +105,8 @@ export function getRelatedTimebands(args) {
 }
 
 export function saveSignOrder(args) {
-    const features = args[0]
+    const features = args[0];
+    const layer = args[1];
     let pureFeatures = [];
     for (let i = 0; i < features.length; i++) {
         pureFeatures.push(features[i].feature)
@@ -113,8 +114,7 @@ export function saveSignOrder(args) {
 
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
-            esriRequest('https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ' +
-                    'er/1/applyEdits', {
+            esriRequest(layer + '/applyEdits', {
                 method: 'post',
                 query: {
                     f: "json", // format
@@ -130,7 +130,7 @@ export function saveSupport(args/*updateFeature, isNew, layer */) {
     const updateFeature = args[0];
     const isNew = args[1];
     return new Promise((resolve, reject) => {
-        loadModules([]).then(([]) => {
+        loadModules(["esri/request"]).then(([esriRequest]) =>  {   
             let set = null;
             if (isNew) {
                 set = {
@@ -141,7 +141,7 @@ export function saveSupport(args/*updateFeature, isNew, layer */) {
                     updateFeatures: [updateFeature]
                 }
             }
-            const id = this
+          /*  const id = this
                 .supportLayer
                 .applyEdits(set)
                 .then(function (rslt) {
@@ -168,7 +168,7 @@ export function saveSupport(args/*updateFeature, isNew, layer */) {
                     }
 
                 });
-        })
+            */  })
     })
 
 }

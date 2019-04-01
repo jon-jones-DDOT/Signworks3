@@ -5,7 +5,7 @@ import {getSupportByExtent, getRelatedSigns, getMUTCDS, getRelatedTimebands} fro
 // WORKER //
 
 function * setSelectSupport(action) {
-    console.log('config layers', action.payload.layers.supports)
+   
     try {
         const errorMUTCD = {
             name: "MUTCD not found",
@@ -13,7 +13,7 @@ function * setSelectSupport(action) {
         }
         // call API to fetch support
         const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layers.supports]);
-        console.log('features', features)
+      
         //if nothing comes back, set sign info in store to empty or null
         if (features.data.features.length === 0) {
             const support = null;
@@ -65,7 +65,7 @@ function * setSelectSupport(action) {
                     feature: signArray[i]
 
                 }
-                console.log(signArray[i])
+             
                 const results = yield call(getRelatedTimebands, [signArray[i],action.payload.layers.timebands ])
                 sign.timebands = results.data.features;
                 for (let j = 0; j < muttData.length; j++) {

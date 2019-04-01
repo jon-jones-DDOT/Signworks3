@@ -8,7 +8,7 @@ import SupportEditor from '../Support/SupportEditor';
 function ModalConductor(props) {
     switch (props.currentModal) {
         case 'SUPPORT':
-        console.log('props into support ed', props)
+      
             return <SupportEditor {...props}/>
         default:
             return null
