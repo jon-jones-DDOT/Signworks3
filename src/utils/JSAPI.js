@@ -128,7 +128,7 @@ export function saveSignOrder(args) {
 
 export function saveSupport(args/*updateFeature, isNew, layer */) {
     const updateFeature = args[0];
-    console.log('editedFeature', updateFeature)
+    
     const isNew = args[1];
     const layer = args[2];
    
@@ -146,7 +146,7 @@ export function saveSupport(args/*updateFeature, isNew, layer */) {
                     "updates": JSON.stringify([updateFeature])
                 }
             }
-            console.log('set', set)
+          
             esriRequest(layer + '/applyEdits', {
                 method: 'post',
                 query: set

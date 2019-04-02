@@ -5,12 +5,14 @@ import { getRelatedSigns, getMUTCDS, getRelatedTimebands} from '../../utils/JSAP
 export function * getFullSignPost(action) {
 
     try {
+        console.log('support :', support);
         const errorMUTCD = {
             name: "MUTCD not found",
             serverImagePath: "none"
         }
         
         const support = action.payload.support;
+        
         // retrieve the new related signs with a call to AGS
         const signsREsp = yield call(getRelatedSigns, [support, action.payload.layers.signs])
 

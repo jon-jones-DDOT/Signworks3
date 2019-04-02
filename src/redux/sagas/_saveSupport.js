@@ -7,8 +7,9 @@ import {saveSupport, getRelatedSigns, getMUTCDS, getRelatedTimebands} from '../.
 
 function * saveSelectSupport(action) {
     try{
-        yield call(saveSupport, [action.payload.support, false, action.payload.layers.supports]);
-        getFullSignPost(action);
+         let bob = yield call(saveSupport, [action.payload.support, false, action.payload.layers.supports]);
+        
+         yield getFullSignPost(action);
     }
     
     catch (e) {
