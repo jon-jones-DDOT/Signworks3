@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
-import {getSupportByExtent, getRelatedSigns, getMUTCDS, getRelatedTimebands} from '../../utils/JSAPI';
+import {getSupportByExtent} from '../../utils/JSAPI';
 import {getFullSignPost} from './reload'
 
 // WORKER //
@@ -8,10 +8,7 @@ import {getFullSignPost} from './reload'
 function * setSelectSupport(action) {
    
     try {
-        const errorMUTCD = {
-            name: "MUTCD not found",
-            serverImagePath: "none"
-        }
+        
         // call API to fetch support
         const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layers.supports]);
       

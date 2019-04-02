@@ -1,11 +1,11 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
+import {call, put} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
 import { getRelatedSigns, getMUTCDS, getRelatedTimebands} from '../../utils/JSAPI';
 
 export function * getFullSignPost(action) {
 
     try {
-        console.log('support :', support);
+       
         const errorMUTCD = {
             name: "MUTCD not found",
             serverImagePath: "none"
