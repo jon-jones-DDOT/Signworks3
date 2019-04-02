@@ -6,7 +6,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {actions as mapActions} from '../../../redux/reducers/map';
 
-const SortableItem = SortableElement(({value}) => <Sign sign={value}></Sign>);
+let editClicker = null
+const SortableItem = SortableElement(({value}) => <Sign sign={value} editClick={editClicker}></Sign>);
 const SortableList = SortableContainer(({items}) => {
 
     return (
@@ -17,42 +18,46 @@ const SortableList = SortableContainer(({items}) => {
     );
 });
 
-
-
-
 class Signs extends Component {
 
-onSortEnd = ({oldIndex, newIndex}) => {
+    onSortEnd = ({oldIndex, newIndex}) => {
 
-let newOrder = [...this.props.signs]
+        let newOrder = [...this.props.signs]
 
-newOrder = arrayMove(newOrder, oldIndex, newIndex)
+        newOrder = arrayMove(newOrder, oldIndex, newIndex)
 
-for (let i = 0; i < newOrder.length; i++) {
+        for (let i = 0; i < newOrder.length; i++) {
 
-    newOrder[i].feature.attributes.SIGNORDER = i;
+            newOrder[i].feature.attributes.SIGNORDER = i;
 
+        }
+
+        this
+            .props
+            .signOrderChanged(newOrder, this.props.map.support, this.props.config.featureURLs);
+        /* */
+    };
+    
+     
+    render() {
+        editClicker =this.props.editClick;
+        
+        if (this.props.signs) {
+            return <SortableList
+                items={this.props.signs}
+                onSortEnd={this.onSortEnd}
+                />;
+        } else 
+            return <p>Sorry</p>
+    }
 }
 
-this
-    .props
-    .signOrderChanged(newOrder, this.props.map.support, this.props.config.featureURLs);
-/* */
-};
-render() {
-if (this.props.signs) {
-    return <SortableList items={this.props.signs} onSortEnd={this.onSortEnd}/>;
-} else 
-    return <p>Sorry</p>
-}
-}
-
-const mapStateToProps = state => ({map: state.map, config:state.config});
+const mapStateToProps = state => ({map: state.map, config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
-return bindActionCreators({
-...mapActions
-}, dispatch);
+    return bindActionCreators({
+        ...mapActions
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signs);

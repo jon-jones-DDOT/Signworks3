@@ -43,6 +43,7 @@ export default(state = initialState, action) => {
             }
 
         case types.MODAL:
+       
             return {
                 ...state,
                 ...action.payload

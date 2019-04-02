@@ -2,6 +2,9 @@ import React from 'react'
 import Img from 'react-image'
 import './Sign.css'
 import Timebands from '../Timebands/Timebands';
+import {faUserEdit} from '@fortawesome/free-solid-svg-icons';
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export default function Sign(props) {
     const imgErrorPath = props
@@ -9,8 +12,8 @@ export default function Sign(props) {
         .MUTCD
         .serverImagePath
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
-    const imgServerDown = window.location.origin + "/img/PR-OTHER.png"    
- 
+    const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
+console.log('props in Sign', props)
     return (
         <div className="Sign">
             <div className="SignMUTCDdiv">
@@ -28,10 +31,12 @@ export default function Sign(props) {
                     src={window.location.origin + "/img/" + props.sign.feature.attributes.SIGNARROWDIRECTION + ".png"}
                     className="SignArrowImage"/>
             </div>
-<hr/>
-           <Timebands bands = {props.sign.timebands}></Timebands>
-           <p>{props.sign.feature.attributes.OBJECTID}</p>
-
+            <hr/>
+            <Timebands bands={props.sign.timebands}></Timebands>
+            <p>{props.sign.feature.attributes.OBJECTID}</p>
+            <button onClick= {(evt) => props.editClick(evt, 'SIGN')}>
+                <FontAwesomeIcon icon={faUserEdit} title="Edit Support"/>
+            </button>
         </div>
     )
 }

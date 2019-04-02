@@ -4,12 +4,14 @@ import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../../redux/reducers/map'
 
 import SupportEditor from '../Support/SupportEditor';
+import SignEditor from '../Signs/SignEditor';
 
 function ModalConductor(props) {
     switch (props.currentModal) {
-        case 'SUPPORT':
-      
+        case 'SUPPORT':      
             return <SupportEditor {...props}/>
+            case 'SIGN':
+            return <SignEditor{...props}  />
         default:
             return null
     }

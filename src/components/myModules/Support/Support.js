@@ -24,6 +24,7 @@ export default function Support(props) {
         else{
             const myImage = window.location.origin + "/img/supports/" + props.sel.attributes.SUPPORTTYPE + ".png";    
             const errImage = window.location.origin + "/img/supports/666.png";
+          
             return (
 
                 <div className="Support">

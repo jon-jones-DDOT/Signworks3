@@ -30,7 +30,7 @@ class RightBar extends Component {
             <RightDiv >
 
                 <Support sel={this.props.map.support} editClick= {this.handleModalClicked}></Support>
-                <Signs signs={this.props.map.signs}></Signs>
+                <Signs signs={this.props.map.signs} editClick = {this.handleModalClicked}></Signs>
             </RightDiv>
         )
     }
