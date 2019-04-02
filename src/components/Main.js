@@ -25,7 +25,7 @@ import TopNav from 'calcite-react/TopNav';
 import TopNavTitle from 'calcite-react/TopNav/TopNavTitle';
 import TopNavList from 'calcite-react/TopNav/TopNavList';
 import TopNavLink from 'calcite-react/TopNav/TopNavLink';
-import SceneViewExample from './esri/map/SceneViewExample';
+import MapView from './esri/map/MapView';
 import LoadScreen from './LoadScreen';
 import UserAccount from './UserAccount';
 
@@ -100,7 +100,7 @@ class Main extends Component {
         </Nav>
 
         <MapWrapper>
-          <SceneViewExample
+          <MapView
           onMapClicked = {this.props.mapClicked}
             onMapLoaded={this.props.mapLoaded}
             mapConfig={this.props.config.mapConfig}
