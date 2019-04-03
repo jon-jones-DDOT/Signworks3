@@ -4,7 +4,7 @@ export const types = {
 
 // REDUCERS //
 export const initialState = {
-    selSupportGeom: {type:'point', longitude:-76.98, latitude:38.888686} //{x:-76.98, y:38.888686}
+    selSupportGeom: {} //{x:-76.98, y:38.888686}
 };
 
 export default(state = initialState, action) => {
