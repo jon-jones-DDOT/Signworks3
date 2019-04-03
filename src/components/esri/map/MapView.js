@@ -52,8 +52,12 @@ class MapView extends Component {
     UNSAFE_componentWillReceiveProps(nextProps){
         console.log('nextProps', nextProps)
         if(this.selPoint){
+            this.markerLayer.removeAll();
             this.selPoint.geometry= nextProps.graphic.selSupportGeom;
             this.markerLayer.add(this.selPoint)
+            this.view.zoom= 20
+            this.view.center = this.selPoint.geometry
+        
         }
      
     }
