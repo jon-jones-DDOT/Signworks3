@@ -18,6 +18,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../../redux/reducers/map';
+import {actions as graphicActions} from '../../../redux/reducers/graphic'
 
 // ESRI
 import {loadModules} from 'esri-loader';
@@ -36,8 +37,10 @@ const Container = styled.div `
 // Variables
 const containerID = "map-view-container";
 
-class MapView extends Component {
 
+class MapView extends Component {
+    selPoint = null;
+    markerLayer = null;
     componentDidMount() {
         this.startup(this.props.mapConfig, containerID, this.props.is3DScene);
     }
@@ -46,7 +49,15 @@ class MapView extends Component {
         // Tell React to never update this component, that's up to us
         return false;
     }
-
+    UNSAFE_componentWillReceiveProps(nextProps){
+        console.log('nextProps', nextProps)
+        if(this.selPoint){
+            this.selPoint.geometry= nextProps.graphic.selSupportGeom;
+            this.markerLayer.add(this.selPoint)
+        }
+     
+    }
+    geom = null;
     render() {
 
         return (
@@ -59,9 +70,10 @@ class MapView extends Component {
         createView(mapConfig, node, isScene).then(response => {
             this.init(response);
 
-           
             this.setupWidgetsAndLayers();
             this.finishedLoading();
+            
+
         }, error => {
             console.error("maperr", error);
             window.setTimeout(() => {
@@ -81,6 +93,7 @@ class MapView extends Component {
         this
             .props
             .onMapClicked(expandedMapPoint, this.props.config.featureURLs);
+       
     }
 
     mapClicked = (evt) => {
@@ -95,7 +108,7 @@ class MapView extends Component {
     }
 
     setupWidgetsAndLayers = () => {
-        loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
+        loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic']).then(([FeatureLayer, GraphicsLayer, Graphic]) => {
 
             const featureLayer = new FeatureLayer({
                 url: "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ" +
@@ -103,39 +116,44 @@ class MapView extends Component {
                 outFields: ["*"],
                 id: "support"
             });
+         this.markerLayer = new GraphicsLayer();
+
             this
                 .map
-                .add(featureLayer);
-                this
+                .addMany([featureLayer, this.markerLayer]);
+            this
                 .view
                 .on("click", this.mapClicked);
 
-            featureLayer.when(function () {
-               
-                zoomToLayer(featureLayer);
-            });
+            const symb = {
+                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                style: "circle",
+                color: [
+                    0, 255, 0, 0.0
+                ],
+                size: "30px", // pixels
+                outline: { // autocasts as new SimpleLineSymbol()
+                    color: 'blue',
+                    width: 3 // points
+                }
+            };
 
-            const zoomToLayer = (layer) => {
-              
-                return layer
-                    .queryExtent()
-                    .then((response) => {
-                        this
-                            .view
-                            .goTo(response.extent);
-                    });
-            }
+         
+            
+            this.selPoint = new Graphic({geometry: this.props.graphic.selSupportGeom, symbol: symb})
+            console.log('selPoint', this.selPoint)
+            this.markerLayer.add(this.selPoint)
         });
     }
 
-
 }
 
-const mapStateToProps = state => ({config: state.config, map: state.map});
+const mapStateToProps = state => ({config: state.config, map: state.map, graphic: state.graphic});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({
-        ...mapActions
+        ...mapActions,
+        ...graphicActions
     }, dispatch);
 }
 

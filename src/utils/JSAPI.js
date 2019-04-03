@@ -38,16 +38,18 @@ export function getSupportByExtent(args) {
     return new Promise((resolve, reject) => {
 
         const extent = args[0];
-
+console.log('extent :', extent);
         const supportLayer = args[1];
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(supportLayer + '/query', {
                 query: {
                     geometry: JSON.stringify(extent),
+                    returnGeometry:true,
                     outFields: '*', // attribute fields to return
                     token: null, // token
-                    f: "json" // format
+                    f: "json", // format
+                    outSR:4326
                 }
             }).then(resp => resolve(resp), error => reject(error));
 
@@ -128,17 +130,17 @@ export function saveSignOrder(args) {
 
 export function saveSupport(args/*updateFeature, isNew, layer */) {
     const updateFeature = args[0];
-    
+
     const isNew = args[1];
     const layer = args[2];
-   
+
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             let set = null;
             if (isNew) {
                 set = {
                     f: "json",
-                    "adds":  JSON.stringify([updateFeature])
+                    "adds": JSON.stringify([updateFeature])
                 };
             } else {
                 set = {
@@ -146,12 +148,24 @@ export function saveSupport(args/*updateFeature, isNew, layer */) {
                     "updates": JSON.stringify([updateFeature])
                 }
             }
-          
+
             esriRequest(layer + '/applyEdits', {
                 method: 'post',
                 query: set
             }).then(resp => resolve(resp), error => reject(error))
         })
+    })
+
+}
+
+export function project(args/*geom,spatRef */) {
+    const geom = args[0]
+    const spatRef = args[1]
+    loadModules(["esri/geometry/projection"]).then(([projection]) => {
+        console.log('spatRef :', geom);
+        let bob = projection.project(geom, spatRef)
+        console.log('bob :', bob);
+        return bob
     })
 
 }

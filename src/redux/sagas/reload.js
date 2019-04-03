@@ -1,18 +1,20 @@
 import {call, put} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
-import { getRelatedSigns, getMUTCDS, getRelatedTimebands} from '../../utils/JSAPI';
+import {types as graphicTypes} from '../reducers/graphic'
+import {getRelatedSigns, getMUTCDS, getRelatedTimebands} from '../../utils/JSAPI';
+import {project} from '../../utils/JSAPI'
 
 export function * getFullSignPost(action) {
 
     try {
-       
+
         const errorMUTCD = {
             name: "MUTCD not found",
             serverImagePath: "none"
         }
-        
+
         const support = action.payload.support;
-        
+
         // retrieve the new related signs with a call to AGS
         const signsREsp = yield call(getRelatedSigns, [support, action.payload.layers.signs])
 
@@ -63,8 +65,21 @@ export function * getFullSignPost(action) {
             signs.push(sign)
 
         }
-
-        // Put config in store
+   //     const outSpatialReference = {
+   //         wkid: 102100
+   //     };
+   //     const transGeom = support.geometry
+       // transGeom.spatialReference = {wkid: 26985, latestWkid: 26985}
+      //  const newGeom = yield call(project, [transGeom, outSpatialReference])
+     //  console.log('newGeom :', newGeom);
+        // Put marker in store
+        yield put({
+            type: graphicTypes.SET_SUPPORT_MARKER,
+            payload: {
+                selSupportGeom: support.geometry
+            }
+        });
+        // put new signpost in store
         yield put({
             type: mapTypes.SET_SELECTED_SUPPORT,
             payload: {
@@ -72,7 +87,7 @@ export function * getFullSignPost(action) {
                 signs
             }
         });
-        
+
     } catch (e) {
         console.log('SAGA ERROR: map/reload, ', e);
     }

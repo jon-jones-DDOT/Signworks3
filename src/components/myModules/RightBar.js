@@ -4,6 +4,7 @@ import Support from './Support/Support'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
+import {actions as graphicActions} from '../../redux/reducers/graphic'
 import Signs from './Signs/Signs';
 
 const RightDiv = styled.div ` 
@@ -13,18 +14,16 @@ const RightDiv = styled.div `
  
 `
 class RightBar extends Component {
-
+   
     handleModalClicked = (evt, type) => {
+       
         this.props.modalClicked(true, type)
     }
+   
 
     render() {
-        
-        if (this.props.map.selSupport) {
-            
-        } else {
-           
-        }
+      
+      
         return (
 
             <RightDiv >
@@ -36,11 +35,12 @@ class RightBar extends Component {
     }
 }
 
-const mapStateToProps = state => ({map: state.map});
+const mapStateToProps = state => ({map: state.map, graphic:state.graphic});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({
-        ...mapActions
+        ...mapActions,
+        ...graphicActions
     }, dispatch);
 }
 
