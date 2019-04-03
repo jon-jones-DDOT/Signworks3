@@ -50,7 +50,7 @@ class MapView extends Component {
         return false;
     }
     UNSAFE_componentWillReceiveProps(nextProps){
-        console.log('nextProps', nextProps)
+       
         if(this.selPoint){
             this.markerLayer.removeAll();
             this.selPoint.geometry= nextProps.graphic.selSupportGeom;
@@ -145,7 +145,7 @@ class MapView extends Component {
          
             
             this.selPoint = new Graphic({geometry: this.props.graphic.selSupportGeom, symbol: symb})
-            console.log('selPoint', this.selPoint)
+           
             this.markerLayer.add(this.selPoint)
         });
     }

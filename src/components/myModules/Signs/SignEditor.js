@@ -7,7 +7,7 @@ export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-      console.log('state in SignEditor constructor', props)
+     
         this.state = {
 
             ...this.props.support.attributes

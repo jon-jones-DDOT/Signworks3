@@ -37,16 +37,17 @@ class Signs extends Component {
             .signOrderChanged(newOrder, this.props.map.support, this.props.config.featureURLs);
         /* */
     };
-    
-     
+
     render() {
-        editClicker =this.props.editClick;
-        
+        editClicker = this.props.editClick;
+        const delay = 150;
+
         if (this.props.signs) {
+
             return <SortableList
                 items={this.props.signs}
                 onSortEnd={this.onSortEnd}
-                />;
+                pressDelay={150}/>;
         } else 
             return <p>Sorry</p>
     }
