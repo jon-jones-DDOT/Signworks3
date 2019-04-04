@@ -38,7 +38,7 @@ export function getSupportByExtent(args) {
     return new Promise((resolve, reject) => {
 
         const extent = args[0];
-console.log('extent :', extent);
+
         const supportLayer = args[1];
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
@@ -162,9 +162,9 @@ export function project(args/*geom,spatRef */) {
     const geom = args[0]
     const spatRef = args[1]
     loadModules(["esri/geometry/projection"]).then(([projection]) => {
-        console.log('spatRef :', geom);
+       
         let bob = projection.project(geom, spatRef)
-        console.log('bob :', bob);
+        
         return bob
     })
 
@@ -191,6 +191,20 @@ export function pointToExtent(view, point, toleranceInPixel, callback) {
 
 export async function getMUTCDS(args) {
     const baseUrl = "http://ddotgisapp01/SignCatalog/api/mutcd?code=" + args[0];
+
+    try {
+        const response = await fetch(baseUrl);
+        if (response.ok) {
+            const results = await response.json();
+            return results;
+        }
+    } catch (err) {
+        console.error('Something went wrong');
+        throw new Error('Bad stuff happened.');
+    }
+}
+export async function getAllMUTCDS() {
+    const baseUrl = "http://ddotgisapp01/SignCatalog/api/mutcd"
 
     try {
         const response = await fetch(baseUrl);

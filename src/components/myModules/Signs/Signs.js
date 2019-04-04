@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import {actions as mapActions} from '../../../redux/reducers/map';
 
 let editClicker = null
-const SortableItem = SortableElement(({value}) => <Sign sign={value} editClick={editClicker}></Sign>);
+const SortableItem = SortableElement(({value, index}) => <Sign sign={value} index = {index} editClick={editClicker}></Sign>);
 const SortableList = SortableContainer(({items}) => {
 
     return (

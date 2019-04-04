@@ -11,7 +11,7 @@ function * setSelectSupport(action) {
         
         // call API to fetch support
         const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layers.supports]);
-       console.log('features.data :', features.data);
+     
         //if nothing comes back, set sign info in store to empty or null
         if (features.data.features.length === 0) {
             const support = null;

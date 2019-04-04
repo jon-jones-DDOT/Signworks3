@@ -3,10 +3,12 @@ import Img from 'react-image'
 import './Sign.css'
 import Timebands from '../Timebands/Timebands';
 import {faUserEdit} from '@fortawesome/free-solid-svg-icons';
+import Loader from 'react-loader-spinner'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export default function Sign(props) {
+   
     const imgErrorPath = props
         .sign
         .MUTCD
@@ -20,7 +22,11 @@ export default function Sign(props) {
                 <Img
                     src={[props.sign.MUTCD.serverImagePath, imgErrorPath, imgServerDown]}
                     className="SignImage"
-                    alt="sign"></Img>
+                    alt="sign"
+                    loader= {<Loader type="Puff"
+                    color="#00BFFF"
+                    height="100"	
+                    width="100"/>}></Img>
                 <div className="SignMutcdText">
                     {props.sign.feature.attributes.SIGNCODE}
                     <br></br>
@@ -34,7 +40,7 @@ export default function Sign(props) {
             <hr/>
             <Timebands bands={props.sign.timebands}></Timebands>
             <p>{props.sign.feature.attributes.OBJECTID}</p>
-            <button onClick= {(evt) => props.editClick(evt, 'SIGN')}>
+            <button onClick= {(evt) => props.editClick(evt, 'SIGN', props.index)}>
                 <FontAwesomeIcon icon={faUserEdit} title="Edit Support"/>
             </button>
         </div>

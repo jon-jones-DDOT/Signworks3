@@ -15,9 +15,9 @@ const RightDiv = styled.div `
 `
 class RightBar extends Component {
    
-    handleModalClicked = (evt, type) => {
-       
-        this.props.modalClicked(true, type)
+    handleModalClicked = (evt, type, index) => {
+    
+        this.props.modalClicked(true, type, index)
     }
    
 

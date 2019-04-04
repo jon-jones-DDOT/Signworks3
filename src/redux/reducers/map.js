@@ -12,8 +12,8 @@ export const types = {
     SET_SELECTED_SUPPORT: "SET_SELECTED_SUPPORT",
     SIGN_ORDER_CHANGED: "SIGN_ORDER_CHANGED",
     MODAL: "MODAL",
-    SAVE_SUPPORT:"SAVE_SUPPORT"
-
+    SAVE_SUPPORT: "SAVE_SUPPORT",
+    INIT: "INIT"
 };
 
 // REDUCERS //
@@ -23,16 +23,19 @@ export const initialState = {
     currentModal: null,
     support: null,
     signs: null,
-    okDisabled:false,
-    showOk:true
+    okDisabled: false,
+    showOk: true,
+    editSignIndex: NaN,
+    muttArray: []
 };
 
 export default(state = initialState, action) => {
 
     switch (action.type) {
-        case types.MAP_LOADED:
+        case types.INIT:
             return {
                 ...state,
+                ...action.payload,
                 loaded: true
             };
 
@@ -43,7 +46,7 @@ export default(state = initialState, action) => {
             }
 
         case types.MODAL:
-       
+
             return {
                 ...state,
                 ...action.payload
@@ -58,7 +61,7 @@ export default(state = initialState, action) => {
 export const actions = {
     mapLoaded: () => ({type: types.MAP_LOADED, payload: {}}),
     mapClicked: (geom, layers) => ({
-        
+
         type: types.MAP_CLICKED,
         payload: {
             geom: geom,
@@ -74,16 +77,17 @@ export const actions = {
 
         }
     }),
-    modalClicked: (show, type) => ({
+    modalClicked: (show, type, index) => ({
         type: types.MODAL,
         payload: {
             showModal: show,
-            currentModal: type
+            currentModal: type,
+            editSignIndex: index
         }
     }),
-    saveSupport:(support, layers)=>({
-        type:types.SAVE_SUPPORT,
-        payload:{
+    saveSupport: (support, layers) => ({
+        type: types.SAVE_SUPPORT,
+        payload: {
             support,
             layers
         }

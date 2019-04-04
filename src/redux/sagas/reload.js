@@ -65,13 +65,8 @@ export function * getFullSignPost(action) {
             signs.push(sign)
 
         }
-   //     const outSpatialReference = {
-   //         wkid: 102100
-   //     };
-   //     const transGeom = support.geometry
-       // transGeom.spatialReference = {wkid: 26985, latestWkid: 26985}
-      //  const newGeom = yield call(project, [transGeom, outSpatialReference])
-     //  console.log('newGeom :', newGeom);
+ 
+     
         // Put marker in store
         yield put({
             type: graphicTypes.SET_SUPPORT_MARKER,
