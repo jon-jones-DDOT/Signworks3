@@ -17,7 +17,8 @@ export default class SignEditor extends Component {
         this.state = {
 
             ...this.props.signs[this.props.editSignIndex],
-            muttActive: false
+            muttActive: false,
+            currentMUTCD: this.props.signs[this.props.editSignIndex].MUTCD
 
         }
         console.log('dog state of signIndex', this.state)
@@ -56,13 +57,22 @@ export default class SignEditor extends Component {
     mutcdLookUpSelectHandler = (desc) => {
         let option = desc.split(':')
         console.log('option', option)
-        
+        let chosenOne = this
+            .props
+            .map
+            .muttArray
+            .find(function (element) {
+                return element.code === option[0]
+            })
+        console.log('chosenOne', chosenOne)
+        this.setState({currentMUTCD: chosenOne})
+        this.muttSelectorHandler()
     }
 
     getOptions = () => {
         let bob = [];
         for (let i = 0; i < this.props.map.muttArray.length; i++) {
-            bob.push(this.props.map.muttArray[i].code + " : " + this.props.map.muttArray[i].name)
+            bob.push(this.props.map.muttArray[i].code + ": " + this.props.map.muttArray[i].name)
         }
         console.log('bob', bob)
         return bob;
