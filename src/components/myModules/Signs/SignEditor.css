@@ -1,69 +1,80 @@
-.SignEditorUnder{
-    
-    position:fixed;
+.SignEditorUnder {
+
+    position: fixed;
     background: lightgray;
     width: 40%;
     height: 40%;
-    top:50%;
-    left:50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%,-50%);
     z-index: 9;
-   /* z-index: 6;  */
+    /* z-index: 6;  */
 }
-.SignEditorOver{
-    
-    position:fixed;
+.SignEditorOver {
+
+    position: fixed;
     background: lightgrey;
     width: 40%;
     height: 40%;
-    top:50%;
-    left:50%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%,-50%);
     z-index: 10;
-  /*  z-index: 5  */
+    /*  z-index: 5  */
 }
 
-.TypeAheadDiv{
-  position: relative;
-  left:-15px;
-  top:15px;
+.TypeAheadDiv {
+    position: relative;
+    left: -15px;
+    top: 15px;
 }
 
-.MutcdInfoDiv{
-  display:block;
- min-height: 60%;
-  min-width: 90%;
-  height: 50px;
-  border: 2px black solid;
-  margin:20px;
+.MutcdInfoDiv {
+    display: block;
+    min-height: 60%;
+    min-width: 90%;
+    height: 50px;
+    border: 2px red solid;
+    margin: 20px;
 }
-.MutcdInfoDiv_hidden{
-  visibility: hidden
-}
-
-.SignEditCancel{
-  width:10px;
-  height: 10px;
-  float:right;
-  margin-right:5px;
-  cursor: pointer;
-
-}
-.MUTCDdiv{
-  position: relative;
-  text-align:left;
-  
-  top: 30px;
-  border:1px solid black;
+.MutcdInfoDiv_hidden {
+    visibility: hidden;
 }
 
-.SignEditorImage{
-  
-  width:80px;
+.SignEditCancel {
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+
+}
+.MUTCDdiv {
+    position: relative;
+    text-align: left;
+    display: block;
+    top: 30px;
+    border: 1px solid green;
 }
 
-.SignEditButtonDiv{
-  top:280px;
-  position: relative;
- 
+.SignEditorImage {
+
+    width: 80px;
+}
+.SignEditorImageDiv {
+    border: 1px deeppink solid;
+}
+
+.SignEditButtonDiv {
+    top: 280px;
+    position: relative;
+    border: 1px solid black;
+
+}
+.InnerMUTCD {
+    position: relative;
+    border: solid blue 1px;
+    left: 20px;
+    bottom: 30px;
+
 }

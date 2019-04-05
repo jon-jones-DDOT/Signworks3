@@ -147,20 +147,21 @@ export default class SignEditor extends Component {
                         className="SignEditCancel"
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
-                    <div className="MUTCDdiv" onClick={this.muttSelectorOpenHandler}> 
-                        <Img
-                        
+                    <div className="MUTCDdiv" onClick={this.muttSelectorOpenHandler}>
+                       <Img
                             src={[this.state.MUTCD.serverImagePath, imgServerDown]}
                             className="SignEditorImage"
                             alt="sign"></Img>
+                           
+                        <span className="InnerMUTCD">
+                            {this.state.MUTCD.code}:{this.state.MUTCD.name}
+                        </span>
 
-                        {this.state.MUTCD.code}:{this.state.MUTCD.name}
                     </div>
-                    <div className= "SignEditButtonDiv">
-                         <button onClick={this.cancelClickHandler}>CANCEL</button>
-                    <button onClick={this.saveClickHandler}>SAVE</button>
+                    <div className="SignEditButtonDiv">
+                        <button onClick={this.cancelClickHandler}>CANCEL</button>
+                        <button onClick={this.saveClickHandler}>SAVE</button>
                     </div>
-                   
 
                 </div>
                 <div
@@ -198,7 +199,7 @@ export default class SignEditor extends Component {
                             ? this.readMUTCDinfo()
                             : null}
                         <button onClick={this.muttSelectorSaveHandler}>SELECT</button>
-                        
+
                     </div>
                 </div>
             </ModalWrapper>
