@@ -53,7 +53,12 @@ export default class SignEditor extends Component {
             muttActive: !this.state.muttActive
         })
     }
-
+ cancelMUTCDselectHandler = () =>{
+     this.setState({
+        currentMUTCD: this.props.signs[this.props.editSignIndex].MUTCD
+     })
+     this.muttSelectorHandler()
+ }
     mutcdLookUpSelectHandler = (desc) => {
         let option = desc.split(':')
         console.log('option', option)
@@ -66,7 +71,7 @@ export default class SignEditor extends Component {
             })
         console.log('chosenOne', chosenOne)
         this.setState({currentMUTCD: chosenOne})
-        this.muttSelectorHandler()
+        //this.muttSelectorHandler()
     }
 
     getOptions = () => {
@@ -111,6 +116,7 @@ export default class SignEditor extends Component {
                     : "SignEditorOver"}>
 
                     <p>{this.state.feature.attributes.OBJECTID}</p>
+                    <p>{this.state.currentMUTCD.name}</p>
                     <button onClick={this.muttSelectorHandler}>MUTT</button>
 
                     <button onClick={this.cancelClickHandler}>CANCEL</button>
@@ -128,8 +134,9 @@ export default class SignEditor extends Component {
                         ref={myRef}/>
 
                     <p>MUTT SELECTOR</p>
-                    <button onClick={this.muttSelectorHandler}>
-                        BACK</button>
+                    <button onClick= {this.muttSelectorHandler}>SAVE</button>
+                    <button onClick={this.cancelMUTCDselectHandler}>
+                        CANCEL</button>
                 </div>
             </ModalWrapper>
         )
