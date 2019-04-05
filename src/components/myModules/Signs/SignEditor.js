@@ -11,8 +11,7 @@ export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-        console.log('dog props inside sign editor', props)
-        console.log('dog this.props inside sign editor', this.props)
+
 
         this.state = {
 
@@ -21,7 +20,7 @@ export default class SignEditor extends Component {
             currentMUTCD: this.props.signs[this.props.editSignIndex].MUTCD
 
         }
-        console.log('dog state of signIndex', this.state)
+     
     }
 
     saveClickHandler = () => {
@@ -61,7 +60,7 @@ export default class SignEditor extends Component {
  }
     mutcdLookUpSelectHandler = (desc) => {
         let option = desc.split(':')
-        console.log('option', option)
+      
         let chosenOne = this
             .props
             .map
@@ -69,7 +68,7 @@ export default class SignEditor extends Component {
             .find(function (element) {
                 return element.code === option[0]
             })
-        console.log('chosenOne', chosenOne)
+      
         this.setState({currentMUTCD: chosenOne})
         //this.muttSelectorHandler()
     }
@@ -79,7 +78,7 @@ export default class SignEditor extends Component {
         for (let i = 0; i < this.props.map.muttArray.length; i++) {
             bob.push(this.props.map.muttArray[i].code + ": " + this.props.map.muttArray[i].name)
         }
-        console.log('bob', bob)
+     
         return bob;
 
     }
@@ -100,7 +99,7 @@ export default class SignEditor extends Component {
     signTypes = new SignType();
 
     render() {
-        console.log('this.list', this.props.map.muttArray)
+      
         return (
 
             <ModalWrapper
@@ -131,6 +130,7 @@ export default class SignEditor extends Component {
                         options={this.getOptions()}
                         maxVisible={5}
                         onOptionSelected={this.mutcdLookUpSelectHandler}
+                        inputProps = {{'size':100}}
                         ref={myRef}/>
 
                     <p>MUTT SELECTOR</p>

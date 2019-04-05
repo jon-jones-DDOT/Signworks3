@@ -12,7 +12,7 @@ function * setInitConfig(action) {
         // call API to save signs with new SIGNORDER
 
         const muttData = yield call(getAllMUTCDS,[])
-        console.log('muttData', muttData)
+     
      // Put marker in store
      yield put({
         type: mapTypes.INIT,
