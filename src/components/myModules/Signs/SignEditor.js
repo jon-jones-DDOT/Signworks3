@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {call} from 'redux-saga/effects';
+import Img from 'react-image'
 import './SignEditor.css'
 import ModalWrapper from '../Modals/ModalWrapper';
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
@@ -12,55 +13,46 @@ export default class SignEditor extends Component {
     constructor(props) {
         super(props)
 
-
         this.state = {
 
             ...this.props.signs[this.props.editSignIndex],
             muttActive: false,
-            currentMUTCD: this.props.signs[this.props.editSignIndex].MUTCD
+            muttSelected: false,
+            showInfo: false,
+            selMUTCD: null
 
         }
-     
+
     }
 
     saveClickHandler = () => {
-        this
-            .props
-            .modalClicked(false, null);
-
-        let tempFeature = {
-            ...this.props.support
-        };
-        tempFeature.attributes = {
-            ...this.state
-        };
-
-        this
-            .props
-            .saveSupport(tempFeature, this.props.config.featureURLs);
+        //gotta implement, this one saves the sign/timebands to the server
 
     }
 
     cancelClickHandler = () => {
+        //this cancels the editor window
         this
             .props
             .modalClicked(false, null)
     }
 
     muttSelectorHandler = () => {
+        //just toggles between mutcd selector and sign editor
+
         this.setState({
-            muttActive: !this.state.muttActive
+            muttActive: !this.state.muttActive,
+            showInfo: false
         })
     }
- cancelMUTCDselectHandler = () =>{
-     this.setState({
-        currentMUTCD: this.props.signs[this.props.editSignIndex].MUTCD
-     })
-     this.muttSelectorHandler()
- }
+    cancelMUTCDselectHandler = () => {
+
+        this.muttSelectorHandler()
+    }
     mutcdLookUpSelectHandler = (desc) => {
+        
         let option = desc.split(':')
-      
+
         let chosenOne = this
             .props
             .map
@@ -68,9 +60,13 @@ export default class SignEditor extends Component {
             .find(function (element) {
                 return element.code === option[0]
             })
-      
-        this.setState({currentMUTCD: chosenOne})
+        //myRef.current.focus();
+        this.setState({showInfo: true, selMUTCD: chosenOne})
         //this.muttSelectorHandler()
+    }
+
+    cancelSelectionHandler = (evt) => {
+        this.setState({showInfo: false})
     }
 
     getOptions = () => {
@@ -78,17 +74,48 @@ export default class SignEditor extends Component {
         for (let i = 0; i < this.props.map.muttArray.length; i++) {
             bob.push(this.props.map.muttArray[i].code + ": " + this.props.map.muttArray[i].name)
         }
-     
+
         return bob;
 
     }
-    /*
-    supportTypeChangeHandler = (evt) => {
-        this.setState({
-            "SUPPORTTYPE": Number(evt.target.value)
-        })
-    }
+    readMUTCDinfo = () => {
+       //console.log('from store', this.state.MUTCD)
+      //  console.log('from state', this.state.selMUTCD)
+      console.log('path in state', this.state.MUTCD.serverImagePath)
 
+        const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
+        return (
+            <div>
+                <Img
+                    src={[this.state.selMUTCD.serverImagePath, imgServerDown]}
+                    className="SignImage"
+                    alt="sign"></Img>
+                    <div>{this.state.selMUTCD.code} : {this.state.selMUTCD.name}</div>
+                    <div>Tags:{this.state.selMUTCD.tags}</div>
+
+                <ul>
+                    {this.state.selMUTCD.isParking
+                        ? <li>Parking Sign</li>
+                        : ""}
+                    {this.state.selMUTCD.isSpeedLimit
+                        ? <li>Speed Limit Sign</li>
+                        : ""}
+                    {this.state.selMUTCD.isNonstandard
+                        ? <li>Non-Standard Sign</li>
+                        : ""}
+                    {this.state.selMUTCD.needsArrow
+                        ? <li>Requires Direction Arrow</li>
+                        : ""}
+                    {this.state.selMUTCD.needsTimeband
+                        ? <li>Requires Time Restriction</li>
+                        : ""}
+
+                </ul>
+
+            </div>
+        )
+    }
+    /*
     supportStatusChangeHandler = (evt) => {
         this.setState({
             "SUPPORTSTATUS": Number(evt.target.value)
@@ -99,7 +126,7 @@ export default class SignEditor extends Component {
     signTypes = new SignType();
 
     render() {
-      
+
         return (
 
             <ModalWrapper
@@ -115,7 +142,7 @@ export default class SignEditor extends Component {
                     : "SignEditorOver"}>
 
                     <p>{this.state.feature.attributes.OBJECTID}</p>
-                    <p>{this.state.currentMUTCD.name}</p>
+                    <p>{this.state.MUTCD.name}</p>
                     <button onClick={this.muttSelectorHandler}>MUTT</button>
 
                     <button onClick={this.cancelClickHandler}>CANCEL</button>
@@ -126,17 +153,35 @@ export default class SignEditor extends Component {
                     className={this.state.muttActive
                     ? "SignEditorOver"
                     : "SignEditorUnder"}>
-                    <Typeahead
-                        options={this.getOptions()}
-                        maxVisible={5}
-                        onOptionSelected={this.mutcdLookUpSelectHandler}
-                        inputProps = {{'size':100}}
-                        ref={myRef}/>
+                    <div className="TypeAheadDiv">
+                        <Typeahead
+                            options={this.getOptions()}
+                            maxVisible={10}
+                            onOptionSelected={this.mutcdLookUpSelectHandler}
+                            placeholder="TYPE DESCRIPTION"
+                            disabled={this.state.showInfo}
+                            inputProps={{
+                            'size': 70
+                        }}
+                            ref={myRef}/>
+                    </div>
 
-                    <p>MUTT SELECTOR</p>
-                    <button onClick= {this.muttSelectorHandler}>SAVE</button>
-                    <button onClick={this.cancelMUTCDselectHandler}>
+                    <p>
+                        "Enter Partial Description or MUTCD"</p>
+                    <button onClick={this.muttSelectorHandler} disabled={this.state.showInfo}>SELECT</button>
+                    <button disabled={this.state.showInfo} onClick={this.cancelMUTCDselectHandler}>
                         CANCEL</button>
+                    <div
+                        className={this.state.showInfo
+                        ? "MutcdInfoDiv"
+                        : "MutcdInfoDiv_hidden"}>
+
+                        {this.state.selMUTCD
+                            ? this.readMUTCDinfo()
+                            : null}
+
+                        <button onClick={this.cancelSelectionHandler}>CANCEL</button>
+                    </div>
                 </div>
             </ModalWrapper>
         )
