@@ -48,7 +48,7 @@ export default class SignEditor extends Component {
     }
     cancelMUTCDselectHandler = () => {
 
-        this.muttSelectorHandler(1)
+        this.setState({paneSelection: 1, showInfo: false})
     }
 
     mutcdLookUpSelectHandler = (desc) => {
@@ -90,7 +90,7 @@ export default class SignEditor extends Component {
             <div>
                 <Img
                     src={[this.state.selMUTCD.serverImagePath, imgServerDown]}
-                    className="SignImage"
+                    className="SignEditorImage"
                     alt="sign"></Img>
                 <div>{this.state.selMUTCD.code}
                     : {this.state.selMUTCD.name}</div>
@@ -129,7 +129,7 @@ export default class SignEditor extends Component {
     signTypes = new SignType();
 
     render() {
-
+        const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
         return (
 
             <ModalWrapper
@@ -143,20 +143,34 @@ export default class SignEditor extends Component {
                     className={this.state.paneSelection === 1
                     ? "SignEditorOver"
                     : "SignEditorUnder"}>
-                    <div className="SignEditCancel" title="Close Window"  onClick={this.cancelClickHandler}>X</div>
-                    <p>{this.state.feature.attributes.OBJECTID}</p>
-                    <p>{this.state.MUTCD.name}</p>
-                    <button onClick={this.muttSelectorOpenHandler}>MUTT</button>
+                    <div
+                        className="SignEditCancel"
+                        title="Close Window"
+                        onClick={this.cancelClickHandler}>X</div>
+                    <div className="MUTCDdiv" onClick={this.muttSelectorOpenHandler}> 
+                        <Img
+                        
+                            src={[this.state.MUTCD.serverImagePath, imgServerDown]}
+                            className="SignEditorImage"
+                            alt="sign"></Img>
 
-                    <button onClick={this.cancelClickHandler}>CANCEL</button>
+                        {this.state.MUTCD.code}:{this.state.MUTCD.name}
+                    </div>
+                    <div className= "SignEditButtonDiv">
+                         <button onClick={this.cancelClickHandler}>CANCEL</button>
                     <button onClick={this.saveClickHandler}>SAVE</button>
+                    </div>
+                   
 
                 </div>
                 <div
                     className={this.state.paneSelection === 2
                     ? "SignEditorOver"
                     : "SignEditorUnder"}>
-                    <div className="SignEditCancel" title="Close Window" onClick={this.cancelClickHandler}>X</div>
+                    <div
+                        className="SignEditCancel"
+                        title="Close Window"
+                        onClick={this.cancelMUTCDselectHandler}>X</div>
                     <div className="TypeAheadDiv">
                         <Typeahead
                             options={this.getOptions()}
@@ -184,7 +198,7 @@ export default class SignEditor extends Component {
                             ? this.readMUTCDinfo()
                             : null}
                         <button onClick={this.muttSelectorSaveHandler}>SELECT</button>
-                        <button onClick={this.cancelSelectionHandler}>CANCEL</button>
+                        
                     </div>
                 </div>
             </ModalWrapper>

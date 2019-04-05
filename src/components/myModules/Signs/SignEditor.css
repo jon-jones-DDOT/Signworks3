@@ -49,3 +49,21 @@
   cursor: pointer;
 
 }
+.MUTCDdiv{
+  position: relative;
+  text-align:left;
+  
+  top: 30px;
+  border:1px solid black;
+}
+
+.SignEditorImage{
+  
+  width:80px;
+}
+
+.SignEditButtonDiv{
+  top:280px;
+  position: relative;
+ 
+}
