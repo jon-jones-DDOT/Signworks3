@@ -40,3 +40,12 @@
 .MutcdInfoDiv_hidden{
   visibility: hidden
 }
+
+.SignEditCancel{
+  width:10px;
+  height: 10px;
+  float:right;
+  margin-right:5px;
+  cursor: pointer;
+
+}

@@ -16,7 +16,7 @@ export default class SignEditor extends Component {
         this.state = {
 
             ...this.props.signs[this.props.editSignIndex],
-            muttActive: false,
+            paneSelection: 1,
             muttSelected: false,
             showInfo: false,
             selMUTCD: null
@@ -37,20 +37,22 @@ export default class SignEditor extends Component {
             .modalClicked(false, null)
     }
 
-    muttSelectorHandler = () => {
-        //just toggles between mutcd selector and sign editor
+    muttSelectorOpenHandler = () => {
+        this.setState({paneSelection: 2, showInfo: false})
+    }
 
-        this.setState({
-            muttActive: !this.state.muttActive,
-            showInfo: false
-        })
+    muttSelectorSaveHandler = () => {
+        //
+
+        this.setState({paneSelection: 1, showInfo: false, MUTCD: this.state.selMUTCD})
     }
     cancelMUTCDselectHandler = () => {
 
-        this.muttSelectorHandler()
+        this.muttSelectorHandler(1)
     }
+
     mutcdLookUpSelectHandler = (desc) => {
-        
+
         let option = desc.split(':')
 
         let chosenOne = this
@@ -79,9 +81,9 @@ export default class SignEditor extends Component {
 
     }
     readMUTCDinfo = () => {
-       //console.log('from store', this.state.MUTCD)
-      //  console.log('from state', this.state.selMUTCD)
-      console.log('path in state', this.state.MUTCD.serverImagePath)
+        // console.log('from store', this.state.MUTCD)  console.log('from state',
+        // this.state.selMUTCD)
+        console.log('path in state', this.state.MUTCD.serverImagePath)
 
         const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
         return (
@@ -90,8 +92,9 @@ export default class SignEditor extends Component {
                     src={[this.state.selMUTCD.serverImagePath, imgServerDown]}
                     className="SignImage"
                     alt="sign"></Img>
-                    <div>{this.state.selMUTCD.code} : {this.state.selMUTCD.name}</div>
-                    <div>Tags:{this.state.selMUTCD.tags}</div>
+                <div>{this.state.selMUTCD.code}
+                    : {this.state.selMUTCD.name}</div>
+                <div>Tags:{this.state.selMUTCD.tags}</div>
 
                 <ul>
                     {this.state.selMUTCD.isParking
@@ -137,22 +140,23 @@ export default class SignEditor extends Component {
                 showOk={this.props.showOk}>
 
                 <div
-                    className={this.state.muttActive
-                    ? "SignEditorUnder"
-                    : "SignEditorOver"}>
-
+                    className={this.state.paneSelection === 1
+                    ? "SignEditorOver"
+                    : "SignEditorUnder"}>
+                    <div className="SignEditCancel" title="Close Window"  onClick={this.cancelClickHandler}>X</div>
                     <p>{this.state.feature.attributes.OBJECTID}</p>
                     <p>{this.state.MUTCD.name}</p>
-                    <button onClick={this.muttSelectorHandler}>MUTT</button>
+                    <button onClick={this.muttSelectorOpenHandler}>MUTT</button>
 
                     <button onClick={this.cancelClickHandler}>CANCEL</button>
                     <button onClick={this.saveClickHandler}>SAVE</button>
 
                 </div>
                 <div
-                    className={this.state.muttActive
+                    className={this.state.paneSelection === 2
                     ? "SignEditorOver"
                     : "SignEditorUnder"}>
+                    <div className="SignEditCancel" title="Close Window" onClick={this.cancelClickHandler}>X</div>
                     <div className="TypeAheadDiv">
                         <Typeahead
                             options={this.getOptions()}
@@ -168,7 +172,7 @@ export default class SignEditor extends Component {
 
                     <p>
                         "Enter Partial Description or MUTCD"</p>
-                    <button onClick={this.muttSelectorHandler} disabled={this.state.showInfo}>SELECT</button>
+
                     <button disabled={this.state.showInfo} onClick={this.cancelMUTCDselectHandler}>
                         CANCEL</button>
                     <div
@@ -179,7 +183,7 @@ export default class SignEditor extends Component {
                         {this.state.selMUTCD
                             ? this.readMUTCDinfo()
                             : null}
-
+                        <button onClick={this.muttSelectorSaveHandler}>SELECT</button>
                         <button onClick={this.cancelSelectionHandler}>CANCEL</button>
                     </div>
                 </div>
