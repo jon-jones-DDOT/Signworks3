@@ -60,9 +60,7 @@ export default class SupportEditor extends Component {
                 ={400}
                 showOk={this.props.showOk}>
                 <div className="SupportEditor">
-                    <p>
-                        I am the Editor Pane.
-                    </p>
+                   
                     <p>{this.state.OBJECTID}</p>
                     <p>Support Type:<select value={this.state.SUPPORTTYPE} onChange={this.supportTypeChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportType)}</select>
                     </p>

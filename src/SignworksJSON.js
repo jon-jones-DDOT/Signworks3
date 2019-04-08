@@ -79,7 +79,8 @@ export class SupportType {
         {
             "name": "Active",
             "code": 1
-        },/* {
+        },
+        /* {
             "name": "Prospective",
             "code": 2
         }, {
@@ -88,10 +89,12 @@ export class SupportType {
         }, {
             "name": "Temporary",
             "code": 4
-        },*/ {
+        },*/
+        {
             "name": "Retired",
             "code": 5
-        }, /* {
+        },
+        /* {
             "name": "Requested (New)",
             "code": 6
         }, {
@@ -510,8 +513,61 @@ export class SignType {
             name: "5 hour"
         }
     ]
+
+    _codedValuesSpeedLimit = [
+        {
+            code: 0,
+            name: " "
+        }, {
+            code: 5,
+            name: "5"
+        }, {
+            code: 10,
+            name: "10"
+        }, {
+            code: 15,
+            name: "15"
+        }, {
+            code: 20,
+            name: "20"
+        }, {
+            code: 25,
+            name: "25"
+        }, {
+            code: 30,
+            name: "30"
+        }, {
+            code: 35,
+            name: "35"
+        }, {
+            code: 40,
+            name: "40"
+        }, {
+            code: 45,
+            name: "45"
+        }, {
+            code: 50,
+            name: "50"
+        }, {
+            code: 55,
+            name: "55"
+        }, {
+            code: 60,
+            name: "60"
+        }, {
+            code: 65,
+            name: "65"
+        }, {
+            code: 70,
+            name: "70"
+        }
+    ]
+
 }
 
 export function addOptionsToSelect(options) {
-   return  options.map((value, index) => (<option  key={`item-${index}`}  value={value.code}> {value.name}</option>))
+    return options.map((value, index) => (
+        <option key={`item-${index}`} value={value.code}>
+            {value.name}</option>
+    ))
 }

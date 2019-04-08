@@ -16,6 +16,7 @@ export default class SignEditor extends Component {
         this.state = {
 
             ...this.props.signs[this.props.editSignIndex],
+            ...this.props.signs[this.props.editSignIndex].feature,
             paneSelection: 1,
             muttSelected: false,
             showInfo: false,
@@ -38,6 +39,7 @@ export default class SignEditor extends Component {
     }
 
     muttSelectorOpenHandler = () => {
+
         this.setState({paneSelection: 2, showInfo: false})
     }
 
@@ -80,6 +82,24 @@ export default class SignEditor extends Component {
         return bob;
 
     }
+    signDirectionClickHandler = (evt) => {
+
+        this.setState({paneSelection: 3})
+        evt.stopPropagation()
+    }
+
+    signArrowSelectHandler = (evt) => {
+        let id = Number(evt.target.id.charAt(4))
+        this.setState({
+            attributes: {
+                ...this.state.attributes,
+                'SIGNARROWDIRECTION': id
+            },
+            paneSelection:1
+        })
+
+    }
+
     readMUTCDinfo = () => {
         // console.log('from store', this.state.MUTCD)  console.log('from state',
         // this.state.selMUTCD)
@@ -88,10 +108,10 @@ export default class SignEditor extends Component {
         const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
         return (
             <div>
-                <Img
-                    src={[this.state.selMUTCD.serverImagePath, imgServerDown]}
+                <img
+                    src={this.state.selMUTCD.serverImagePath}
                     className="SignEditorImage"
-                    alt="sign"></Img>
+                    alt="sign"></img>
                 <div>{this.state.selMUTCD.code}
                     : {this.state.selMUTCD.name}</div>
                 <div>Tags:{this.state.selMUTCD.tags}</div>
@@ -148,19 +168,26 @@ export default class SignEditor extends Component {
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
                     <div className="MUTCDdiv" onClick={this.muttSelectorOpenHandler}>
-                       <Img
+                        <Img
                             src={[this.state.MUTCD.serverImagePath, imgServerDown]}
                             className="SignEditorImage"
                             alt="sign"></Img>
-                           
+
                         <span className="InnerMUTCD">
                             {this.state.MUTCD.code}:{this.state.MUTCD.name}
+
+                        </span>
+                        <span>
+                            <img
+                                src={window.location.origin + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png"}
+                                onClick={this.signDirectionClickHandler}
+                                className="SignDirectionArrow"></img>
                         </span>
 
                     </div>
-                    <div className="SignEditButtonDiv">
-                        <button onClick={this.cancelClickHandler}>CANCEL</button>
-                        <button onClick={this.saveClickHandler}>SAVE</button>
+                    <div className="SignAttributes" >
+                    <span>MPH:<select value={this.state.attributes.SIGNNUMBER}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}</select></span>
+                    <span>Zone: box box box box</span>
                     </div>
 
                 </div>
@@ -201,6 +228,69 @@ export default class SignEditor extends Component {
                         <button onClick={this.muttSelectorSaveHandler}>SELECT</button>
 
                     </div>
+                    <div className="SignEditButtonDiv">
+                        <button onClick={this.cancelClickHandler}>CANCEL</button>
+                        <button onClick={this.saveClickHandler}>SAVE</button>
+                    </div>
+                </div>
+                <div
+                    className={this.state.paneSelection === 3
+                    ? "SignEditorOver"
+                    : "SignEditorUnder"}>
+                    <div
+                        className="SignEditCancel"
+                        title="Close Window"
+                        onClick={this.cancelClickHandler}>X</div>
+                    SIGN ARROW DIRECTION SELECTOR TOOL™<table className="dirSignTable">
+                        <tr>
+                            <td><img
+                                src="img/6.png"
+                                class="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_6"/></td>
+                            <td><img
+                                src="img/4.png"
+                                class="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_4"/></td>
+                            <td><img
+                                src="img/8.png"
+                                class="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_8"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img
+                                src="img/1.png"
+                                class="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_1"/></td>
+                            <td><img
+                                src="img/3.png"
+                                class="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_3"/></td>
+                            <td><img
+                                src="img/2.png"
+                                class="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_2"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/7.png" class="dirSign"  onClick={this.signArrowSelectHandler} id="dir_7"/></td>
+                            <td><img src="img/5.png" class="dirSign"  onClick={this.signArrowSelectHandler} id="dir_5"/></td>
+                            <td><img src="img/9.png" class="dirSign"  onClick={this.signArrowSelectHandler} id="dir_9"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/0.png" class="dirSign"  onClick={this.signArrowSelectHandler} id="dir_0"/></td>
+                            <td>(no direction)
+                            </td>
+                        </tr>
+                    </table>
+                    <p>Click A Selection to Return To The Editor</p>
                 </div>
             </ModalWrapper>
         )
