@@ -2,8 +2,10 @@ import React, {Component} from 'react'
 import {call} from 'redux-saga/effects';
 import Img from 'react-image'
 import './SignEditor.css'
+
 import ModalWrapper from '../Modals/ModalWrapper';
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
+import Timebands from './Timebands';
 
 let Typeahead = require('react-typeahead').Typeahead;
 
@@ -95,7 +97,7 @@ export default class SignEditor extends Component {
                 ...this.state.attributes,
                 'SIGNARROWDIRECTION': id
             },
-            paneSelection:1
+            paneSelection: 1
         })
 
     }
@@ -138,6 +140,8 @@ export default class SignEditor extends Component {
             </div>
         )
     }
+
+    MPHSelectHandler = ()=>{}
     /*
     supportStatusChangeHandler = (evt) => {
         this.setState({
@@ -185,9 +189,15 @@ export default class SignEditor extends Component {
                         </span>
 
                     </div>
-                    <div className="SignAttributes" >
-                    <span>MPH:<select value={this.state.attributes.SIGNNUMBER}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}</select></span>
-                    <span>Zone: box box box box</span>
+                    <div className="SignAttributes">
+                        <span>MPH:<select value={this.state.attributes.SIGNNUMBER?this.state.attributes.SIGNNUMBER:""}onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}</select>
+                        </span>
+                        <span>
+                            <Timebands
+                                bands={{
+                                ...this.state.timebands
+                            }}></Timebands>
+                        </span>
                     </div>
 
                 </div>
@@ -242,20 +252,21 @@ export default class SignEditor extends Component {
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
                     SIGN ARROW DIRECTION SELECTOR TOOL™<table className="dirSignTable">
+                    <tbody>
                         <tr>
                             <td><img
                                 src="img/6.png"
-                                class="dirSign"
+                                className="dirSign"
                                 onClick={this.signArrowSelectHandler}
                                 id="dir_6"/></td>
                             <td><img
                                 src="img/4.png"
-                                class="dirSign"
+                                className="dirSign"
                                 onClick={this.signArrowSelectHandler}
                                 id="dir_4"/></td>
                             <td><img
                                 src="img/8.png"
-                                class="dirSign"
+                                className="dirSign"
                                 onClick={this.signArrowSelectHandler}
                                 id="dir_8"/>
                             </td>
@@ -263,32 +274,49 @@ export default class SignEditor extends Component {
                         <tr>
                             <td><img
                                 src="img/1.png"
-                                class="dirSign"
+                                className="dirSign"
                                 onClick={this.signArrowSelectHandler}
                                 id="dir_1"/></td>
                             <td><img
                                 src="img/3.png"
-                                class="dirSign"
+                                className="dirSign"
                                 onClick={this.signArrowSelectHandler}
                                 id="dir_3"/></td>
                             <td><img
                                 src="img/2.png"
-                                class="dirSign"
+                                className="dirSign"
                                 onClick={this.signArrowSelectHandler}
                                 id="dir_2"/>
                             </td>
                         </tr>
                         <tr>
-                            <td><img src="img/7.png" class="dirSign"  onClick={this.signArrowSelectHandler} id="dir_7"/></td>
-                            <td><img src="img/5.png" class="dirSign"  onClick={this.signArrowSelectHandler} id="dir_5"/></td>
-                            <td><img src="img/9.png" class="dirSign"  onClick={this.signArrowSelectHandler} id="dir_9"/>
+                            <td><img
+                                src="img/7.png"
+                                className="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_7"/></td>
+                            <td><img
+                                src="img/5.png"
+                                className="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_5"/></td>
+                            <td><img
+                                src="img/9.png"
+                                className="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_9"/>
                             </td>
                         </tr>
                         <tr>
-                            <td><img src="img/0.png" class="dirSign"  onClick={this.signArrowSelectHandler} id="dir_0"/></td>
+                            <td><img
+                                src="img/0.png"
+                                className="dirSign"
+                                onClick={this.signArrowSelectHandler}
+                                id="dir_0"/></td>
                             <td>(no direction)
                             </td>
                         </tr>
+                        </tbody>
                     </table>
                     <p>Click A Selection to Return To The Editor</p>
                 </div>
