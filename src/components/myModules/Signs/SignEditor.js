@@ -34,6 +34,7 @@ export default class SignEditor extends Component {
         }
 
     }
+
     ZoneChangeHandler = (evt) => {
 
         switch (evt.target.id) {
@@ -75,6 +76,7 @@ export default class SignEditor extends Component {
 
         this.setState({paneSelection: 1, showInfo: false, MUTCD: this.state.selMUTCD})
     }
+
     cancelMUTCDselectHandler = () => {
 
         this.setState({paneSelection: 1, showInfo: false})
@@ -216,7 +218,15 @@ export default class SignEditor extends Component {
         )
     }
 
-    MPHSelectHandler = () => {}
+    MPHSelectHandler = (evt) => {
+
+        this.setState({
+            attributes: {
+                ...this.state.attributes,
+                'SIGNNUMBER': evt.target.value
+            }
+        });
+    }
     /*
     supportStatusChangeHandler = (evt) => {
         this.setState({
@@ -265,11 +275,13 @@ export default class SignEditor extends Component {
 
                     </div>
                     <div className="SignAttributes">
-                        <span>MPH:<select
-                            value={this.state.attributes.SIGNNUMBER
-                ? this.state.attributes.SIGNNUMBER
-                : ""}
-                            onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}</select>
+                        <span>MPH:
+                            <select
+                                value={this.state.attributes.SIGNNUMBER
+                                ? this.state.attributes.SIGNNUMBER
+                                : ""}
+                                onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
+                            </select>
                         </span>
                         <span className="ZoneSpan">
                             <Zone
