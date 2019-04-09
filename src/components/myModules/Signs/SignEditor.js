@@ -6,15 +6,18 @@ import './SignEditor.css'
 import ModalWrapper from '../Modals/ModalWrapper';
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
 import Timebands from './Timebands';
+import Zone from './Zone';
 
 let Typeahead = require('react-typeahead').Typeahead;
 
 const myRef = React.createRef();
+const amp = /[&]/;
 export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-
+        console.log('props',)
+        const zone = this.zoneParse(this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
 
             ...this.props.signs[this.props.editSignIndex],
@@ -22,8 +25,30 @@ export default class SignEditor extends Component {
             paneSelection: 1,
             muttSelected: false,
             showInfo: false,
-            selMUTCD: null
+            selMUTCD: null,
+            ward1: zone[0],
+            anc1: zone[1],
+            ward2: zone[2],
+            anc2: zone[3]
 
+        }
+
+    }
+    ZoneChangeHandler = (evt) => {
+
+        switch (evt.target.id) {
+            case "ward1":
+                this.setState({ward1: evt.target.value});
+                break;
+            case "anc1":
+                this.setState({anc1: evt.target.value});
+                break;
+            case "ward2":
+                this.setState({ward2: evt.target.value});
+                break;
+            case "anc2":
+                this.setState({anc2: evt.target.value});
+                break;
         }
 
     }
@@ -84,6 +109,56 @@ export default class SignEditor extends Component {
         return bob;
 
     }
+
+    zoneParse = (zoneValue) => {
+        // why don't we just set the controls directly?  Because they don't exist yet.
+        // we don't have to check for all possible garbage because the zoneValue has
+        // already passed ZoneVerify Don't run this without running and passing
+        // zoneVerify first!
+        let zoneArray = [];
+        if (zoneValue) {
+            // set first cell
+            zoneArray[0] = zoneValue[0]
+        } else {
+            //empty zone id
+            return "";
+        }
+        // set second cell
+        if (!zoneValue[1]) {
+            //just one ward no anc
+            return zoneArray;
+        } else if (amp.test(zoneValue[1])) {
+            //second digit is amp so third must be ward
+            zoneArray[2] = zoneValue[2];
+            if (!zoneValue[3]) {
+                // ward + amp + ward and done
+                return zoneArray;
+            } else {
+                //ward + amp + ward + anc and done
+                zoneArray[3] = zoneValue[3];
+                return zoneArray;
+            }
+        } else {
+            //ward + anc + ...
+            zoneArray[1] = zoneValue[1];
+            if (amp.test(zoneValue[2])) {
+                zoneArray[2] = zoneValue[3];
+                if (!zoneValue[4]) {
+                    // ward + anc + amp + ward and done
+                    return zoneArray;
+                } else {
+                    // ward + anc + amp + ward + anc
+                    zoneArray[3] = zoneValue[4];
+                    return zoneArray;
+                }
+            } else {
+                // ward + anc and done
+                return zoneArray;
+            }
+        }
+
+    }
+
     signDirectionClickHandler = (evt) => {
 
         this.setState({paneSelection: 3})
@@ -141,7 +216,7 @@ export default class SignEditor extends Component {
         )
     }
 
-    MPHSelectHandler = ()=>{}
+    MPHSelectHandler = () => {}
     /*
     supportStatusChangeHandler = (evt) => {
         this.setState({
@@ -190,13 +265,18 @@ export default class SignEditor extends Component {
 
                     </div>
                     <div className="SignAttributes">
-                        <span>MPH:<select value={this.state.attributes.SIGNNUMBER?this.state.attributes.SIGNNUMBER:""}onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}</select>
+                        <span>MPH:<select
+                            value={this.state.attributes.SIGNNUMBER
+                ? this.state.attributes.SIGNNUMBER
+                : ""}
+                            onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}</select>
                         </span>
-                        <span>
-                            <Timebands
-                                bands={{
-                                ...this.state.timebands
-                            }}></Timebands>
+                        <span className="ZoneSpan">
+                            <Zone
+                                props={{
+                                ...this.state
+                            }}
+                                change={this.ZoneChangeHandler}></Zone>
                         </span>
                     </div>
 
@@ -252,70 +332,70 @@ export default class SignEditor extends Component {
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
                     SIGN ARROW DIRECTION SELECTOR TOOL™<table className="dirSignTable">
-                    <tbody>
-                        <tr>
-                            <td><img
-                                src="img/6.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_6"/></td>
-                            <td><img
-                                src="img/4.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_4"/></td>
-                            <td><img
-                                src="img/8.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_8"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><img
-                                src="img/1.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_1"/></td>
-                            <td><img
-                                src="img/3.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_3"/></td>
-                            <td><img
-                                src="img/2.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_2"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><img
-                                src="img/7.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_7"/></td>
-                            <td><img
-                                src="img/5.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_5"/></td>
-                            <td><img
-                                src="img/9.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_9"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><img
-                                src="img/0.png"
-                                className="dirSign"
-                                onClick={this.signArrowSelectHandler}
-                                id="dir_0"/></td>
-                            <td>(no direction)
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td><img
+                                    src="img/6.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_6"/></td>
+                                <td><img
+                                    src="img/4.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_4"/></td>
+                                <td><img
+                                    src="img/8.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_8"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img
+                                    src="img/1.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_1"/></td>
+                                <td><img
+                                    src="img/3.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_3"/></td>
+                                <td><img
+                                    src="img/2.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_2"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img
+                                    src="img/7.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_7"/></td>
+                                <td><img
+                                    src="img/5.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_5"/></td>
+                                <td><img
+                                    src="img/9.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_9"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img
+                                    src="img/0.png"
+                                    className="dirSign"
+                                    onClick={this.signArrowSelectHandler}
+                                    id="dir_0"/></td>
+                                <td>(no direction)
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <p>Click A Selection to Return To The Editor</p>
