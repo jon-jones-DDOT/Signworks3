@@ -2,6 +2,9 @@ import React from "react"
 
 export class SupportType {
     name = (index, domain) => {
+        if(index===null){
+            return null;
+        }
         let codedValue = "but";
         switch (domain) {
             case 'SUPPORTTYPE':
@@ -109,6 +112,9 @@ export class SupportType {
 
 export class SignType {
     name = (index, domain) => {
+        if(index===null){
+            return null;
+        }
         let codedValue = "but";
         switch (domain) {
             case 'TIMEBAND_DAYS':

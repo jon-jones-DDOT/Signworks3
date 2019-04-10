@@ -9,7 +9,7 @@ import './Zone.css'
 
 export default function Zone(props) {
     const signTypes = new SignType();
-console.log('props', props)
+
   return (
     <span>
                 Zone:<select id="ward1" value={props.props.ward1} onChange={props.change}>

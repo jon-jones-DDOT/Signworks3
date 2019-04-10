@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {call} from 'redux-saga/effects';
+
 import Img from 'react-image'
 import './SignEditor.css'
 
 import ModalWrapper from '../Modals/ModalWrapper';
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
-import Timebands from './Timebands';
+import Timebands from '../Timebands/Timebands';
 import Zone from './Zone';
 
 let Typeahead = require('react-typeahead').Typeahead;
@@ -16,7 +16,7 @@ export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-        console.log('props',)
+      
         const zone = this.zoneParse(this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
 
@@ -32,7 +32,7 @@ export default class SignEditor extends Component {
             anc2: zone[3]
 
         }
-
+console.log('this.state', this.state)
     }
 
     ZoneChangeHandler = (evt) => {
@@ -249,8 +249,14 @@ export default class SignEditor extends Component {
 
     //Timeband Handlers
 
-    timebandChangeHandler = (evt) => {
-        
+    timebandChangeHandler = (evt) => { 
+        console.log('this.state :', this.state);
+        this.setState({
+            attributes: {
+                ...this.state.attributes,
+                "SIGNTEXT": evt.target.value
+            }
+        })
     }
 
     signTypes = new SignType();
@@ -329,7 +335,9 @@ export default class SignEditor extends Component {
 
                         </div>
                         <div className="TimebandDiv">
-                        <Timebands></Timebands>
+                            <Timebands
+                                bands={this.state.timebands} edit={true}
+                                change={this.timebandChangeHandler}></Timebands>
                         </div>
 
                     </div>
