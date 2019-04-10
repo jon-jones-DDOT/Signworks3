@@ -223,16 +223,28 @@ export default class SignEditor extends Component {
         this.setState({
             attributes: {
                 ...this.state.attributes,
-                'SIGNNUMBER': Number( evt.target.value)
+                'SIGNNUMBER': Number(evt.target.value)
             }
         });
     }
 
-statusChangeHandler = (evt)=>{
-   
+    statusChangeHandler = (evt) => {
 
-    this.setState({attributes:{...this.state.attributes, "SIGNSTATUS":Number(evt.target.value)}})
-}
+        this.setState({
+            attributes: {
+                ...this.state.attributes,
+                "SIGNSTATUS": Number(evt.target.value)
+            }
+        })
+    }
+    signTextChangeHandler = (evt) => {
+        this.setState({
+            attributes: {
+                ...this.state.attributes,
+                "SIGNTEXT": evt.target.value
+            }
+        })
+    }
     /*
     supportStatusChangeHandler = (evt) => {
         this.setState({
@@ -296,10 +308,27 @@ statusChangeHandler = (evt)=>{
                             }}
                                 change={this.ZoneChangeHandler}></Zone>
                         </span>
-                        <div>
-                            Status: <select value= {this.state.attributes.SIGNSTATUS} onChange={this.statusChangeHandler}>
-                            {addOptionsToSelect(this.signTypes._codedValuesSignStatus)}</select>
+                        <div className="StatusDiv">
+                            <span >
+                                Status:
+                                <select
+                                    className="StatusSelect"
+                                    value={this.state.attributes.SIGNSTATUS}
+                                    onChange={this.statusChangeHandler}>
+                                    {addOptionsToSelect(this.signTypes._codedValuesSignStatus)}</select>
+
+                            </span>
+                            <span className="ZoneSpan">
+                                Sign Text:
+                                <textarea
+                                    value={this.state.attributes.SIGNTEXT}
+                                    onChange={this.signTextChangeHandler}
+                                    rows="4"
+                                    className="SignText"></textarea>
+                            </span>
+
                         </div>
+
                     </div>
 
                 </div>

@@ -102,3 +102,16 @@
 .ZoneSpan{
     padding-left: 35px;
 }
+.SignText{
+    resize:none;
+    
+}
+
+.StatusSelect{
+    padding-right:20px;
+  
+}
+
+.StatusDiv{
+    padding-top: 10px;
+}
