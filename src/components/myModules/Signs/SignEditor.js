@@ -180,10 +180,8 @@ console.log('this.state', this.state)
     }
 
     readMUTCDinfo = () => {
-        // console.log('from store', this.state.MUTCD)  console.log('from state',
-        // this.state.selMUTCD)
-        console.log('path in state', this.state.MUTCD.serverImagePath)
-
+      
+     
         const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
         return (
             <div>
@@ -250,7 +248,7 @@ console.log('this.state', this.state)
     //Timeband Handlers
 
     timebandChangeHandler = (evt) => { 
-        console.log('this.state :', this.state);
+      
         this.setState({
             attributes: {
                 ...this.state.attributes,

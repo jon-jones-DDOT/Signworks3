@@ -4,7 +4,7 @@ import {SignType, addOptionsToSelect} from './../../../SignworksJSON'
 const signTypes = new SignType();
 
 export default function Timeband(props) {
-  console.log('props', props)
+ 
   return (
     <div>
    <button><b>X</b></button>
