@@ -37,7 +37,6 @@ const Container = styled.div `
 // Variables
 const containerID = "map-view-container";
 
-
 class MapView extends Component {
     selPoint = null;
     markerLayer = null;
@@ -49,17 +48,21 @@ class MapView extends Component {
         // Tell React to never update this component, that's up to us
         return false;
     }
-    UNSAFE_componentWillReceiveProps(nextProps){
-       
-        if(this.selPoint){
-            this.markerLayer.removeAll();
-            this.selPoint.geometry= nextProps.graphic.selSupportGeom;
-            this.markerLayer.add(this.selPoint)
-            this.view.zoom= 20
+    UNSAFE_componentWillReceiveProps(nextProps) {
+
+        if (this.selPoint) {
+            this
+                .markerLayer
+                .removeAll();
+            this.selPoint.geometry = nextProps.graphic.selSupportGeom;
+            this
+                .markerLayer
+                .add(this.selPoint)
+            this.view.zoom = 20
             this.view.center = this.selPoint.geometry
-        
+
         }
-     
+
     }
     geom = null;
     render() {
@@ -76,7 +79,6 @@ class MapView extends Component {
 
             this.setupWidgetsAndLayers();
             this.finishedLoading();
-            
 
         }, error => {
             console.error("maperr", error);
@@ -97,7 +99,7 @@ class MapView extends Component {
         this
             .props
             .onMapClicked(expandedMapPoint, this.props.config.featureURLs);
-       
+
     }
 
     mapClicked = (evt) => {
@@ -112,16 +114,21 @@ class MapView extends Component {
     }
 
     setupWidgetsAndLayers = () => {
-        loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic']).then(([FeatureLayer, GraphicsLayer, Graphic]) => {
-
+        loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic', "esri/layers/TileLayer", "esri/Basemap"])
+        .then(([FeatureLayer, GraphicsLayer, Graphic, TileLayer,Basemap]) => {
+            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_WebMercator/MapServer";
+            const baselayer = new TileLayer(layerUrl, null);
+            const baseMap = new Basemap({baseLayers:[baselayer]})
+    
             const featureLayer = new FeatureLayer({
                 url: "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ" +
                         "er/0",
                 outFields: ["*"],
                 id: "support"
             });
-         this.markerLayer = new GraphicsLayer();
+            this.markerLayer = new GraphicsLayer();
 
+            this.map.basemap = baseMap;
             this
                 .map
                 .addMany([featureLayer, this.markerLayer]);
@@ -142,11 +149,11 @@ class MapView extends Component {
                 }
             };
 
-         
-            
             this.selPoint = new Graphic({geometry: this.props.graphic.selSupportGeom, symbol: symb})
-           
-            this.markerLayer.add(this.selPoint)
+
+            this
+                .markerLayer
+                .add(this.selPoint)
         });
     }
 

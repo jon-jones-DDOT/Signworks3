@@ -237,6 +237,7 @@ export default class SignEditor extends Component {
             }
         })
     }
+
     signTextChangeHandler = (evt) => {
         this.setState({
             attributes: {
@@ -245,13 +246,12 @@ export default class SignEditor extends Component {
             }
         })
     }
-    /*
-    supportStatusChangeHandler = (evt) => {
-        this.setState({
-            "SUPPORTSTATUS": Number(evt.target.value)
-        })
+
+    //Timeband Handlers
+
+    timebandChangeHandler = (evt) => {
+        
     }
-*/
 
     signTypes = new SignType();
 
@@ -327,6 +327,9 @@ export default class SignEditor extends Component {
                                     className="SignText"></textarea>
                             </span>
 
+                        </div>
+                        <div className="TimebandDiv">
+                        <Timebands></Timebands>
                         </div>
 
                     </div>
