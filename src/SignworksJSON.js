@@ -563,12 +563,94 @@ export class SignType {
         }
     ]
 
-    _codedValuesWards = [{code:"", name:""},{ code: 1, name: "1" }, { code: 2, name: "2" }, { code: 3, name: "3" }, { code: 4, name: "4" }, { code: 5, name: "5" },
-            { code: 6, name: "6" }, { code: 7, name: "7" }, { code: 8, name: "8" }]
-    
-    _codedValuesAnc=  [{code:"", name:""},{ code: "A", name: "A" }, { code: "B", name: "B" }, { code: "C", name: "C" }, { code: "D", name: "D" },
-            { code: "E", name: "E" }, { code: "F", name: "F" }, { code: "G", name: "G" }]
-    
+    _codedValuesSignStatus = [
+        {
+            "name": "Active",
+            "code": 1
+        },
+        /* {
+            "name": "Prospective",
+            "code": 2
+        }, {
+            "name": "Temporarily Out of Service",
+            "code": 3
+        }, {
+            "name": "Temporary",
+            "code": 4
+        },*/
+        {
+            "name": "Retired",
+            "code": 5
+        },
+        /* {
+            "name": "Requested (New)",
+            "code": 6
+        }, {
+            "name": "Requested (Change)",
+            "code": 7
+        }, {
+            "name": "Requested (Remove)",
+            "code": 8
+        } */
+    ]
+    _codedValuesWards = [
+        {
+            code: "",
+            name: ""
+        }, {
+            code: 1,
+            name: "1"
+        }, {
+            code: 2,
+            name: "2"
+        }, {
+            code: 3,
+            name: "3"
+        }, {
+            code: 4,
+            name: "4"
+        }, {
+            code: 5,
+            name: "5"
+        }, {
+            code: 6,
+            name: "6"
+        }, {
+            code: 7,
+            name: "7"
+        }, {
+            code: 8,
+            name: "8"
+        }
+    ]
+
+    _codedValuesAnc = [
+        {
+            code: "",
+            name: ""
+        }, {
+            code: "A",
+            name: "A"
+        }, {
+            code: "B",
+            name: "B"
+        }, {
+            code: "C",
+            name: "C"
+        }, {
+            code: "D",
+            name: "D"
+        }, {
+            code: "E",
+            name: "E"
+        }, {
+            code: "F",
+            name: "F"
+        }, {
+            code: "G",
+            name: "G"
+        }
+    ]
 
 }
 

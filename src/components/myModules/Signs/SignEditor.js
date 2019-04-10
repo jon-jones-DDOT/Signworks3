@@ -223,10 +223,16 @@ export default class SignEditor extends Component {
         this.setState({
             attributes: {
                 ...this.state.attributes,
-                'SIGNNUMBER': evt.target.value
+                'SIGNNUMBER': Number( evt.target.value)
             }
         });
     }
+
+statusChangeHandler = (evt)=>{
+   
+
+    this.setState({attributes:{...this.state.attributes, "SIGNSTATUS":Number(evt.target.value)}})
+}
     /*
     supportStatusChangeHandler = (evt) => {
         this.setState({
@@ -290,6 +296,10 @@ export default class SignEditor extends Component {
                             }}
                                 change={this.ZoneChangeHandler}></Zone>
                         </span>
+                        <div>
+                            Status: <select value= {this.state.attributes.SIGNSTATUS} onChange={this.statusChangeHandler}>
+                            {addOptionsToSelect(this.signTypes._codedValuesSignStatus)}</select>
+                        </div>
                     </div>
 
                 </div>
