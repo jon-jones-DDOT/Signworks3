@@ -2,7 +2,7 @@ import {call, put} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
 import {types as graphicTypes} from '../reducers/graphic'
 import {getRelatedSigns, getMUTCDS, getRelatedTimebands} from '../../utils/JSAPI';
-import {project} from '../../utils/JSAPI'
+
 
 export function * getFullSignPost(action) {
 

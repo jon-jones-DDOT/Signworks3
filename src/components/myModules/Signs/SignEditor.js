@@ -16,7 +16,7 @@ export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-      
+console.log('props in Sign Editor', props);
         const zone = this.zoneParse(this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
 
@@ -32,7 +32,7 @@ export default class SignEditor extends Component {
             anc2: zone[3]
 
         }
-console.log('this.state', this.state)
+
     }
 
     ZoneChangeHandler = (evt) => {
@@ -49,6 +49,8 @@ console.log('this.state', this.state)
                 break;
             case "anc2":
                 this.setState({anc2: evt.target.value});
+                break;
+            default:
                 break;
         }
 
@@ -180,9 +182,7 @@ console.log('this.state', this.state)
     }
 
     readMUTCDinfo = () => {
-      
-     
-        const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
+
         return (
             <div>
                 <img
@@ -247,25 +247,79 @@ console.log('this.state', this.state)
 
     //Timeband Handlers
 
-    timebandChangeHandler = (evt) => { 
-      
+    timebandChangeHandler = (evt, index, ctrl) => {
+
+        let bands = [...this.state.timebands]
+
+        switch (ctrl) {
+
+            case 0:
+                bands[index].attributes.STARTDAY = evt.target.value;
+                break;
+            case 1:
+                bands[index].attributes.ENDDAY = evt.target.value;
+                break;
+            case 2:
+                bands[index].attributes.STARTTIME = evt.target.value;
+                break;
+            case 3:
+                bands[index].attributes.ENDTIME = evt.target.value;
+                break;
+            case 4:
+                bands[index].attributes.HOURLIMIT = evt.target.value;
+                break;
+            default:
+                break;
+        }
+
         this.setState({
-            attributes: {
-                ...this.state.attributes,
-                "SIGNTEXT": evt.target.value
-            }
+            timebands: [...bands]
         })
     }
+
+    timebandAddHandler = (signId) => {
+      
+        let bands = [...this.state.timebands]
+        const newBand = {attributes:{
+            CREATED_DATE: null,
+            CREATED_USER: null,
+            ENDDAY: 0,
+            ENDTIME: 0,
+            EXCEPTION: null,
+            GLOBALID: null,
+            HOURLIMIT: 0,
+            LAST_EDITED_DATE: null,
+            LAST_EDITED_USER: null,
+            LINKID: null,
+            OBJECTID: null,
+            ORIGIN_ID: null,
+            RESTRICTIONORDER: null,
+            RESTRICTIONSTATUS: null,
+            SIGNID:signId,
+            SPACEARROW: null,
+            SPACEID: null,
+            STARTDAY: 8,
+            STARTTIME: 0
+        }}
+
+        bands.push(newBand);
+        this.setState({
+            timebands: [...bands]
+        })
+    }
+
+    timebandDeleteHandler = (index) => {}
 
     signTypes = new SignType();
 
     render() {
         const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
+
         return (
 
             <ModalWrapper
                 {...this.props}
-                title="Edit Support"
+                title="Edit Sign"
                 width
                 ={400}
                 showOk={this.props.showOk}>
@@ -290,6 +344,7 @@ console.log('this.state', this.state)
                         </span>
                         <span>
                             <img
+                                alt="sign direction"
                                 src={window.location.origin + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png"}
                                 onClick={this.signDirectionClickHandler}
                                 className="SignDirectionArrow"></img>
@@ -334,8 +389,12 @@ console.log('this.state', this.state)
                         </div>
                         <div className="TimebandDiv">
                             <Timebands
-                                bands={this.state.timebands} edit={true}
-                                change={this.timebandChangeHandler}></Timebands>
+                                bands={this.state.timebands}
+                                edit={true}
+                                change={this.timebandChangeHandler}
+                                add={this.timebandAddHandler}
+                                delete={this.timebandDeleteHandler}
+                                signId={this.state.feature.attributes.GLOBALID}></Timebands>
                         </div>
 
                     </div>
@@ -395,16 +454,19 @@ console.log('this.state', this.state)
                         <tbody>
                             <tr>
                                 <td><img
+                                    alt="6"
                                     src="img/6.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
                                     id="dir_6"/></td>
                                 <td><img
+                                    alt="4"
                                     src="img/4.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
                                     id="dir_4"/></td>
                                 <td><img
+                                    alt="8"
                                     src="img/8.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
@@ -413,16 +475,19 @@ console.log('this.state', this.state)
                             </tr>
                             <tr>
                                 <td><img
+                                    alt="1"
                                     src="img/1.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
                                     id="dir_1"/></td>
                                 <td><img
+                                    alt="3"
                                     src="img/3.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
                                     id="dir_3"/></td>
                                 <td><img
+                                    alt="2"
                                     src="img/2.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
@@ -431,16 +496,19 @@ console.log('this.state', this.state)
                             </tr>
                             <tr>
                                 <td><img
+                                    alt="7"
                                     src="img/7.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
                                     id="dir_7"/></td>
                                 <td><img
+                                    alt="5"
                                     src="img/5.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
                                     id="dir_5"/></td>
                                 <td><img
+                                    alt="9"
                                     src="img/9.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}
@@ -449,6 +517,7 @@ console.log('this.state', this.state)
                             </tr>
                             <tr>
                                 <td><img
+                                    alt="0"
                                     src="img/0.png"
                                     className="dirSign"
                                     onClick={this.signArrowSelectHandler}

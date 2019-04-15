@@ -147,6 +147,9 @@ export class SignType {
 
     _codedValuesTimebandDays = [
         {
+            code: "",
+            name: ""
+        },   {
             "name": "Monday",
             "code": 1
         }, {
@@ -178,6 +181,9 @@ export class SignType {
 
     _codedValuesTimebandHours = [
         {
+            code: "",
+            name: ""
+        },  {
             "name": "0400A",
             "code": 1
         }, {
@@ -485,6 +491,9 @@ export class SignType {
 
     _codedValuesHourLimits = [
         {
+            code: "",
+            name: ""
+        }, {
             code: .25,
             name: "15 min"
         }, {
@@ -599,6 +608,7 @@ export class SignType {
             "code": 8
         } */
     ]
+    
     _codedValuesWards = [
         {
             code: "",

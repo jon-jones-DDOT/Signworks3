@@ -7,11 +7,12 @@ import SupportEditor from '../Support/SupportEditor';
 import SignEditor from '../Signs/SignEditor';
 
 function ModalConductor(props) {
+ 
     switch (props.currentModal) {
-        case 'SUPPORT':      
+        case 'SUPPORT':
             return <SupportEditor {...props}/>
-            case 'SIGN':
-            return <SignEditor{...props}  />
+        case 'SIGN':
+            return <SignEditor{...props}/>
         default:
             return null
     }

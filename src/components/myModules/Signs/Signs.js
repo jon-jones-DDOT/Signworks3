@@ -40,7 +40,7 @@ class Signs extends Component {
 
     render() {
         editClicker = this.props.editClick;
-        const delay = 150;
+      
 
         if (this.props.signs) {
 
