@@ -16,7 +16,7 @@ export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-console.log('props in Sign Editor', props);
+        console.log('props in Sign Editor', props);
         const zone = this.zoneParse(this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
 
@@ -278,29 +278,31 @@ console.log('props in Sign Editor', props);
     }
 
     timebandAddHandler = (signId) => {
-      
+
         let bands = [...this.state.timebands]
-        const newBand = {attributes:{
-            CREATED_DATE: null,
-            CREATED_USER: null,
-            ENDDAY: 0,
-            ENDTIME: 0,
-            EXCEPTION: null,
-            GLOBALID: null,
-            HOURLIMIT: 0,
-            LAST_EDITED_DATE: null,
-            LAST_EDITED_USER: null,
-            LINKID: null,
-            OBJECTID: null,
-            ORIGIN_ID: null,
-            RESTRICTIONORDER: null,
-            RESTRICTIONSTATUS: null,
-            SIGNID:signId,
-            SPACEARROW: null,
-            SPACEID: null,
-            STARTDAY: 8,
-            STARTTIME: 0
-        }}
+        const newBand = {
+            attributes: {
+                CREATED_DATE: null,
+                CREATED_USER: null,
+                ENDDAY: 0,
+                ENDTIME: 0,
+                EXCEPTION: null,
+                GLOBALID: null,
+                HOURLIMIT: 0,
+                LAST_EDITED_DATE: null,
+                LAST_EDITED_USER: null,
+                LINKID: null,
+                OBJECTID: null,
+                ORIGIN_ID: null,
+                RESTRICTIONORDER: null,
+                RESTRICTIONSTATUS: null,
+                SIGNID: signId,
+                SPACEARROW: null,
+                SPACEID: null,
+                STARTDAY: 8,
+                STARTTIME: 0
+            }
+        }
 
         bands.push(newBand);
         this.setState({
@@ -396,7 +398,11 @@ console.log('props in Sign Editor', props);
                                 delete={this.timebandDeleteHandler}
                                 signId={this.state.feature.attributes.GLOBALID}></Timebands>
                         </div>
-
+                        <div>
+                            <button onClick={this.signArrowSelectHandler}>SAVE</button>
+                            <button onClick= {this.cancelClickHandler}>CANCEL
+                            </button>
+                        </div>
                     </div>
 
                 </div>
