@@ -66,7 +66,7 @@ export default class SignEditor extends Component {
         if (this.state.ward1) {
             
             zone = this.state.ward1.toString();
-            console.log('step one', zone);
+      
         } else {
             return ""
         }
@@ -74,19 +74,19 @@ export default class SignEditor extends Component {
         if (this.state.anc1) {
           
             zone += this.state.anc1.toString();
-            console.log('step two', zone);
+        
         }
         if (this.state.ward1 && this.state.ward2) {
            
            
             zone += "&"+ this.state.ward2.toString();
-            console.log('step 3', zone);
+          
         }
         else{
             return zone
         }
         if (this.state.ward2 && this.state.anc2){
-            console.log('stp four');
+       
             return zone + this.state.anc2.toString();
         }
         else{
@@ -104,13 +104,14 @@ export default class SignEditor extends Component {
         };
 
         editedFeature.sign.attributes.ZONEID = this.zoneAssembler();
-        console.log('editedFeature.sign.attributes.ZONEID :', editedFeature.sign.attributes.ZONEID);
+      
         editedFeature.sign.attributes.SIGNCODE = this.state.MUTCD.code;
         editedFeature.editBands = [];
         editedFeature.newBands = [];
 
         for (let i = 0; i < this.state.timebands.length; i++) {
-            if (this.state.timebands[i].GLOBALID === null) {
+        
+            if (this.state.timebands[i].attributes.GLOBALID === null) {
                 editedFeature
                     .newBands
                     .push(this.state.timebands[i])
@@ -141,7 +142,7 @@ export default class SignEditor extends Component {
 
     muttSelectorSaveHandler = () => {
         //
-        console.log('save is running')
+    
         this.setState({paneSelection: 1, showInfo: false})
     }
 
@@ -164,7 +165,7 @@ export default class SignEditor extends Component {
         //myRef.current.focus();
         const mutt = muttGenerator(chosenOne).next();
 
-        console.log('mutt :', mutt);
+     
         this.setState({MUTCD: mutt.value.payload.args[0][0], showInfo: true})
         //this.muttSelectorHandler()
     }

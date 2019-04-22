@@ -1,14 +1,15 @@
 import {call, takeLatest} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
 import {getFullSignPost} from './reload'
-import {saveSign} from '../../utils/JSAPI';
+import {saveSign, saveTimebands} from '../../utils/JSAPI';
 
 // WORKER //
 
 function * saveSelectSign(action) {
     try{
-      
+     
          yield call(saveSign, [action.payload.sign, false,action.payload.layers]);
+         yield call(saveTimebands,[action.payload.sign,action.payload.layers])
        
         
          yield getFullSignPost(action);

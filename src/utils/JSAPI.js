@@ -131,7 +131,7 @@ export function saveSignOrder(args) {
 
 export function saveSupport(args/*updateFeature, isNew, layer */) {
     const updateFeature = args[0];
- console.log(JSON.stringify(updateFeature));
+    console.log(JSON.stringify(updateFeature));
     const isNew = args[1];
     const layer = args[2];
 
@@ -159,16 +159,36 @@ export function saveSupport(args/*updateFeature, isNew, layer */) {
 
 }
 
+export function saveTimebands(args) {
+    const updateTimebands = args[0].editBands; //array
+    const newTimebands = args[0].newBands; //array
+    const timebandLayer = args[1].timebands + "/applyEdits";
+    console.log('newTimebands', newTimebands)
+    console.log('updateTimebands', updateTimebands)
+    const bandSet = {
+        f: "json",
+        "adds": JSON.stringify(newTimebands),
+        "updates": JSON.stringify([updateTimebands])
+    };
+console.log("in timeband save");
+    return new Promise((resolve, reject) => {
+        loadModules(["esri/request"]).then(([esriRequest]) => {
+            esriRequest(timebandLayer, {
+                method: 'post',
+                query: bandSet
+            }).then(resp => resolve(resp), error => reject(error))
+        })
+    })
+}
+
 export function saveSign(args) {
 
     const updateSignFeature = args[0].sign;
-    const updateTimebands = args[0].editBands; //array
-    const newTimebands = args[0].newBands; //array
+
     const isNew = args[1];
     const signLayer = args[2].signs + "/applyEdits";
-    const timebandLayer = args[2].timebands + "/applyEdits";
+
     let signSet = null;
-    let bandSet = null;
 
     if (isNew) {
         signSet = {
@@ -181,12 +201,6 @@ export function saveSign(args) {
             "updates": JSON.stringify([updateSignFeature])
         };
     }
-
-    bandSet = {
-        f: "json",
-        "adds": JSON.stringify(newTimebands),
-        "updates": JSON.stringify([updateTimebands])
-    };
 
     return new Promise((resolve, reject) => {
 
@@ -233,7 +247,7 @@ export function pointToExtent(view, point, toleranceInPixel, callback) {
 //NON-ESRI DATA CALLS
 
 export function * muttGenerator(muttQueryString) {
-     yield call(getMUTCDS, [muttQueryString])
+    yield call(getMUTCDS, [muttQueryString])
 }
 
 export async function getMUTCDS(args) {
