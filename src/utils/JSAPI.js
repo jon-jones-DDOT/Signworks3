@@ -168,9 +168,9 @@ export function saveTimebands(args) {
     const bandSet = {
         f: "json",
         "adds": JSON.stringify(newTimebands),
-        "updates": JSON.stringify([updateTimebands])
+        "updates": JSON.stringify(updateTimebands)
     };
-console.log("in timeband save");
+console.log("bandset", bandSet);
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(timebandLayer, {

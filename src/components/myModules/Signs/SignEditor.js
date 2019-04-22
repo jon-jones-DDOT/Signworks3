@@ -110,7 +110,7 @@ export default class SignEditor extends Component {
         editedFeature.newBands = [];
 
         for (let i = 0; i < this.state.timebands.length; i++) {
-        
+        console.log('this.state.timebands[i].attributes.GLOBALID :', this.state.timebands[i].attributes.GLOBALID);
             if (this.state.timebands[i].attributes.GLOBALID === null) {
                 editedFeature
                     .newBands
@@ -126,6 +126,9 @@ export default class SignEditor extends Component {
         this
             .props
             .saveSign(this.props.support, editedFeature, layers)
+            this
+            .props
+            .modalClicked(false, null)
     }
 
     cancelClickHandler = () => {

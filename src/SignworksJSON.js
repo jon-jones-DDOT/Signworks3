@@ -112,6 +112,7 @@ export class SupportType {
 
 export class SignType {
     name = (index, domain) => {
+        
         if(index===null){
             return null;
         }
@@ -139,7 +140,7 @@ export class SignType {
                 }
             }
 
-            return "coded domain is broken";
+            return "coded domain is broken " + domain + " " + index;
         } catch (err) {
             alert(err.message);
         }
@@ -147,7 +148,7 @@ export class SignType {
 
     _codedValuesTimebandDays = [
         {
-            code: "",
+            code: 0,
             name: ""
         },   {
             "name": "Monday",
@@ -484,15 +485,15 @@ export class SignType {
             "name": "ANYTIME",
             "code": 100
         }, {
-            "name": "0000A",
+            "name": " ",
             "code": 0
         }
     ]
 
     _codedValuesHourLimits = [
         {
-            code: "",
-            name: ""
+            code: 0,
+            name: "    "
         }, {
             code: .25,
             name: "15 min"
