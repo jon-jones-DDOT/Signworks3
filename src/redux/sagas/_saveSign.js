@@ -1,25 +1,26 @@
 import {call, takeLatest} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
 import {getFullSignPost} from './reload'
-import {saveSupport} from '../../utils/JSAPI';
+import {saveSign} from '../../utils/JSAPI';
 
 // WORKER //
 
-function * saveSelectSupport(action) {
+function * saveSelectSign(action) {
     try{
       
-         yield call(saveSupport, [action.payload.support, false, action.payload.layers.supports]);
+         yield call(saveSign, [action.payload.sign, false,action.payload.layers]);
+       
         
          yield getFullSignPost(action);
     }
     
     catch (e) {
-        console.log('SAGA ERROR: map/saveSelectedSupport, ', e);
+        console.log('SAGA ERROR: map/saveSelectedSign, ', e);
     }
 }
 
 // WATCHER //
 export function * watchLayers() {
    
-    yield takeLatest(mapTypes.SAVE_SUPPORT, saveSelectSupport);
+    yield takeLatest(mapTypes.SAVE_SIGN, saveSelectSign);
 }

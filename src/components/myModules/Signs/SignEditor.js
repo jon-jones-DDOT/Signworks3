@@ -5,6 +5,8 @@ import './SignEditor.css'
 
 import ModalWrapper from '../Modals/ModalWrapper';
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
+import {muttGenerator} from "../../../utils/JSAPI";
+
 import Timebands from '../Timebands/Timebands';
 import Zone from './Zone';
 
@@ -12,11 +14,12 @@ let Typeahead = require('react-typeahead').Typeahead;
 
 const myRef = React.createRef();
 const amp = /[&]/;
+
 export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-        console.log('props in Sign Editor', props);
+
         const zone = this.zoneParse(this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
 
@@ -35,7 +38,7 @@ export default class SignEditor extends Component {
 
     }
 
-    ZoneChangeHandler = (evt) => {
+    zoneChangeHandler = (evt) => {
 
         switch (evt.target.id) {
             case "ward1":
@@ -56,9 +59,72 @@ export default class SignEditor extends Component {
 
     }
 
-    saveClickHandler = () => {
-        //gotta implement, this one saves the sign/timebands to the server
+    zoneAssembler = () => {
 
+        // this.state.ward1 + this.state.anc1 + "&" + this.state.ward2 + this.state.anc2
+        let zone = 'ndad';
+        if (this.state.ward1) {
+            
+            zone = this.state.ward1.toString();
+            console.log('step one', zone);
+        } else {
+            return ""
+        }
+
+        if (this.state.anc1) {
+          
+            zone += this.state.anc1.toString();
+            console.log('step two', zone);
+        }
+        if (this.state.ward1 && this.state.ward2) {
+           
+           
+            zone += "&"+ this.state.ward2.toString();
+            console.log('step 3', zone);
+        }
+        else{
+            return zone
+        }
+        if (this.state.ward2 && this.state.anc2){
+            console.log('stp four');
+            return zone + this.state.anc2.toString();
+        }
+        else{
+            return zone
+        }
+    }
+
+    saveClickHandler = () => {
+
+        const editedFeature = {};
+
+        editedFeature.sign = {}
+        editedFeature.sign.attributes = {
+            ...this.state.attributes
+        };
+
+        editedFeature.sign.attributes.ZONEID = this.zoneAssembler();
+        console.log('editedFeature.sign.attributes.ZONEID :', editedFeature.sign.attributes.ZONEID);
+        editedFeature.sign.attributes.SIGNCODE = this.state.MUTCD.code;
+        editedFeature.editBands = [];
+        editedFeature.newBands = [];
+
+        for (let i = 0; i < this.state.timebands.length; i++) {
+            if (this.state.timebands[i].GLOBALID === null) {
+                editedFeature
+                    .newBands
+                    .push(this.state.timebands[i])
+            } else {
+                editedFeature
+                    .editBands
+                    .push(this.state.timebands[i])
+            }
+        }
+        const layers = this.props.config.featureURLs;
+
+        this
+            .props
+            .saveSign(this.props.support, editedFeature, layers)
     }
 
     cancelClickHandler = () => {
@@ -75,8 +141,8 @@ export default class SignEditor extends Component {
 
     muttSelectorSaveHandler = () => {
         //
-
-        this.setState({paneSelection: 1, showInfo: false, MUTCD: this.state.selMUTCD})
+        console.log('save is running')
+        this.setState({paneSelection: 1, showInfo: false})
     }
 
     cancelMUTCDselectHandler = () => {
@@ -96,7 +162,10 @@ export default class SignEditor extends Component {
                 return element.code === option[0]
             })
         //myRef.current.focus();
-        this.setState({showInfo: true, selMUTCD: chosenOne})
+        const mutt = muttGenerator(chosenOne).next();
+
+        console.log('mutt :', mutt);
+        this.setState({MUTCD: mutt.value.payload.args[0][0], showInfo: true})
         //this.muttSelectorHandler()
     }
 
@@ -186,27 +255,27 @@ export default class SignEditor extends Component {
         return (
             <div>
                 <img
-                    src={this.state.selMUTCD.serverImagePath}
+                    src={this.state.MUTCD.serverImagePath}
                     className="SignEditorImage"
                     alt="sign"></img>
-                <div>{this.state.selMUTCD.code}
-                    : {this.state.selMUTCD.name}</div>
-                <div>Tags:{this.state.selMUTCD.tags}</div>
+                <div>{this.state.MUTCD.code}
+                    : {this.state.MUTCD.name}</div>
+                <div>Tags:{this.state.MUTCD.tags}</div>
 
                 <ul>
-                    {this.state.selMUTCD.isParking
+                    {this.state.MUTCD.isParking
                         ? <li>Parking Sign</li>
                         : ""}
-                    {this.state.selMUTCD.isSpeedLimit
+                    {this.state.MUTCD.isSpeedLimit
                         ? <li>Speed Limit Sign</li>
                         : ""}
-                    {this.state.selMUTCD.isNonstandard
+                    {this.state.MUTCD.isNonstandard
                         ? <li>Non-Standard Sign</li>
                         : ""}
-                    {this.state.selMUTCD.needsArrow
+                    {this.state.MUTCD.needsArrow
                         ? <li>Requires Direction Arrow</li>
                         : ""}
-                    {this.state.selMUTCD.needsTimeband
+                    {this.state.MUTCD.needsTimeband
                         ? <li>Requires Time Restriction</li>
                         : ""}
 
@@ -367,7 +436,7 @@ export default class SignEditor extends Component {
                                 props={{
                                 ...this.state
                             }}
-                                change={this.ZoneChangeHandler}></Zone>
+                                change={this.zoneChangeHandler}></Zone>
                         </span>
                         <div className="StatusDiv">
                             <span >
@@ -399,8 +468,8 @@ export default class SignEditor extends Component {
                                 signId={this.state.feature.attributes.GLOBALID}></Timebands>
                         </div>
                         <div>
-                            <button onClick={this.signArrowSelectHandler}>SAVE</button>
-                            <button onClick= {this.cancelClickHandler}>CANCEL
+                            <button onClick={this.saveClickHandler}>SAVE</button>
+                            <button onClick={this.cancelClickHandler}>CANCEL
                             </button>
                         </div>
                     </div>
@@ -437,7 +506,7 @@ export default class SignEditor extends Component {
                         ? "MutcdInfoDiv"
                         : "MutcdInfoDiv_hidden"}>
 
-                        {this.state.selMUTCD
+                        {this.state.MUTCD
                             ? this.readMUTCDinfo()
                             : null}
                         <button onClick={this.muttSelectorSaveHandler}>SELECT</button>

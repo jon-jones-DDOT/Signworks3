@@ -7,7 +7,7 @@ import {getRelatedSigns, getMUTCDS, getRelatedTimebands} from '../../utils/JSAPI
 export function * getFullSignPost(action) {
 
     try {
-
+        
         const errorMUTCD = {
             name: "MUTCD not found",
             serverImagePath: "none"
@@ -16,10 +16,11 @@ export function * getFullSignPost(action) {
         const support = action.payload.support;
 
         // retrieve the new related signs with a call to AGS
+     
         const signsREsp = yield call(getRelatedSigns, [support, action.payload.layers.signs])
-
+       
         const signArray = signsREsp.data.features;
-
+    
         // start creating sign payload
         const signs = [];
         // create a string to get back MUTCD metadata for all signs on post
@@ -47,6 +48,7 @@ export function * getFullSignPost(action) {
                 feature: signArray[i]
 
             }
+     
             const results = yield call(getRelatedTimebands, [signArray[i], action.payload.layers.timebands])
 
             sign.timebands = results.data.features;

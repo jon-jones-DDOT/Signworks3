@@ -25,10 +25,19 @@
         "id": "2c831005fd7b437787e3fd9ea53788e6"
     },
 
+  
     "featureURLs": {
+        "supports": "https://arcgis.ddot.dc.gov/arcgis/rest/services/Signs/SignWorks_Secured/FeatureServer/0",
+        "signs":  "https://arcgis.ddot.dc.gov/arcgis/rest/services/Signs/SignWorks_Secured/FeatureServer/1",
+        "timebands":"https://arcgis.ddot.dc.gov/arcgis/rest/services/Signs/SignWorks_Secured/FeatureServer/2"
+
+    },
+    "featureURLs1": {
         "supports": "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/0",
         "signs":  "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/1",
         "timebands":"https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServer/2"
 
     }
+
+    
 }

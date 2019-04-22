@@ -4,7 +4,7 @@ import TimebandEditor from './TimebandEditor'
 import './Timebands.css'
 
 export default function Timebands(props) {
-console.log('props in Timebands', props);
+
     const makeBands = () => {
         if (props.edit) {
             return props

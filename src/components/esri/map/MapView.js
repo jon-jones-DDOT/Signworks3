@@ -114,18 +114,13 @@ class MapView extends Component {
     }
 
     setupWidgetsAndLayers = () => {
-        loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic', "esri/layers/TileLayer", "esri/Basemap"])
-        .then(([FeatureLayer, GraphicsLayer, Graphic, TileLayer,Basemap]) => {
-            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_WebMercator/MapServer";
+        loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic', "esri/layers/TileLayer", "esri/Basemap"]).then(([FeatureLayer, GraphicsLayer, Graphic, TileLayer, Basemap]) => {
+            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_W" +
+                    "ebMercator/MapServer";
             const baselayer = new TileLayer(layerUrl, null);
-            const baseMap = new Basemap({baseLayers:[baselayer]})
-    
-            const featureLayer = new FeatureLayer({
-                url: "https://dcdot.esriemcs.com/server/rest/services/Signs/SignWorks_Test/FeatureServ" +
-                        "er/0",
-                outFields: ["*"],
-                id: "support"
-            });
+            const baseMap = new Basemap({baseLayers: [baselayer]})
+
+            const featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, outFields: ["*"], id: "support"});
             this.markerLayer = new GraphicsLayer();
 
             this.map.basemap = baseMap;
@@ -135,6 +130,10 @@ class MapView extends Component {
             this
                 .view
                 .on("click", this.mapClicked);
+
+           
+
+          
 
             const symb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
@@ -148,7 +147,7 @@ class MapView extends Component {
                     width: 3 // points
                 }
             };
-
+          
             this.selPoint = new Graphic({geometry: this.props.graphic.selSupportGeom, symbol: symb})
 
             this

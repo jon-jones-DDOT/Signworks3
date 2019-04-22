@@ -26,6 +26,7 @@ export default class SupportEditor extends Component {
         this
             .props
             .saveSupport(tempFeature, this.props.config.featureURLs);
+        
 
     }
 
