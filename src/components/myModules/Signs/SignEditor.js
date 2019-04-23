@@ -424,15 +424,17 @@ export default class SignEditor extends Component {
         })
     }
 
-    timebandDeleteHandler = (evt, index) => {
+    timebandDeleteHandler = (evt, index ,del) => {
+        
         let bands = [...this.state.timebands]
         // if it is an existing record , edited or not, mark for deletion
         if (bands[index].action === 0 || bands[index].action === 2) {
-            bands[index].action = // if it is a new record, set to zero and it will disappear on save
-            3
+            bands[index].action =3 // if it is a new record, set to zero and it will disappear on save
+            
         } else {
             bands[index].action = 0
         }
+
         this.setState({
             timebands: [...bands]
         })
