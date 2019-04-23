@@ -5,6 +5,10 @@ import './Timebands.css'
 
 export default function Timebands(props) {
 
+    const deleteBand = (evt, index) =>{
+      
+        props.delete(evt,index)
+    }
     const makeBands = () => {
         if (props.edit) {
             return props
@@ -13,7 +17,7 @@ export default function Timebands(props) {
                     key={`item-${index}`}
                     index={index}
                     value={value}
-                    change={props.change} signId = {props.signId}/>))
+                    change={props.change} delete = {deleteBand} signId = {props.signId}/>))
         } else {
             return props
                 .bands

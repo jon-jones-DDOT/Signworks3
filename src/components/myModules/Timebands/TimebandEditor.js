@@ -7,7 +7,7 @@ export default function TimebandEditor(props) {
 
   return (
     <div className="TimebandEditor">
-   <button><b>X</b></button>
+   <button onClick = {(evt) => props.delete(evt,props.index)}><b>X</b></button>
     <select value={props.value.attributes.STARTDAY?props.value.attributes.STARTDAY:""} 
     onChange={ (evt) => props.change(evt, props.index, 0)}>
     {addOptionsToSelect(signTypes._codedValuesTimebandDays)}</select>    

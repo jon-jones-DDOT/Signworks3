@@ -35,7 +35,11 @@ export default class SignEditor extends Component {
             anc2: zone[3]
 
         }
-
+        // the action property is just being arbitrarily tacked on here, I will use it
+        // to sort the timebands for edits, adds, deletes, and no action
+        for (let i = 0; i < this.state.timebands.length; i++) {
+            this.state.timebands[i].action = 0;
+        }
     }
 
     zoneChangeHandler = (evt) => {
@@ -64,32 +68,41 @@ export default class SignEditor extends Component {
         // this.state.ward1 + this.state.anc1 + "&" + this.state.ward2 + this.state.anc2
         let zone = 'ndad';
         if (this.state.ward1) {
-            
-            zone = this.state.ward1.toString();
-      
+
+            zone = this
+                .state
+                .ward1
+                .toString();
+
         } else {
             return ""
         }
 
         if (this.state.anc1) {
-          
-            zone += this.state.anc1.toString();
-        
+
+            zone += this
+                .state
+                .anc1
+                .toString();
+
         }
         if (this.state.ward1 && this.state.ward2) {
-           
-           
-            zone += "&"+ this.state.ward2.toString();
-          
-        }
-        else{
+
+            zone += "&" + this
+                .state
+                .ward2
+                .toString();
+
+        } else {
             return zone
         }
-        if (this.state.ward2 && this.state.anc2){
-       
-            return zone + this.state.anc2.toString();
-        }
-        else{
+        if (this.state.ward2 && this.state.anc2) {
+
+            return zone + this
+                .state
+                .anc2
+                .toString();
+        } else {
             return zone
         }
     }
@@ -104,14 +117,15 @@ export default class SignEditor extends Component {
         };
 
         editedFeature.sign.attributes.ZONEID = this.zoneAssembler();
-      
+
         editedFeature.sign.attributes.SIGNCODE = this.state.MUTCD.code;
         editedFeature.editBands = [];
         editedFeature.newBands = [];
+        editedFeature.deleteBands = [];
 
         for (let i = 0; i < this.state.timebands.length; i++) {
-        console.log('this.state.timebands[i].attributes.GLOBALID :', this.state.timebands[i].attributes.GLOBALID);
-            if (this.state.timebands[i].attributes.GLOBALID === null) {
+            console.log('this.state.timebands[i].attributes.GLOBALID :', this.state.timebands[i].attributes.GLOBALID);
+            /*    if (this.state.timebands[i].attributes.GLOBALID === null) {
                 editedFeature
                     .newBands
                     .push(this.state.timebands[i])
@@ -119,14 +133,35 @@ export default class SignEditor extends Component {
                 editedFeature
                     .editBands
                     .push(this.state.timebands[i])
+            } */
+
+            switch (this.state.timebands[i].action) {
+                case 1:
+                    editedFeature
+                        .newBands
+                        .push(this.state.timebands[i]);
+                    break;
+                case 2:
+                    editedFeature
+                        .editBands
+                        .push(this.state.timebands[i]);
+                    break;
+                case 3:
+                    editedFeature
+                        .deleteBands
+                        .push(this.state.timebands[i].attributes.OBJECTID);
+                    break;
+                default:
+                    break;
             }
+
         }
         const layers = this.props.config.featureURLs;
 
         this
             .props
             .saveSign(this.props.support, editedFeature, layers)
-            this
+        this
             .props
             .modalClicked(false, null)
     }
@@ -145,7 +180,7 @@ export default class SignEditor extends Component {
 
     muttSelectorSaveHandler = () => {
         //
-    
+
         this.setState({paneSelection: 1, showInfo: false})
     }
 
@@ -168,7 +203,6 @@ export default class SignEditor extends Component {
         //myRef.current.focus();
         const mutt = muttGenerator(chosenOne).next();
 
-     
         this.setState({MUTCD: mutt.value.payload.args[0][0], showInfo: true})
         //this.muttSelectorHandler()
     }
@@ -344,6 +378,12 @@ export default class SignEditor extends Component {
             default:
                 break;
         }
+        // set action to edit if existing record, unedited or already scheduled for
+        // editing records marked for add or delete will retain their current action
+        if (bands[index].action === 0 || bands[index].action === 2) {
+
+            bands[index].action = 2;
+        }
 
         this.setState({
             timebands: [...bands]
@@ -374,7 +414,8 @@ export default class SignEditor extends Component {
                 SPACEID: null,
                 STARTDAY: 8,
                 STARTTIME: 0
-            }
+            },
+            action: 1
         }
 
         bands.push(newBand);
@@ -383,7 +424,19 @@ export default class SignEditor extends Component {
         })
     }
 
-    timebandDeleteHandler = (index) => {}
+    timebandDeleteHandler = (evt, index) => {
+        let bands = [...this.state.timebands]
+        // if it is an existing record , edited or not, mark for deletion
+        if (bands[index].action === 0 || bands[index].action === 2) {
+            bands[index].action = // if it is a new record, set to zero and it will disappear on save
+            3
+        } else {
+            bands[index].action = 0
+        }
+        this.setState({
+            timebands: [...bands]
+        })
+    }
 
     signTypes = new SignType();
 

@@ -162,13 +162,16 @@ export function saveSupport(args/*updateFeature, isNew, layer */) {
 export function saveTimebands(args) {
     const updateTimebands = args[0].editBands; //array
     const newTimebands = args[0].newBands; //array
+    const deleteTimebands = args[0].deleteBands;
     const timebandLayer = args[1].timebands + "/applyEdits";
     console.log('newTimebands', newTimebands)
     console.log('updateTimebands', updateTimebands)
+    console.log('deleteTimebands :', deleteTimebands);
     const bandSet = {
         f: "json",
         "adds": JSON.stringify(newTimebands),
-        "updates": JSON.stringify(updateTimebands)
+        "updates": JSON.stringify(updateTimebands),
+        "deletes":JSON.stringify(deleteTimebands)
     };
 console.log("bandset", bandSet);
     return new Promise((resolve, reject) => {
