@@ -1,14 +1,15 @@
 .Sign {
-    height: 190px;
+    height: 220px;
     border: 20px solid lightgreen;
     padding: 10px;
     background-color: lightgray;
-    display: blick;
+    display: block;
 
 }
 .SignMUTCDdiv {
     display: flex;
     text-align: left;
+    font-size: 11px;
     
 }
 .SignMutcdText{
@@ -27,4 +28,8 @@
     width: 60px;
     position:relative;
     
+}
+
+.SignEditButton{
+   
 }
