@@ -49,7 +49,7 @@ class Signs extends Component {
                 onSortEnd={this.onSortEnd}
                 pressDelay={150}/>;
         } else 
-            return <p>Sorry</p>
+            return <p></p>
     }
 }
 

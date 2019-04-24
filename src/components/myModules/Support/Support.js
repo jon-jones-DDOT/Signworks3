@@ -16,7 +16,7 @@ export default function Support(props) {
     
     const supportInnards=()=>{
         if(props.sel === null){
-            return 'no support found'
+            return 'Click on a support on the map to see its information'
         }
         else if(props.sel.selSupport === null){
             return 'no support found...'

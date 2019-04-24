@@ -6,30 +6,24 @@ import {getFullSignPost} from './reload'
 // WORKER //
 
 function * setSelectSupport(action) {
-   
+
     try {
-        
+
         // call API to fetch support
         const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layers.supports]);
-     
+
         //if nothing comes back, set sign info in store to empty or null
         if (features.data.features.length === 0) {
             const support = null;
             const signs = [];
-
-            yield put({
-                type: mapTypes.SET_SELECTED_SUPPORT,
-                payload: {
-                    support,
-                    signs
-                }
-            });
+            return;
+        
             //if a support is returned...
         } else {
             //create support payload from support returned
             action.payload.support = features.data.features[0];
             yield getFullSignPost(action)
-           
+
         }
     } catch (e) {
         console.log('SAGA ERROR: map/setSelectedSupport, ', e);
