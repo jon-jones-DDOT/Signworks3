@@ -41,6 +41,7 @@ class MapView extends Component {
     selPoint = null;
     markerLayer = null;
     componentDidMount() {
+    
         this.startup(this.props.mapConfig, containerID, this.props.is3DScene);
     }
 
@@ -115,8 +116,7 @@ class MapView extends Component {
 
     setupWidgetsAndLayers = () => {
         loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic', "esri/layers/TileLayer", "esri/Basemap"]).then(([FeatureLayer, GraphicsLayer, Graphic, TileLayer, Basemap]) => {
-            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_W" +
-                    "ebMercator/MapServer";
+            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_WebMercator/MapServer";
             const baselayer = new TileLayer(layerUrl, null);
             const baseMap = new Basemap({baseLayers: [baselayer]})
 

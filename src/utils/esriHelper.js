@@ -96,46 +96,20 @@ export function createView(mapConfig, node, isScene = false) {
 
 function initMap(mapConfig, node) {
     // if there is a portal ID then this is a web map
-    if (mapConfig.id) {
-        return new Promise((resolve, reject) => {
-            esriLoader.loadModules([
-                'esri/WebMap',
-                'esri/views/MapView',
-                'esri/geometry/Extent'
-            ]).then( ([WebMap, MapView, Extent]) => {
-
-                const webmap = new WebMap({
-                    portalItem: {
-                        id: mapConfig.id
-                    }
-                });
-
-                new MapView({
-                    container: node,
-                    map: webmap,
-                    extent: mapConfig.extent
-                }).when(
-                    response => {
-                        resolve({
-                            view: response,
-                        });
-                    },
-                    error => {
-                        reject(error);
-                    }
-                );
-            });
-        });
-    }
+    
     // else if there is no portal ID then we return the default map view
     return new Promise((resolve, reject) => {
         esriLoader.loadModules([
             'esri/Map',
+            "esri/layers/TileLayer",
+            "esri/Basemap",
             'esri/views/MapView'
-        ]).then( ([Map, MapView]) => {
-
+        ]).then( ([Map,TileLayer,Basemap, MapView]) => {
+            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_WebMercator/MapServer";
+            const baselayer = new TileLayer(layerUrl, null);
+            const baseMapMine = new Basemap({baseLayers: [baselayer]})
             const map = new Map({
-                basemap: mapConfig.basemap
+                basemap: baseMapMine
             });
 
             new MapView({
