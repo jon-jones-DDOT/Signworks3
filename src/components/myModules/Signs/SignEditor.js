@@ -9,6 +9,7 @@ import {muttGenerator} from "../../../utils/JSAPI";
 
 import Timebands from '../Timebands/Timebands';
 import Zone from './Zone';
+import {MutcdDuplicate} from './SignValidations';
 
 let Typeahead = require('react-typeahead').Typeahead;
 
@@ -32,7 +33,9 @@ export default class SignEditor extends Component {
             ward1: zone[0],
             anc1: zone[1],
             ward2: zone[2],
-            anc2: zone[3]
+            anc2: zone[3],
+            //validation keys
+            muttDupe:false,
 
         }
         // the action property is just being arbitrarily tacked on here, I will use it
@@ -115,7 +118,7 @@ export default class SignEditor extends Component {
         editedFeature.sign.attributes = {
             ...this.state.attributes
         };
-        if(editedFeature.sign.attributes.SIGNARROWDIRECTION === 0){
+        if (editedFeature.sign.attributes.SIGNARROWDIRECTION === 0) {
             editedFeature.sign.attributes.SIGNARROWDIRECTION = null;
         }
 
@@ -127,7 +130,6 @@ export default class SignEditor extends Component {
         editedFeature.deleteBands = [];
 
         for (let i = 0; i < this.state.timebands.length; i++) {
-       
 
             switch (this.state.timebands[i].action) {
                 case 1:
@@ -174,8 +176,9 @@ export default class SignEditor extends Component {
 
     muttSelectorSaveHandler = () => {
         //
-
-        this.setState({paneSelection: 1, showInfo: false})
+        const result = MutcdDuplicate(this.state.MUTCD.code, this.props.signs)
+        console.log('result :', result);
+        this.setState({paneSelection: 1,muttDupe:result, showInfo: false})
     }
 
     cancelMUTCDselectHandler = () => {
@@ -272,7 +275,7 @@ export default class SignEditor extends Component {
 
     signArrowSelectHandler = (evt) => {
         let id = Number(evt.target.id.charAt(4))
-        
+
         this.setState({
             attributes: {
                 ...this.state.attributes,
@@ -419,13 +422,13 @@ export default class SignEditor extends Component {
         })
     }
 
-    timebandDeleteHandler = (evt, index ,del) => {
-        
+    timebandDeleteHandler = (evt, index, del) => {
+
         let bands = [...this.state.timebands]
         // if it is an existing record , edited or not, mark for deletion
         if (bands[index].action === 0 || bands[index].action === 2) {
-            bands[index].action =3 // if it is a new record, set to zero and it will disappear on save
-            
+            bands[index].action = 3 // if it is a new record, set to zero and it will disappear on save
+
         } else {
             bands[index].action = 0
         }
@@ -439,7 +442,7 @@ export default class SignEditor extends Component {
 
     render() {
         const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
-     
+
         return (
 
             <ModalWrapper
@@ -463,16 +466,17 @@ export default class SignEditor extends Component {
                             className="SignEditorImage"
                             alt="sign"></Img>
 
-                        <span className="InnerMUTCD">
+                        <span className={this.state.muttDupe?"InnerMUTCD_error":"InnerMUTCD"}>
                             {this.state.MUTCD.code}:{this.state.MUTCD.name}
 
                         </span>
                         <span>
                             <Img
                                 alt="sign direction"
-                                src={[window.location.origin + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png",
-                                  window.location.origin + "/img/0.png"]}
-                               
+                                src={[
+                                window.location.origin + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png",
+                                window.location.origin + "/img/0.png"
+                            ]}
                                 onClick={this.signDirectionClickHandler}
                                 className="SignDirectionArrow"></Img>
                         </span>

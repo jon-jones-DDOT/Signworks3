@@ -34,7 +34,7 @@
     min-height: 60%;
     min-width: 90%;
     height: 50px;
-    border: 2px red solid;
+    
     margin: 20px;
 }
 .MutcdInfoDiv_hidden {
@@ -54,16 +54,14 @@
     text-align: left;
     display: block;
     top: 30px;
-    border: 1px solid green;
+    
 }
 
 .SignEditorImage {
 
     width: 80px;
 }
-.SignEditorImageDiv {
-    border: 1px deeppink solid;
-}
+
 
 .SignEditButtonDiv {
     bottom: 20px;
@@ -72,12 +70,21 @@
 
 }
 .InnerMUTCD {
-    position: relative;
-    border: solid blue 1px;
+    position: relative;   
     left: 20px;
     bottom: 30px;
-
+    border: 5px solid blue;
 }
+
+.InnerMUTCD_error {
+    position: relative;   
+    left: 20px;
+    bottom: 30px;
+    border: solid red 1px;
+}
+
+
+
 .SignDirectionArrow{
     float:right;
     width:80px;
@@ -97,7 +104,7 @@
     height: 110px;
     width: 100%;
     top:30px;
-    border: 1px solid purple;
+  
 }
 .ZoneSpan{
     padding-left: 35px;
