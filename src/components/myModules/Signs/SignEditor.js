@@ -115,6 +115,9 @@ export default class SignEditor extends Component {
         editedFeature.sign.attributes = {
             ...this.state.attributes
         };
+        if(editedFeature.sign.attributes.SIGNARROWDIRECTION === 0){
+            editedFeature.sign.attributes.SIGNARROWDIRECTION = null;
+        }
 
         editedFeature.sign.attributes.ZONEID = this.zoneAssembler();
 
@@ -278,6 +281,7 @@ export default class SignEditor extends Component {
 
     signArrowSelectHandler = (evt) => {
         let id = Number(evt.target.id.charAt(4))
+        
         this.setState({
             attributes: {
                 ...this.state.attributes,
@@ -444,7 +448,7 @@ export default class SignEditor extends Component {
 
     render() {
         const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
-
+     
         return (
 
             <ModalWrapper
@@ -473,11 +477,13 @@ export default class SignEditor extends Component {
 
                         </span>
                         <span>
-                            <img
+                            <Img
                                 alt="sign direction"
-                                src={window.location.origin + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png"}
+                                src={[window.location.origin + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png",
+                                  window.location.origin + "/img/0.png"]}
+                               
                                 onClick={this.signDirectionClickHandler}
-                                className="SignDirectionArrow"></img>
+                                className="SignDirectionArrow"></Img>
                         </span>
 
                     </div>
