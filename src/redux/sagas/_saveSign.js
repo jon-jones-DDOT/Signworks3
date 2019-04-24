@@ -11,7 +11,7 @@ function * saveSelectSign(action) {
        const signResult =   yield call(saveSign, [action.payload.sign, false,action.payload.layers]);
 
         const bandResult =  yield call(saveTimebands,[action.payload.sign,action.payload.layers])
-        console.log('signs result', signResult,'band result', bandResult);
+      
        
         
          yield getFullSignPost(action);

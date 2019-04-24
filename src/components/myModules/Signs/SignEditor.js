@@ -127,16 +127,7 @@ export default class SignEditor extends Component {
         editedFeature.deleteBands = [];
 
         for (let i = 0; i < this.state.timebands.length; i++) {
-            console.log('this.state.timebands[i].attributes.GLOBALID :', this.state.timebands[i].attributes.GLOBALID);
-            /*    if (this.state.timebands[i].attributes.GLOBALID === null) {
-                editedFeature
-                    .newBands
-                    .push(this.state.timebands[i])
-            } else {
-                editedFeature
-                    .editBands
-                    .push(this.state.timebands[i])
-            } */
+       
 
             switch (this.state.timebands[i].action) {
                 case 1:
