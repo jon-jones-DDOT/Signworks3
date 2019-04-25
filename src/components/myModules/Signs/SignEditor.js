@@ -10,7 +10,7 @@ import {muttGenerator} from "../../../utils/JSAPI";
 
 import Timebands from '../Timebands/Timebands';
 import Zone from './Zone';
-import {MutcdDuplicate, isSpeedLimit} from './SignValidations';
+import {MutcdDuplicate, isSpeedLimit, zoneVerify} from './SignValidations';
 
 let Typeahead = require('react-typeahead').Typeahead;
 
@@ -37,6 +37,7 @@ console.log('this is the props coming into the constructor', this.props.signs[th
             anc2: zone[3],
             //validation keys
             muttDupe:false,
+            zoneChecked:true,
 
         }
         // the action property is just being arbitrarily tacked on here, I will use it
@@ -47,23 +48,40 @@ console.log('this is the props coming into the constructor', this.props.signs[th
     }
 
     zoneChangeHandler = (evt) => {
-
+        let Checksky = true;
         switch (evt.target.id) {
             case "ward1":
-                this.setState({ward1: evt.target.value});
+                this.setState({ward1: evt.target.value},function(){
+                     Checksky = zoneVerify(this.state)
+                     this.setState({zoneChecked:Checksky})
+        console.log('Checksky :', Checksky);
+                });
                 break;
             case "anc1":
-                this.setState({anc1: evt.target.value});
+                this.setState({anc1: evt.target.value},function(){
+                     Checksky = zoneVerify(this.state)
+                     this.setState({zoneChecked:Checksky})
+        console.log('Checksky :', Checksky);
+                });
                 break;
             case "ward2":
-                this.setState({ward2: evt.target.value});
+                this.setState({ward2: evt.target.value},function(){
+                     Checksky = zoneVerify(this.state)
+                     this.setState({zoneChecked:Checksky})
+        console.log('Checksky :', Checksky);
+                });
                 break;
             case "anc2":
-                this.setState({anc2: evt.target.value});
+                this.setState({anc2: evt.target.value},function(){
+                     Checksky = zoneVerify(this.state)
+                     this.setState({zoneChecked:Checksky})
+        console.log('Checksky :', Checksky);
+                });
                 break;
             default:
                 break;
         }
+        
 
     }
 
@@ -124,7 +142,7 @@ console.log('this is the props coming into the constructor', this.props.signs[th
         }
 
         editedFeature.sign.attributes.ZONE_ID = this.zoneAssembler();
-        console.log('editedFeature.sign.attributes.ZONEID', editedFeature.sign.attributes.ZONEID)
+     
 
         editedFeature.sign.attributes.SIGNCODE = this.state.MUTCD.code;
         editedFeature.editBands = [];
@@ -495,7 +513,7 @@ console.log('this is the props coming into the constructor', this.props.signs[th
                                 onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
                             </select>
                         </span>
-                        <span className="ZoneSpan">
+                        <span className={this.state.zoneChecked?"ZoneSpan":"ZoneSpan_error"}>
                             <Zone
                                 props={{
                                 ...this.state

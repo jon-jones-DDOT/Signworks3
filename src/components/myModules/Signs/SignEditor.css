@@ -109,6 +109,12 @@
 .ZoneSpan{
     padding-left: 35px;
 }
+
+.ZoneSpan_error{
+    padding-left: 35px;
+    border: 1px red solid;
+}
+
 .SignText{
     resize:none;
     

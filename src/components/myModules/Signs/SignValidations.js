@@ -5,10 +5,10 @@ import {parkingtypesigns, mphSigns} from "../../../SignworksJSON";
 // from the sign catalog
 export function MutcdDuplicate(newCode, signs) {
 
-    let isDupe = false;
+    let isDupe = "";
     for (let i = 0; i < signs.length; i++) {
         if (signs[i].MUTCD.code === newCode) {
-            isDupe = true;
+            isDupe =true;
         }
     }
    
@@ -31,43 +31,53 @@ else
     return "disabled";
 
 }
-/*
-function zoneVerify (fromSource) {
+
+export function zoneVerify (edState) {
+
+//regex 
+const anc = /[A-G]/
+const ward = /[1-8]/
+const amp = /[&]/
+
+const ward1 = edState.ward1?edState.ward1:"";
+const ward2 = edState.ward2?edState.ward2:"";
+const anc1 = edState.anc1?edState.anc1:"";
+const anc2 = edState.anc2?edState.anc2:"";
 
 
-    if (!fromSource) {
         //assemble zone
-        zoneValue = $ward1.val() + $anc1.val();
-        if ($ward2.val()) {
-            zoneValue += "&" + $ward2.val() + $anc2.val();
+      let  zoneValue = ward1 + anc1;
+     
+        if (ward2) {
+            zoneValue += "&" + ward2 + anc2;
         }
-        else if ($anc2.val()) {
+        else if (anc2) {
             // you've got a anc with no ward
-            return flagZone;
+            return false;
 
         }
-    }
-
+     
 
 
 
     // alert(zoneValue);
     // verify zone with same script as python server side
     // this algorithm is overly rigorous since unlike the server side, the zone value is constrained by input controls.  But it should work and might be needed later
-    var verifiedZ = false;
+   
     if (zoneValue == "" || !zoneValue) {
         // this was an error before , but having an empty value is ok
-        return 0;
+        // above is an old comment, might not be "true" in 3.0
+        return true;
     }
     if (zoneValue.length < 1) {
-        return flagZone;
+        return true;
     }
-    var look = zoneValue[0];
+    
     if (ward.test(zoneValue[0])) {
         // we have a ward in first position
         if (zoneValue.length < 2) {
             // it was just a single ward
-            return 0;
+            return true;
         }
         if (amp.test(zoneValue[1])) {
             //single digit ward and ...
@@ -75,15 +85,15 @@ function zoneVerify (fromSource) {
                 //single digit ward and ward and ...
                 if (zoneValue.length < 4) {
                     //single digit ward and single digit ward and done
-                    return 0;
+                    return true;
                 }
                 if (anc.test(zoneValue[3])) {
                     // single digit ward and ward+anc and done
-                    return 0;
+                    return true;
                 }
                 else {
                     //single digit ward and some garbage
-                    return flagZone;
+                    return false;
                 }
             }
         }
@@ -91,47 +101,47 @@ function zoneVerify (fromSource) {
             // ward + anc
             if (zoneValue.length < 3) {
                 // ward + anc and done
-                return 0;
+                return true;
             }
             else if (amp.test(zoneValue[2])) {
                 // ward + anc and ...
                 if (zoneValue.length < 4) {
                     // oops, nothing after the ampersand
                     // we could just fix it here clip the ampersand
-                    return flagZone;
+                    return false;
                 }
                 else if (ward.test(zoneValue[3])) {
                     // ward + anc and ward and ...
                     if (zoneValue.length < 5) {
                         // ward + anc and single digit ward and done
-                        return 0;
+                        return true;
                     }
                     else if (zoneValue.length > 5) {
                         // too many characters  - - shouldn't happen here but check anyway
-                        return flagZone;
+                        return false;
                     }
                     else if (anc.test(zoneValue[4])) {
                         // ward + anc and ward = anc and done
-                        return 0;
+                        return true;
                     }
                     else {
                         // ward + anc + ward + garbage
-                        return flagZone;
+                        return false;
                     }
                 }
                 else {
                     // ward + anc + ampersand + garbage
-                    return flagZone;
+                    return false;
                 }
             }
             else {
                 // ward + anc + garbage
-                return flagZone;
+                return false;
             }
         }
         else {
             //ward + garbage
-            return flagZone;
+            return false;
         }
 
 
@@ -139,39 +149,41 @@ function zoneVerify (fromSource) {
     }
     else {
         //garbage from the get go
-        return flagZone;
+        return false;
     }
     //should never get here
-    return -1;
+    return false;
 };
 
+
+/*
 function zoneCheck (evt) {
 
 
-    if ($ward1.val() != "") {
-        $anc1.attr('disabled', false);
+    if (props.ward1 != "") {
+        $anc1.attr('disabled', "");
     }
     else {
-        $anc1.attr('disabled', true);
+        $anc1.attr('disabled', "");
         $anc1.val("");
     }
-    if ($ward2.val() != "") {
-        $anc2.attr('disabled', false);
+    if (props.ward2 != "") {
+        $anc2.attr('disabled', "");
     }
     else {
-        $anc2.attr('disabled', true);
+        $anc2.attr('disabled', "");
         $anc2.val("");
     }
-    var err = zoneVerify(false);
+    var err = zoneVerify("");
     if (err) {
         $zoneDiv.removeClass("edit_div");
         $zoneDiv.addClass("edit_div_err");
-        verify(flagOR, flagZone);
+        verify(flagOR, "");
     }
     else {
         $zoneDiv.removeClass("edit_div_err");
         $zoneDiv.addClass("edit_div");
-        verify(flagORX, flagZone);
+        verify(flagORX, "");
         feature.attributes.ZONE_ID = zoneValue;
     }
 }
