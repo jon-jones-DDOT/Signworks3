@@ -21,7 +21,7 @@ export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-
+console.log('this is the props coming into the constructor', this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID);
         const zone = this.zoneParse(this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
 
@@ -123,7 +123,8 @@ export default class SignEditor extends Component {
             editedFeature.sign.attributes.SIGNARROWDIRECTION = null;
         }
 
-        editedFeature.sign.attributes.ZONEID = this.zoneAssembler();
+        editedFeature.sign.attributes.ZONE_ID = this.zoneAssembler();
+        console.log('editedFeature.sign.attributes.ZONEID', editedFeature.sign.attributes.ZONEID)
 
         editedFeature.sign.attributes.SIGNCODE = this.state.MUTCD.code;
         editedFeature.editBands = [];
@@ -154,7 +155,7 @@ export default class SignEditor extends Component {
 
         }
         const layers = this.props.config.featureURLs;
-
+ console.log('editedFeature', editedFeature)
         this
             .props
             .saveSign(this.props.support, editedFeature, layers)
@@ -178,7 +179,7 @@ export default class SignEditor extends Component {
     muttSelectorSaveHandler = () => {
         //
         const result = MutcdDuplicate(this.state.MUTCD.code, this.props.signs)
-        console.log('result :', result);
+     
         this.setState({paneSelection: 1,muttDupe:result, showInfo: false})
     }
 

@@ -131,7 +131,7 @@ export function saveSignOrder(args) {
 
 export function saveSupport(args/*updateFeature, isNew, layer */) {
     const updateFeature = args[0];
-    console.log(JSON.stringify(updateFeature));
+  
     const isNew = args[1];
     const layer = args[2];
 
@@ -164,16 +164,14 @@ export function saveTimebands(args) {
     const newTimebands = args[0].newBands; //array
     const deleteTimebands = args[0].deleteBands;
     const timebandLayer = args[1].timebands + "/applyEdits";
-    console.log('newTimebands', newTimebands)
-    console.log('updateTimebands', updateTimebands)
-    console.log('deleteTimebands :', deleteTimebands);
+
     const bandSet = {
         f: "json",
         "adds": JSON.stringify(newTimebands),
         "updates": JSON.stringify(updateTimebands),
         "deletes":JSON.stringify(deleteTimebands)
     };
-console.log("bandset", bandSet);
+
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(timebandLayer, {
