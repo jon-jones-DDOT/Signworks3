@@ -5,11 +5,12 @@ import './SignEditor.css'
 
 import ModalWrapper from '../Modals/ModalWrapper';
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
+
 import {muttGenerator} from "../../../utils/JSAPI";
 
 import Timebands from '../Timebands/Timebands';
 import Zone from './Zone';
-import {MutcdDuplicate} from './SignValidations';
+import {MutcdDuplicate, isSpeedLimit} from './SignValidations';
 
 let Typeahead = require('react-typeahead').Typeahead;
 
@@ -487,7 +488,9 @@ export default class SignEditor extends Component {
                             <select
                                 value={this.state.attributes.SIGNNUMBER
                                 ? this.state.attributes.SIGNNUMBER
-                                : ""}
+                                : ""
+                            }
+                            disabled= {isSpeedLimit(this.state.attributes.SIGNCODE)}
                                 onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
                             </select>
                         </span>

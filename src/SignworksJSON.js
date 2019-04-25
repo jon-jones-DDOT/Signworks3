@@ -2,7 +2,7 @@ import React from "react"
 
 export class SupportType {
     name = (index, domain) => {
-        if(index===null){
+        if (index === null) {
             return null;
         }
         let codedValue = "but";
@@ -112,8 +112,8 @@ export class SupportType {
 
 export class SignType {
     name = (index, domain) => {
-        
-        if(index===null){
+
+        if (index === null) {
             return null;
         }
         let codedValue = "but";
@@ -150,7 +150,7 @@ export class SignType {
         {
             code: 0,
             name: ""
-        },   {
+        }, {
             "name": "Monday",
             "code": 1
         }, {
@@ -184,7 +184,7 @@ export class SignType {
         {
             code: "",
             name: ""
-        },  {
+        }, {
             "name": "0400A",
             "code": 1
         }, {
@@ -609,7 +609,7 @@ export class SignType {
             "code": 8
         } */
     ]
-    
+
     _codedValuesWards = [
         {
             code: "",
@@ -677,3 +677,113 @@ export function addOptionsToSelect(options) {
             {value.name}</option>
     ))
 }
+
+export const mphSigns = [
+    "R2-1",
+    "R2-1(5)",
+    "R2-1(10)",
+    "R2-1(15)",
+    "R2-1(20)",
+    "R2-1(25)",
+    "R2-1(30)",
+    "R2-1(35)",
+    "R2-1(40)",
+    "R2-1(45)",
+    "R2-1(50)",
+    "R2-1(55)",
+    "R2-1(60)",
+    "R2-1(65)",
+    "R2-1(70)",
+    "R2-1(75)",
+    "R2-2",
+    "R2-2P",
+    "R2-3",
+    "R2-3P",
+    "R2-4",
+    "R2-4P",
+    "R2-4a",
+    "R2-5B",
+    "S5-1",
+    "W1-1a",
+    "W1-2a",
+    "W13-1",
+    "W13-2",
+    "W13-3"
+];
+
+export const parkingtypesigns = [
+    'R-NS-006',
+    'R-NS-011',
+    'R-NS-012',
+    'R-NS-013',
+    'R-NS-015',
+    'R-NS-017',
+    'R-NS-019',
+    'R-NS-022',
+    'R-NS-026',
+    'R-NS-038',
+    'R-NS-052',
+    'R-NS-053',
+    'R-NS-059',
+    'R-NS-064',
+    'R-NS-075',
+    'R-NS-080',
+    'R-NS-121',
+    'R-NS-122',
+    'R-NS-131',
+    'R-NS-133',
+    'R-NS-141',
+    'R-NS-148',
+    'R-NS-172',
+    'R-NS-174',
+    'R-NS-180',
+    'R-NS-185',
+    'R-NS-210',
+    'R-NS-215',
+    'R-NS-213',
+    'R-NS-214',
+    'R-NS-056',
+    'R-NS-LZSHARED',
+    'R-NS-OLD',
+    'R-NS_ROP',
+    'R-NS-RPP',
+    'R-DC-2HROLD',
+    'R-DC-2HROLD',
+    'R-DC-2HR',
+    'R-DC-NSNP',
+    'R-DC-NSNP_EXCEPTION',
+    'R-DC-PTPCOIN',
+    'R-DC-Taxi_2',
+    'R-DC-NO_PARK_ENTRANCE_TIMES',
+    'R-DC-Diplomat',
+    'R-DC-No_Park_Russia_Embassy',
+    'R-DC-No_Parking_Generic_w_Time',
+    'R-DC-Diplomat_Kazakhstan',
+    'R-DC-No_Stand_Bus',
+    'R-DC-Diplomat_Eq_Guinea',
+    'R-DC-Embassy _Angola',
+    'R-DC-Embassy _Diplomat_Mexico',
+    'R-DC-15_Min_Parking1',
+    'R-DC-One_Hour_Parking_Eastern_Market',
+    'R-DC-School_Parking_Zone_15_Min',
+    'R-DC-School_Loading_Zones2',
+    'R-DC-School_Loading_Zones3',
+    'R-DC-15_Min_Parking2',
+    'R-DC-Back_in_Parking',
+    'R-NS-157',
+    'R-NS-120',
+    'R-DC-One_Way_Yellow',
+    'R-DC-Reserved_DCGov',
+    'D-NS-011',
+    'D-NS-038',
+    'D-NS-039',
+    'D-NS-055',
+    'R-NS-046',
+    'R-NS-134',
+    'R-DC-Hotel_Load',
+    'R-NS-LZPTL',
+    'R-NS-LZSPECIAL',
+    'O-NS-024',
+    'R8-3',
+    'R8-3a'
+];
