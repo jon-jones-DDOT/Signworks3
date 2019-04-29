@@ -10,7 +10,7 @@ import {muttGenerator} from "../../../utils/JSAPI";
 
 import Timebands from '../Timebands/Timebands';
 import Zone from './Zone';
-import {MutcdDuplicate, isSpeedLimit, zoneVerify} from './SignValidations';
+import {MutcdDuplicate, isSpeedLimit, zoneVerify, timebandVerify} from './SignValidations';
 
 let Typeahead = require('react-typeahead').Typeahead;
 
@@ -379,23 +379,26 @@ console.log('this is the props coming into the constructor', this.props.signs[th
         switch (ctrl) {
 
             case 0:
-                bands[index].attributes.STARTDAY = evt.target.value;
+                bands[index].attributes.STARTDAY = Number(evt.target.value);
                 break;
             case 1:
-                bands[index].attributes.ENDDAY = evt.target.value;
+                bands[index].attributes.ENDDAY = Number(evt.target.value);
                 break;
             case 2:
-                bands[index].attributes.STARTTIME = evt.target.value;
+                bands[index].attributes.STARTTIME =Number( evt.target.value);
                 break;
             case 3:
-                bands[index].attributes.ENDTIME = evt.target.value;
+                bands[index].attributes.ENDTIME = Number(evt.target.value);
                 break;
             case 4:
-                bands[index].attributes.HOURLIMIT = evt.target.value;
+                bands[index].attributes.HOURLIMIT = Number(evt.target.value);
                 break;
             default:
                 break;
         }
+
+        timebandVerify(bands[index])
+
         // set action to edit if existing record, unedited or already scheduled for
         // editing records marked for add or delete will retain their current action
         if (bands[index].action === 0 || bands[index].action === 2) {

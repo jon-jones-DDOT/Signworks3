@@ -12,6 +12,7 @@ export default class TimebandEditor extends Component {
         this.state = {willDelete:false}
     }
 
+   
 
     deleteBand = (evt, index) => {
       let newDel = !this.state.willDelete;
