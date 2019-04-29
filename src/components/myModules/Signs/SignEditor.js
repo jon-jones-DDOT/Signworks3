@@ -480,7 +480,7 @@ console.log('this is the props coming into the constructor', this.props.signs[th
                     ? "SignEditorOver"
                     : "SignEditorUnder"}>
                     <div
-                        className="SignEditCancel"
+                        className="SupportEditCancel"
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
                     <div className="MUTCDdiv" onClick={this.muttSelectorOpenHandler}>

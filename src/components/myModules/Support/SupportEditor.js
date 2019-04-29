@@ -61,8 +61,12 @@ export default class SupportEditor extends Component {
                 width
                 ={400}
                 showOk={this.props.showOk}>
-                <div className="SupportEditor">
                    
+                <div className="SupportEditor">
+                <div
+                        className="SignEditCancel"
+                        title="Close Window"
+                        onClick={this.cancelClickHandler}>X</div>
                     <p>{this.state.OBJECTID}</p>
                     <p>Support Type:<select value={this.state.SUPPORTTYPE} onChange={this.supportTypeChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportType)}</select>
                     </p>

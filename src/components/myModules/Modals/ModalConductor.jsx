@@ -12,7 +12,7 @@ function ModalConductor(props) {
         case 'SUPPORT':
             return <SupportEditor {...props}/>
         case 'SIGN':
-            return <SignEditor{...props}/>
+            return <SignEditor {...props}/>
         default:
             return null
     }
