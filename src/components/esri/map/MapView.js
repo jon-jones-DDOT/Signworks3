@@ -40,6 +40,7 @@ const containerID = "map-view-container";
 class MapView extends Component {
     selPoint = null;
     markerLayer = null;
+    symb = null;
     componentDidMount() {
     
         this.startup(this.props.mapConfig, containerID, this.props.is3DScene);
@@ -135,7 +136,7 @@ class MapView extends Component {
 
           
 
-            const symb = {
+            this.symb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
                 style: "circle",
                 color: [
@@ -148,11 +149,9 @@ class MapView extends Component {
                 }
             };
           
-            this.selPoint = new Graphic({geometry: this.props.graphic.selSupportGeom, symbol: symb})
+            this.selPoint = new Graphic({geometry: null, symbol: this.symb})
 
-            this
-                .markerLayer
-                .add(this.selPoint)
+        //   this.markerLayer.add(this.selPoint)
         });
     }
 

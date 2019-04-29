@@ -4,8 +4,8 @@ export const types = {
 
 // REDUCERS //
 export const initialState = {
-    selSupportGeom: {} //{x:-76.98, y:38.888686}
-};
+    selSupportGeom:  null
+}
 
 export default(state = initialState, action) => {
     switch (action.type) {
