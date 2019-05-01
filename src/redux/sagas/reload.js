@@ -13,12 +13,13 @@ export function * getFullSignPost(action) {
         }
 
         const support = action.payload.support;
-
+console.log('support', support)
         // retrieve the new related signs with a call to AGS
 
         const signsREsp = yield call(getRelatedSigns, [support, action.payload.layers.signs])
-
+       
         const signArray = signsREsp.data.features;
+       
 
         // start creating sign payload
         const signs = [];

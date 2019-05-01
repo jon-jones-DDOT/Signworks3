@@ -14,6 +14,7 @@ export const types = {
     MODAL: "MODAL",
     SAVE_SUPPORT: "SAVE_SUPPORT",
     SAVE_SIGN: "SAVE_SIGN",
+    NEW_SIGN: "NEW_SIGN",
     INIT: "INIT"
 };
 
@@ -93,9 +94,18 @@ export const actions = {
             layers
         }
     }),
-    saveSign:(support,sign, layers) =>({
+    saveSign: (support, sign, layers) => ({
         type: types.SAVE_SIGN,
-        payload:{
+        payload: {
+            support,
+            sign,
+            layers
+        }
+    }),
+
+    newSign: (support, sign, layers) => ({
+        type: types.NEW_SIGN,
+        payload: {
             support,
             sign,
             layers

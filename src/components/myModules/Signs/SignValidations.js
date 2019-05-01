@@ -146,12 +146,12 @@ export function zoneVerify(edState) {
 
 //gets an individual timeband and makes sure that it is internally consistent
 export function timebandVerify(timeband) {
-    console.log('timeband', timeband)
+
     const startDay = timeband.attributes.STARTDAY;
     const endDay = timeband.attributes.ENDDAY;
     const startTime = timeband.attributes.STARTTIME;
     const endTime = timeband.attributes.ENDTIME;
-    console.log(startDay, endDay, startTime, endTime)
+
 
     let errorArray = [];
 

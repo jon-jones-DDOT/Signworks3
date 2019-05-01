@@ -71,7 +71,7 @@ export function getRelatedSigns(args) {
 
     return new Promise((resolve, reject) => {
         const feature = args[0]
-
+console.log('feature :', feature);
         const layer = args[1]
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
@@ -185,6 +185,7 @@ export function saveTimebands(args) {
 export function saveSign(args) {
 
     const updateSignFeature = args[0].sign;
+    console.log('updateSignFeature', updateSignFeature)
 
     const isNew = args[1];
     const signLayer = args[2].signs + "/applyEdits";
@@ -192,6 +193,7 @@ export function saveSign(args) {
     let signSet = null;
 
     if (isNew) {
+        console.log('JSAPI says it is new')
         signSet = {
             f: "json",
             "adds": JSON.stringify([updateSignFeature])
@@ -215,6 +217,10 @@ export function saveSign(args) {
     }) //end of promise
 
 } // end of function
+
+export function newSign(arg){
+    
+}
 
 export function project(args/*geom,spatRef */) {
     const geom = args[0]

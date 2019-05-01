@@ -21,7 +21,6 @@ export default class SignEditor extends Component {
 
     constructor(props) {
         super(props)
-console.log('this is the props coming into the constructor', this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID);
         const zone = this.zoneParse(this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
 
@@ -36,9 +35,8 @@ console.log('this is the props coming into the constructor', this.props.signs[th
             ward2: zone[2],
             anc2: zone[3],
             //validation keys
-            muttDupe:false,
-            zoneChecked:true,
-
+            muttDupe: false,
+            zoneChecked: true
         }
         // the action property is just being arbitrarily tacked on here, I will use it
         // to sort the timebands for edits, adds, deletes, and no action
@@ -51,37 +49,44 @@ console.log('this is the props coming into the constructor', this.props.signs[th
         let Checksky = true;
         switch (evt.target.id) {
             case "ward1":
-                this.setState({ward1: evt.target.value},function(){
-                     Checksky = zoneVerify(this.state)
-                     this.setState({zoneChecked:Checksky})
-        console.log('Checksky :', Checksky);
+                this.setState({
+                    ward1: evt.target.value
+                }, function () {
+                    Checksky = zoneVerify(this.state)
+                    this.setState({zoneChecked: Checksky})
+
                 });
                 break;
             case "anc1":
-                this.setState({anc1: evt.target.value},function(){
-                     Checksky = zoneVerify(this.state)
-                     this.setState({zoneChecked:Checksky})
-        console.log('Checksky :', Checksky);
+                this.setState({
+                    anc1: evt.target.value
+                }, function () {
+                    Checksky = zoneVerify(this.state)
+                    this.setState({zoneChecked: Checksky})
+
                 });
                 break;
             case "ward2":
-                this.setState({ward2: evt.target.value},function(){
-                     Checksky = zoneVerify(this.state)
-                     this.setState({zoneChecked:Checksky})
-        console.log('Checksky :', Checksky);
+                this.setState({
+                    ward2: evt.target.value
+                }, function () {
+                    Checksky = zoneVerify(this.state)
+                    this.setState({zoneChecked: Checksky})
+
                 });
                 break;
             case "anc2":
-                this.setState({anc2: evt.target.value},function(){
-                     Checksky = zoneVerify(this.state)
-                     this.setState({zoneChecked:Checksky})
-        console.log('Checksky :', Checksky);
+                this.setState({
+                    anc2: evt.target.value
+                }, function () {
+                    Checksky = zoneVerify(this.state)
+                    this.setState({zoneChecked: Checksky})
+
                 });
                 break;
             default:
                 break;
         }
-        
 
     }
 
@@ -142,7 +147,6 @@ console.log('this is the props coming into the constructor', this.props.signs[th
         }
 
         editedFeature.sign.attributes.ZONE_ID = this.zoneAssembler();
-     
 
         editedFeature.sign.attributes.SIGNCODE = this.state.MUTCD.code;
         editedFeature.editBands = [];
@@ -173,7 +177,7 @@ console.log('this is the props coming into the constructor', this.props.signs[th
 
         }
         const layers = this.props.config.featureURLs;
- console.log('editedFeature', editedFeature)
+
         this
             .props
             .saveSign(this.props.support, editedFeature, layers)
@@ -197,8 +201,8 @@ console.log('this is the props coming into the constructor', this.props.signs[th
     muttSelectorSaveHandler = () => {
         //
         const result = MutcdDuplicate(this.state.MUTCD.code, this.props.signs)
-     
-        this.setState({paneSelection: 1,muttDupe:result, showInfo: false})
+
+        this.setState({paneSelection: 1, muttDupe: result, showInfo: false})
     }
 
     cancelMUTCDselectHandler = () => {
@@ -385,7 +389,7 @@ console.log('this is the props coming into the constructor', this.props.signs[th
                 bands[index].attributes.ENDDAY = Number(evt.target.value);
                 break;
             case 2:
-                bands[index].attributes.STARTTIME =Number( evt.target.value);
+                bands[index].attributes.STARTTIME = Number(evt.target.value);
                 break;
             case 3:
                 bands[index].attributes.ENDTIME = Number(evt.target.value);
@@ -489,7 +493,10 @@ console.log('this is the props coming into the constructor', this.props.signs[th
                             className="SignEditorImage"
                             alt="sign"></Img>
 
-                        <span className={this.state.muttDupe?"InnerMUTCD_error":"InnerMUTCD"}>
+                        <span
+                            className={this.state.muttDupe
+                            ? "InnerMUTCD_error"
+                            : "InnerMUTCD"}>
                             {this.state.MUTCD.code}:{this.state.MUTCD.name}
 
                         </span>
@@ -510,13 +517,15 @@ console.log('this is the props coming into the constructor', this.props.signs[th
                             <select
                                 value={this.state.attributes.SIGNNUMBER
                                 ? this.state.attributes.SIGNNUMBER
-                                : ""
-                            }
-                            disabled= {isSpeedLimit(this.state.attributes.SIGNCODE)}
+                                : ""}
+                                disabled={isSpeedLimit(this.state.attributes.SIGNCODE)}
                                 onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
                             </select>
                         </span>
-                        <span className={this.state.zoneChecked?"ZoneSpan":"ZoneSpan_error"}>
+                        <span
+                            className={this.state.zoneChecked
+                            ? "ZoneSpan"
+                            : "ZoneSpan_error"}>
                             <Zone
                                 props={{
                                 ...this.state
