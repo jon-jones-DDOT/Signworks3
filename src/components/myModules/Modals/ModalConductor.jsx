@@ -5,6 +5,7 @@ import {actions as mapActions} from '../../../redux/reducers/map'
 
 import SupportEditor from '../Support/SupportEditor';
 import SignEditor from '../Signs/SignEditor';
+import SuperQuery from '../SuperQuery'
 
 function ModalConductor(props) {
  
@@ -13,6 +14,8 @@ function ModalConductor(props) {
             return <SupportEditor {...props}/>
         case 'SIGN':
             return <SignEditor {...props}/>
+            case 'QUERY':
+            return <SuperQuery {...props}></SuperQuery>
         default:
             return null
     }

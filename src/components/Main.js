@@ -20,20 +20,22 @@ import { actions as authActions } from '../redux/reducers/auth';
 
 
 // Components
-import TopNav from 'calcite-react/TopNav';
 
-import TopNavTitle from 'calcite-react/TopNav/TopNavTitle';
+
 import TopNavList from 'calcite-react/TopNav/TopNavList';
-import TopNavLink from 'calcite-react/TopNav/TopNavLink';
+
 import MapView from './esri/map/MapView';
 import LoadScreen from './LoadScreen';
-import UserAccount from './UserAccount';
+
 
 import RightBar from "./myModules/RightBar";
+
+import Banner from './myModules/Banner';
 
 // Styled Components
 import styled from 'styled-components';
 import ModalConductor from './myModules/Modals/ModalConductor';
+
 
 const Container = styled.div`
   display: flex;
@@ -56,10 +58,6 @@ const MapWrapper = styled.div`
 
 
 
-const Nav = styled(TopNav)`
-  background-color: ${props => props.theme.palette.gray};
-  z-index: 5
-`;
 
 const NavList = styled(TopNavList)`
   text-align: left;
@@ -81,23 +79,7 @@ class Main extends Component {
       <Container>
         <LoadScreen isLoading={this.props.mapLoaded} />
 
-        <Nav>
-         
-          <TopNavTitle href="#">ArcGIS JS API + React Boot</TopNavTitle>
-          <NavList>
-            <TopNavLink href="https://github.com/Esri/esri-react-boot">Github</TopNavLink>
-            <TopNavLink href="https://github.com/Esri/esri-react-boot/wiki">Docs</TopNavLink>
-            <TopNavLink href="https://calcite-react.netlify.com/">Calcite-React</TopNavLink>
-          </NavList>
-          <UserAccount
-            user={this.props.auth.user}
-            portal={this.props.auth.user ? this.props.auth.user.portal : null}
-            loggedIn={this.props.auth.loggedIn}
-            signIn={this.signIn}
-            signOut={this.signOut}
-          />
-          
-        </Nav>
+        <Banner {...this.props}></Banner>
 
         <MapWrapper>
           <MapView
