@@ -8,11 +8,7 @@ export default class SuperQuery extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-
-            ...this.props.support.attributes
-
-        }
+       
     }
 
    

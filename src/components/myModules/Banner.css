@@ -1,4 +1,22 @@
 .Banner{
+display:flex;
+flex-direction: row;
+background-color: #1C2F5A;
+   
+}
 
-    margin:auto;
+.UserAccount{
+   display: inline;
+}
+.AppLogo{
+   display: block;
+   margin-left: 175px;
+   margin-top:5px;
+   margin-bottom:3px;
+}
+
+.AppTools{
+    display: inline;
+   flex-grow:7;
+    
 }
