@@ -10,3 +10,12 @@
     /*  z-index: 5  */
 }
 
+.SuperQueryCancel{
+    
+  width: 10px;
+  height: 10px;
+  float: right;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
