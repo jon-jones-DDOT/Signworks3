@@ -13,7 +13,7 @@ import logo from "../../img/logo.png"
         
         switch (evt.target.value) {
 
-            case "0":
+            case "0": //SuperQuery™
          
             this
             .props
@@ -32,7 +32,7 @@ import logo from "../../img/logo.png"
                 <img src={logo} className="AppLogo"/>
 
                 <div className="AppTools">
-                    <select onChange={this.bannerActionHandler}>
+                    <select onChange={this.bannerActionHandler} className="ActionSelect">
                         <option>...Actions</option>
                         <option value={0}>Sign Query</option>
                     </select>
