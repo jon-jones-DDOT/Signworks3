@@ -9,6 +9,7 @@
 export const types = {
     MAP_LOADED: "MAP_LOADED",
     MAP_CLICKED: "MAP_CLICKED",
+    MAP_CHANGED: "MAP_CHANGED",
     SET_SELECTED_SUPPORT: "SET_SELECTED_SUPPORT",
     SIGN_ORDER_CHANGED: "SIGN_ORDER_CHANGED",
     MODAL: "MODAL",
@@ -28,7 +29,8 @@ export const initialState = {
     okDisabled: false,
     showOk: true,
     editSignIndex: NaN,
-    muttArray: []
+    muttArray: [],
+    extent:null
 };
 
 export default(state = initialState, action) => {
@@ -53,6 +55,11 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
+            case types.MAP_CHANGED:
+            return{
+                ...state,
+                ...action.payload
+            }
 
         default:
             return state;
@@ -61,7 +68,13 @@ export default(state = initialState, action) => {
 
 // ACTIONS //
 export const actions = {
-    mapLoaded: () => ({type: types.MAP_LOADED, payload: {}}),
+    mapLoaded: (extent) => ({type: types.MAP_LOADED, payload: {extent}}),
+    mapChanged: (extent) => ({
+        type: types.MAP_CHANGED, 
+        payload: {
+            extent
+        }
+    }),
     mapClicked: (geom, layers) => ({
 
         type: types.MAP_CLICKED,

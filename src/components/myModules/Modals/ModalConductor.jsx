@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../../redux/reducers/map'
+import {actions as graphicsActions} from '../../../redux/reducers/graphic'
 
 import SupportEditor from '../Support/SupportEditor';
 import SignEditor from '../Signs/SignEditor';
@@ -25,7 +26,8 @@ const mapStateToProps = state => ({map: state.map, config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({
-        ...mapActions
+        ...mapActions,
+        ...graphicsActions
     }, dispatch);
 }
 

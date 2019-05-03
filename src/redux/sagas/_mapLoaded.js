@@ -17,7 +17,8 @@ function * setInitConfig(action) {
      yield put({
         type: mapTypes.INIT,
         payload: {
-            muttArray:muttData
+            muttArray:muttData,
+            extent:action.payload.extent
         }
     });
 

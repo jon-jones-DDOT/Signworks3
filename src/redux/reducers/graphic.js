@@ -1,10 +1,13 @@
 export const types = {
-    SET_SUPPORT_MARKER: "SET_SUPPORT_MARKER"
+    SET_SUPPORT_MARKER: "SET_SUPPORT_MARKER",
+    QUERY_SUPERQUERY: "QUERY_SUPERQUERY",
+    SET_QUERY_RESULTS: "SET_QUERY_RESULTS"
 };
 
 // REDUCERS //
 export const initialState = {
-    selSupportGeom:  null
+    selSupportGeom:  null,
+    queryFeatures :[]
 }
 
 export default(state = initialState, action) => {
@@ -15,7 +18,11 @@ export default(state = initialState, action) => {
             ...state,
             ...action.payload
         }
-
+        case types.SET_QUERY_RESULTS:
+        return {
+            ...state,
+            ...action.payload
+        }
         default:
             return state;
     }
@@ -29,5 +36,10 @@ export const actions = {
         payload: {
             selSupportGeom
         }
+    }),
+    querySuperQuery:(where, extent, layer) =>({
+
+        type:types.QUERY_SUPERQUERY,
+        payload:{ where,extent,layer}
     })
 };

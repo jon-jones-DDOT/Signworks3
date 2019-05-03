@@ -11,7 +11,7 @@ function * saveNewSign(action) {
     try{
      
         const signResult =   yield call(saveSign, [action.payload.sign, true, action.payload.layers]);
-       console.log('action.payload :', action.payload);
+      
         
          yield getFullSignPost(action);
     }

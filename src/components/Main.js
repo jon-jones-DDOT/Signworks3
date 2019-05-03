@@ -86,6 +86,7 @@ class Main extends Component {
           onMapClicked = {this.props.mapClicked}
             onMapLoaded={this.props.mapLoaded}
             mapConfig={this.props.config.mapConfig}
+            onMapChanged = {this.props.mapChanged}
             is3DScene={false}
           />
            <RightBar/>

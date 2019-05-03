@@ -6,7 +6,7 @@ import {faPlusSquare} from '@fortawesome/free-solid-svg-icons';
 
 
 export default function SignCreator(props) {
-    console.log("props inside sign creator", props);
+   
   return (
       props.sel?
     <div className="SignCreator">

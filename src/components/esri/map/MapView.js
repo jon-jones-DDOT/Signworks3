@@ -51,7 +51,7 @@ class MapView extends Component {
         return false;
     }
     UNSAFE_componentWillReceiveProps(nextProps) {
-
+console.log("mystery function fired");
         if (this.selPoint) {
             this
                 .markerLayer
@@ -94,10 +94,11 @@ class MapView extends Component {
         // Update app state only after map and widgets are loaded
         this
             .props
-            .onMapLoaded();
+            .onMapLoaded(this.view.extent);
     }
 
     getSelectedSupport = (expandedMapPoint) => {
+       
         this
             .props
             .onMapClicked(expandedMapPoint, this.props.config.featureURLs);
@@ -108,6 +109,10 @@ class MapView extends Component {
 
         pointToExtent(this.view, evt.mapPoint, 12, this.getSelectedSupport);
 
+    }
+
+    mapMoveHandler = (evt) =>{
+      this.props.onMapChanged(this.view.extent);
     }
 
     init = (response) => {
@@ -131,6 +136,9 @@ class MapView extends Component {
             this
                 .view
                 .on("click", this.mapClicked);
+
+                this.view.on("pointer-up", this.mapMoveHandler);
+                this.view.on('mouse-wheel', this.mapMoveHandler)
 
            
 

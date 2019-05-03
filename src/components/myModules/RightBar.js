@@ -24,7 +24,7 @@ class RightBar extends Component {
     }
 
     addSignHandler = (evt) => {
-        console.log('props', this.props)
+      
         // this may look dumb, but we are sharing a function with saveSign and the input
         // parameter must match structure
         let signWrapper = {};

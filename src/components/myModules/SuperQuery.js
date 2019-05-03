@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import './SuperQuery.css'
 import ModalWrapper from './Modals/ModalWrapper';
+
+
 let Typeahead = require('react-typeahead').Typeahead;
+
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
 
 export default class SuperQuery extends Component {
@@ -39,6 +42,24 @@ export default class SuperQuery extends Component {
             .modalClicked(false, null)
     }
 
+
+    searchClickHandler = (evt) => {
+        // when this finally breaks , remember to check and see if they updated the table to 'SIGNCODE'
+     
+        const where = "MUTCD='" + this.state.selectedMutt + "'";
+        const  extent = this.props.extent;
+        const layer = this.props.config.featureURLs.superquery;
+      
+        this.props.querySuperQuery(where, extent, layer)
+
+
+       // const features = queryLayers(where,extent,this.props.config.featureURLs.Superquery).next();
+        
+      //  console.log('features :', features);
+        
+
+    }
+
     render() {
 
         return (
@@ -71,7 +92,7 @@ export default class SuperQuery extends Component {
 
                     <p>
                         The Extent for the query will be the current extent of the displayed map</p>
-                    < button>DO THIS THING</button>
+                    < button onClick = {this.searchClickHandler}>DO THIS THING</button>
 
                 </div>
             </ModalWrapper>

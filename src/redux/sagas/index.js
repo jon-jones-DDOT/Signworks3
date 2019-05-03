@@ -23,6 +23,7 @@ import * as saveSupportSaga from './_saveSupport';
 import * as saveSignSaga from './_saveSign';
 import * as mapLoadedSaga from './_mapLoaded';
 import * as newSignSaga from './_newSign';
+import * as querySaga from './_query'
 
 
 export default function* rootSaga() {
@@ -34,7 +35,8 @@ export default function* rootSaga() {
     ...Object.values(saveSupportSaga),
     ...Object.values(mapLoadedSaga),
     ...Object.values(saveSignSaga),
-    ...Object.values(newSignSaga)
+    ...Object.values(newSignSaga),
+    ...Object.values(querySaga)
 
     // more sagas from different files
   ].map(fork));

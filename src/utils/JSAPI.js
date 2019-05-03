@@ -71,7 +71,7 @@ export function getRelatedSigns(args) {
 
     return new Promise((resolve, reject) => {
         const feature = args[0]
-console.log('feature :', feature);
+
         const layer = args[1]
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
@@ -131,7 +131,7 @@ export function saveSignOrder(args) {
 
 export function saveSupport(args/*updateFeature, isNew, layer */) {
     const updateFeature = args[0];
-  
+
     const isNew = args[1];
     const layer = args[2];
 
@@ -169,7 +169,7 @@ export function saveTimebands(args) {
         f: "json",
         "adds": JSON.stringify(newTimebands),
         "updates": JSON.stringify(updateTimebands),
-        "deletes":JSON.stringify(deleteTimebands)
+        "deletes": JSON.stringify(deleteTimebands)
     };
 
     return new Promise((resolve, reject) => {
@@ -218,21 +218,38 @@ export function saveSign(args) {
 
 } // end of function
 
-export function newSign(arg){
-    
-}
 
-export function project(args/*geom,spatRef */) {
-    const geom = args[0]
-    const spatRef = args[1]
-    loadModules(["esri/geometry/projection"]).then(([projection]) => {
 
-        let bob = projection.project(geom, spatRef)
+export function superQuery(args) {
+    const where = args[0];
+    const geom = args[1];
+    const layer = args[2];
 
-        return bob
+    return new Promise((resolve, reject) => {
+
+        const extent = args[0];
+
+        const supportLayer = args[1];
+
+        loadModules(["esri/request"]).then(([esriRequest]) => {
+            esriRequest(layer + '/query', {
+                query: {
+                    geometry: JSON.stringify(geom),
+                    where: where,
+                    returnGeometry: true,
+                    outFields: '*', // attribute fields to return
+                    token: null, // token
+                    f: "json", // format
+                    outSR: 4326
+                }
+            }).then(resp => resolve(resp), error => reject(error))
+
+        });
+
     })
-
 }
+
+
 
 export function pointToExtent(view, point, toleranceInPixel, callback) {
 
