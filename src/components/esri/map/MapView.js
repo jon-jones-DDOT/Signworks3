@@ -41,8 +41,17 @@ class MapView extends Component {
     selPoint = null;
     markerLayer = null;
     symb = null;
+    geom = null;
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            mapClicked: false
+        }
+    }
+
     componentDidMount() {
-    
+
         this.startup(this.props.mapConfig, containerID, this.props.is3DScene);
     }
 
@@ -50,23 +59,57 @@ class MapView extends Component {
         // Tell React to never update this component, that's up to us
         return false;
     }
+
     UNSAFE_componentWillReceiveProps(nextProps) {
-console.log("mystery function fired");
-        if (this.selPoint) {
+
+        if (nextProps.graphic.queryFeatures.length > 0) {
+            const graphics = [...nextProps.graphic.queryFeatures]
+
+            let querySymb = {
+                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                style: "circle",
+                color: [
+                    0, 255, 0, 0.0
+                ],
+                size: "30px", // pixels
+                outline: { // autocasts as new SimpleLineSymbol()
+                    color: 'blue',
+                    width: 3 // points
+                }
+            };
+
+            //remove features from state goes here
             this
-                .markerLayer
-                .removeAll();
-            this.selPoint.geometry = nextProps.graphic.selSupportGeom;
-            this
-                .markerLayer
-                .add(this.selPoint)
-            this.view.zoom = 20
-            this.view.center = this.selPoint.geometry
+                .props
+                .removeQueryResults();
+            loadModules(["esri/Graphic"]).then(([Graphic]) => {
+                let gr = null;
+                for (let i = 0; i < graphics.length; i++) {
+                    graphics[i].geometry.type = "point"
+                    gr = new Graphic({geometry: graphics[i].geometry, symbol: querySymb})
+                    this
+                        .markerLayer
+                        .add(gr)
+                }
+
+            })
 
         }
 
+        if (this.state.mapClicked) {
+
+            this.selPoint.geometry = nextProps.graphic.selSupportGeom;
+            this.selPoint.symbol = this.symb;
+            this
+                .markerLayer
+                .add(this.selPoint)
+
+            this.view.zoom = 20
+            this.view.center = this.selPoint.geometry
+        }
+        this.setState({mapClicked: false})
     }
-    geom = null;
+
     render() {
 
         return (
@@ -98,7 +141,7 @@ console.log("mystery function fired");
     }
 
     getSelectedSupport = (expandedMapPoint) => {
-       
+
         this
             .props
             .onMapClicked(expandedMapPoint, this.props.config.featureURLs);
@@ -106,13 +149,15 @@ console.log("mystery function fired");
     }
 
     mapClicked = (evt) => {
-
+        this.setState({mapClicked: true})
         pointToExtent(this.view, evt.mapPoint, 12, this.getSelectedSupport);
 
     }
 
-    mapMoveHandler = (evt) =>{
-      this.props.onMapChanged(this.view.extent);
+    mapMoveHandler = (evt) => {
+        this
+            .props
+            .onMapChanged(this.view.extent);
     }
 
     init = (response) => {
@@ -122,7 +167,8 @@ console.log("mystery function fired");
 
     setupWidgetsAndLayers = () => {
         loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic', "esri/layers/TileLayer", "esri/Basemap"]).then(([FeatureLayer, GraphicsLayer, Graphic, TileLayer, Basemap]) => {
-            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_WebMercator/MapServer";
+            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_W" +
+                    "ebMercator/MapServer";
             const baselayer = new TileLayer(layerUrl, null);
             const baseMap = new Basemap({baseLayers: [baselayer]})
 
@@ -137,12 +183,12 @@ console.log("mystery function fired");
                 .view
                 .on("click", this.mapClicked);
 
-                this.view.on("pointer-up", this.mapMoveHandler);
-                this.view.on('mouse-wheel', this.mapMoveHandler)
-
-           
-
-          
+            this
+                .view
+                .on("pointer-up", this.mapMoveHandler);
+            this
+                .view
+                .on('mouse-wheel', this.mapMoveHandler)
 
             this.symb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
@@ -152,14 +198,14 @@ console.log("mystery function fired");
                 ],
                 size: "30px", // pixels
                 outline: { // autocasts as new SimpleLineSymbol()
-                    color: 'blue',
+                    color: 'magenta',
                     width: 3 // points
                 }
             };
-          
+
             this.selPoint = new Graphic({geometry: null, symbol: this.symb})
 
-        //   this.markerLayer.add(this.selPoint)
+            //   this.markerLayer.add(this.selPoint)
         });
     }
 
