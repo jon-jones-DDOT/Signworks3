@@ -16,13 +16,14 @@ background-color: #1C2F5A;
 }
 
 .AppTools{
-    display: inline;
+    display: flex;
    flex-grow:7;
     
 }
 
 .ActionSelect{
-   display:inline;
+   display:flex;
+   margin-top:50px;
   
    
 }

@@ -46,14 +46,19 @@ class Banner extends Component {
                 <img src={logo} className="AppLogo"/>
 
                 <div className="AppTools">
-                   <select onChange={this.bannerToolHandler} className="ActionSelect">
+                <span>
+                    <select onChange={this.bannerToolHandler} className="ActionSelect">
                         <option value={0}>...Tools</option>
                         <option value={1}>Sign Query</option>
                     </select>
-                    <select onChange={this.bannerActionHandler} className="ActionSelect">
+                </span>
+                   <span>
+                        <select onChange={this.bannerActionHandler} className="ActionSelect">
                         <option value={0}>...Actions</option>
                         <option value={1}>Clear Query Graphics</option>
                     </select>
+                   </span>
+                   
                 </div>
 
                 <UserAccount
