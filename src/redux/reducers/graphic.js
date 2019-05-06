@@ -2,13 +2,15 @@ export const types = {
     SET_SUPPORT_MARKER: "SET_SUPPORT_MARKER",
     QUERY_SUPERQUERY: "QUERY_SUPERQUERY",
     SET_QUERY_RESULTS: "SET_QUERY_RESULTS",
-    REMOVE_QUERY_RESULTS: "REMOVE_QUERY_RESULTS"
+    REMOVE_QUERY_RESULTS: "REMOVE_QUERY_RESULTS",
+    REMOVE_QUERY_GRAPHICS: 'REMOVE_QUERY_GRAPHICS'
 };
 
 // REDUCERS //
 export const initialState = {
     selSupportGeom: null,
-    queryFeatures: []
+    queryFeatures: [],
+    showQuery: false
 }
 
 export default(state = initialState, action) => {
@@ -22,13 +24,19 @@ export default(state = initialState, action) => {
         case types.SET_QUERY_RESULTS:
             return {
                 ...state,
-                ...action.payload
+                ...action.payload,
+                showQuery: true
             }
-            case types.REMOVE_QUERY_RESULTS:
+        case types.REMOVE_QUERY_RESULTS:
             return {
                 ...state,
-                queryFeatures:[]
+                queryFeatures: []
 
+            }
+            case types.REMOVE_QUERY_GRAPHICS:
+            return{
+                ...state,
+                ...action.payload
             }
         default:
             return state;
@@ -41,6 +49,12 @@ export const actions = {
             selSupportGeom
         }}),
     removeQueryResults: () => ({type: types.REMOVE_QUERY_RESULTS, payload: {}}),
+    removeQueryGraphics: () => ({
+        type: types.REMOVE_QUERY_GRAPHICS,
+        payload: {
+            showQuery: false
+        }
+    }),
     querySuperQuery: (where, extent, layer) => ({
 
         type: types.QUERY_SUPERQUERY,

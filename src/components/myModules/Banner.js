@@ -7,22 +7,36 @@ import './Banner.css'
 import UserAccount from '../UserAccount';
 import logo from "../../img/logo.png"
 
- class Banner extends Component {
+class Banner extends Component {
 
-    bannerActionHandler = (evt) => {
-        
+    bannerToolHandler = (evt) => {
+
         switch (evt.target.value) {
-
-            case "0": //SuperQuery™
-         
-            this
-            .props
-            .modalClicked(true, "QUERY", null)
+            case '0':
                 break;
+            case "1": //SuperQuery™
+
+                this
+                    .props
+                    .modalClicked(true, "QUERY", null);
+                    evt.target.value = '0'
+                    break;
+
             default:
                 //do nothing
-                alert('yeet')
+
                 return null;
+        }
+    }
+
+    bannerActionHandler = (evt)=>{
+        switch (evt.target.value) {
+            case '1':
+            this.props.removeQueryGraphics();
+            evt.target.value = "0"
+            break;
+            default:
+            return null;
         }
     }
 
@@ -32,9 +46,13 @@ import logo from "../../img/logo.png"
                 <img src={logo} className="AppLogo"/>
 
                 <div className="AppTools">
+                   <select onChange={this.bannerToolHandler} className="ActionSelect">
+                        <option value={0}>...Tools</option>
+                        <option value={1}>Sign Query</option>
+                    </select>
                     <select onChange={this.bannerActionHandler} className="ActionSelect">
-                        <option>...Actions</option>
-                        <option value={0}>Sign Query</option>
+                        <option value={0}>...Actions</option>
+                        <option value={1}>Clear Query Graphics</option>
                     </select>
                 </div>
 

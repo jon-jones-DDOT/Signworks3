@@ -40,6 +40,7 @@ const containerID = "map-view-container";
 class MapView extends Component {
     selPoint = null;
     markerLayer = null;
+    queryMarkerLayer = null;
     symb = null;
     geom = null;
 
@@ -61,6 +62,10 @@ class MapView extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
+
+        if(nextProps.graphic.showQuery === false){
+            this.queryMarkerLayer.removeAll();
+        }
 
         if (nextProps.graphic.queryFeatures.length > 0) {
             const graphics = [...nextProps.graphic.queryFeatures]
@@ -88,7 +93,7 @@ class MapView extends Component {
                     graphics[i].geometry.type = "point"
                     gr = new Graphic({geometry: graphics[i].geometry, symbol: querySymb})
                     this
-                        .markerLayer
+                        .queryMarkerLayer
                         .add(gr)
                 }
 
@@ -173,12 +178,13 @@ class MapView extends Component {
             const baseMap = new Basemap({baseLayers: [baselayer]})
 
             const featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, outFields: ["*"], id: "support"});
+            this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
 
             this.map.basemap = baseMap;
             this
                 .map
-                .addMany([featureLayer, this.markerLayer]);
+                .addMany([featureLayer,this.queryMarkerLayer, this.markerLayer]);
             this
                 .view
                 .on("click", this.mapClicked);
