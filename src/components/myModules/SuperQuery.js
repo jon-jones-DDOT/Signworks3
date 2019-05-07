@@ -2,18 +2,20 @@ import React, {Component} from 'react'
 import './SuperQuery.css'
 import ModalWrapper from './Modals/ModalWrapper';
 
-
 let Typeahead = require('react-typeahead').Typeahead;
 
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
+const myRef = React.createRef();
 
 export default class SuperQuery extends Component {
 
     constructor(props) {
         super(props)
-
+this.myRef = React.createRef();
         this.state = {
-            selectedMutt: null
+            selectedMutt: null,
+            selected:false,
+            ready:true
         }
 
     }
@@ -31,8 +33,9 @@ export default class SuperQuery extends Component {
     mutcdLookUpSelectHandler = (desc) => {
 
         let option = desc.split(':')
-        this.setState({selectedMutt: option[0]})
-
+        this.setState({selectedMutt: option[0], selected:true})
+        this.myRef.current.focus();
+        
     }
 
     cancelClickHandler = () => {
@@ -42,21 +45,21 @@ export default class SuperQuery extends Component {
             .modalClicked(false, null)
     }
 
-
     searchClickHandler = (evt) => {
-        // when this finally breaks , remember to check and see if they updated the table to 'SIGNCODE'
-     
+        // when this finally breaks , remember to check and see if they updated the
+        // table to 'SIGNCODE'
+
         const where = "MUTCD='" + this.state.selectedMutt + "'";
-        const  extent = this.props.extent;
+        const extent = this.props.extent;
         const layer = this.props.config.featureURLs.superquery;
-      
-        this.props.querySuperQuery(where, extent, layer)
-
-
-       // const features = queryLayers(where,extent,this.props.config.featureURLs.Superquery).next();
         
-      //  console.log('features :', features);
-        
+        this
+            .props
+            .querySuperQuery(where, extent, layer)
+
+        // const features =
+        // queryLayers(where,extent,this.props.config.featureURLs.Superquery).next();
+        // console.log('features :', features);
 
     }
 
@@ -81,6 +84,7 @@ export default class SuperQuery extends Component {
                         <p>Type a partial MUTCD and select from results</p>
 
                         <Typeahead
+                       
                             options={this.getOptions()}
                             maxVisible={10}
                             onOptionSelected={this.mutcdLookUpSelectHandler}
@@ -92,7 +96,7 @@ export default class SuperQuery extends Component {
 
                     <p>
                         The Extent for the query will be the current extent of the displayed map</p>
-                    < button onClick = {this.searchClickHandler}>DO THIS THING</button>
+                    < button ref= {this.myRef} onClick={this.searchClickHandler} disabled={this.selected}> SEARCH</button>
 
                 </div>
             </ModalWrapper>

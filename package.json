@@ -1,8 +1,8 @@
 {
-  "name": "react-jsapi-app",
+  "name": "Signworks Inventory",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/react-boot",
+  "homepage": "/SignworksDev",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.15",
     "@fortawesome/free-brands-svg-icons": "^5.7.2",

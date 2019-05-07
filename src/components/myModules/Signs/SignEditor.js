@@ -223,7 +223,7 @@ export default class SignEditor extends Component {
             })
         //myRef.current.focus();
         const mutt = muttGenerator(chosenOne).next();
-console.log('mutt :', mutt);
+
         this.setState({MUTCD: mutt.value.payload.args[0][0], showInfo: true})
         //this.muttSelectorHandler()
     }
