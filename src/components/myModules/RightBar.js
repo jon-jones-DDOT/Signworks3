@@ -25,7 +25,7 @@ class RightBar extends Component {
 
     streetSmartClickHandler = (evt, coords, overlay) => {
       
-        this.props.startStreetSmartViewer(coords,this.props.config.featureURLs.geometryService)
+        this.props.startStreetSmartViewer([coords],this.props.config.featureURLs.geometryService,4326,2248)
     }
 
     addSignHandler = (evt) => {

@@ -18,17 +18,25 @@ class StreetSmart extends Component {
         // Tell React to never update this component, that's up to us
         return false;
     }
+    ssCancel = () =>{
+        window.StreetSmartApi.destroy({
+            targetElement: document.getElementById(containerID)
+        });
+        this.props.closeStreetSmartViewer();
 
+    }
 
     startup = (divId) => {
         const x = this.props.graphic.ssInputGeom[0].x;
         const y = this.props.graphic.ssInputGeom[0].y;
-       
-        window.StreetSmartApi.init({
-            username: "signworks",
-            password: "SIGNWORKS",
-            apiKey: "CnkxOTY52fExizg9C_EVanMh2j0RK3gxuzURif89eLsZu3ghqTAt6LEdKng56fo1",
-            targetElement: document.getElementById(containerID),
+
+        window
+            .StreetSmartApi
+            .init({
+                username: "signworks",
+                password: "SIGNWORKS",
+                apiKey: "CnkxOTY52fExizg9C_EVanMh2j0RK3gxuzURif89eLsZu3ghqTAt6LEdKng56fo1",
+                targetElement: document.getElementById(containerID),
                 srs: "EPSG:2248",
                 locale: 'en-us',
                 configurationUrl: 'https://atlas.cyclomedia.com/configuration',
@@ -48,7 +56,7 @@ class StreetSmart extends Component {
                     })
                     .then(function (result) {
                         if (result) {
-                           
+
                             for (let i = 0; i < result.length; i++) {
                                 if (result[i].getType() === window.StreetSmartApi.ViewerType.PANORAMA) {
 
@@ -80,10 +88,10 @@ class StreetSmart extends Component {
     }
 
     render() {
-       
+
         return (
-            <div className= "StreetSmart">
-<div className="ssCancel">X</div>
+            <div className="StreetSmart">
+                <div className="ssCancel" onClick={this.ssCancel} >X</div>
                 <div ref="ssDiv" className="ssPane" id={containerID}></div>
 
             </div>

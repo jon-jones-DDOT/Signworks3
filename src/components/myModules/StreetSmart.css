@@ -6,6 +6,7 @@
 .ssPane{
     height: 90%;
     width: 100%;
+    
 }
 
 .ssCancel{
@@ -13,5 +14,6 @@
     height: 10px;
     float: right;
     margin-right: 5px;
+    margin-bottom:20px;
     cursor: pointer;
 }

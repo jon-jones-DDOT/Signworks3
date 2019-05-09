@@ -9,7 +9,7 @@ import {projectGeometry} from '../../utils/JSAPI'
 function * openStreetSmart(action) {
     try{
      
-       const projectResult =   yield call(projectGeometry, [action.payload.coords,action.payload.layer, action.payload.overlay]);
+       const projectResult =   yield call(projectGeometry, [action.payload.coords,action.payload.layer, action.payload.inSR, action.payload.outSR]);
        
        const geoms = projectResult;
       

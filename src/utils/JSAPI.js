@@ -247,22 +247,29 @@ export function superQuery(args) {
 }
 
 export function projectGeometry(args) {
-    const coords = args[0];
-    
+    const coords = args[0]; //array
+console.log('coords', coords)
     const layer = args[1];
-   
+    const inSR = args[2];
+    const outSR = args[3]
 
     return new Promise((resolve, reject) => {
-        loadModules(["esri/tasks/GeometryService", "esri/tasks/support/ProjectParameters",
-        "esri/geometry/Point", "esri/geometry/SpatialReference"]).then(([GeometryService, ProjectParameters,Point, SpatialReference]) => {
-            const outS = new SpatialReference(2248);
+        loadModules(["esri/tasks/GeometryService", "esri/tasks/support/ProjectParameters", "esri/geometry/Point", "esri/geometry/SpatialReference"]).then(([GeometryService, ProjectParameters, Point, SpatialReference]) => {
+            const outS = new SpatialReference(outSR);
+
             const gS = new GeometryService({url: layer});
-            const inSpatRef = new SpatialReference(4326);
-            const pt = new Point({latitude:coords.y,
-            longitude:coords.x, 
-        spatialReference:inSpatRef})
-            const params = new ProjectParameters({geometries: [pt], outSpatialReference: outS})
-         
+            const inSpatRef = new SpatialReference(inSR);
+
+            let geoms = [];
+
+            for (let i = 0; i < coords.length; i++) {
+                const pt = new Point({latitude: coords[i].y, longitude: coords[i].x, spatialReference: inSpatRef})
+
+                geoms.push(pt)
+            }
+
+            const params = new ProjectParameters({geometries: geoms, outSpatialReference: outS})
+            console.log('params', params)
             gS
                 .project(params)
                 .then(resp => resolve(resp), error => reject(error))
