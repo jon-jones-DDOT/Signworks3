@@ -248,7 +248,7 @@ export function superQuery(args) {
 
 export function projectGeometry(args) {
     const coords = args[0]; //array
-console.log('coords', coords)
+
     const layer = args[1];
     const inSR = args[2];
     const outSR = args[3]
@@ -278,18 +278,18 @@ console.log('coords', coords)
     })
 }
 
-export function pointToExtent(view, point, toleranceInPixel, callback) {
+export function pointToExtent(view_width, view_extent_width, view_spatialReference,point, toleranceInPixel, callback) {
 
     loadModules(["esri/geometry/Extent"]).then(([Extent]) => {
 
         //calculate map coords represented per pixel
-        let pixelWidth = view.extent.width / view.width;
+        let pixelWidth = view_extent_width / view_width;
 
         //calculate map coords for tolerance in pixel
         let toleraceInMapCoords = toleranceInPixel * pixelWidth;
         //calculate & return computed extent
 
-        callback(new Extent(point.x - toleraceInMapCoords, point.y - toleraceInMapCoords, point.x + toleraceInMapCoords, point.y + toleraceInMapCoords, view.spatialReference))
+        callback(new Extent(point.x - toleraceInMapCoords, point.y - toleraceInMapCoords, point.x + toleraceInMapCoords, point.y + toleraceInMapCoords, view_spatialReference))
 
     })
 

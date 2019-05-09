@@ -23,8 +23,8 @@ class RightBar extends Component {
             .modalClicked(true, type, index)
     }
 
-    streetSmartClickHandler = (evt, coords, overlay) => {
-      
+    streetSmartClickHandler = (evt, coords) => {
+      console.log('this.props :', this.props);
         this.props.startStreetSmartViewer([coords],this.props.config.featureURLs.geometryService,4326,2248)
     }
 
