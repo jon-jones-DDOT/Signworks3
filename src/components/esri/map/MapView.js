@@ -155,6 +155,7 @@ class MapView extends Component {
 
     mapClicked = (evt) => {
         this.setState({mapClicked: true})
+        this.props.setPointBuffer(this.view.width,this.view.extent.width)
         pointToExtent(this.view.width,this.view.extent.width, this.view.spatialReference, evt.mapPoint, 12, this.getSelectedSupport);
 
     }

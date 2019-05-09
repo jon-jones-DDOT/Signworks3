@@ -7,7 +7,8 @@ export const types = {
     SHOW_STREETSMART_VIEWER: 'SHOW_STREETSMART_VIEWER',
     SHOW_STREETSMART_EDITOR: "SHOW_STREETSMART_EDITOR",
     START_STREETSMART_VIEWER: "START_STREETSMART_VIEWER",
-    CLOSE_STREETSMART_VIEWER: "CLOSE_STREETSMART_VIEWER"
+    CLOSE_STREETSMART_VIEWER: "CLOSE_STREETSMART_VIEWER",
+    SET_POINT_BUFFER: "SET_POINT_BUFFER"
 };
 
 // REDUCERS //
@@ -19,6 +20,8 @@ export const initialState = {
     ssEdit: false,
     ssView: false,
     ssInputGeom: null,
+    viewWidth:null,
+    viewExtentWidth:null,
     ssOverlayFeatures:null
 }
 
@@ -47,6 +50,11 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
+            case types.SET_POINT_BUFFER:
+            return ({
+                ...state,
+                ...action.payload
+            })
         case types.SHOW_STREETSMART_VIEWER:
             return {
                 ...state,
@@ -71,6 +79,11 @@ export const actions = {
         }}),
     removeQueryResults: () => ({type: types.REMOVE_QUERY_RESULTS, payload: {}}),
     closeStreetSmartViewer: () =>({type:types.CLOSE_STREETSMART_VIEWER,payload:{}}),
+    setPointBuffer: (viewWidth, viewExtentWidth) =>({type:types.SET_POINT_BUFFER, payload:{
+        viewWidth,
+        viewExtentWidth
+    }
+    }),
     removeQueryGraphics: () => ({
         type: types.REMOVE_QUERY_GRAPHICS,
         payload: {
