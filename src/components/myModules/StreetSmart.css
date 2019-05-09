@@ -1,0 +1,17 @@
+.StreetSmart{
+    height:100%;
+    width:100%;
+}
+
+.ssPane{
+    height: 90%;
+    width: 100%;
+}
+
+.ssCancel{
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+}

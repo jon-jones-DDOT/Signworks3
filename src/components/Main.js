@@ -35,6 +35,7 @@ import Banner from './myModules/Banner';
 // Styled Components
 import styled from 'styled-components';
 import ModalConductor from './myModules/Modals/ModalConductor';
+import LeftBar from './myModules/LeftBar';
 
 
 const Container = styled.div`
@@ -82,6 +83,7 @@ class Main extends Component {
         <Banner {...this.props}></Banner>
 
         <MapWrapper>
+          <LeftBar></LeftBar>
           <MapView
           onMapClicked = {this.props.mapClicked}
             onMapLoaded={this.props.mapLoaded}
@@ -102,6 +104,7 @@ const mapStateToProps = state => ({
   map: state.map,
   auth: state.auth,
   config: state.config,
+  graphics:state.graphics
 })
 
 const mapDispatchToProps = function (dispatch) {

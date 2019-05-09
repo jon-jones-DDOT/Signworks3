@@ -59,7 +59,7 @@ this.myRef = React.createRef();
 
         // const features =
         // queryLayers(where,extent,this.props.config.featureURLs.Superquery).next();
-        // console.log('features :', features);
+      
 
     }
 

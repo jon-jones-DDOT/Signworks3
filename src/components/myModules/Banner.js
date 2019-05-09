@@ -50,6 +50,7 @@ class Banner extends Component {
                     <select onChange={this.bannerToolHandler} className="ActionSelect">
                         <option value={0}>...Tools</option>
                         <option value={1}>Sign Query</option>
+                        <option value={2}>Add Support</option>
                     </select>
                 </span>
                    <span>

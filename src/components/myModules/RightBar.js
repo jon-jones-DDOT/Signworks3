@@ -23,8 +23,13 @@ class RightBar extends Component {
             .modalClicked(true, type, index)
     }
 
-    addSignHandler = (evt) => {
+    streetSmartClickHandler = (evt, coords, overlay) => {
       
+        this.props.startStreetSmartViewer(coords,this.props.config.featureURLs.geometryService)
+    }
+
+    addSignHandler = (evt) => {
+
         // this may look dumb, but we are sharing a function with saveSign and the input
         // parameter must match structure
         let signWrapper = {};
@@ -60,7 +65,10 @@ class RightBar extends Component {
 
             <RightDiv >
 
-                <Support sel={this.props.map.support} editClick={this.handleModalClicked}></Support>
+                <Support
+                    sel={this.props.map.support}
+                    editClick={this.handleModalClicked}
+                    SsClick={this.streetSmartClickHandler}></Support>
                 <Signs signs={this.props.map.signs} editClick={this.handleModalClicked}></Signs>
                 <SignCreator sel={this.props.map.support} click={this.addSignHandler}></SignCreator>
             </RightDiv>

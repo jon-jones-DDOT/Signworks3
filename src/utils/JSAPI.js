@@ -185,7 +185,6 @@ export function saveTimebands(args) {
 export function saveSign(args) {
 
     const updateSignFeature = args[0].sign;
-    console.log('updateSignFeature', updateSignFeature)
 
     const isNew = args[1];
     const signLayer = args[2].signs + "/applyEdits";
@@ -193,7 +192,7 @@ export function saveSign(args) {
     let signSet = null;
 
     if (isNew) {
-        console.log('JSAPI says it is new')
+
         signSet = {
             f: "json",
             "adds": JSON.stringify([updateSignFeature])
@@ -217,8 +216,6 @@ export function saveSign(args) {
     }) //end of promise
 
 } // end of function
-
-
 
 export function superQuery(args) {
     const where = args[0];
@@ -249,7 +246,30 @@ export function superQuery(args) {
     })
 }
 
+export function projectGeometry(args) {
+    const coords = args[0];
+    
+    const layer = args[1];
+   
 
+    return new Promise((resolve, reject) => {
+        loadModules(["esri/tasks/GeometryService", "esri/tasks/support/ProjectParameters",
+        "esri/geometry/Point", "esri/geometry/SpatialReference"]).then(([GeometryService, ProjectParameters,Point, SpatialReference]) => {
+            const outS = new SpatialReference(2248);
+            const gS = new GeometryService({url: layer});
+            const inSpatRef = new SpatialReference(4326);
+            const pt = new Point({latitude:coords.y,
+            longitude:coords.x, 
+        spatialReference:inSpatRef})
+            const params = new ProjectParameters({geometries: [pt], outSpatialReference: outS})
+         
+            gS
+                .project(params)
+                .then(resp => resolve(resp), error => reject(error))
+
+        })
+    })
+}
 
 export function pointToExtent(view, point, toleranceInPixel, callback) {
 

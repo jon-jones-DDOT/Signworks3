@@ -15,6 +15,7 @@ export default function Support(props) {
 
     
     const supportInnards=()=>{
+     
         if(props.sel === null){
             return 'Click on a support on the map to see its information'
         }
@@ -41,7 +42,7 @@ export default function Support(props) {
                             : 'null '}
                     </p>
                     <p>
-                        <button ><FontAwesomeIcon icon={faBinoculars} title="StreetSmart"/></button>
+                        <button onClick={(evt) =>props.SsClick(evt,props.sel.geometry)}><FontAwesomeIcon icon={faBinoculars} title="StreetSmart"/></button>
                         <button><FontAwesomeIcon icon={faGoogle} title="Google Street View"/></button>
                     
                         <button onClick = {(evt) => props.editClick(evt, 'SUPPORT')} >

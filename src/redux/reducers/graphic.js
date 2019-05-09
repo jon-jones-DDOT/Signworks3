@@ -3,14 +3,21 @@ export const types = {
     QUERY_SUPERQUERY: "QUERY_SUPERQUERY",
     SET_QUERY_RESULTS: "SET_QUERY_RESULTS",
     REMOVE_QUERY_RESULTS: "REMOVE_QUERY_RESULTS",
-    REMOVE_QUERY_GRAPHICS: 'REMOVE_QUERY_GRAPHICS'
+    REMOVE_QUERY_GRAPHICS: 'REMOVE_QUERY_GRAPHICS',
+    SHOW_STREETSMART_VIEWER: 'SHOW_STREETSMART_VIEWER',
+    SHOW_STREETSMART_EDITOR: "SHOW_STREETSMART_EDITOR",
+    START_STREETSMART_VIEWER:"START_STREETSMART_VIEWER"
 };
 
 // REDUCERS //
 export const initialState = {
     selSupportGeom: null,
     queryFeatures: [],
-    showQuery: false
+    showQuery: false,
+    leftVisible: false,
+    ssEdit: false,
+    ssView: false,
+    ssInputGeom:null
 }
 
 export default(state = initialState, action) => {
@@ -33,7 +40,12 @@ export default(state = initialState, action) => {
                 queryFeatures: []
 
             }
-            case types.REMOVE_QUERY_GRAPHICS:
+        case types.REMOVE_QUERY_GRAPHICS:
+            return {
+                ...state,
+                ...action.payload
+            }
+            case types.SHOW_STREETSMART_VIEWER:
             return{
                 ...state,
                 ...action.payload
@@ -62,6 +74,14 @@ export const actions = {
             where,
             extent,
             layer
+        }
+    }),
+    startStreetSmartViewer: (coords,layer, overlay) => ({
+        type: types.START_STREETSMART_VIEWER,
+        payload: {
+            coords,
+            layer,
+            overlay
         }
     })
 };

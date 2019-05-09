@@ -23,7 +23,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 // Components //
 import { homepage } from '../package.json';
 import App from './components/App';
-
+import Script from 'react-load-script'
 // Styles //
 import CalciteThemeProvider from 'calcite-react/CalciteThemeProvider';
 import { GlobalStyle } from './styles/global';
@@ -39,6 +39,7 @@ export const store = initStore();
 // App entry point
 ReactDOM.render(
   <Provider store={store}>
+   
     <BrowserRouter basename={basename}>
       <CalciteThemeProvider>
         <GlobalStyle />

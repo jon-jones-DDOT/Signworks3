@@ -1,5 +1,5 @@
 {
-  "name": "Signworks Inventory",
+  "name": "SignworksInventory",
   "version": "0.1.0",
   "private": true,
   "homepage": "/SignworksDev",
@@ -19,6 +19,7 @@
     "react-dnd-html5-backend": "^7.2.0",
     "react-dom": "^16.8.2",
     "react-image": "^2.1.1",
+    "react-load-script": "0.0.6",
     "react-loader-spinner": "^2.3.0",
     "react-redux": "^6.0.1",
     "react-router": "^4.3.1",
