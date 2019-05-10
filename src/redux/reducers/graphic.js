@@ -22,6 +22,7 @@ export const initialState = {
     ssInputGeom: null,
     viewWidth:null,
     viewExtentWidth:null,
+    view_spatRef:null,
     ssOverlayFeatures:null
 }
 
@@ -79,9 +80,10 @@ export const actions = {
         }}),
     removeQueryResults: () => ({type: types.REMOVE_QUERY_RESULTS, payload: {}}),
     closeStreetSmartViewer: () =>({type:types.CLOSE_STREETSMART_VIEWER,payload:{}}),
-    setPointBuffer: (viewWidth, viewExtentWidth) =>({type:types.SET_POINT_BUFFER, payload:{
+    setPointBuffer: (viewWidth, viewExtentWidth,view_spatRef) =>({type:types.SET_POINT_BUFFER, payload:{
         viewWidth,
-        viewExtentWidth
+        viewExtentWidth,
+        view_spatRef
     }
     }),
     removeQueryGraphics: () => ({
@@ -99,13 +101,16 @@ export const actions = {
             layer
         }
     }),
-    startStreetSmartViewer: (coords, layer, inSR, outSR) => ({
+    startStreetSmartViewer: (coords, layers, inSR, outSR, viewWidth,viewExtentWidth,view_spatRef) => ({
         type: types.START_STREETSMART_VIEWER,
         payload: {
             coords,
-            layer,
+            layers,
             inSR,
-            outSR
+            outSR,
+            viewWidth,
+            viewExtentWidth,
+            view_spatRef
         }
     })
 };

@@ -146,6 +146,7 @@ class MapView extends Component {
     }
 
     getSelectedSupport = (expandedMapPoint) => {
+ 
 
         this
             .props
@@ -155,7 +156,8 @@ class MapView extends Component {
 
     mapClicked = (evt) => {
         this.setState({mapClicked: true})
-        this.props.setPointBuffer(this.view.width,this.view.extent.width)
+        this.props.setPointBuffer(this.view.width,this.view.extent.width, this.view.spatialReference)
+
         pointToExtent(this.view.width,this.view.extent.width, this.view.spatialReference, evt.mapPoint, 12, this.getSelectedSupport);
 
     }

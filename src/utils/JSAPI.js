@@ -42,6 +42,8 @@ export function getSupportByExtent(args) {
 
         const supportLayer = args[1];
 
+        const outSR = args[2];
+
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(supportLayer + '/query', {
                 query: {
@@ -50,7 +52,7 @@ export function getSupportByExtent(args) {
                     outFields: '*', // attribute fields to return
                     token: null, // token
                     f: "json", // format
-                    outSR: 4326
+                    outSR: outSR
                 }
             }).then(resp => resolve(resp), error => reject(error));
 
@@ -269,7 +271,7 @@ export function projectGeometry(args) {
             }
 
             const params = new ProjectParameters({geometries: geoms, outSpatialReference: outS})
-            console.log('params', params)
+         
             gS
                 .project(params)
                 .then(resp => resolve(resp), error => reject(error))
@@ -278,7 +280,53 @@ export function projectGeometry(args) {
     })
 }
 
-export function pointToExtent(view_width, view_extent_width, view_spatialReference,point, toleranceInPixel, callback) {
+export function pointToExtentSaga(args) {
+    const view_width = args[0];
+    const view_extent_width = args[1];
+    const view_spatialReference = args[2];
+
+    const point = args[3];
+
+    const toleranceInPixel = args[4];
+
+
+
+    return new Promise((resolve, reject) => {
+        loadModules(["esri/geometry/Extent","esri/geometry/support/webMercatorUtils"]).then(([Extent, webMercatorUtils]) => {
+
+            try {
+
+                let mercPoint = null;
+            
+              if(point.spatialReference){
+                  if(point.spatialReference.wkid === 102100){
+                      mercPoint = point;
+                  }
+                  else{
+                    mercPoint = webMercatorUtils.geographicToWebMercator(point)
+                  }
+                  
+              }
+              else{
+                mercPoint = webMercatorUtils.geographicToWebMercator(point)
+              }
+                //calculate map coords represented per pixel
+                let pixelWidth = view_extent_width / view_width;
+
+                //calculate map coords for tolerance in pixel
+                let toleraceInMapCoords = toleranceInPixel * pixelWidth;
+                const ext = new Extent(mercPoint.x - toleraceInMapCoords, mercPoint.y - toleraceInMapCoords, mercPoint.x + toleraceInMapCoords, mercPoint.y + toleraceInMapCoords, view_spatialReference);
+                resolve(ext)
+            } catch (error) {
+               
+                reject(error)
+            }
+        })
+    })
+
+}
+
+export function pointToExtent(view_width, view_extent_width, view_spatialReference, point, toleranceInPixel, callback) {
 
     loadModules(["esri/geometry/Extent"]).then(([Extent]) => {
 
