@@ -249,6 +249,7 @@ export function superQuery(args) {
 }
 
 export function projectGeometry(args) {
+
     const coords = args[0]; //array
 
     const layer = args[1];
@@ -286,7 +287,6 @@ export function pointToExtentSaga(args) {
     const view_spatialReference = args[2];
 
     const point = args[3];
-
     const toleranceInPixel = args[4];
 
 
@@ -341,6 +341,23 @@ export function pointToExtent(view_width, view_extent_width, view_spatialReferen
 
     })
 
+}
+
+export function createFeatureSet (args){
+    return new Promise((resolve, reject) => {
+        loadModules([ 
+            "esri/tasks/support/FeatureSet"
+        ]).then(([
+    FeatureSet
+         ]) => {
+             try{
+resolve( new FeatureSet({features:args[0]}))
+             }
+             catch(err){
+reject(err)
+             }
+         })
+    })
 }
 
 //NON-ESRI DATA CALLS
