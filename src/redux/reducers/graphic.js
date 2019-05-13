@@ -20,6 +20,7 @@ export const initialState = {
     ssEdit: false,
     ssView: false,
     ssInputGeom: null,
+    ssgeoJSONselPoint:null,
     viewWidth:null,
     viewExtentWidth:null,
     view_spatRef:null,
@@ -101,10 +102,10 @@ export const actions = {
             layer
         }
     }),
-    startStreetSmartViewer: (coords, layers, inSR, outSR, viewWidth,viewExtentWidth,view_spatRef) => ({
+    startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth,viewExtentWidth,view_spatRef) => ({
         type: types.START_STREETSMART_VIEWER,
         payload: {
-            coords,
+            sel,
             layers,
             inSR,
             outSR,

@@ -251,7 +251,7 @@ export function superQuery(args) {
 export function projectGeometry(args) {
 
     const coords = args[0]; //array
-
+console.log('coords :', coords);
     const layer = args[1];
     const inSR = args[2];
     const outSR = args[3]

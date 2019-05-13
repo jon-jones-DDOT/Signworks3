@@ -23,9 +23,9 @@ class RightBar extends Component {
             .modalClicked(true, type, index)
     }
 
-    streetSmartClickHandler = (evt, coords) => {
+    streetSmartClickHandler = (evt, sel) => {
      
-        this.props.startStreetSmartViewer([coords],this.props.config.featureURLs,4326,2248,
+        this.props.startStreetSmartViewer([sel],this.props.config.featureURLs,4326,2248,
              this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef)
     }
 

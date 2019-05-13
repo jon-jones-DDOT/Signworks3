@@ -42,7 +42,7 @@ export default function Support(props) {
                             : 'null '}
                     </p>
                     <p>
-                        <button onClick={(evt) =>props.SsClick(evt,props.sel.geometry)}><FontAwesomeIcon icon={faBinoculars} title="StreetSmart"/></button>
+                        <button onClick={(evt) =>props.SsClick(evt,props.sel)}><FontAwesomeIcon icon={faBinoculars} title="StreetSmart"/></button>
                         <button><FontAwesomeIcon icon={faGoogle} title="Google Street View"/></button>
                     
                         <button onClick = {(evt) => props.editClick(evt, 'SUPPORT')} >

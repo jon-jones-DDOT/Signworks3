@@ -1,59 +1,74 @@
-import {call, put,takeLatest} from 'redux-saga/effects';
+import {call, put, takeLatest} from 'redux-saga/effects';
 import {types as graphicTypes} from '../reducers/graphic';
-import {projectGeometry,getSupportByExtent,pointToExtentSaga} from '../../utils/JSAPI'
-
-
+import {projectGeometry, getSupportByExtent, pointToExtentSaga, createFeatureSet} from '../../utils/JSAPI'
+import {faWindows} from '@fortawesome/free-brands-svg-icons';
 
 // WORKER //
 
 function * openStreetSmart(action) {
-    try{
-     
- 
-       const projectResult =   yield call(projectGeometry, [action.payload.coords,
-        action.payload.layers.geometryService, action.payload.inSR, action.payload.outSR]);
-       
-       const geoms = projectResult;
-      
+    try {
+        // this ball of wax has a ridiculous number of async calls, I am gonna try to do
+        // them all here in the saga
+        console.log('action', action)
+        const projectResult = yield call(projectGeometry, [
+            [action.payload.sel[0].geometry],
+            action.payload.layers.geometryService,
+            action.payload.inSR,
+            action.payload.outSR
+        ]);
 
-const localExtent = yield call(pointToExtentSaga,[ action.payload.viewWidth,
-action.payload.viewExtentWidth,
-action.payload.view_spatRef,
-action.payload.coords[0],
-400  //tolerance in pixels
-
-
-])
-
-
-       //get neighboring points from the selected support
-     const features = yield call(getSupportByExtent, [localExtent, action.payload.layers.supports,2248]);
-
-
-
-
-
-
-       yield put({
-        type: graphicTypes.SHOW_STREETSMART_VIEWER,
-        payload: {
-            leftVisible: true,
-            ssEdit: false,
-            ssView: true,
-            ssInputGeom:geoms
-        }
-    });
-
-        
-    }
+        // now we have the projected (2248) support, let's make a geoJSON feature set
+        // out of it yay
     
-    catch (e) {
+        let sel2 = {
+            ...action.payload.sel[0]
+        }
+        sel2.geometry = projectResult[0];
+     
+        const selPtFeatureSet = yield call(createFeatureSet, [sel2])
+        const gjPt = window
+            .ArcgisToGeojsonUtils
+            .arcgisToGeoJSON(selPtFeatureSet)
+ 
+
+        // now we have the geoJSON for the selected point overlay, let's get the nearby
+        // points overlay first get the extent
+        const localExtent = yield call(pointToExtentSaga, [
+            action.payload.viewWidth, action.payload.viewExtentWidth, action.payload.view_spatRef, action.payload.sel[0].geometry, 400 //tolerance in pixels
+
+        ])
+
+        //get neighboring points from the selected support
+        const features = yield call(getSupportByExtent, [localExtent, action.payload.layers.supports, 2248]);
+        const neighborFeatures = features.data.features;
+        //make them a featureset because the converter is picky like that
+
+        const neighborFeatureSet = yield call(createFeatureSet, [neighborFeatures, 2248])
+
+        //convert FeatureSet to geoJSON feature set
+        const gjNeighbors = window
+            .ArcgisToGeojsonUtils
+            .arcgisToGeoJSON(neighborFeatureSet)
+
+        yield put({
+            type: graphicTypes.SHOW_STREETSMART_VIEWER,
+            payload: {
+                leftVisible: true,
+                ssEdit: false,
+                ssView: true,
+                ssInputGeom: projectResult,
+                ssgeoJSONselPoint: gjPt,
+                ssOverlay: gjNeighbors
+            }
+        });
+
+    } catch (e) {
         console.log('SAGA ERROR: graphic/openStreetSmart, ', e);
     }
 }
 
 // WATCHER //
 export function * watchStreetSmart() {
-   
+
     yield takeLatest(graphicTypes.START_STREETSMART_VIEWER, openStreetSmart);
 }

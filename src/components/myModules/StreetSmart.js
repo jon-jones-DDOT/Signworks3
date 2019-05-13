@@ -18,17 +18,61 @@ class StreetSmart extends Component {
         // Tell React to never update this component, that's up to us
         return false;
     }
-    ssCancel = () =>{
-        window.StreetSmartApi.destroy({
-            targetElement: document.getElementById(containerID)
-        });
-        this.props.closeStreetSmartViewer();
+    ssCancel = () => {
+        window
+            .StreetSmartApi
+            .destroy({
+                targetElement: document.getElementById(containerID)
+            });
+        this
+            .props
+            .closeStreetSmartViewer();
 
     }
 
     startup = (divId) => {
+        console.log('this.props.graphic :', this.props.graphic);
         const x = this.props.graphic.ssInputGeom[0].x;
         const y = this.props.graphic.ssInputGeom[0].y;
+        const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;
+        const geoJSONNeighbors = this.props.graphic.ssOverlay;
+
+        const PointsSLD = ' <?xml version="1.0"  encoding="ISO-8859-1"?><StyledLayerDescriptor  version="1.' +
+                '0.0"             xsi:schemaLocation="http://www.opengis.net/sld  StyledLayerDesc' +
+                'riptor.xsd" xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net' +
+                '/ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/20' +
+                '01/XMLSchema-instance"><NamedLayer><Name>Simple  point  with  stroke</Name><User' +
+                'Style><Title>GeoServer  SLD  Cook  Book:  Simple  point  with  stroke</Title><Fe' +
+                'atureTypeStyle><Rule><PointSymbolizer><Graphic><Mark><WellKnownName>circle</Well' +
+                'KnownName><Fill><CssParameter  name="fill">#FF0000</CssParameter></Fill><Stroke>' +
+                '<CssParameter  name="stroke">#000000</CssParameter><CssParameter  name="stroke-w' +
+                'idth">2</CssParameter></Stroke></Mark><Size>6</Size></Graphic></PointSymbolizer>' +
+                '</Rule></FeatureTypeStyle></UserStyle></NamedLayer></StyledLayerDescriptor>';
+
+        const selectSLD = '<?xml version="1.0"  encoding="ISO-8859-1"?><StyledLayerDescriptor  version="1.0' +
+                '.0"             xsi:schemaLocation="http://www.opengis.net/sld  StyledLayerDescr' +
+                'iptor.xsd" xmlns="http://www.opengis.net/sld" xmlns:ogc="http://www.opengis.net/' +
+                'ogc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/200' +
+                '1/XMLSchema-instance"><NamedLayer><Name>Simple  point  with  stroke</Name><UserS' +
+                'tyle><Title>GeoServer  SLD  Cook  Book:  Simple  point  with  stroke</Title><Fea' +
+                'tureTypeStyle><Rule><PointSymbolizer><Graphic><Mark><WellKnownName>circle</WellK' +
+                'nownName><Fill><CssParameter  name="fill">#00000000</CssParameter><CssParameter ' +
+                'name="fill-opacity">0.2</CssParameter></Fill><Stroke><CssParameter  name="stroke' +
+                '">#E633FF</CssParameter><CssParameter  name="stroke-width">2</CssParameter></Str' +
+                'oke></Mark><Size>12</Size></Graphic></PointSymbolizer></Rule></FeatureTypeStyle>' +
+                '</UserStyle></NamedLayer></StyledLayerDescriptor>';
+
+        const options = [
+            {
+                name: "Nearby Supports",
+                geojson: geoJSONNeighbors,
+                sldXMLtext: PointsSLD
+            }, {
+                name: "Selected Support",
+                geojson: geoJSONSelect,
+                sldXMLtext: selectSLD
+            }
+        ]
 
         window
             .StreetSmartApi
@@ -68,11 +112,13 @@ class StreetSmart extends Component {
                                 // N GE, changeView);
                                 // window.panoramaViewer.on(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOA
                                 // D _END, loadViewEnd);
-
-                                /*     for (o in options) {
-                                    window.StreetSmartApi.addOverlay(options[o])
-                                }
-*/
+                                console.log('options :', options);
+                                window.StreetSmartApi.addOverlay(options[1])
+                               /* for (let o in options) {
+                                    window
+                                        .StreetSmartApi
+                                        .addOverlay(options[o])
+                                } */
 
                             }
 
@@ -91,7 +137,7 @@ class StreetSmart extends Component {
 
         return (
             <div className="StreetSmart">
-                <div className="ssCancel" onClick={this.ssCancel} >X</div>
+                <div className="ssCancel" onClick={this.ssCancel}>X</div>
                 <div ref="ssDiv" className="ssPane" id={containerID}></div>
 
             </div>
