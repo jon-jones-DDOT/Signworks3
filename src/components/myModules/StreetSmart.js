@@ -31,7 +31,7 @@ class StreetSmart extends Component {
     }
 
     startup = (divId) => {
-        console.log('this.props.graphic :', this.props.graphic);
+
         const x = this.props.graphic.ssInputGeom[0].x;
         const y = this.props.graphic.ssInputGeom[0].y;
         const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;
@@ -112,13 +112,13 @@ class StreetSmart extends Component {
                                 // N GE, changeView);
                                 // window.panoramaViewer.on(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOA
                                 // D _END, loadViewEnd);
-                                console.log('options :', options);
-                                window.StreetSmartApi.addOverlay(options[1])
-                               /* for (let o in options) {
+                     
+                              
+                                for (let o in options) {
                                     window
                                         .StreetSmartApi
                                         .addOverlay(options[o])
-                                } */
+                                } 
 
                             }
 

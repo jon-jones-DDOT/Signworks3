@@ -9,7 +9,7 @@ function * openStreetSmart(action) {
     try {
         // this ball of wax has a ridiculous number of async calls, I am gonna try to do
         // them all here in the saga
-        console.log('action', action)
+ 
         const projectResult = yield call(projectGeometry, [
             [action.payload.sel[0].geometry],
             action.payload.layers.geometryService,
@@ -24,7 +24,7 @@ function * openStreetSmart(action) {
             ...action.payload.sel[0]
         }
         sel2.geometry = projectResult[0];
-     
+ 
         const selPtFeatureSet = yield call(createFeatureSet, [sel2])
         const gjPt = window
             .ArcgisToGeojsonUtils
@@ -43,7 +43,11 @@ function * openStreetSmart(action) {
         const neighborFeatures = features.data.features;
         //make them a featureset because the converter is picky like that
 
-        const neighborFeatureSet = yield call(createFeatureSet, [neighborFeatures, 2248])
+for(let i = 0; i < neighborFeatures.length;i++){
+    neighborFeatures[i].geometry.type = "point";
+    neighborFeatures[i].geometry.spatialReference = {wkid:2248}
+}
+        const neighborFeatureSet = yield call(createFeatureSet, [neighborFeatures])
 
         //convert FeatureSet to geoJSON feature set
         const gjNeighbors = window
