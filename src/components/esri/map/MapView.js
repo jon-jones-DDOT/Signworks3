@@ -180,7 +180,8 @@ class MapView extends Component {
             const baselayer = new TileLayer(layerUrl, null);
             const baseMap = new Basemap({baseLayers: [baselayer]})
 
-            const featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, outFields: ["*"], id: "support"});
+            const featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, 
+                definitionExpression:"SUPPORTSTATUS = 1" ,outFields: ["*"], id: "support"});
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
 

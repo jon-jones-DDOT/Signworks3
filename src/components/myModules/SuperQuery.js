@@ -49,7 +49,7 @@ this.myRef = React.createRef();
         // when this finally breaks , remember to check and see if they updated the
         // table to 'SIGNCODE'
 
-        const where = "MUTCD='" + this.state.selectedMutt + "'";
+        const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND MUTCD='" + this.state.selectedMutt + "'";
         const extent = this.props.extent;
         const layer = this.props.config.featureURLs.superquery;
         

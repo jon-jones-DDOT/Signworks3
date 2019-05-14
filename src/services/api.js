@@ -18,7 +18,7 @@ import { makeRequest } from "./request";
 export function getAppConfig() {
   return new Promise((resolve, reject) => {
     makeRequest({
-      url: `/config.json`,
+      url: `./config.json`,
       method: "get"
     }).then(resp => resolve(resp));
   });
