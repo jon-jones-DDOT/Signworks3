@@ -99,7 +99,10 @@ class MapView extends Component {
 
         }
        //updates marker
-            this.selPoint.geometry = nextProps.graphic.selSupportGeom;
+       
+       if (nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT){
+
+         this.selPoint.geometry = nextProps.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;
             this.markerLayer.removeAll();
             this
@@ -108,6 +111,8 @@ class MapView extends Component {
 
             this.view.zoom = 20
             this.view.center = this.selPoint.geometry
+       }
+           
        
 
         this.view.surface.style.cursor = nextProps.graphic.cursor;

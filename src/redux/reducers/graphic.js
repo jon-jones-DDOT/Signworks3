@@ -9,7 +9,6 @@ export const types = {
     START_STREETSMART_VIEWER: "START_STREETSMART_VIEWER",
     CLOSE_STREETSMART_VIEWER: "CLOSE_STREETSMART_VIEWER",
     SET_POINT_BUFFER: "SET_POINT_BUFFER",
-    SET_CURSOR: "SET_CURSOR",
     SET_MAP_CLICK_MODE: "SET_MAP_CLICK_MODE"
 };
 export const mapModes = {
@@ -38,7 +37,6 @@ export const initialState = {
 export default(state = initialState, action) => {
     switch (action.type) {
         case types.SET_SUPPORT_MARKER:
-        console.log('action.payload.selSupportGeom :', action.payload.selSupportGeom);
             action.payload.selSupportGeom.type = "point";
             return {
                 ...state,
@@ -78,11 +76,7 @@ export default(state = initialState, action) => {
                 ssView: false,
                 leftVisible: false
             }
-        case types.SET_CURSOR:
-            return {
-                ...state,
-                ...action.payload
-            }
+      
         case types.SET_MAP_CLICK_MODE:
             return {
                 ...state,
@@ -123,14 +117,13 @@ export const actions = {
             layer
         }
     }),
-    setCursor: (cursor) => ({type: types.SET_CURSOR, payload: {
-            cursor
-        }}),
+ 
 
-    setMapClickMode: (mode) => ({
+    setMapClickMode: (mode, cursor) => ({
         type: types.SET_MAP_CLICK_MODE,
         payload: {
-            mapClickMode: mode
+            mapClickMode: mode,
+            cursor
         }
     }),
     startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth, viewExtentWidth, view_spatRef, editMode) => ({
