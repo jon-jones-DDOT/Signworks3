@@ -44,12 +44,7 @@ class MapView extends Component {
     symb = null;
     geom = null;
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            mapClicked: false
-        }
-    }
+    
 
     componentDidMount() {
 
@@ -103,10 +98,7 @@ class MapView extends Component {
             })
 
         }
-        // this is the part that reacts to map click, but wrongly
-        if (this.state.mapClicked) {
-console.log('next.graphic.selSupportGeom', nextProps.graphic.selSupportGeom)
-console.log('this.props.graphic.selSupportGeom', this.props.graphic.selSupportGeom)
+       //updates marker
             this.selPoint.geometry = nextProps.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;
             this.markerLayer.removeAll();
@@ -116,8 +108,7 @@ console.log('this.props.graphic.selSupportGeom', this.props.graphic.selSupportGe
 
             this.view.zoom = 20
             this.view.center = this.selPoint.geometry
-        }
-        this.setState({mapClicked: false})
+       
 
         this.view.surface.style.cursor = nextProps.graphic.cursor;
     }
