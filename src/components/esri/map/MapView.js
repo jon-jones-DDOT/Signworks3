@@ -44,8 +44,6 @@ class MapView extends Component {
     symb = null;
     geom = null;
 
-    
-
     componentDidMount() {
 
         this.startup(this.props.mapConfig, containerID, this.props.is3DScene);
@@ -57,13 +55,13 @@ class MapView extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-//removes superQuery results from view based on store
+        //removes superQuery results from view based on store
         if (nextProps.graphic.showQuery === false) {
             this
                 .queryMarkerLayer
                 .removeAll();
         }
-//if there are query features in the store, this block displays them in the view
+        //if there are query features in the store, this block displays them in the view
         if (nextProps.graphic.queryFeatures.length > 0) {
             const graphics = [...nextProps.graphic.queryFeatures]
             // add symbols
@@ -98,22 +96,22 @@ class MapView extends Component {
             })
 
         }
-       //updates marker
-       
-       if (nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT){
+        // updates marker use nextProps or this.props for the map clicks?  if bugs come
+        // up , check this part
+        if (nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT) {
 
-         this.selPoint.geometry = nextProps.graphic.selSupportGeom;
+            this.selPoint.geometry = nextProps.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;
-            this.markerLayer.removeAll();
+            this
+                .markerLayer
+                .removeAll();
             this
                 .markerLayer
                 .add(this.selPoint)
 
             this.view.zoom = 20
             this.view.center = this.selPoint.geometry
-       }
-           
-       
+        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT) {}
 
         this.view.surface.style.cursor = nextProps.graphic.cursor;
     }
@@ -149,10 +147,10 @@ class MapView extends Component {
     }
 
     getSelectedSupport = (expandedMapPoint) => {
-//this line takes the buffered point and sends it  to the map reducer which punts it to the _setSupport saga
-// which queries and gets the support, signs, timebands, etc and writes them to the store, where they dictate the 
-//Rightbar display.  Once the store changes the action picks up in willReceiveProps
-// BUT IT DOESN'T.  The action in willReceiveProps happens before the store changes, and thus reads old info from the store
+        // this line takes the buffered point and sends it  to the map reducer which
+        // punts it to the _setSupport saga which queries and gets the support, signs,
+        // timebands, etc and writes them to the store, where they dictate the Rightbar
+        // display.  Once the store changes the action picks up in willReceiveProps
 
         this
             .props
@@ -161,24 +159,42 @@ class MapView extends Component {
     }
 
     mapClickHandler = (evt) => {
-        // in any map app that's more than a viewer, the map click event is gonna be complicated
-        // so much so that I wrote this a month ago and it is already getting away from me
-        //so we shall comment.  The click event is first captured here
-        // then evaluated against the store to decide what it is supposed to do
+
+        // in any map app that's more than a viewer, the map click event is gonna be
+        // complicated so much so that I wrote this a month ago and it is already
+        // getting away from me so we shall comment.  The click event is first captured
+        // here then evaluated against the store to decide what it is supposed to do
         switch (this.props.graphic.mapClickMode) {
-            //the click is supposed to select an existing support on the map
+                //the click is supposed to select an existing support on the map
             case mapModes.SELECT_SUPPORT:
-            //this line seems to control some code in willReceiveProps, but I think that code might be in the wrong place
-            // It is.  Must fix. (todo)
-                this.setState({mapClicked: true});
-                //this redux call moves info about the view into the store so that an extent around the point can be calculated
-                // I don't think it changes, (todo) see about moving it to map load or something
+
+                // this redux call moves info about the view into the store so that an extent
+                // around the point can be calculated I don't think it changes, (todo) see about
+                // moving it to map load or something
                 this
                     .props
                     .setPointBuffer(this.view.width, this.view.extent.width, this.view.spatialReference);
-                //this creates a small extent buffer around the mapPoint to aid in the select query
-                //its callback is getSelectedSupport, above    
+                // this creates a small extent buffer around the mapPoint to aid in the select
+                // query its callback is getSelectedSupport, above
                 pointToExtent(this.view.width, this.view.extent.width, this.view.spatialReference, evt.mapPoint, 12, this.getSelectedSupport);
+                break;
+                //ok now we are in add support mode
+            case mapModes.ADD_SUPPORT:
+                // we should create a 'fake' feature out of the map click event
+
+                const newSupportFeature = {
+                    atrributes: {},
+                    geometry: {
+                        x: evt.mapPoint.longitude,
+                        y: evt.mapPoint.latitude,
+                        type: 'point'
+                    }
+                }
+
+                this
+                    .props
+                    .startStreetSmartViewer([newSupportFeature], this.props.config.featureURLs, 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, true);
+
                 break;
             default:
                 return

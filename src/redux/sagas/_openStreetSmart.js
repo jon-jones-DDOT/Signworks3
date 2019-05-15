@@ -9,7 +9,7 @@ function * openStreetSmart(action) {
     try {
         // this ball of wax has a ridiculous number of async calls, I am gonna try to do
         // them all here in the saga
- 
+
         const projectResult = yield call(projectGeometry, [
             [action.payload.sel[0].geometry],
             action.payload.layers.geometryService,
