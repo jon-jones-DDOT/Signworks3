@@ -58,8 +58,7 @@ for(let i = 0; i < neighborFeatures.length;i++){
             type: graphicTypes.SHOW_STREETSMART_VIEWER,
             payload: {
                 leftVisible: true,
-                ssEdit: false,
-                ssView: true,
+                editMode:action.payload.editMode,
                 ssInputGeom: projectResult,
                 ssgeoJSONselPoint: gjPt,
                 ssOverlay: gjNeighbors

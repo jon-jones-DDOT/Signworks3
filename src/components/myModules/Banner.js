@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
 import {actions as graphicActions} from '../../redux/reducers/graphic'
+import {mapModes} from '../../redux/reducers/graphic'
 import './Banner.css'
 import UserAccount from '../UserAccount';
 import logo from "../../img/logo.png"
@@ -19,9 +20,15 @@ class Banner extends Component {
                 this
                     .props
                     .modalClicked(true, "QUERY", null);
-                    evt.target.value = '0'
-                    break;
+                evt.target.value = '0'
+                break;
+            case "2":
+                this
+                    .props
+                    .setCursor('crosshair');
+                    this.props.setMapMode(mapModes.ADD_SUPPORT)
 
+                break;
             default:
                 //do nothing
 
@@ -29,14 +36,16 @@ class Banner extends Component {
         }
     }
 
-    bannerActionHandler = (evt)=>{
+    bannerActionHandler = (evt) => {
         switch (evt.target.value) {
             case '1':
-            this.props.removeQueryGraphics();
-            evt.target.value = "0"
-            break;
+                this
+                    .props
+                    .removeQueryGraphics();
+                evt.target.value = "0"
+                break;
             default:
-            return null;
+                return null;
         }
     }
 
@@ -46,20 +55,20 @@ class Banner extends Component {
                 <img src={logo} className="AppLogo"/>
 
                 <div className="AppTools">
-                <span>
-                    <select onChange={this.bannerToolHandler} className="ActionSelect">
-                        <option value={0}>...Tools</option>
-                        <option value={1}>Sign Query</option>
-                        <option value={2}>Add Support</option>
-                    </select>
-                </span>
-                   <span>
+                    <span>
+                        <select onChange={this.bannerToolHandler} className="ActionSelect">
+                            <option value={0}>...Tools</option>
+                            <option value={1}>Sign Query</option>
+                            <option value={2}>Add Support</option>
+                        </select>
+                    </span>
+                    <span>
                         <select onChange={this.bannerActionHandler} className="ActionSelect">
-                        <option value={0}>...Actions</option>
-                        <option value={1}>Clear Query Graphics</option>
-                    </select>
-                   </span>
-                   
+                            <option value={0}>...Actions</option>
+                            <option value={1}>Clear Query Graphics</option>
+                        </select>
+                    </span>
+
                 </div>
 
                 <UserAccount

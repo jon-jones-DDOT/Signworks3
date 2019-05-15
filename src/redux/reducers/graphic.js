@@ -5,11 +5,18 @@ export const types = {
     REMOVE_QUERY_RESULTS: "REMOVE_QUERY_RESULTS",
     REMOVE_QUERY_GRAPHICS: 'REMOVE_QUERY_GRAPHICS',
     SHOW_STREETSMART_VIEWER: 'SHOW_STREETSMART_VIEWER',
-    SHOW_STREETSMART_EDITOR: "SHOW_STREETSMART_EDITOR",
+
     START_STREETSMART_VIEWER: "START_STREETSMART_VIEWER",
     CLOSE_STREETSMART_VIEWER: "CLOSE_STREETSMART_VIEWER",
-    SET_POINT_BUFFER: "SET_POINT_BUFFER"
+    SET_POINT_BUFFER: "SET_POINT_BUFFER",
+    SET_CURSOR: "SET_CURSOR",
+    SET_MAP_CLICK_MODE: "SET_MAP_CLICK_MODE"
 };
+export const mapModes = {
+    SELECT_SUPPORT: 'SELECT_SUPPORT',
+    ADD_SUPPORT: 'ADD_SUPPORT',
+    DRAW: "DRAW"
+}
 
 // REDUCERS //
 export const initialState = {
@@ -17,19 +24,21 @@ export const initialState = {
     queryFeatures: [],
     showQuery: false,
     leftVisible: false,
-    ssEdit: false,
-    ssView: false,
+    editMode: true,
     ssInputGeom: null,
-    ssgeoJSONselPoint:null,
-    viewWidth:null,
-    viewExtentWidth:null,
-    view_spatRef:null,
-    ssOverlayFeatures:null
+    ssgeoJSONselPoint: null,
+    viewWidth: null,
+    viewExtentWidth: null,
+    view_spatRef: null,
+    ssOverlayFeatures: null,
+    cursor: 'default',
+    mapClickMode: mapModes.SELECT_SUPPORT
 }
 
 export default(state = initialState, action) => {
     switch (action.type) {
         case types.SET_SUPPORT_MARKER:
+        console.log('action.payload.selSupportGeom :', action.payload.selSupportGeom);
             action.payload.selSupportGeom.type = "point";
             return {
                 ...state,
@@ -52,7 +61,7 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
-            case types.SET_POINT_BUFFER:
+        case types.SET_POINT_BUFFER:
             return ({
                 ...state,
                 ...action.payload
@@ -69,6 +78,16 @@ export default(state = initialState, action) => {
                 ssView: false,
                 leftVisible: false
             }
+        case types.SET_CURSOR:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case types.SET_MAP_CLICK_MODE:
+            return {
+                ...state,
+                ...action.payload
+            }
         default:
             return state;
     }
@@ -80,12 +99,14 @@ export const actions = {
             selSupportGeom
         }}),
     removeQueryResults: () => ({type: types.REMOVE_QUERY_RESULTS, payload: {}}),
-    closeStreetSmartViewer: () =>({type:types.CLOSE_STREETSMART_VIEWER,payload:{}}),
-    setPointBuffer: (viewWidth, viewExtentWidth,view_spatRef) =>({type:types.SET_POINT_BUFFER, payload:{
-        viewWidth,
-        viewExtentWidth,
-        view_spatRef
-    }
+    closeStreetSmartViewer: () => ({type: types.CLOSE_STREETSMART_VIEWER, payload: {}}),
+    setPointBuffer: (viewWidth, viewExtentWidth, view_spatRef) => ({
+        type: types.SET_POINT_BUFFER,
+        payload: {
+            viewWidth,
+            viewExtentWidth,
+            view_spatRef
+        }
     }),
     removeQueryGraphics: () => ({
         type: types.REMOVE_QUERY_GRAPHICS,
@@ -102,7 +123,17 @@ export const actions = {
             layer
         }
     }),
-    startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth,viewExtentWidth,view_spatRef) => ({
+    setCursor: (cursor) => ({type: types.SET_CURSOR, payload: {
+            cursor
+        }}),
+
+    setMapClickMode: (mode) => ({
+        type: types.SET_MAP_CLICK_MODE,
+        payload: {
+            mapClickMode: mode
+        }
+    }),
+    startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth, viewExtentWidth, view_spatRef, editMode) => ({
         type: types.START_STREETSMART_VIEWER,
         payload: {
             sel,
@@ -111,7 +142,8 @@ export const actions = {
             outSR,
             viewWidth,
             viewExtentWidth,
-            view_spatRef
+            view_spatRef,
+            editMode
         }
     })
 };

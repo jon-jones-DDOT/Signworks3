@@ -19,7 +19,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../../redux/reducers/map';
 import {actions as graphicActions} from '../../../redux/reducers/graphic'
-
+import {mapModes} from '../../../redux/reducers/graphic'
 // ESRI
 import {loadModules} from 'esri-loader';
 import {createView} from '../../../utils/esriHelper';
@@ -62,16 +62,18 @@ class MapView extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-
-        if(nextProps.graphic.showQuery === false){
-            this.queryMarkerLayer.removeAll();
+//removes superQuery results from view based on store
+        if (nextProps.graphic.showQuery === false) {
+            this
+                .queryMarkerLayer
+                .removeAll();
         }
-
+//if there are query features in the store, this block displays them in the view
         if (nextProps.graphic.queryFeatures.length > 0) {
             const graphics = [...nextProps.graphic.queryFeatures]
-
+            // add symbols
             let querySymb = {
-                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()  NEVER TRUST AUTOCAST
                 style: "circle",
                 color: [
                     0, 255, 0, 0.0
@@ -83,10 +85,11 @@ class MapView extends Component {
                 }
             };
 
-            //remove features from state goes here
+            //this just sets query results in the store to empty array
             this
                 .props
                 .removeQueryResults();
+            // create graphics and add them to layer
             loadModules(["esri/Graphic"]).then(([Graphic]) => {
                 let gr = null;
                 for (let i = 0; i < graphics.length; i++) {
@@ -100,11 +103,13 @@ class MapView extends Component {
             })
 
         }
-
+        // this is the part that reacts to map click, but wrongly
         if (this.state.mapClicked) {
-
+console.log('next.graphic.selSupportGeom', nextProps.graphic.selSupportGeom)
+console.log('this.props.graphic.selSupportGeom', this.props.graphic.selSupportGeom)
             this.selPoint.geometry = nextProps.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;
+            this.markerLayer.removeAll();
             this
                 .markerLayer
                 .add(this.selPoint)
@@ -113,6 +118,8 @@ class MapView extends Component {
             this.view.center = this.selPoint.geometry
         }
         this.setState({mapClicked: false})
+
+        this.view.surface.style.cursor = nextProps.graphic.cursor;
     }
 
     render() {
@@ -146,7 +153,10 @@ class MapView extends Component {
     }
 
     getSelectedSupport = (expandedMapPoint) => {
- 
+//this line takes the buffered point and sends it  to the map reducer which punts it to the _setSupport saga
+// which queries and gets the support, signs, timebands, etc and writes them to the store, where they dictate the 
+//Rightbar display.  Once the store changes the action picks up in willReceiveProps
+// BUT IT DOESN'T.  The action in willReceiveProps happens before the store changes, and thus reads old info from the store
 
         this
             .props
@@ -154,11 +164,30 @@ class MapView extends Component {
 
     }
 
-    mapClicked = (evt) => {
-        this.setState({mapClicked: true})
-        this.props.setPointBuffer(this.view.width,this.view.extent.width, this.view.spatialReference)
+    mapClickHandler = (evt) => {
+        // in any map app that's more than a viewer, the map click event is gonna be complicated
+        // so much so that I wrote this a month ago and it is already getting away from me
+        //so we shall comment.  The click event is first captured here
+        // then evaluated against the store to decide what it is supposed to do
+        switch (this.props.graphic.mapClickMode) {
+            //the click is supposed to select an existing support on the map
+            case mapModes.SELECT_SUPPORT:
+            //this line seems to control some code in willReceiveProps, but I think that code might be in the wrong place
+            // It is.  Must fix. (todo)
+                this.setState({mapClicked: true});
+                //this redux call moves info about the view into the store so that an extent around the point can be calculated
+                // I don't think it changes, (todo) see about moving it to map load or something
+                this
+                    .props
+                    .setPointBuffer(this.view.width, this.view.extent.width, this.view.spatialReference);
+                //this creates a small extent buffer around the mapPoint to aid in the select query
+                //its callback is getSelectedSupport, above    
+                pointToExtent(this.view.width, this.view.extent.width, this.view.spatialReference, evt.mapPoint, 12, this.getSelectedSupport);
+                break;
+            default:
+                return
 
-        pointToExtent(this.view.width,this.view.extent.width, this.view.spatialReference, evt.mapPoint, 12, this.getSelectedSupport);
+        }
 
     }
 
@@ -180,18 +209,17 @@ class MapView extends Component {
             const baselayer = new TileLayer(layerUrl, null);
             const baseMap = new Basemap({baseLayers: [baselayer]})
 
-            const featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, 
-                definitionExpression:"SUPPORTSTATUS = 1" ,outFields: ["*"], id: "support"});
+            const featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
 
             this.map.basemap = baseMap;
             this
                 .map
-                .addMany([featureLayer,this.queryMarkerLayer, this.markerLayer]);
+                .addMany([featureLayer, this.queryMarkerLayer, this.markerLayer]);
             this
                 .view
-                .on("click", this.mapClicked);
+                .on("click", this.mapClickHandler);
 
             this
                 .view

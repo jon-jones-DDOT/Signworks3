@@ -16,7 +16,9 @@ export const types = {
     SAVE_SUPPORT: "SAVE_SUPPORT",
     SAVE_SIGN: "SAVE_SIGN",
     NEW_SIGN: "NEW_SIGN",
-    INIT: "INIT"
+    NEW_SUPPORT: "NEW_SUPPORT",
+    INIT: "INIT",
+
 };
 
 // REDUCERS //
@@ -121,6 +123,13 @@ export const actions = {
         payload: {
             support,
             sign,
+            layers
+        }
+    }),
+    newSupport:(support, layers) =>({
+        type:types.NEW_SUPPORT,
+        payload:{
+            support,
             layers
         }
     })
