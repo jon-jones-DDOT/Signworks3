@@ -42,8 +42,15 @@ class MapView extends Component {
     markerLayer = null;
     queryMarkerLayer = null;
     symb = null;
+    addSymb = null;
     geom = null;
 
+
+    constructor(props) {
+        super(props)
+        this.state = {newSupportClickGeom:null}
+        
+    }
     componentDidMount() {
 
         this.startup(this.props.mapConfig, containerID, this.props.is3DScene);
@@ -111,7 +118,19 @@ class MapView extends Component {
 
             this.view.zoom = 20
             this.view.center = this.selPoint.geometry
-        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT) {}
+        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT) {
+            //gonna try to keep the selected point in local state
+            let addMark = {};
+            addMark.geometry = this.state.newSupportClickGeom;
+            addMark.symbol = this.addSymb;
+            this.markerLayer.removeAll();
+            this.markerLayer.add(addMark)
+            //center, but no zoom
+            this.view.center = addMark.geometry
+        }
+        else{
+            this.markerLayer.removeAll();
+        }
 
         this.view.surface.style.cursor = nextProps.graphic.cursor;
     }
@@ -190,7 +209,9 @@ class MapView extends Component {
                         type: 'point'
                     }
                 }
-
+                //grabbing a local copy of the mapPoint.geom for the marker
+                console.log('evt.mapPoint', evt.mapPoint)
+                this.setState({newSupportClickGeom:evt.mapPoint})
                 this
                     .props
                     .startStreetSmartViewer([newSupportFeature], this.props.config.featureURLs, 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, true);
@@ -249,6 +270,18 @@ class MapView extends Component {
                 size: "30px", // pixels
                 outline: { // autocasts as new SimpleLineSymbol()
                     color: 'magenta',
+                    width: 3 // points
+                }
+            };
+            this.addSymb = {
+                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                style: "circle",
+                color: [
+                    0, 255, 0, 0.0
+                ],
+                size: "30px", // pixels
+                outline: { // autocasts as new SimpleLineSymbol()
+                    color: 'green',
                     width: 3 // points
                 }
             };
