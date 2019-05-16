@@ -31,7 +31,8 @@
         "signs":  "https://arcgis.ddot.dc.gov/arcgis/rest/services/Signs/SignWorks_Secured/FeatureServer/1",
         "timebands":"https://arcgis.ddot.dc.gov/arcgis/rest/services/Signs/SignWorks_Secured/FeatureServer/2",
         "superquery":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
-        "geometryService":"https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer"
+        "geometryService":"https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
+        "LRS_Service":"https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools"
 
     }
 

@@ -25,7 +25,7 @@ import * as mapLoadedSaga from './_mapLoaded';
 import * as newSignSaga from './_newSign';
 import * as querySaga from './_query';
 import * as streetSmartSaga from './_openStreetSmart';
-import * as addSupportSaga from './_addSupport';
+import * as newSupportSaga from './_newSupport';
 
 
 export default function* rootSaga() {
@@ -40,7 +40,7 @@ export default function* rootSaga() {
     ...Object.values(newSignSaga),
     ...Object.values(querySaga),
     ...Object.values(streetSmartSaga),
-    ...Object.values(addSupportSaga)
+    ...Object.values(newSupportSaga)
 
     // more sagas from different files
   ].map(fork));

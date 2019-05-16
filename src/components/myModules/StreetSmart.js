@@ -37,6 +37,10 @@ class StreetSmart extends Component {
         const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;
         const geoJSONNeighbors = this.props.graphic.ssOverlay;
         const editMode = this.props.graphic.editMode;
+        const save = this.props.newSupport;
+        const layers = this.props.config.featureURLs;
+        
+    
 
         const PointsSLD = ' <?xml version="1.0"  encoding="ISO-8859-1"?><StyledLayerDescriptor  version="1.' +
                 '0.0"             xsi:schemaLocation="http://www.opengis.net/sld  StyledLayerDesc' +
@@ -82,6 +86,8 @@ class StreetSmart extends Component {
             if (result.features[0].geometry.coordinates == null) {
                 return;
             }
+            save(result, layers);
+
             window.StreetSmartApi.off(msEvents.MEASUREMENT_CHANGED);
            // graphics.view.surface.style.cursor = "default";
            // callback.GetLRSInfo(result, callback);

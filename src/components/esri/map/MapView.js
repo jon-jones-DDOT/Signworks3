@@ -210,7 +210,7 @@ class MapView extends Component {
                     }
                 }
                 //grabbing a local copy of the mapPoint.geom for the marker
-                console.log('evt.mapPoint', evt.mapPoint)
+       
                 this.setState({newSupportClickGeom:evt.mapPoint})
                 this
                     .props

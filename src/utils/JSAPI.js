@@ -360,6 +360,28 @@ reject(err)
     })
 }
 
+export function getPointOnRouteStreetSmart(args){
+
+    const point = args[0];
+    console.log('point :', point);
+    const layer = args[1];
+    console.log('layer :', layer);
+    return new Promise((resolve, reject) => {
+        loadModules(["esri/request"]).then(([esriRequest]) => {
+            esriRequest(layer + '/getPointOnRoute', {
+                query: {
+                    'x': point.geometry.x,
+                    'y': point.geometry.y,
+                    'inSR': 2248,
+                    'outSR': 26985,
+                    'searchRadius': 50,
+                    'f': "json"
+                }
+            }).then(resp => resolve(resp), error => reject(error))
+         })
+    })
+}
+
 //NON-ESRI DATA CALLS
 
 export function * muttGenerator(muttQueryString) {
