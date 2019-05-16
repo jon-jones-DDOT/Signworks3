@@ -41,6 +41,7 @@ class MapView extends Component {
     selPoint = null;
     markerLayer = null;
     queryMarkerLayer = null;
+    featureLayer = null;
     symb = null;
     addSymb = null;
     geom = null;
@@ -64,9 +65,7 @@ class MapView extends Component {
     UNSAFE_componentWillReceiveProps(nextProps) {
         //removes superQuery results from view based on store
         if (nextProps.graphic.showQuery === false) {
-            this
-                .queryMarkerLayer
-                .removeAll();
+            this.queryMarkerLayer.removeAll();
         }
         //if there are query features in the store, this block displays them in the view
         if (nextProps.graphic.queryFeatures.length > 0) {
@@ -103,6 +102,7 @@ class MapView extends Component {
             })
 
         }
+       
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
@@ -244,14 +244,14 @@ class MapView extends Component {
             const baselayer = new TileLayer(layerUrl, null);
             const baseMap = new Basemap({baseLayers: [baselayer]})
 
-            const featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
+             this.featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
 
             this.map.basemap = baseMap;
             this
                 .map
-                .addMany([featureLayer, this.queryMarkerLayer, this.markerLayer]);
+                .addMany([this.featureLayer, this.queryMarkerLayer, this.markerLayer]);
             this
                 .view
                 .on("click", this.mapClickHandler);
@@ -262,6 +262,8 @@ class MapView extends Component {
             this
                 .view
                 .on('mouse-wheel', this.mapMoveHandler)
+
+    
 
             this.symb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
