@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
-import {actions as graphicActions} from '../../redux/reducers/graphic'
+import {mapModes,actions as graphicActions} from '../../redux/reducers/graphic'
+
 import './StreetSmart.css'
 
 const containerID = "StreetSmart-container";
@@ -39,6 +40,7 @@ class StreetSmart extends Component {
         const editMode = this.props.graphic.editMode;
         const save = this.props.newSupport;
         const layers = this.props.config.featureURLs;
+        const ciao = this.props.setMapClickMode;
         
     
 
@@ -92,6 +94,7 @@ class StreetSmart extends Component {
            // graphics.view.surface.style.cursor = "default";
            // callback.GetLRSInfo(result, callback);
           //  close();
+          ciao(mapModes.SELECT_SUPPORT_MODE, 'default');
 
         };
 

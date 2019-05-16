@@ -1,7 +1,7 @@
 import {call, takeLatest} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
 import {getFullSignPost} from './reload'
-import {saveSupport, getPointOnRouteStreetSmart} from '../../utils/JSAPI';
+import {saveSupport, getPointOnRouteStreetSmart, projectGeometry} from '../../utils/JSAPI';
 
 // WORKER //
 
@@ -54,13 +54,33 @@ function * addNewSupport(action) {
                 wkid: 2248
             }
         };
-        console.log('newSupport :', newSupport);
+
         //add LRS info
 
         const lrsResults = yield call(getPointOnRouteStreetSmart, [newSupport,action.payload.layers.LRS_Service]);
-        console.log('lrsResults', lrsResults)
-        //  yield call(saveSupport, [action.payload.support, true,
-        // action.payload.layers.supports]);  yield getFullSignPost(action);
+        const lrsInfo = lrsResults.data.pointOnRoutes[0];
+        newSupport.attributes.ROUTEID = lrsInfo.routeID;
+        newSupport.attributes.MEASURE = lrsInfo.measureInMeters;
+        newSupport.attributes.STREETSEGID = lrsInfo.streetSegID;
+        
+        //now let's project its geometry to its native preference
+
+
+      const antCraving  =  yield call(projectGeometry,[[newSupport.geometry],action.payload.layers.geometryService,2248,26985   ])
+      
+      newSupport.geometry  = antCraving[0];
+
+
+       
+         const elLation =  yield call(saveSupport, [newSupport, true, action.payload.layers.supports]); 
+         console.log('elLation :', elLation);
+         newSupport.attributes.OBJECTID = elLation.data.addResults[0].objectId;
+         newSupport.attributes.GLOBALID = elLation.data.addResults[0].globalId;
+         action.payload.support = newSupport;
+
+
+        yield getFullSignPost(action);
+
     } catch (e) {
         console.log('SAGA ERROR: map/addNewSupport, ', e);
     }
