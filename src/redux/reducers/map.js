@@ -7,17 +7,17 @@
 // KIND, either express or implied. See the License for the specific language
 // governing permissions and limitations under the License.​ ACTION TYPES //
 export const types = {
-    MAP_LOADED: "MAP_LOADED",
-    MAP_CLICKED: "MAP_CLICKED",
-    MAP_CHANGED: "MAP_CHANGED",
-    SET_SELECTED_SUPPORT: "SET_SELECTED_SUPPORT",
-    SIGN_ORDER_CHANGED: "SIGN_ORDER_CHANGED",
-    MODAL: "MODAL",
-    SAVE_SUPPORT: "SAVE_SUPPORT",
-    SAVE_SIGN: "SAVE_SIGN",
-    NEW_SIGN: "NEW_SIGN",
-    NEW_SUPPORT: "NEW_SUPPORT",
-    INIT: "INIT",
+    MAP_LOADED_S: "MAP_LOADED_S",
+    SELECT_SUPPORT_S: "SELECT_SUPPORT_S",
+    MAP_CHANGED_RM: "MAP_CHANGED_RM",
+    SET_SELECTED_SUPPORT_RM: "SET_SELECTED_SUPPORT_RM",
+    SIGN_ORDER_CHANGED_S: "SIGN_ORDER_CHANGED_S",
+    MODAL_CLICKED_RM: "MODAL_CLICKED_RM",
+    SAVE_SUPPORT_S: "SAVE_SUPPORT_S",
+    SAVE_SIGN_S: "SAVE_SIGN_S",
+    NEW_SIGN_S: "NEW_SIGN_S",
+    NEW_SUPPORT_S: "NEW_SUPPORT_S",
+    INIT_RM: "INIT_RM",
 
 };
 
@@ -38,26 +38,26 @@ export const initialState = {
 export default(state = initialState, action) => {
 
     switch (action.type) {
-        case types.INIT:
+        case types.INIT_RM:
             return {
                 ...state,
                 ...action.payload,
                 loaded: true
             };
 
-        case types.SET_SELECTED_SUPPORT:
+        case types.SET_SELECTED_SUPPORT_RM:
             return {
                 ...state,
                 ...action.payload
             }
 
-        case types.MODAL:
+        case types.MODAL_CLICKED_RM:
 
             return {
                 ...state,
                 ...action.payload
             }
-            case types.MAP_CHANGED:
+            case types.MAP_CHANGED_RM:
             return{
                 ...state,
                 ...action.payload
@@ -70,23 +70,23 @@ export default(state = initialState, action) => {
 
 // ACTIONS //
 export const actions = {
-    mapLoaded: (extent) => ({type: types.MAP_LOADED, payload: {extent}}),
+    mapLoaded: (extent) => ({type: types.MAP_LOADED_S, payload: {extent}}),
     mapChanged: (extent) => ({
-        type: types.MAP_CHANGED, 
+        type: types.MAP_CHANGED_RM, 
         payload: {
             extent
         }
     }),
-    mapClicked: (geom, layers) => ({
+    selectSupport: (geom, layers) => ({
 
-        type: types.MAP_CLICKED,
+        type: types.SELECT_SUPPORT_S,
         payload: {
             geom: geom,
             layers: layers
         }
     }),
     signOrderChanged: (features, support, layers) => ({
-        type: types.SIGN_ORDER_CHANGED,
+        type: types.SIGN_ORDER_CHANGED_S,
         payload: {
             features,
             support,
@@ -95,7 +95,7 @@ export const actions = {
         }
     }),
     modalClicked: (show, type, index) => ({
-        type: types.MODAL,
+        type: types.MODAL_CLICKED_RM,
         payload: {
             showModal: show,
             currentModal: type,
@@ -103,14 +103,14 @@ export const actions = {
         }
     }),
     saveSupport: (support, layers) => ({
-        type: types.SAVE_SUPPORT,
+        type: types.SAVE_SUPPORT_S,
         payload: {
             support,
             layers
         }
     }),
     saveSign: (support, sign, layers) => ({
-        type: types.SAVE_SIGN,
+        type: types.SAVE_SIGN_S,
         payload: {
             support,
             sign,
@@ -119,7 +119,7 @@ export const actions = {
     }),
 
     newSign: (support, sign, layers) => ({
-        type: types.NEW_SIGN,
+        type: types.NEW_SIGN_S,
         payload: {
             support,
             sign,
@@ -127,7 +127,7 @@ export const actions = {
         }
     }),
     newSupport:(support, layers) =>({
-        type:types.NEW_SUPPORT,
+        type:types.NEW_SUPPORT_S,
         payload:{
             support,
             layers

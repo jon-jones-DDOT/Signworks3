@@ -105,7 +105,7 @@ class MapView extends Component {
         }
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
-        if (nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT) {
+        if (nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
 
             this.selPoint.geometry = nextProps.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;
@@ -118,7 +118,7 @@ class MapView extends Component {
 
             this.view.zoom = 20
             this.view.center = this.selPoint.geometry
-        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT) {
+        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
             //gonna try to keep the selected point in local state
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
@@ -185,7 +185,7 @@ class MapView extends Component {
         // here then evaluated against the store to decide what it is supposed to do
         switch (this.props.graphic.mapClickMode) {
                 //the click is supposed to select an existing support on the map
-            case mapModes.SELECT_SUPPORT:
+            case mapModes.SELECT_SUPPORT_MODE:
 
                 // this redux call moves info about the view into the store so that an extent
                 // around the point can be calculated I don't think it changes, (todo) see about
@@ -198,7 +198,7 @@ class MapView extends Component {
                 pointToExtent(this.view.width, this.view.extent.width, this.view.spatialReference, evt.mapPoint, 12, this.getSelectedSupport);
                 break;
                 //ok now we are in add support mode
-            case mapModes.ADD_SUPPORT:
+            case mapModes.ADD_SUPPORT_MODE:
                 // we should create a 'fake' feature out of the map click event
 
                 const newSupportFeature = {
@@ -214,7 +214,9 @@ class MapView extends Component {
                 this.setState({newSupportClickGeom:evt.mapPoint})
                 this
                     .props
-                    .startStreetSmartViewer([newSupportFeature], this.props.config.featureURLs, 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, true);
+                    .startStreetSmartViewer([newSupportFeature], this.props.config.featureURLs,
+                         4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth,
+                          this.props.graphic.view_spatRef, true);
 
                 break;
             default:

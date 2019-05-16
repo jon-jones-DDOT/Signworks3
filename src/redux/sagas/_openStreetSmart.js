@@ -55,7 +55,7 @@ for(let i = 0; i < neighborFeatures.length;i++){
             .arcgisToGeoJSON(neighborFeatureSet)
 
         yield put({
-            type: graphicTypes.SHOW_STREETSMART_VIEWER,
+            type: graphicTypes.SHOW_STREETSMART_VIEWER_RG,
             payload: {
                 leftVisible: true,
                 editMode:action.payload.editMode,
@@ -73,5 +73,5 @@ for(let i = 0; i < neighborFeatures.length;i++){
 // WATCHER //
 export function * watchStreetSmart() {
 
-    yield takeLatest(graphicTypes.START_STREETSMART_VIEWER, openStreetSmart);
+    yield takeLatest(graphicTypes.START_STREETSMART_VIEWER_S, openStreetSmart);
 }

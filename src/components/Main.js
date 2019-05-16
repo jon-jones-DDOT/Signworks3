@@ -85,7 +85,7 @@ class Main extends Component {
         <MapWrapper>
           <LeftBar></LeftBar>
           <MapView
-          onMapClicked = {this.props.mapClicked}
+          onMapClicked = {this.props.selectSupport}
             onMapLoaded={this.props.mapLoaded}
             mapConfig={this.props.config.mapConfig}
             onMapChanged = {this.props.mapChanged}

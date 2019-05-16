@@ -72,14 +72,14 @@ export function * getFullSignPost(action) {
 
         // Put marker in store
         yield put({
-            type: graphicTypes.SET_SUPPORT_MARKER,
+            type: graphicTypes.SET_SUPPORT_MARKER_RG,
             payload: {
                 selSupportGeom: support.geometry
             }
         });
         // put new signpost in store
         yield put({
-            type: mapTypes.SET_SELECTED_SUPPORT,
+            type: mapTypes.SET_SELECTED_SUPPORT_RM,
             payload: {
                 support,
                 signs

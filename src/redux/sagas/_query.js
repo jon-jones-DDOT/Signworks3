@@ -13,7 +13,7 @@ function * query(action) {
        
        const features = queryResult.data.features;
        yield put({
-        type: graphicTypes.SET_QUERY_RESULTS,
+        type: graphicTypes.SET_QUERY_RESULTS_RG,
         payload: {
             queryFeatures:features
         }
@@ -29,5 +29,5 @@ function * query(action) {
 // WATCHER //
 export function * watchQuery() {
    
-    yield takeLatest(graphicTypes.QUERY_SUPERQUERY, query);
+    yield takeLatest(graphicTypes.QUERY_SUPERQUERY_S, query);
 }

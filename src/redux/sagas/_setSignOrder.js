@@ -22,5 +22,5 @@ function * setSignOrder(action) {
 // WATCHER //
 export function * watchSignOrder() {
 
-    yield takeLatest(mapTypes.SIGN_ORDER_CHANGED, setSignOrder);
+    yield takeLatest(mapTypes.SIGN_ORDER_CHANGED_S, setSignOrder);
 }

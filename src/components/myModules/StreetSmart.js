@@ -36,6 +36,7 @@ class StreetSmart extends Component {
         const y = this.props.graphic.ssInputGeom[0].y;
         const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;
         const geoJSONNeighbors = this.props.graphic.ssOverlay;
+        const editMode = this.props.graphic.editMode;
 
         const PointsSLD = ' <?xml version="1.0"  encoding="ISO-8859-1"?><StyledLayerDescriptor  version="1.' +
                 '0.0"             xsi:schemaLocation="http://www.opengis.net/sld  StyledLayerDesc' +
@@ -73,6 +74,32 @@ class StreetSmart extends Component {
                 sldXMLtext: selectSLD
             }
         ]
+        const clkMap = function (evt) {
+
+            let msEvents = window.StreetSmartApi.Events.measurement;
+
+            let result = window.StreetSmartApi.getActiveMeasurement();
+            if (result.features[0].geometry.coordinates == null) {
+                return;
+            }
+            window.StreetSmartApi.off(msEvents.MEASUREMENT_CHANGED);
+           // graphics.view.surface.style.cursor = "default";
+           // callback.GetLRSInfo(result, callback);
+          //  close();
+
+        };
+
+        const changeView = function (evt) {
+            // view cone stuff
+          //  imagePitch = evt.detail.pitch;
+        //    imageYaw = evt.detail.yaw;
+         //   projectCoords(panoramaViewer._panoramaViewer._activeRecording.xyz[0], panoramaViewer._panoramaViewer._activeRecording.xyz[1], panoramaViewer._panoramaViewer._activeRecording.xyz[2]);
+        };
+
+        const loadViewEnd = function (evt) {
+            //some hack for the view cone
+          //  panoramaViewer.rotateLeft(1);
+        };
 
         window
             .StreetSmartApi
@@ -107,18 +134,27 @@ class StreetSmart extends Component {
                                     window.panoramaViewer = result[i];
                                 }
 
-                                //
-                                // window.panoramaViewer.on(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHA
-                                // N GE, changeView);
-                                // window.panoramaViewer.on(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOA
-                                // D _END, loadViewEnd);
-                     
-                              
+                                if (editMode) {
+                                    window
+                                        .StreetSmartApi
+                                        .startMeasurementMode(window.panoramaViewer, {geometry: window.StreetSmartApi.MeasurementGeometryType.POINT});
+                                    let msEvents = window.StreetSmartApi.Events.measurement;
+                                    window
+                                        .StreetSmartApi
+                                        .on(msEvents.MEASUREMENT_CHANGED, clkMap);
+                                    window
+                                        .panoramaViewer
+                                        .on(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHANGE, changeView);
+                                    window
+                                        .panoramaViewer
+                                        .on(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOAD_END, loadViewEnd);
+                                }
+
                                 for (let o in options) {
                                     window
                                         .StreetSmartApi
                                         .addOverlay(options[o])
-                                } 
+                                }
 
                             }
 

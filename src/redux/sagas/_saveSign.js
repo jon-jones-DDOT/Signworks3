@@ -25,5 +25,5 @@ function * saveSelectSign(action) {
 // WATCHER //
 export function * watchLayers() {
    
-    yield takeLatest(mapTypes.SAVE_SIGN, saveSelectSign);
+    yield takeLatest(mapTypes.SAVE_SIGN_S, saveSelectSign);
 }

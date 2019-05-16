@@ -14,7 +14,7 @@ class Banner extends Component {
 
         switch (evt.target.value) {
             case '0':
-            this.props.setMapClickMode(mapModes.SELECT_SUPPORT, 'default')
+            this.props.setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default')
                 break;
             case "1": //SuperQuery™
 
@@ -25,7 +25,7 @@ class Banner extends Component {
                 break;
             case "2":
                 
-                    this.props.setMapClickMode(mapModes.ADD_SUPPORT, 'crosshair')
+                    this.props.setMapClickMode(mapModes.ADD_SUPPORT_MODE, 'crosshair')
 
                 break;
             default:

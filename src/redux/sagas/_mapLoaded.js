@@ -15,7 +15,7 @@ function * setInitConfig(action) {
      
      // Put marker in store
      yield put({
-        type: mapTypes.INIT,
+        type: mapTypes.INIT_RM,
         payload: {
             muttArray:muttData,
             extent:action.payload.extent
@@ -30,5 +30,5 @@ function * setInitConfig(action) {
 // WATCHER //
 export function * watchSignOrder() {
 
-    yield takeLatest(mapTypes.MAP_LOADED, setInitConfig);
+    yield takeLatest(mapTypes.MAP_LOADED_S, setInitConfig);
 }

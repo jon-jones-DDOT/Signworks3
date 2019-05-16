@@ -21,5 +21,5 @@ function * saveSelectSupport(action) {
 // WATCHER //
 export function * watchLayers() {
    
-    yield takeLatest(mapTypes.SAVE_SUPPORT, saveSelectSupport);
+    yield takeLatest(mapTypes.SAVE_SUPPORT_S, saveSelectSupport);
 }
