@@ -36,11 +36,7 @@ export default function Support(props) {
                             ? SBT.name(props.sel.attributes.SUPPORTTYPE, "SUPPORTTYPE")
                             : 'null '}
                     </p>
-                    <p>
-                        Sign Status: {props.sel
-                            ? SBT.name(props.sel.attributes.SUPPORTSTATUS, "SUPPORTSTATUS")
-                            : 'null '}
-                    </p>
+                    
                     <p>
                         <button onClick={(evt) =>props.SsClick(evt,props.sel)}><FontAwesomeIcon icon={faBinoculars} title="StreetSmart"/></button>
                         <button><FontAwesomeIcon icon={faGoogle} title="Google Street View"/></button>

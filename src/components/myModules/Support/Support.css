@@ -1,6 +1,6 @@
 .Support{
 
-    height: 220px;
+    height: 120px;
     padding:10px ;
    border : 20px lightcoral solid;
    background-color: lightgrey;
@@ -11,6 +11,7 @@
     height:75px;
     width:75px;
     margin-left: 2px;
-    display: inline-block;
+    
+    float:left;
 
 }
