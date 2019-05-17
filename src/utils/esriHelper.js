@@ -105,7 +105,7 @@ function initMap(mapConfig, node) {
             "esri/Basemap",
             'esri/views/MapView'
         ]).then( ([Map,TileLayer,Basemap, MapView]) => {
-            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_WebMercator/MapServer";
+            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray/MapServer";
             const baselayer = new TileLayer(layerUrl, null);
             const baseMapMine = new Basemap({baseLayers: [baselayer]})
             const map = new Map({
