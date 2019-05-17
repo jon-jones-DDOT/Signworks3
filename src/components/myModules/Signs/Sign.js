@@ -30,7 +30,8 @@ export default function Sign(props) {
                 <div className="SignMutcdText">
                     {props.sign.feature.attributes.SIGNCODE}
                     <br></br>
-                    {props.sign.MUTCD.name}
+                   <div className="SignMUTCDdesc">{props.sign.MUTCD.name}
+                       </div> 
                 </div>
 
                 <Img
