@@ -278,6 +278,7 @@ export function projectGeometry(args) {
 }
 
 export function pointToExtentSaga(args) {
+    console.log('args', args)
     const view_width = args[0];
     const view_extent_width = args[1];
     const view_spatialReference = args[2];

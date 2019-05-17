@@ -183,7 +183,13 @@ class MapView extends Component {
     }
 
     mapClickHandler = (evt) => {
-
+    // this redux call moves info about the view into the store so that an extent
+                // around the point can be calculated I don't think it changes, (todo) see about
+                // moving it to map load or something
+                this
+                    .props
+                    .setPointBuffer(this.view.width, this.view.extent.width, this.view.spatialReference);
+                    
         // in any map app that's more than a viewer, the map click event is gonna be
         // complicated so much so that I wrote this a month ago and it is already
         // getting away from me so we shall comment.  The click event is first captured
@@ -192,12 +198,7 @@ class MapView extends Component {
                 //the click is supposed to select an existing support on the map
             case mapModes.SELECT_SUPPORT_MODE:
 
-                // this redux call moves info about the view into the store so that an extent
-                // around the point can be calculated I don't think it changes, (todo) see about
-                // moving it to map load or something
-                this
-                    .props
-                    .setPointBuffer(this.view.width, this.view.extent.width, this.view.spatialReference);
+            
                 // this creates a small extent buffer around the mapPoint to aid in the select
                 // query its callback is getSelectedSupport, above
                 pointToExtent(this.view.width, this.view.extent.width, this.view.spatialReference, evt.mapPoint, 12, this.getSelectedSupport);

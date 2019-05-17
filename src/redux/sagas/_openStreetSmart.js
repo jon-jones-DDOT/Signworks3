@@ -19,17 +19,16 @@ function * openStreetSmart(action) {
 
         // now we have the projected (2248) support, let's make a geoJSON feature set
         // out of it yay
-    
+
         let sel2 = {
             ...action.payload.sel[0]
         }
         sel2.geometry = projectResult[0];
- 
+
         const selPtFeatureSet = yield call(createFeatureSet, [sel2])
         const gjPt = window
             .ArcgisToGeojsonUtils
             .arcgisToGeoJSON(selPtFeatureSet)
- 
 
         // now we have the geoJSON for the selected point overlay, let's get the nearby
         // points overlay first get the extent
@@ -38,15 +37,18 @@ function * openStreetSmart(action) {
 
         ])
 
+        console.log('localExtent :', localExtent);
         //get neighboring points from the selected support
         const features = yield call(getSupportByExtent, [localExtent, action.payload.layers.supports, 2248]);
         const neighborFeatures = features.data.features;
         //make them a featureset because the converter is picky like that
 
-for(let i = 0; i < neighborFeatures.length;i++){
-    neighborFeatures[i].geometry.type = "point";
-    neighborFeatures[i].geometry.spatialReference = {wkid:2248}
-}
+        for (let i = 0; i < neighborFeatures.length; i++) {
+            neighborFeatures[i].geometry.type = "point";
+            neighborFeatures[i].geometry.spatialReference = {
+                wkid: 2248
+            }
+        }
         const neighborFeatureSet = yield call(createFeatureSet, [neighborFeatures])
 
         //convert FeatureSet to geoJSON feature set
@@ -58,7 +60,7 @@ for(let i = 0; i < neighborFeatures.length;i++){
             type: graphicTypes.SHOW_STREETSMART_VIEWER_RG,
             payload: {
                 leftVisible: true,
-                editMode:action.payload.editMode,
+                editMode: action.payload.editMode,
                 ssInputGeom: projectResult,
                 ssgeoJSONselPoint: gjPt,
                 ssOverlay: gjNeighbors
