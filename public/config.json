@@ -11,8 +11,8 @@
     "appId": "hkdtqXBMmZ8JJ5tD",
 
     "mapConfig": {
-        "basemap": "gray",
-        "zoom": 9,
+        "basemap": "streets",
+        "zoom": 18,
         "center":  [-76.994990, 38.888686]
     },
 
