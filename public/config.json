@@ -12,7 +12,7 @@
 
     "mapConfig": {
         "basemap": "gray",
-        "zoom": 18,
+        "zoom": 9,
         "center":  [-76.994990, 38.888686]
     },
 

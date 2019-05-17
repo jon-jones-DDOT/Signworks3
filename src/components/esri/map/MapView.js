@@ -232,7 +232,7 @@ class MapView extends Component {
     }
 
     mapMoveHandler = (evt) => {
-  
+  console.log('this.view.zoom', this.view.zoom)
         this
             .props
             .onMapChanged(this.view.extent);
@@ -241,6 +241,7 @@ class MapView extends Component {
     init = (response) => {
         this.view = response.view
         this.map = response.view.map;
+        console.log('this.view.zoom on init :', this.view.zoom);
     }
 
     setupWidgetsAndLayers = () => {
