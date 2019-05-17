@@ -1,7 +1,9 @@
-import {call, takeLatest} from 'redux-saga/effects';
+import {call, put, takeLatest} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
+import {types as graphicTypes} from '../reducers/graphic';
+
 import {getFullSignPost} from './reload'
-import {saveSupport, getPointOnRouteStreetSmart, projectGeometry} from '../../utils/JSAPI';
+import {saveSupport, getPointOnRouteStreetSmart, getSupportById, projectGeometry} from '../../utils/JSAPI';
 
 // WORKER //
 
@@ -57,31 +59,39 @@ function * addNewSupport(action) {
 
         //add LRS info
 
-        const lrsResults = yield call(getPointOnRouteStreetSmart, [newSupport,action.payload.layers.LRS_Service]);
+        const lrsResults = yield call(getPointOnRouteStreetSmart, [newSupport, action.payload.layers.LRS_Service]);
         const lrsInfo = lrsResults.data.pointOnRoutes[0];
         newSupport.attributes.ROUTEID = lrsInfo.routeID;
         newSupport.attributes.MEASURE = lrsInfo.measureInMeters;
         newSupport.attributes.STREETSEGID = lrsInfo.streetSegID;
-        
+
         //now let's project its geometry to its native preference
 
+        /*      const antCraving = yield call(projectGeometry, [
+            [newSupport.geometry],
+            action.payload.layers.geometryService,
+            2248,
+            26985
+        ])
 
-      const antCraving  =  yield call(projectGeometry,[[newSupport.geometry],action.payload.layers.geometryService,2248,26985   ])
-      
-      newSupport.geometry  = antCraving[0];
-
-
-       
-         const elLation =  yield call(saveSupport, [newSupport, true, action.payload.layers.supports]); 
-         console.log('elLation :', elLation);
-         newSupport.attributes.OBJECTID = elLation.data.addResults[0].objectId;
-         newSupport.attributes.GLOBALID = elLation.data.addResults[0].globalId;
-         action.payload.support = newSupport;
-
+        newSupport.geometry = antCraving[0];
+*/
+     
+        const elLation = yield call(saveSupport, [newSupport, true, action.payload.layers.supports]);
+        const features = yield call(getSupportById, [elLation.data.addResults[0].objectId, action.payload.layers.supports, 4326])
+ 
+        action.payload.support = features.data.features[0];
 
         yield getFullSignPost(action);
+        yield put({
+            type: graphicTypes.NEED_SUPPORT_REFRESH_RG,
+            payload: {
+                needSupRefresh: true
+            }
+        })
 
     } catch (e) {
+
         console.log('SAGA ERROR: map/addNewSupport, ', e);
     }
 }

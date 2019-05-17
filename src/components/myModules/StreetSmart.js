@@ -41,6 +41,7 @@ class StreetSmart extends Component {
         const save = this.props.newSupport;
         const layers = this.props.config.featureURLs;
         const ciao = this.props.setMapClickMode;
+        const bye = this.ssCancel;
         
     
 
@@ -88,13 +89,16 @@ class StreetSmart extends Component {
             if (result.features[0].geometry.coordinates == null) {
                 return;
             }
+        
             save(result, layers);
+          
 
             window.StreetSmartApi.off(msEvents.MEASUREMENT_CHANGED);
            // graphics.view.surface.style.cursor = "default";
            // callback.GetLRSInfo(result, callback);
           //  close();
           ciao(mapModes.SELECT_SUPPORT_MODE, 'default');
+          bye();
 
         };
 

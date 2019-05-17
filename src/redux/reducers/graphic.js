@@ -8,7 +8,8 @@ export const types = {
     START_STREETSMART_VIEWER_S: "START_STREETSMART_VIEWER_S",
     CLOSE_STREETSMART_VIEWER_RG: "CLOSE_STREETSMART_VIEWER_RG",
     SET_POINT_BUFFER_RG: "SET_POINT_BUFFER_RG",
-    SET_MAP_CLICK_MODE_RG: "SET_MAP_CLICK_MODE_RG"
+    SET_MAP_CLICK_MODE_RG: "SET_MAP_CLICK_MODE_RG",
+    NEED_SUPPORT_REFRESH_RG:"NEED_SUPPORT_REFRESH_RG"
 };
 
 export const mapModes = {
@@ -31,7 +32,8 @@ export const initialState = {
     view_spatRef: null,
     ssOverlayFeatures: null,
     cursor: 'default',
-    mapClickMode: mapModes.SELECT_SUPPORT_MODE
+    mapClickMode: mapModes.SELECT_SUPPORT_MODE,
+    needSupRefresh:false
 }
 
 export default(state = initialState, action) => {
@@ -82,6 +84,11 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
+            case types.NEED_SUPPORT_REFRESH_RG:
+            return {
+                ...state,
+                ...action.payload
+            }
         default:
             return state;
     }
@@ -125,6 +132,10 @@ export const actions = {
             mapClickMode: mode,
             cursor
         }
+    }),
+    needSupportRefresh:(needSupRefresh) =>({
+        type:types.NEED_SUPPORT_REFRESH_RG,
+        payload:{ needSupRefresh}
     }),
     startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth, viewExtentWidth, view_spatRef, editMode) => ({
         type: types.START_STREETSMART_VIEWER_S,

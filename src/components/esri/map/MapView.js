@@ -102,7 +102,11 @@ class MapView extends Component {
             })
 
         }
-       
+       //let's see if the support layer has been added to
+
+       if(nextProps.graphic.needSupRefresh === true){
+           this.featureLayer.refresh();
+       }
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
@@ -117,6 +121,7 @@ class MapView extends Component {
                 .add(this.selPoint)
 
             this.view.zoom = 20
+ 
             this.view.center = this.selPoint.geometry
         } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
             //gonna try to keep the selected point in local state
@@ -227,6 +232,7 @@ class MapView extends Component {
     }
 
     mapMoveHandler = (evt) => {
+  
         this
             .props
             .onMapChanged(this.view.extent);
@@ -248,7 +254,7 @@ class MapView extends Component {
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
 
-            this.map.basemap = baseMap;
+       //     this.map.basemap = baseMap;
             this
                 .map
                 .addMany([this.featureLayer, this.queryMarkerLayer, this.markerLayer]);

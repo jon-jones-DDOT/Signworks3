@@ -9,30 +9,26 @@ const err = (e) => {
 export function getSupportById(args) {
     const id = args[0];
     const layer = args[1];
+    const outSR = args[2];
     //needs a Promis here
-
-    loadModules(["esri/tasks/support/Query"]).then(([Query]) => {
-        let query = new Query();
-        query.where = "OBJECTID = " + id;
-        query.outFields = ["*"];
-        query.returnGeometry = true;
-
-        layer
-            .queryFeatures(query)
-            .then(function (results) {
-
-                if (results.features.length > 0) {
-
-                    return results.features[0];
-                } else {
-                    alert('support was not retrieved')
+    return new Promise((resolve, reject) => {
+        loadModules(["esri/request"]).then(([esriRequest]) => {
+            esriRequest(layer + '/query', {
+                query: {
+                    where: "OBJECTID = " + id,
+                    returnGeometry: true,
+                    outFields: '*', // attribute fields to return
+                    token: null, // token
+                    f: "json",
+                    outSR:outSR // format
+                   
                 }
-            }, err);
+            }).then(resp => resolve(resp), error => reject(error));
 
-    }).catch(err => {
-        // handle any errors
-        console.error(err);
-    });
+        
+        });
+    })
+   
 }
 
 export function getSupportByExtent(args) {
@@ -251,7 +247,7 @@ export function superQuery(args) {
 export function projectGeometry(args) {
 
     const coords = args[0]; //array
-console.log('coords :', coords);
+
     const layer = args[1];
     const inSR = args[2];
     const outSR = args[3]
@@ -363,9 +359,9 @@ reject(err)
 export function getPointOnRouteStreetSmart(args){
 
     const point = args[0];
-    console.log('point :', point);
+
     const layer = args[1];
-    console.log('layer :', layer);
+
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(layer + '/getPointOnRoute', {
