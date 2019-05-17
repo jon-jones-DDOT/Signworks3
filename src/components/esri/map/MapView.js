@@ -120,7 +120,7 @@ class MapView extends Component {
                 .markerLayer
                 .add(this.selPoint)
 
-            this.view.zoom = 20
+         //   this.view.zoom = 20
  
             this.view.center = this.selPoint.geometry
         } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
