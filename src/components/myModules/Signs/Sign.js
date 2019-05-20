@@ -40,7 +40,7 @@ export default function Sign(props) {
             </div>
             <hr/>
             <Timebands bands={props.sign.timebands} edit={false}></Timebands>
-            <p>{props.sign.feature.attributes.OBJECTID}</p>
+           
             <button
                 onClick=
                 {(evt) => props.editClick(evt, 'SIGN', props.index)}
