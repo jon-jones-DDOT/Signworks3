@@ -16,8 +16,6 @@ export default function Sign(props) {
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
     const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
 
-    
-
     return (
         <div className="Sign">
             <div className="SignMUTCDdiv">
@@ -30,8 +28,8 @@ export default function Sign(props) {
                 <div className="SignMutcdText">
                     {props.sign.feature.attributes.SIGNCODE}
                     <br></br>
-                   <div className="SignMUTCDdesc">{props.sign.MUTCD.name}
-                       </div> 
+                    <div className="SignMUTCDdesc">{props.sign.MUTCD.name}
+                    </div>
                 </div>
 
                 <Img
@@ -39,14 +37,18 @@ export default function Sign(props) {
                     className="SignArrowImage"/>
             </div>
             <hr/>
-            <Timebands bands={props.sign.timebands} edit={false}></Timebands>
-           
+            <div>
             <button
-                onClick=
-                {(evt) => props.editClick(evt, 'SIGN', props.index)}
-                className="SignEditButton">
-                <FontAwesomeIcon icon={faUserEdit} title="Edit Sign"/>
-            </button>
+                    onClick=
+                    {(evt) => props.editClick(evt, 'SIGN', props.index)}
+                    className="SignEditButton">
+                    <FontAwesomeIcon icon={faUserEdit} title="Edit Sign"/>
+                </button>
+                <Timebands bands={props.sign.timebands} edit={false}></Timebands>
+
+                
+            </div>
+
         </div>
     )
 }

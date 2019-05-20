@@ -15,6 +15,7 @@
 .SignMutcdText{
     flex:100px;
 }
+
 .SignMUTCDdesc{
 flex:100px;
 font-size:11px;
@@ -36,4 +37,5 @@ font-size:11px;
 
 .SignEditButton{
    padding-bottom:5px;
+  float:right;
 }
