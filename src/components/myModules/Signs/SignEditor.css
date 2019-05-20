@@ -34,7 +34,7 @@
     min-height: 60%;
     min-width: 90%;
     height: 50px;
-    
+
     margin: 20px;
 }
 .MutcdInfoDiv_hidden {
@@ -54,7 +54,7 @@
     text-align: left;
     display: block;
     top: 30px;
-    
+
 }
 
 .SignEditorImage {
@@ -62,78 +62,72 @@
     width: 80px;
 }
 
-
 .SignEditButtonDiv {
-  
-    bottom: 20px;
     position: relative;
-   
-    text-align:center;
+    text-align: center;
 
 }
 .InnerMUTCD {
-    position: relative;   
+    position: relative;
     left: 20px;
     bottom: 30px;
 
 }
 
 .InnerMUTCD_error {
-    position: relative;   
+    position: relative;
     left: 20px;
     bottom: 30px;
     border: solid red 1px;
 }
 
-
-
-.SignDirectionArrow{
-    float:right;
-    width:80px;
+.SignDirectionArrow {
+    float: right;
+    width: 80px;
 }
 
-.dirSign{
-    height:60px;
-    width:90px;
+.dirSign {
+    height: 60px;
+    width: 90px;
 }
-.dirSignTable{
+.dirSignTable {
 
-    margin:auto;
+    margin: auto;
 }
 
-.SignAttributes{
-    position:relative;
+.SignAttributes {
+    position: relative;
     height: 110px;
     width: 80%;
-    top:30px;
+    top: 30px;
     text-align: left;
-    margin-left:100px;
-  
+    margin-left: 100px;
+
 }
-.ZoneSpan{
+.ZoneSpan {
     padding-left: 285px;
-   
+
 }
 
-.ZoneSpan_error{
+.ZoneSpan_error {
     padding-left: 35px;
     border: 1px red solid;
 }
-.SignTextSpan{
+.SignTextSpan {
     padding-left: 175px;
-   
+
 }
 
-.SignText{
-    resize:none;
-    
+.SignText {
+    resize: none;
+
 }
 
-.StatusSelect{
-    padding-right:20px;
-  
+.StatusSelect {
+    padding-right: 20px;
+
 }
 
-.StatusDiv{
+.StatusDiv {
     padding-top: 10px;
 }
