@@ -1,14 +1,12 @@
-.Timeband{
+.Timeband {
+    }
 
-}
-
-TimebandRow{
-    display:inline;
-    font-size: 3px;
-   
+TimebandRow {
+    display: block;
   
 }
-.timebandElement{
+.timebandElement {
     font-size: 11px;
    
+
 }

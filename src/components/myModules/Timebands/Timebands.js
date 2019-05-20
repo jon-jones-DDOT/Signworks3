@@ -32,9 +32,9 @@ export default function Timebands(props) {
                 ? "TimebandTitle_Edit"
                 : "TimebandTitle_View"}>
                 Time Restrictions for this sign:
-            </div>
+            </div><br></br>
 
-            <div className="Timebands">{props.bands.length > 0
+            <div className= {props.edit?"Timebands_Edit":"Timebands_View"}>{props.bands.length > 0
                     ? makeBands()
                     : "No Restrictions"}
             </div>
