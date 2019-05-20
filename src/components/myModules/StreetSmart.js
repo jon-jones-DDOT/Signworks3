@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
-import {mapModes,actions as graphicActions} from '../../redux/reducers/graphic'
+import {mapModes, actions as graphicActions} from '../../redux/reducers/graphic'
 
 import './StreetSmart.css'
 
@@ -20,6 +20,11 @@ class StreetSmart extends Component {
         return false;
     }
     ssCancel = () => {
+
+        const msEvents = window.StreetSmartApi.Events.measurement;
+        window
+            .StreetSmartApi
+            .off(msEvents.MEASUREMENT_CHANGED);
         window
             .StreetSmartApi
             .destroy({
@@ -42,8 +47,6 @@ class StreetSmart extends Component {
         const layers = this.props.config.featureURLs;
         const ciao = this.props.setMapClickMode;
         const bye = this.ssCancel;
-        
-    
 
         const PointsSLD = ' <?xml version="1.0"  encoding="ISO-8859-1"?><StyledLayerDescriptor  version="1.' +
                 '0.0"             xsi:schemaLocation="http://www.opengis.net/sld  StyledLayerDesc' +
@@ -85,33 +88,34 @@ class StreetSmart extends Component {
 
             let msEvents = window.StreetSmartApi.Events.measurement;
 
-            let result = window.StreetSmartApi.getActiveMeasurement();
+            let result = window
+                .StreetSmartApi
+                .getActiveMeasurement();
             if (result.features[0].geometry.coordinates == null) {
                 return;
             }
-        
-            save(result, layers);
-          
 
-            window.StreetSmartApi.off(msEvents.MEASUREMENT_CHANGED);
-           // graphics.view.surface.style.cursor = "default";
-           // callback.GetLRSInfo(result, callback);
-          //  close();
-          ciao(mapModes.SELECT_SUPPORT_MODE, 'default');
-          bye();
+            save(result, layers);
+
+            window
+                .StreetSmartApi
+                .off(msEvents.MEASUREMENT_CHANGED);
+            // graphics.view.surface.style.cursor = "default"; callback.GetLRSInfo(result,
+            // callback);  close();
+            ciao(mapModes.SELECT_SUPPORT_MODE, 'default');
+            bye();
 
         };
 
         const changeView = function (evt) {
-            // view cone stuff
-          //  imagePitch = evt.detail.pitch;
-        //    imageYaw = evt.detail.yaw;
-         //   projectCoords(panoramaViewer._panoramaViewer._activeRecording.xyz[0], panoramaViewer._panoramaViewer._activeRecording.xyz[1], panoramaViewer._panoramaViewer._activeRecording.xyz[2]);
+            // view cone stuff  imagePitch = evt.detail.pitch;    imageYaw = evt.detail.yaw;
+            //   projectCoords(panoramaViewer._panoramaViewer._activeRecording.xyz[0],
+            // panoramaViewer._panoramaViewer._activeRecording.xyz[1],
+            // panoramaViewer._panoramaViewer._activeRecording.xyz[2]);
         };
 
         const loadViewEnd = function (evt) {
-            //some hack for the view cone
-          //  panoramaViewer.rotateLeft(1);
+            //some hack for the view cone  panoramaViewer.rotateLeft(1);
         };
 
         window
