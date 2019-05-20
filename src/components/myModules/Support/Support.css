@@ -2,8 +2,9 @@
 
     height: 120px;
     padding:10px ;
-   border : 20px lightcoral solid;
-   background-color: lightgrey;
+  color:white;
+   background-color: rgb(224, 80, 80);
+   font-weight:bold;
     
 }
 

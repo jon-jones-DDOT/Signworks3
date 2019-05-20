@@ -64,9 +64,11 @@
 
 
 .SignEditButtonDiv {
+  
     bottom: 20px;
     position: relative;
-    border: 1px solid black;
+   
+    text-align:center;
 
 }
 .InnerMUTCD {
@@ -102,17 +104,24 @@
 .SignAttributes{
     position:relative;
     height: 110px;
-    width: 100%;
+    width: 80%;
     top:30px;
+    text-align: left;
+    margin-left:100px;
   
 }
 .ZoneSpan{
-    padding-left: 35px;
+    padding-left: 285px;
+   
 }
 
 .ZoneSpan_error{
     padding-left: 35px;
     border: 1px red solid;
+}
+.SignTextSpan{
+    padding-left: 175px;
+   
 }
 
 .SignText{

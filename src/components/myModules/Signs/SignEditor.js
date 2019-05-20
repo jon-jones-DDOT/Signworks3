@@ -542,10 +542,10 @@ export default class SignEditor extends Component {
                                     {addOptionsToSelect(this.signTypes._codedValuesSignStatus)}</select>
 
                             </span>
-                            <span className="ZoneSpan">
+                            <span className="SignTextSpan">
                                 Sign Text:
                                 <textarea
-                                    value={this.state.attributes.SIGNTEXT}
+                                    value={this.state.attributes.SIGNTEXT===null?"":this.state.attributes.SIGNTEXT}
                                     onChange={this.signTextChangeHandler}
                                     rows="4"
                                     className="SignText"></textarea>
@@ -561,7 +561,7 @@ export default class SignEditor extends Component {
                                 delete={this.timebandDeleteHandler}
                                 signId={this.state.feature.attributes.GLOBALID}></Timebands>
                         </div>
-                        <div>
+                        <div className="SignEditButtonDiv">
                             <button onClick={this.saveClickHandler}>SAVE</button>
                             <button onClick={this.cancelClickHandler}>CANCEL
                             </button>

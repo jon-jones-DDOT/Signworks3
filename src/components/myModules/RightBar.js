@@ -7,6 +7,7 @@ import {actions as mapActions} from '../../redux/reducers/map';
 import {actions as graphicActions} from '../../redux/reducers/graphic'
 import Signs from './Signs/Signs';
 import SignCreator from './Signs/SignCreator';
+import "./RightBar.css"
 
 const RightDiv = styled.div ` 
 
@@ -30,7 +31,7 @@ class RightBar extends Component {
     }
 
     addSignHandler = (evt) => {
-
+alert('we awake?')
         // this may look dumb, but we are sharing a function with saveSign and the input
         // parameter must match structure
         let signWrapper = {};
@@ -64,7 +65,7 @@ class RightBar extends Component {
 
         return (
 
-            <RightDiv >
+            <RightDiv className="RightBar">
 
                 <Support
                     sel={this.props.map.support}
