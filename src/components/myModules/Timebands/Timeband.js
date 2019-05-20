@@ -8,6 +8,7 @@ export default function Timeband(props) {
   return (
     <div className= "TimebandRow">
     
+    
     <span className="timebandElement">{domains.name(props.value.attributes.STARTDAY, "TIMEBAND_DAYS")}
     {props.value.attributes.STARTDAY >7?"":  "-"}</span>
     <span className="timebandElement">{domains.name(props.value.attributes.ENDDAY, "TIMEBAND_DAYS")}
