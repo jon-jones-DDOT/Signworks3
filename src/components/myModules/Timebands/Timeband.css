@@ -1,11 +1,14 @@
 .Timeband{
-    display:flex;
+
 }
 
 TimebandRow{
     display:inline;
+    font-size: 3px;
+   
   
 }
 .timebandElement{
+    font-size: 11px;
    
 }

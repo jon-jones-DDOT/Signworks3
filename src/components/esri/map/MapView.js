@@ -109,7 +109,7 @@ class MapView extends Component {
        }
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
-        if (nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
+        if (this.selPoint && nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
 
             this.selPoint.geometry = nextProps.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;

@@ -5,7 +5,6 @@ import './Timebands.css'
 
 export default function Timebands(props) {
 
-  
     const makeBands = () => {
         if (props.edit) {
             return props
@@ -14,8 +13,10 @@ export default function Timebands(props) {
                     key={`item-${index}`}
                     index={index}
                     value={value}
-                    class = "TimebandEditor"
-                    change={props.change} delete = {props.delete} signId = {props.signId}/>))
+                    class="TimebandEditor"
+                    change={props.change}
+                    delete={props.delete}
+                    signId={props.signId}/>))
         } else {
             return props
                 .bands
@@ -25,17 +26,27 @@ export default function Timebands(props) {
     }
 
     return (
-        <div className="Timebands">
-            Time Restrictions for this sign:
-            <br/> {props.bands.length > 0
-                ? makeBands()
-                : "No Restrictions"}
+        <div >
+            <div
+                className={props.edit
+                ? "TimebandTitle_Edit"
+                : "TimebandTitle_View"}>
+                Time Restrictions for this sign:
+            </div>
+
+            <div className="Timebands">{props.bands.length > 0
+                    ? makeBands()
+                    : "No Restrictions"}
+            </div>
             {props.edit
                 ? <div className="addBandDiv">
-                <button onClick={() => props.add(props.signId)} title= "Add Time Restriction"
-                className="addBandButton">
-                        <b>+</b>
-                    </button></div>
+                        <button
+                            onClick={() => props.add(props.signId)}
+                            title="Add Time Restriction"
+                            className="addBandButton">
+                            <b>+</b>
+                        </button>
+                    </div>
                 : ""}
         </div>
     )

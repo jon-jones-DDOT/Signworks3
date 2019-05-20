@@ -4,9 +4,16 @@
 }
 
 
-.addBandButton{
- 
+.TimebandTitle_View{
+    text-align:left;
+    height:1px;
 }
+
+.TimebandTitle_Edit{
+    height:1px;
+}
+
+
 .addBandDiv{
   
     text-align: left;
