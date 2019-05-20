@@ -64,7 +64,7 @@ class MapView extends Component {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         //removes superQuery results from view based on store
-        if (nextProps.graphic.showQuery === false) {
+        if (this.queryMarkerLayer && nextProps.graphic.showQuery === false) {
             this.queryMarkerLayer.removeAll();
         }
         //if there are query features in the store, this block displays them in the view
