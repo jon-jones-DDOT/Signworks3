@@ -7,9 +7,11 @@ export const types = {
     SHOW_STREETSMART_VIEWER_RG: 'SHOW_STREETSMART_VIEWER_RG',
     START_STREETSMART_VIEWER_S: "START_STREETSMART_VIEWER_S",
     CLOSE_STREETSMART_VIEWER_RG: "CLOSE_STREETSMART_VIEWER_RG",
+    GET_NEW_CONE_S: "GET_NEW_CONE",
+    SET_NEW_CONE_RG: "SET_NEW_CONE",
     SET_POINT_BUFFER_RG: "SET_POINT_BUFFER_RG",
     SET_MAP_CLICK_MODE_RG: "SET_MAP_CLICK_MODE_RG",
-    NEED_SUPPORT_REFRESH_RG:"NEED_SUPPORT_REFRESH_RG"
+    NEED_SUPPORT_REFRESH_RG: "NEED_SUPPORT_REFRESH_RG"
 };
 
 export const mapModes = {
@@ -33,7 +35,9 @@ export const initialState = {
     ssOverlayFeatures: null,
     cursor: 'default',
     mapClickMode: mapModes.SELECT_SUPPORT_MODE,
-    needSupRefresh:false
+    needSupRefresh: false,
+    coneGraphic:null,
+    conePointGraphic:null
 }
 
 export default(state = initialState, action) => {
@@ -78,13 +82,18 @@ export default(state = initialState, action) => {
                 ssView: false,
                 leftVisible: false
             }
-      
+
         case types.SET_MAP_CLICK_MODE_RG:
             return {
                 ...state,
                 ...action.payload
             }
-            case types.NEED_SUPPORT_REFRESH_RG:
+        case types.NEED_SUPPORT_REFRESH_RG:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case types.SET_NEW_CONE_RG:
             return {
                 ...state,
                 ...action.payload
@@ -124,7 +133,6 @@ export const actions = {
             layer
         }
     }),
- 
 
     setMapClickMode: (mode, cursor) => ({
         type: types.SET_MAP_CLICK_MODE_RG,
@@ -133,9 +141,17 @@ export const actions = {
             cursor
         }
     }),
-    needSupportRefresh:(needSupRefresh) =>({
-        type:types.NEED_SUPPORT_REFRESH_RG,
-        payload:{ needSupRefresh}
+    needSupportRefresh: (needSupRefresh) => ({type: types.NEED_SUPPORT_REFRESH_RG, payload: {
+            needSupRefresh
+        }}),
+    getNewCone: (point, pitch, yaw,layers) => ({
+        type: types.GET_NEW_CONE_S,
+        payload: {
+            point,
+            pitch,
+            yaw,
+            layers
+        }
     }),
     startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth, viewExtentWidth, view_spatRef, editMode) => ({
         type: types.START_STREETSMART_VIEWER_S,

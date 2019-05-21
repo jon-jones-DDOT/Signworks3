@@ -47,7 +47,7 @@ class Signs extends Component {
             return <SortableList
                 items={this.props.signs}
                 onSortEnd={this.onSortEnd}
-                pressDelay={150}/>;
+                pressThreshold={10}/>;
         } else 
             return <p></p>
     }

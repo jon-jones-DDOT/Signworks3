@@ -468,7 +468,7 @@ export default class SignEditor extends Component {
     signTypes = new SignType();
 
     render() {
-        const imgServerDown = window.location.origin + "/img/PR-OTHER.png"
+        const imgServerDown = window.location.href + "/img/PR-OTHER.png"
 
         return (
 
@@ -504,11 +504,11 @@ export default class SignEditor extends Component {
                             <Img
                                 alt="sign direction"
                                 src={[
-                                window.location.origin + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png",
-                                window.location.origin + "/img/0.png"
+                                window.location.href + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png",
+                                window.location.href + "/img/0.png"
                             ]}
                                 onClick={this.signDirectionClickHandler}
-                                className="SignDirectionArrow"></Img>
+                                className="SignDirectionArrow"  ></Img>
                         </span>
 
                     </div>

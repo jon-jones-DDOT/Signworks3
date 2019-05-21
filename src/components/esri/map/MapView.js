@@ -123,7 +123,7 @@ class MapView extends Component {
          //   this.view.zoom = 20
  
             this.view.center = this.selPoint.geometry
-        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
+        } else if (this.markerLayer && this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
             //gonna try to keep the selected point in local state
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
@@ -233,7 +233,6 @@ class MapView extends Component {
     }
 
     mapMoveHandler = (evt) => {
-  console.log('this.view.zoom', this.view.zoom)
         this
             .props
             .onMapChanged(this.view.extent);
@@ -242,15 +241,13 @@ class MapView extends Component {
     init = (response) => {
         this.view = response.view
         this.map = response.view.map;
-        console.log('this.view.zoom on init :', this.view.zoom);
+     
     }
 
     setupWidgetsAndLayers = () => {
         loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic', "esri/layers/TileLayer", "esri/Basemap"]).then(([FeatureLayer, GraphicsLayer, Graphic, TileLayer, Basemap]) => {
-            const layerUrl = "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/DC_Basemap_LightGray_W" +
-                    "ebMercator/MapServer";
-            const baselayer = new TileLayer(layerUrl, null);
-            const baseMap = new Basemap({baseLayers: [baselayer]})
+   
+            
 
              this.featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
             this.queryMarkerLayer = new GraphicsLayer();

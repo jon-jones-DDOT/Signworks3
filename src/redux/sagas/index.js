@@ -26,6 +26,7 @@ import * as newSignSaga from './_newSign';
 import * as querySaga from './_query';
 import * as streetSmartSaga from './_openStreetSmart';
 import * as newSupportSaga from './_newSupport';
+import * as getConeSaga from './_getNewCone';
 
 
 export default function* rootSaga() {
@@ -40,7 +41,8 @@ export default function* rootSaga() {
     ...Object.values(newSignSaga),
     ...Object.values(querySaga),
     ...Object.values(streetSmartSaga),
-    ...Object.values(newSupportSaga)
+    ...Object.values(newSupportSaga),
+    ...Object.values(getConeSaga)
 
     // more sagas from different files
   ].map(fork));

@@ -15,7 +15,7 @@ export default function Support(props) {
 
     
     const supportInnards=()=>{
-     
+    
         if(props.sel === null){
             return 'Click on a support on the map to see its information'
         }
@@ -23,8 +23,9 @@ export default function Support(props) {
             return 'no support found...'
         }
         else{
-            const myImage = window.location.origin + "/img/supports/" + props.sel.attributes.SUPPORTTYPE + ".png";    
-            const errImage = window.location.origin + "/img/supports/666.png";
+            const myImage = window.location.href + "/img/supports/" + props.sel.attributes.SUPPORTTYPE + ".png";   
+       
+            const errImage = window.location.href + "/img/supports/666.png";
           
             return (
 

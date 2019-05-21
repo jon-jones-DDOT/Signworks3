@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
 import {mapModes, actions as graphicActions} from '../../redux/reducers/graphic'
+import {projectGeometry, createTriangle} from '../../utils/JSAPI'
 
 import './StreetSmart.css'
 
@@ -16,7 +17,7 @@ class StreetSmart extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        // Tell React to never update this component, that's up to us
+
         return false;
     }
     ssCancel = () => {
@@ -42,11 +43,15 @@ class StreetSmart extends Component {
         const y = this.props.graphic.ssInputGeom[0].y;
         const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;
         const geoJSONNeighbors = this.props.graphic.ssOverlay;
+  
+        const coneCode = this.props.getNewCone;
         const editMode = this.props.graphic.editMode;
         const save = this.props.newSupport;
         const layers = this.props.config.featureURLs;
         const ciao = this.props.setMapClickMode;
         const bye = this.ssCancel;
+        let imagePitch,
+            imageYaw;
 
         const PointsSLD = ' <?xml version="1.0"  encoding="ISO-8859-1"?><StyledLayerDescriptor  version="1.' +
                 '0.0"             xsi:schemaLocation="http://www.opengis.net/sld  StyledLayerDesc' +
@@ -57,8 +62,8 @@ class StreetSmart extends Component {
                 'atureTypeStyle><Rule><PointSymbolizer><Graphic><Mark><WellKnownName>circle</Well' +
                 'KnownName><Fill><CssParameter  name="fill">#FF0000</CssParameter></Fill><Stroke>' +
                 '<CssParameter  name="stroke">#000000</CssParameter><CssParameter  name="stroke-w' +
-                'idth">2</CssParameter></Stroke></Mark><Size>6</Size></Graphic></PointSymbolizer>' +
-                '</Rule></FeatureTypeStyle></UserStyle></NamedLayer></StyledLayerDescriptor>';
+                'idth">2</CssParameter></Stroke></Mark><Size>16</Size></Graphic></PointSymbolizer' +
+                '></Rule></FeatureTypeStyle></UserStyle></NamedLayer></StyledLayerDescriptor>';
 
         const selectSLD = '<?xml version="1.0"  encoding="ISO-8859-1"?><StyledLayerDescriptor  version="1.0' +
                 '.0"             xsi:schemaLocation="http://www.opengis.net/sld  StyledLayerDescr' +
@@ -70,7 +75,7 @@ class StreetSmart extends Component {
                 'nownName><Fill><CssParameter  name="fill">#00000000</CssParameter><CssParameter ' +
                 'name="fill-opacity">0.2</CssParameter></Fill><Stroke><CssParameter  name="stroke' +
                 '">#E633FF</CssParameter><CssParameter  name="stroke-width">2</CssParameter></Str' +
-                'oke></Mark><Size>12</Size></Graphic></PointSymbolizer></Rule></FeatureTypeStyle>' +
+                'oke></Mark><Size>19</Size></Graphic></PointSymbolizer></Rule></FeatureTypeStyle>' +
                 '</UserStyle></NamedLayer></StyledLayerDescriptor>';
 
         const options = [
@@ -107,15 +112,30 @@ class StreetSmart extends Component {
 
         };
 
+        const projectCoords = (x, y, z, imagePitch, imageYaw) => {
+           
+
+          
+        }
+
         const changeView = function (evt) {
-            // view cone stuff  imagePitch = evt.detail.pitch;    imageYaw = evt.detail.yaw;
-            //   projectCoords(panoramaViewer._panoramaViewer._activeRecording.xyz[0],
-            // panoramaViewer._panoramaViewer._activeRecording.xyz[1],
-            // panoramaViewer._panoramaViewer._activeRecording.xyz[2]);
+            // view cone stuff
+
+            imagePitch = evt.detail.pitch;
+            imageYaw = evt.detail.yaw;
+            console.log('imagePitch, imageYaw in changeView :', imagePitch, imageYaw);
+
+            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch,imageYaw, layers)
+         //   projectCoords(window.panoramaViewer._panoramaViewer._activeRecording.xyz[0], window.panoramaViewer._panoramaViewer._activeRecording.xyz[1], window.panoramaViewer._panoramaViewer._activeRecording.xyz[2], imagePitch, imageYaw);
+
         };
 
         const loadViewEnd = function (evt) {
-            //some hack for the view cone  panoramaViewer.rotateLeft(1);
+            //some hack for the view cone
+
+            window
+                .panoramaViewer
+                .rotateLeft(1);
         };
 
         window
@@ -159,13 +179,15 @@ class StreetSmart extends Component {
                                     window
                                         .StreetSmartApi
                                         .on(msEvents.MEASUREMENT_CHANGED, clkMap);
-                                    window
-                                        .panoramaViewer
-                                        .on(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHANGE, changeView);
-                                    window
-                                        .panoramaViewer
-                                        .on(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOAD_END, loadViewEnd);
+
                                 }
+
+                                window
+                                    .panoramaViewer
+                                    .on(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHANGE, changeView);
+                                window
+                                    .panoramaViewer
+                                    .on(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOAD_END, loadViewEnd);
 
                                 for (let o in options) {
                                     window
