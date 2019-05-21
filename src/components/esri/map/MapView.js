@@ -46,11 +46,12 @@ class MapView extends Component {
     addSymb = null;
     geom = null;
 
-
     constructor(props) {
         super(props)
-        this.state = {newSupportClickGeom:null}
-        
+        this.state = {
+            newSupportClickGeom: null
+        }
+
     }
     componentDidMount() {
 
@@ -58,14 +59,26 @@ class MapView extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        // Tell React to never update this component, that's up to us
+        if(this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic){
+            console.log('we have a new cone')
+            return true;
+        }
         return false;
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot){
+        if(this.props.graphic.coneGraphic !== prevProps.graphic.coneGraphic){
+            console.log('we are writing a new cone to the map')
+        }
+    }
+
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         //removes superQuery results from view based on store
         if (this.queryMarkerLayer && nextProps.graphic.showQuery === false) {
-            this.queryMarkerLayer.removeAll();
+            this
+                .queryMarkerLayer
+                .removeAll();
         }
         //if there are query features in the store, this block displays them in the view
         if (nextProps.graphic.queryFeatures.length > 0) {
@@ -102,11 +115,13 @@ class MapView extends Component {
             })
 
         }
-       //let's see if the support layer has been added to
+        //let's see if the support layer has been added to
 
-       if(nextProps.graphic.needSupRefresh === true){
-           this.featureLayer.refresh();
-       }
+        if (nextProps.graphic.needSupRefresh === true) {
+            this
+                .featureLayer
+                .refresh();
+        }
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (this.selPoint && nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
@@ -120,21 +135,26 @@ class MapView extends Component {
                 .markerLayer
                 .add(this.selPoint)
 
-         //   this.view.zoom = 20
- 
+            //   this.view.zoom = 20
+
             this.view.center = this.selPoint.geometry
         } else if (this.markerLayer && this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
             //gonna try to keep the selected point in local state
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
             addMark.symbol = this.addSymb;
-            this.markerLayer.removeAll();
-            this.markerLayer.add(addMark)
+            this
+                .markerLayer
+                .removeAll();
+            this
+                .markerLayer
+                .add(addMark)
             //center, but no zoom
             this.view.center = addMark.geometry
-        }
-        else{
-            this.markerLayer.removeAll();
+        } else {
+            this
+                .markerLayer
+                .removeAll();
         }
 
         this.view.surface.style.cursor = nextProps.graphic.cursor;
@@ -183,13 +203,13 @@ class MapView extends Component {
     }
 
     mapClickHandler = (evt) => {
-    // this redux call moves info about the view into the store so that an extent
-                // around the point can be calculated I don't think it changes, (todo) see about
-                // moving it to map load or something
-                this
-                    .props
-                    .setPointBuffer(this.view.width, this.view.extent.width, this.view.spatialReference);
-                    
+        // this redux call moves info about the view into the store so that an extent
+        // around the point can be calculated I don't think it changes, (todo) see about
+        // moving it to map load or something
+        this
+            .props
+            .setPointBuffer(this.view.width, this.view.extent.width, this.view.spatialReference);
+
         // in any map app that's more than a viewer, the map click event is gonna be
         // complicated so much so that I wrote this a month ago and it is already
         // getting away from me so we shall comment.  The click event is first captured
@@ -198,7 +218,6 @@ class MapView extends Component {
                 //the click is supposed to select an existing support on the map
             case mapModes.SELECT_SUPPORT_MODE:
 
-            
                 // this creates a small extent buffer around the mapPoint to aid in the select
                 // query its callback is getSelectedSupport, above
                 pointToExtent(this.view.width, this.view.extent.width, this.view.spatialReference, evt.mapPoint, 12, this.getSelectedSupport);
@@ -216,13 +235,11 @@ class MapView extends Component {
                     }
                 }
                 //grabbing a local copy of the mapPoint.geom for the marker
-       
-                this.setState({newSupportClickGeom:evt.mapPoint})
+
+                this.setState({newSupportClickGeom: evt.mapPoint});
                 this
                     .props
-                    .startStreetSmartViewer([newSupportFeature], this.props.config.featureURLs,
-                         4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth,
-                          this.props.graphic.view_spatRef, true);
+                    .startStreetSmartViewer([newSupportFeature], this.props.config.featureURLs, 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, true);
 
                 break;
             default:
@@ -241,19 +258,17 @@ class MapView extends Component {
     init = (response) => {
         this.view = response.view
         this.map = response.view.map;
-     
+
     }
 
     setupWidgetsAndLayers = () => {
         loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic', "esri/layers/TileLayer", "esri/Basemap"]).then(([FeatureLayer, GraphicsLayer, Graphic, TileLayer, Basemap]) => {
-   
-            
 
-             this.featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
+            this.featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
 
-       //     this.map.basemap = baseMap;
+            //     this.map.basemap = baseMap;
             this
                 .map
                 .addMany([this.featureLayer, this.queryMarkerLayer, this.markerLayer]);
@@ -267,8 +282,6 @@ class MapView extends Component {
             this
                 .view
                 .on('mouse-wheel', this.mapMoveHandler)
-
-    
 
             this.symb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()

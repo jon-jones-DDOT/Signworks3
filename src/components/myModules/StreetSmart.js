@@ -43,7 +43,7 @@ class StreetSmart extends Component {
         const y = this.props.graphic.ssInputGeom[0].y;
         const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;
         const geoJSONNeighbors = this.props.graphic.ssOverlay;
-  
+
         const coneCode = this.props.getNewCone;
         const editMode = this.props.graphic.editMode;
         const save = this.props.newSupport;
@@ -105,37 +105,30 @@ class StreetSmart extends Component {
             window
                 .StreetSmartApi
                 .off(msEvents.MEASUREMENT_CHANGED);
-            // graphics.view.surface.style.cursor = "default"; callback.GetLRSInfo(result,
-            // callback);  close();
+          
             ciao(mapModes.SELECT_SUPPORT_MODE, 'default');
             bye();
 
         };
 
-        const projectCoords = (x, y, z, imagePitch, imageYaw) => {
-           
-
-          
-        }
 
         const changeView = function (evt) {
             // view cone stuff
 
             imagePitch = evt.detail.pitch;
             imageYaw = evt.detail.yaw;
-            console.log('imagePitch, imageYaw in changeView :', imagePitch, imageYaw);
-
-            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch,imageYaw, layers)
-         //   projectCoords(window.panoramaViewer._panoramaViewer._activeRecording.xyz[0], window.panoramaViewer._panoramaViewer._activeRecording.xyz[1], window.panoramaViewer._panoramaViewer._activeRecording.xyz[2], imagePitch, imageYaw);
+            
+            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch, imageYaw, layers)
 
         };
 
         const loadViewEnd = function (evt) {
-            //some hack for the view cone
-
+            //some hack for the view cone gonna comment it out and see if we need it now
+            /*
             window
                 .panoramaViewer
                 .rotateLeft(1);
+                */
         };
 
         window

@@ -25,7 +25,7 @@ function * getCone(action) {
         
         const results = yield call( projectGeometry,[[newPoint], action.payload.layers.geometryService, 2248, 4326]);
         const triangle = yield call(createTriangle,[results, action.payload.pitch, action.payload.yaw])
-       console.log('results, triangle :', results, triangle);
+      
      
     
        
