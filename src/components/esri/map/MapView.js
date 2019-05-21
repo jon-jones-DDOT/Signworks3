@@ -60,35 +60,55 @@ class MapView extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-     /*   if(this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic){
-            
+          if(this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic){
+
             return true;
         }
         //removes superQuery results from view based on store
         if ( nextProps.graphic.showQuery === false) {
            return true;
         }
-        */
-        return true;
+        if( this.props.graphic.queryFeatures !== nextProps.graphic.queryFeatures  ){
+            return true;
+        }
+        if (this.props.graphic.needSupRefresh === true) {
+            return true;
+        }
+
+        if(this.props.graphic.mapClickMode !== nextProps.graphic.mapClickMode){
+            return true;
+        }
+        
+        return false;
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot){
-        if(this.props.graphic.coneGraphic !== prevProps.graphic.coneGraphic){
-           this.conicLayer.removeAll();
-           this.markerLayer.removeAll();
-           this.queryMarkerLayer.removeAll();
-           this.conicLayer.add(this.props.graphic.coneGraphic)
-           this.conicLayer.add(this.props.graphic.conePointGraphic)
-        }
-
-        if(this.props.graphic.showQuery === false){
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.graphic.coneGraphic !== prevProps.graphic.coneGraphic) {
             this
-            .queryMarkerLayer
-            .removeAll();
+                .conicLayer
+                .removeAll();
+            this
+                .markerLayer
+                .removeAll();
+            this
+                .queryMarkerLayer
+                .removeAll();
+            this
+                .conicLayer
+                .add(this.props.graphic.coneGraphic)
+            this
+                .conicLayer
+                .add(this.props.graphic.conePointGraphic)
         }
 
-          //if there are query features in the store, this block displays them in the view
-          if (this.props.graphic.queryFeatures.length > 0) {
+        if (this.props.graphic.showQuery === false) {
+            this
+                .queryMarkerLayer
+                .removeAll();
+        }
+
+        //if there are query features in the store, this block displays them in the view
+        if (this.props.graphic.queryFeatures.length > 0) {
             const graphics = [...this.props.graphic.queryFeatures]
             // add symbols
             let querySymb = {
@@ -130,19 +150,12 @@ class MapView extends Component {
                 .featureLayer
                 .refresh();
         }
-    }
 
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        
-      
-
-        
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
-        if (this.selPoint && nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
+        if ( this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
 
-            this.selPoint.geometry = nextProps.graphic.selSupportGeom;
+            this.selPoint.geometry = this.props.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;
             this
                 .markerLayer
@@ -154,7 +167,8 @@ class MapView extends Component {
             //   this.view.zoom = 20
 
             this.view.center = this.selPoint.geometry
-        } else if (this.markerLayer && this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
+        } 
+        else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
             //gonna try to keep the selected point in local state
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
@@ -172,9 +186,10 @@ class MapView extends Component {
                 .markerLayer
                 .removeAll();
         }
-
-        this.view.surface.style.cursor = nextProps.graphic.cursor;
+        this.view.surface.style.cursor = this.props.graphic.cursor;
     }
+
+    
 
     render() {
 
