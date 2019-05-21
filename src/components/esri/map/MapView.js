@@ -60,7 +60,7 @@ class MapView extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if(this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic){
+     /*   if(this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic){
             
             return true;
         }
@@ -68,7 +68,8 @@ class MapView extends Component {
         if ( nextProps.graphic.showQuery === false) {
            return true;
         }
-        return false;
+        */
+        return true;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot){
@@ -79,20 +80,16 @@ class MapView extends Component {
            this.conicLayer.add(this.props.graphic.coneGraphic)
            this.conicLayer.add(this.props.graphic.conePointGraphic)
         }
+
         if(this.props.graphic.showQuery === false){
             this
             .queryMarkerLayer
             .removeAll();
         }
-        
-    }
 
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        
-        //if there are query features in the store, this block displays them in the view
-        if (nextProps.graphic.queryFeatures.length > 0) {
-            const graphics = [...nextProps.graphic.queryFeatures]
+          //if there are query features in the store, this block displays them in the view
+          if (this.props.graphic.queryFeatures.length > 0) {
+            const graphics = [...this.props.graphic.queryFeatures]
             // add symbols
             let querySymb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()  NEVER TRUST AUTOCAST
@@ -125,13 +122,22 @@ class MapView extends Component {
             })
 
         }
+
         //let's see if the support layer has been added to
 
-        if (nextProps.graphic.needSupRefresh === true) {
+        if (this.props.graphic.needSupRefresh === true) {
             this
                 .featureLayer
                 .refresh();
         }
+    }
+
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        
+      
+
+        
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (this.selPoint && nextProps.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
