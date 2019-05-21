@@ -42,6 +42,7 @@ class MapView extends Component {
     markerLayer = null;
     queryMarkerLayer = null;
     featureLayer = null;
+    conicLayer = null;
     symb = null;
     addSymb = null;
     geom = null;
@@ -60,26 +61,35 @@ class MapView extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if(this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic){
-            console.log('we have a new cone')
+            
             return true;
+        }
+        //removes superQuery results from view based on store
+        if ( nextProps.graphic.showQuery === false) {
+           return true;
         }
         return false;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot){
         if(this.props.graphic.coneGraphic !== prevProps.graphic.coneGraphic){
-            console.log('we are writing a new cone to the map')
+           this.conicLayer.removeAll();
+           this.markerLayer.removeAll();
+           this.queryMarkerLayer.removeAll();
+           this.conicLayer.add(this.props.graphic.coneGraphic)
+           this.conicLayer.add(this.props.graphic.conePointGraphic)
         }
+        if(this.props.graphic.showQuery === false){
+            this
+            .queryMarkerLayer
+            .removeAll();
+        }
+        
     }
 
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        //removes superQuery results from view based on store
-        if (this.queryMarkerLayer && nextProps.graphic.showQuery === false) {
-            this
-                .queryMarkerLayer
-                .removeAll();
-        }
+        
         //if there are query features in the store, this block displays them in the view
         if (nextProps.graphic.queryFeatures.length > 0) {
             const graphics = [...nextProps.graphic.queryFeatures]
@@ -267,11 +277,12 @@ class MapView extends Component {
             this.featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
+            this.conicLayer = new GraphicsLayer();
 
             //     this.map.basemap = baseMap;
             this
                 .map
-                .addMany([this.featureLayer, this.queryMarkerLayer, this.markerLayer]);
+                .addMany([this.featureLayer, this.queryMarkerLayer, this.markerLayer, this.conicLayer]);
             this
                 .view
                 .on("click", this.mapClickHandler);
