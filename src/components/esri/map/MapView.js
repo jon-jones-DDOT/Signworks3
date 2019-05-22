@@ -69,6 +69,9 @@ class MapView extends Component {
             console.log('update due to view cone');
             return true;
         }
+        if(nextState.newSupportClickGeom !== this.state.newSupportClickGeom){
+            return true;
+        }
 
         if (this.props.graphic.queryFeatures.length > 0 && this.props.graphic.queryFeatures !== nextProps.graphic.queryFeatures) {
             console.log('update because of query features');
@@ -80,7 +83,7 @@ class MapView extends Component {
         }
 
         if (this.props.graphic.mapClickMode !== nextProps.graphic.mapClickMode) {
-            console.log('update because mapClickMode changed')
+            console.log('update because mapClickMode changed.  Not sure this does anything')
             return true;
         }
 
@@ -135,6 +138,8 @@ class MapView extends Component {
                 .conicLayer
                 .removeAll();
         }
+
+        
 
         //if there are query features in the store, this block displays them in the view
         if (this.props.graphic.queryFeatures.length > 0) {
@@ -202,19 +207,12 @@ class MapView extends Component {
 
             this.view.zoom = 20
             this.view.center = this.selPoint.geometry
-        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
+        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE && prevState.newSupportClickGeom !== this.state.newSupportClickGeom) {
             //gonna try to keep the selected point in local state
             console.log('changing add support target graphic because of click')
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
-            addMark.symbol = this.addSymb;
-            this
-                .markerLayer
-                .removeAll();
-            this
-                .markerLayer
-                .add(addMark)
-            //center, but no zoom      this.view.center = addMark.geometry
+            this.view.center = addMark.geometry
         } 
         this.view.surface.style.cursor = this.props.graphic.cursor;
     }
@@ -284,7 +282,7 @@ class MapView extends Component {
                 //ok now we are in add support mode
             case mapModes.ADD_SUPPORT_MODE:
                 // we should create a 'fake' feature out of the map click event
-
+console.log('map click happens here')
                 const newSupportFeature = {
                     atrributes: {},
                     geometry: {
