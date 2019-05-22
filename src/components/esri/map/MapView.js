@@ -153,7 +153,7 @@ class MapView extends Component {
                 color: [
                     0, 255, 0, 0.0
                 ],
-                size: "30px", // pixels
+                size: "35px", // pixels
                 outline: { // autocasts as new SimpleLineSymbol()
                     color: 'blue',
                     width: 3 // points
