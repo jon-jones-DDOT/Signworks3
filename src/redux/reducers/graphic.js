@@ -109,7 +109,10 @@ export const actions = {
             selSupportGeom
         }}),
     removeQueryResults: () => ({type: types.REMOVE_QUERY_RESULTS_RG, payload: {}}),
-    closeStreetSmartViewer: () => ({type: types.CLOSE_STREETSMART_VIEWER_RG, payload: {}}),
+    closeStreetSmartViewer: () => ({type: types.CLOSE_STREETSMART_VIEWER_RG, payload: {
+        ssOverlayFeatures:null,
+        ssgeoJSONselPoint:null
+    }}),
     setPointBuffer: (viewWidth, viewExtentWidth, view_spatRef) => ({
         type: types.SET_POINT_BUFFER_RG,
         payload: {

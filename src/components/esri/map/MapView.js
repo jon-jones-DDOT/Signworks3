@@ -62,36 +62,55 @@ class MapView extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic) {
 
+     
+        //view cone needs adjustment
+        if (this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic) {
+            console.log('update due to view cone');
             return true;
         }
-        //removes superQuery results from view based on store
-        if (nextProps.graphic.showQuery === false) {
-            return true;
-        }
-        if (this.props.graphic.queryFeatures !== nextProps.graphic.queryFeatures) {
+
+        if (this.props.graphic.queryFeatures.length > 0 && this.props.graphic.queryFeatures !== nextProps.graphic.queryFeatures) {
+            console.log('update because of query features');
             return true;
         }
         if (this.props.graphic.needSupRefresh === true) {
+            console.log('update to refresh for new support feature added');
             return true;
         }
 
         if (this.props.graphic.mapClickMode !== nextProps.graphic.mapClickMode) {
+            console.log('update because mapClickMode changed')
             return true;
         }
 
+        if (this.props.map.support !== nextProps.map.support) {
+            console.log('update because map.support changed');
+            return true
+        }
+        //removes superQuery results from view based on store
+        if (nextProps.graphic.showQuery !== this.props.graphic.showQuery) {
+            console.log('update because showQuery has changed');
+            return true;
+        }
+
+        if(nextProps.graphic.ssOverlayFeatures === null & this.conicLayer.graphics.length > 0){
+            console.log('update because view cone needs to be removed');
+            return true;
+        }
+        console.log('did not update');
         return false;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.graphic.coneGraphic !== prevProps.graphic.coneGraphic) {
+            console.log('changing cone');
             this
                 .conicLayer
                 .removeAll();
-            this
+         /*   this
                 .markerLayer
-                .removeAll();
+                .removeAll();  */
             this
                 .queryMarkerLayer
                 .removeAll();
@@ -103,15 +122,23 @@ class MapView extends Component {
                 .add(this.props.graphic.conePointGraphic)
             return;
         }
-
-        if (this.props.graphic.showQuery === false) {
+      
+        if (this.props.graphic.showQuery === false && this.queryMarkerLayer.graphics.length > 0) {
+            console.log('removing query markers')
             this
                 .queryMarkerLayer
+                .removeAll();
+        }
+        if (this.props.graphic.ssOverlayFeatures === null && this.conicLayer.graphics.length > 0 ) {
+            console.log('removing conic graphics')
+            this
+                .conicLayer
                 .removeAll();
         }
 
         //if there are query features in the store, this block displays them in the view
         if (this.props.graphic.queryFeatures.length > 0) {
+            console.log('adding query features');
             const graphics = [...this.props.graphic.queryFeatures]
             // add symbols
             let querySymb = {
@@ -149,6 +176,7 @@ class MapView extends Component {
         //let's see if the support layer has been added to
 
         if (this.props.graphic.needSupRefresh === true) {
+            console.log('refershing support layer on map after add')
             this
                 .featureLayer
                 .refresh();
@@ -156,13 +184,13 @@ class MapView extends Component {
 
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
-        console.log('this.selPoint.geometry, props', this.selPoint.geometry, this.props.graphic.selSupportGeom)
-        if( this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && !this.props.graphic.selSupportGeom){
+        if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && !this.props.graphic.selSupportGeom) {
+            console.log('not even sure why')
             return;
         }
-        if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
+        if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && this.props.map.support !== prevProps.map.support) {
 
-            console.log('it fired')
+            console.log('changing selected support graphics in response to click')
             this.selPoint.geometry = this.props.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;
             this
@@ -172,9 +200,11 @@ class MapView extends Component {
                 .markerLayer
                 .add(this.selPoint)
 
-            //   this.view.zoom = 20     this.view.center = this.selPoint.geometry
+            this.view.zoom = 20
+            this.view.center = this.selPoint.geometry
         } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
             //gonna try to keep the selected point in local state
+            console.log('changing add support target graphic because of click')
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
             addMark.symbol = this.addSymb;
@@ -185,11 +215,7 @@ class MapView extends Component {
                 .markerLayer
                 .add(addMark)
             //center, but no zoom      this.view.center = addMark.geometry
-        } else {
-            this
-                .markerLayer
-                .removeAll();
-        }
+        } 
         this.view.surface.style.cursor = this.props.graphic.cursor;
     }
 
