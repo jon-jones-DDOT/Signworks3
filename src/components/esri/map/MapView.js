@@ -70,6 +70,7 @@ class MapView extends Component {
             return true;
         }
         if(nextState.newSupportClickGeom !== this.state.newSupportClickGeom){
+            console.log('update because map clicked to select target area for new support')
             return true;
         }
 
@@ -97,7 +98,7 @@ class MapView extends Component {
             return true;
         }
 
-        if(nextProps.graphic.ssOverlayFeatures === null & this.conicLayer.graphics.length > 0){
+        if(nextProps.graphic.ssOverlay === null & this.conicLayer.graphics.length > 0){
             console.log('update because view cone needs to be removed');
             return true;
         }
@@ -132,7 +133,7 @@ class MapView extends Component {
                 .queryMarkerLayer
                 .removeAll();
         }
-        if (this.props.graphic.ssOverlayFeatures === null && this.conicLayer.graphics.length > 0 ) {
+        if (this.props.graphic.ssOverlay === null && this.conicLayer.graphics.length > 0 ) {
             console.log('removing conic graphics')
             this
                 .conicLayer
@@ -212,7 +213,8 @@ class MapView extends Component {
             console.log('changing add support target graphic because of click')
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
-            this.view.center = addMark.geometry
+            this.view.center = addMark.geometry;
+            this.view.zoom = 19;
         } 
         this.view.surface.style.cursor = this.props.graphic.cursor;
     }

@@ -32,7 +32,7 @@ export const initialState = {
     viewWidth: null,
     viewExtentWidth: null,
     view_spatRef: null,
-    ssOverlayFeatures: null,
+  
     cursor: 'default',
     mapClickMode: mapModes.SELECT_SUPPORT_MODE,
     needSupRefresh: false,
@@ -78,9 +78,12 @@ export default(state = initialState, action) => {
         case types.CLOSE_STREETSMART_VIEWER_RG:
             return {
                 ...state,
+                ...action.payload,
                 ssEdit: false,
                 ssView: false,
-                leftVisible: false
+                leftVisible: false,
+                mapClickMode: mapModes.SELECT_SUPPORT_MODE,
+                cursor:'default'
             }
 
         case types.SET_MAP_CLICK_MODE_RG:
@@ -110,7 +113,7 @@ export const actions = {
         }}),
     removeQueryResults: () => ({type: types.REMOVE_QUERY_RESULTS_RG, payload: {}}),
     closeStreetSmartViewer: () => ({type: types.CLOSE_STREETSMART_VIEWER_RG, payload: {
-        ssOverlayFeatures:null,
+        ssOverlay:null,
         ssgeoJSONselPoint:null
     }}),
     setPointBuffer: (viewWidth, viewExtentWidth, view_spatRef) => ({
