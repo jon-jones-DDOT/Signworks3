@@ -38,7 +38,9 @@ const Container = styled.div `
 const containerID = "map-view-container";
 
 class MapView extends Component {
-    selPoint = null;
+    selPoint = {
+        geometry: null
+    };
     markerLayer = null;
     queryMarkerLayer = null;
     featureLayer = null;
@@ -60,25 +62,25 @@ class MapView extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-          if(this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic){
+        if (this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic) {
 
             return true;
         }
         //removes superQuery results from view based on store
-        if ( nextProps.graphic.showQuery === false) {
-           return true;
+        if (nextProps.graphic.showQuery === false) {
+            return true;
         }
-        if( this.props.graphic.queryFeatures !== nextProps.graphic.queryFeatures  ){
+        if (this.props.graphic.queryFeatures !== nextProps.graphic.queryFeatures) {
             return true;
         }
         if (this.props.graphic.needSupRefresh === true) {
             return true;
         }
 
-        if(this.props.graphic.mapClickMode !== nextProps.graphic.mapClickMode){
+        if (this.props.graphic.mapClickMode !== nextProps.graphic.mapClickMode) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -99,6 +101,7 @@ class MapView extends Component {
             this
                 .conicLayer
                 .add(this.props.graphic.conePointGraphic)
+            return;
         }
 
         if (this.props.graphic.showQuery === false) {
@@ -153,8 +156,13 @@ class MapView extends Component {
 
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
-        if ( this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
+        console.log('this.selPoint.geometry, props', this.selPoint.geometry, this.props.graphic.selSupportGeom)
+        if( this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && !this.props.graphic.selSupportGeom){
+            return;
+        }
+        if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE) {
 
+            console.log('it fired')
             this.selPoint.geometry = this.props.graphic.selSupportGeom;
             this.selPoint.symbol = this.symb;
             this
@@ -164,11 +172,8 @@ class MapView extends Component {
                 .markerLayer
                 .add(this.selPoint)
 
-            //   this.view.zoom = 20
-
-            this.view.center = this.selPoint.geometry
-        } 
-        else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
+            //   this.view.zoom = 20     this.view.center = this.selPoint.geometry
+        } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE) {
             //gonna try to keep the selected point in local state
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
@@ -179,8 +184,7 @@ class MapView extends Component {
             this
                 .markerLayer
                 .add(addMark)
-            //center, but no zoom
-            this.view.center = addMark.geometry
+            //center, but no zoom      this.view.center = addMark.geometry
         } else {
             this
                 .markerLayer
@@ -188,8 +192,6 @@ class MapView extends Component {
         }
         this.view.surface.style.cursor = this.props.graphic.cursor;
     }
-
-    
 
     render() {
 
