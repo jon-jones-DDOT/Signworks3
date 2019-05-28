@@ -1,10 +1,10 @@
 .SupportEditor{
     position:fixed;
   background: lightgrey;
-  width: 40%;
+  width: 25%;
   height: 40%;
   top:50%;
-  left:67%;
+  left:57%;
   transform: translate(-50%,-50%);
 }
 
