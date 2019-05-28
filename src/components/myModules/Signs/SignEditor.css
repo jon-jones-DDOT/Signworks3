@@ -123,14 +123,15 @@
 .SignAttributes {
     position: relative;
     height: 110px;
-    width: 80%;
-    top: 30px;
+    width: 90%;
+    top: 3px;
     text-align: left;
-    margin-left: 100px;
+    margin-left: 15px;
+   
 
 }
 .ZoneSpan {
-    padding-left: 285px;
+    padding-left: 155px;
 
 }
 
@@ -139,12 +140,15 @@
     border: 1px red solid;
 }
 .SignTextSpan {
-    padding-left: 175px;
+    padding-left: 75px;
+  
 
 }
 
 .SignText {
     resize: none;
+    width:120px;
+    
 
 }
 
