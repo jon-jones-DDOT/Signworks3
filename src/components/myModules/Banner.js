@@ -51,7 +51,7 @@ class Banner extends Component {
     render() {
         return (
             <div className="Banner">
-                <img src={logo} className="AppLogo"/>
+                <img src={logo} className="AppLogo" alt= "logo" />
 
                 <div className="AppTools">
                     <span>

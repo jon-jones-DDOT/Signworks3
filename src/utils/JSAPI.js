@@ -2,9 +2,7 @@ import {loadModules} from 'esri-loader';
 import {call} from 'redux-saga/effects';
 import LatLon from './geodesy/latlon-spherical';
 
-const err = (e) => {
-    console.log('an error occurred in JSAPI  ' + e.message)
-}
+
 
 //currently not being used, needs a slight rewrite
 export function getSupportById(args) {
@@ -222,9 +220,7 @@ export function superQuery(args) {
 
     return new Promise((resolve, reject) => {
 
-        const extent = args[0];
-
-        const supportLayer = args[1];
+ 
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(layer + '/query', {

@@ -3,7 +3,7 @@ import {types as mapTypes} from '../reducers/map';
 import {types as graphicTypes} from '../reducers/graphic';
 
 import {getFullSignPost} from './reload'
-import {saveSupport, getPointOnRouteStreetSmart, getSupportById, projectGeometry} from '../../utils/JSAPI';
+import {saveSupport, getPointOnRouteStreetSmart, getSupportById} from '../../utils/JSAPI';
 
 // WORKER //
 

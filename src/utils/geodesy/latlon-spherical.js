@@ -127,35 +127,35 @@ class LatLonSpherical {
      *   const p8 = LatLon.parse({ type: 'Point', coordinates: [ 0.119, 52.205] }); // GeoJSON
      */
     static parse(...args) {
-        if (args.length == 0) throw new TypeError('invalid (empty) point');
+        if (args.length === 0) throw new TypeError('invalid (empty) point');
         if (args[0]===null || args[1]===null) throw new TypeError('invalid (null) point');
 
         let lat=undefined, lon=undefined;
 
-        if (args.length == 2) { // regular (lat, lon) arguments
+        if (args.length === 2) { // regular (lat, lon) arguments
             [ lat, lon ] = args;
             lat = Dms.wrap90(Dms.parse(lat));
             lon = Dms.wrap180(Dms.parse(lon));
             if (isNaN(lat) || isNaN(lon)) throw new TypeError(`invalid point ‘${args.toString()}’`);
         }
 
-        if (args.length == 1 && typeof args[0] == 'string') { // single comma-separated lat,lon string
+        if (args.length === 1 && typeof args[0] == 'string') { // single comma-separated lat,lon string
             [ lat, lon ] = args[0].split(',');
             lat = Dms.wrap90(Dms.parse(lat));
             lon = Dms.wrap180(Dms.parse(lon));
             if (isNaN(lat) || isNaN(lon)) throw new TypeError(`invalid point ‘${args[0]}’`);
         }
 
-        if (args.length == 1 && typeof args[0] == 'object') { // single { lat, lon } object
+        if (args.length === 1 && typeof args[0] == 'object') { // single { lat, lon } object
             const ll = args[0];
-            if (ll.type == 'Point' && Array.isArray(ll.coordinates)) { // GeoJSON
+            if (ll.type === 'Point' && Array.isArray(ll.coordinates)) { // GeoJSON
                 [ lon, lat ] = ll.coordinates;
             } else { // regular { lat, lon } object
-                if (ll.latitude  != undefined) lat = ll.latitude;
-                if (ll.lat       != undefined) lat = ll.lat;
-                if (ll.longitude != undefined) lon = ll.longitude;
-                if (ll.lng       != undefined) lon = ll.lng;
-                if (ll.lon       != undefined) lon = ll.lon;
+                if (ll.latitude  !== undefined) lat = ll.latitude;
+                if (ll.lat       !== undefined) lat = ll.lat;
+                if (ll.longitude !== undefined) lon = ll.longitude;
+                if (ll.lng       !== undefined) lon = ll.lng;
+                if (ll.lon       !== undefined) lon = ll.lon;
                 lat = Dms.wrap90(Dms.parse(lat));
                 lon = Dms.wrap180(Dms.parse(lon));
             }
@@ -424,7 +424,7 @@ class LatLonSpherical {
         const α1 = θ13 - θ12; // angle 2-1-3
         const α2 = θ21 - θ23; // angle 1-2-3
 
-        if (Math.sin(α1) == 0 && Math.sin(α2) == 0) return null; // infinite intersections
+        if (Math.sin(α1) === 0 && Math.sin(α2) === 0) return null; // infinite intersections
         if (Math.sin(α1) * Math.sin(α2) < 0) return null;        // ambiguous intersection (antipodal?)
 
         const cosα3 = -Math.cos(α1)*Math.cos(α2) + Math.sin(α1)*Math.sin(α2)*Math.cos(δ12);
@@ -839,8 +839,8 @@ class LatLonSpherical {
         // note: explicitly set dp to undefined for passing through to toLat/toLon
         if (![ 'd', 'dm', 'dms', 'n' ].includes(format)) throw new RangeError(`invalid format ‘${format}’`);
 
-        if (format == 'n') { // signed numeric degrees
-            if (dp == undefined) dp = 4;
+        if (format === 'n') { // signed numeric degrees
+            if (dp === undefined) dp = 4;
             return `${this.lat.toFixed(dp)},${this.lon.toFixed(dp)}`;
         }
         const lat = Dms.toLat(this.lat, format, dp);

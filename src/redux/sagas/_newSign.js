@@ -10,7 +10,7 @@ import { saveSign } from '../../utils/JSAPI';
 function * saveNewSign(action) {
     try{
      
-        const signResult =   yield call(saveSign, [action.payload.sign, true, action.payload.layers]);
+         yield call(saveSign, [action.payload.sign, true, action.payload.layers]);
       
         
          yield getFullSignPost(action);

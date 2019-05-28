@@ -8,9 +8,7 @@ import StreetSmart from './StreetSmart';
 import Script from 'react-load-script';
  class LeftBar extends Component {
 
-    constructor(props) {
-        super(props)
-    }
+  
 
     render() {
         if(this.props.graphic.leftVisible){ return (

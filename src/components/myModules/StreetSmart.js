@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
 import {mapModes, actions as graphicActions} from '../../redux/reducers/graphic'
-import {projectGeometry, createTriangle} from '../../utils/JSAPI'
 
 import './StreetSmart.css'
 
@@ -191,9 +190,6 @@ class StreetSmart extends Component {
                             }
 
                         }
-                    }.bind(this))
-                    .catch(function (reason) {
-                        alert('Failed to create component(s) through API: ' + reason)
                     });
             }, function (err) {
                 alert('Api Init Failed!' + err);

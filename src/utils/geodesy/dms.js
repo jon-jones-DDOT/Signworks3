@@ -70,9 +70,9 @@ class Dms {
 
         // strip off any sign or compass dir'n & split out separate d/m/s
         const dmsParts = String(dms).trim().replace(/^-/, '').replace(/[NSEW]$/i, '').split(/[^0-9.,]+/);
-        if (dmsParts[dmsParts.length-1]=='') dmsParts.splice(dmsParts.length-1);  // from trailing symbol
+        if (dmsParts[dmsParts.length-1]==='') dmsParts.splice(dmsParts.length-1);  // from trailing symbol
 
-        if (dmsParts == '') return NaN;
+        if (dmsParts === '') return NaN;
 
         // and convert to decimal degrees...
         let deg = null;
@@ -113,10 +113,10 @@ class Dms {
      */
     static toDms(deg, format='d', dp=undefined) {
         if (isNaN(deg)) return null;  // give up here if we can't make a number from deg
-        if (typeof deg == 'string' && deg.trim() == '') return null;
-        if (typeof deg == 'boolean') return null;
-        if (deg == Infinity) return null;
-        if (deg == null) return null;
+        if (typeof deg === 'string' && deg.trim() === '') return null;
+        if (typeof deg === 'boolean') return null;
+        if (deg === Infinity) return null;
+        if (deg === null) return null;
 
         // default values
         if (dp === undefined) {
@@ -142,7 +142,7 @@ class Dms {
             case 'dm': case 'deg+min':
                 d = Math.floor(deg);                       // get component deg
                 m = ((deg*60) % 60).toFixed(dp);           // get component min & round/right-pad
-                if (m == 60) { m = (0).toFixed(dp); d++; } // check for rounding up
+                if (m === 60) { m = (0).toFixed(dp); d++; } // check for rounding up
                 d = ('000'+d).slice(-3);                   // left-pad with leading zeros
                 if (m<10) m = '0' + m;                     // left-pad with leading zeros (note may include decimals)
                 dms = d + '°'+Dms.separator + m + '′';
@@ -151,8 +151,8 @@ class Dms {
                 d = Math.floor(deg);                       // get component deg
                 m = Math.floor((deg*3600)/60) % 60;        // get component min
                 s = (deg*3600 % 60).toFixed(dp);           // get component sec & round/right-pad
-                if (s == 60) { s = (0).toFixed(dp); m++; } // check for rounding up
-                if (m == 60) { m = 0; d++; }               // check for rounding up
+                if (s === 60) { s = (0).toFixed(dp); m++; } // check for rounding up
+                if (m === 60) { m = 0; d++; }               // check for rounding up
                 d = ('000'+d).slice(-3);                   // left-pad with leading zeros
                 m = ('00'+m).slice(-2);                    // left-pad with leading zeros
                 if (s<10) s = '0' + s;                     // left-pad with leading zeros (note may include decimals)

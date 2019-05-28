@@ -5,7 +5,7 @@ import ModalWrapper from './Modals/ModalWrapper';
 let Typeahead = require('react-typeahead').Typeahead;
 
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
-const myRef = React.createRef();
+
 
 export default class SuperQuery extends Component {
 

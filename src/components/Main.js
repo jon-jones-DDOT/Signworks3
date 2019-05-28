@@ -22,8 +22,6 @@ import { actions as authActions } from '../redux/reducers/auth';
 // Components
 
 
-import TopNavList from 'calcite-react/TopNav/TopNavList';
-
 import MapView from './esri/map/MapView';
 import LoadScreen from './LoadScreen';
 
@@ -60,9 +58,7 @@ const MapWrapper = styled.div`
 
 
 
-const NavList = styled(TopNavList)`
-  text-align: left;
-`;
+
 
 // Class
 class Main extends Component {

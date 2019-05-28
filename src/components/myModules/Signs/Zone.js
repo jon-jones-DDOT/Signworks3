@@ -1,7 +1,7 @@
 import React from 'react'
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
 import './Zone.css'
-import { zoneVerify } from './SignValidations';
+
 
 
 

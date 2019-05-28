@@ -1,6 +1,6 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {types as graphicTypes} from '../reducers/graphic';
-import {projectGeometry, getSupportByExtent, pointToExtentSaga, createTriangle} from '../../utils/JSAPI'
+import {projectGeometry,  createTriangle} from '../../utils/JSAPI'
 
 // WORKER //
 

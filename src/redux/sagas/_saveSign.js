@@ -8,9 +8,9 @@ import {saveSign, saveTimebands} from '../../utils/JSAPI';
 function * saveSelectSign(action) {
     try{
      
-       const signResult =   yield call(saveSign, [action.payload.sign, false,action.payload.layers]);
+         yield call(saveSign, [action.payload.sign, false,action.payload.layers]);
 
-        const bandResult =  yield call(saveTimebands,[action.payload.sign,action.payload.layers])
+        yield call(saveTimebands,[action.payload.sign,action.payload.layers])
       
        
         

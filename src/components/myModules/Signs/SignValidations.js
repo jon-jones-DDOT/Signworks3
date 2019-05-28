@@ -1,4 +1,4 @@
-import {parkingtypesigns, mphSigns} from "../../../SignworksJSON";
+import { mphSigns} from "../../../SignworksJSON";
 
 // newCode is the mutcd.code that is being checked signs -  an array of signs on
 // the signpost each sign should have a property called MUTCD that has the info
@@ -21,6 +21,9 @@ export function isSpeedLimit(mutt) {
 
         if (code === mutt) {
             return mutt;
+        }
+        else{
+            return false;
         }
     })
 
@@ -66,7 +69,7 @@ export function zoneVerify(edState) {
     // algorithm is overly rigorous since unlike the server side, the zone value is
     // constrained by input controls.  But it should work and might be needed later
 
-    if (zoneValue == "" || !zoneValue) {
+    if (zoneValue === "" || !zoneValue) {
         // this was an error before , but having an empty value is ok above is an old
         // comment, might not be "true" in 3.0
         return true;

@@ -1,4 +1,4 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
+import {call, takeLatest} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
 import {getSupportByExtent} from '../../utils/JSAPI';
 import {getFullSignPost} from './reload'
@@ -12,10 +12,9 @@ function * setSelectSupport(action) {
         // call API to fetch support
         const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layers.supports,4326]);
 
-        //if nothing comes back, set sign info in store to empty or null
+      
         if (features.data.features.length === 0) {
-            const support = null;
-            const signs = [];
+           
             return;
         
             //if a support is returned...
