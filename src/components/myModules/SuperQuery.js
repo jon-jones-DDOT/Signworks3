@@ -90,7 +90,7 @@ this.myRef = React.createRef();
                             onOptionSelected={this.mutcdLookUpSelectHandler}
                             placeholder="TYPE DESCRIPTION"
                             inputProps={{
-                            'size': 70
+                            'size': 50
                         }}/>
                     </div>
 
