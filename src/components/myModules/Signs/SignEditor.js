@@ -469,7 +469,6 @@ export default class SignEditor extends Component {
 
     render() {
         const imgServerDown = window.location.href + "/img/PR-OTHER.png"
-
         return (
 
             <ModalWrapper
@@ -484,7 +483,7 @@ export default class SignEditor extends Component {
                     ? "SignEditorOver"
                     : "SignEditorUnder"}>
                     <div
-                        className="SupportEditCancel"
+                        className="SignEditCancel"
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
                     <div className="MUTCDdiv" onClick={this.muttSelectorOpenHandler}>
@@ -497,7 +496,16 @@ export default class SignEditor extends Component {
                             className={this.state.muttDupe
                             ? "InnerMUTCD_error"
                             : "InnerMUTCD"}>
-                            {this.state.MUTCD.code}:{this.state.MUTCD.name}
+                            <div className="EditorMuttCode">
+                                {this
+                                    .state
+                                    .MUTCD
+                                    .code
+                                    .toUpperCase()}:
+                            </div>
+                            <div className="EditorMuteDesc">
+                                {this.state.MUTCD.name}
+                            </div>
 
                         </span>
                         <span>
@@ -508,10 +516,14 @@ export default class SignEditor extends Component {
                                 window.location.href + "/img/0.png"
                             ]}
                                 onClick={this.signDirectionClickHandler}
-                                className="SignDirectionArrow"  ></Img>
+                                className="SignDirectionArrow"></Img>
                         </span>
 
                     </div>
+                    <div>
+                        <hr className= "EditorHorizontalBar" />
+                    </div>
+
                     <div className="SignAttributes">
                         <span>MPH:
                             <select
@@ -545,7 +557,9 @@ export default class SignEditor extends Component {
                             <span className="SignTextSpan">
                                 Sign Text:
                                 <textarea
-                                    value={this.state.attributes.SIGNTEXT===null?"":this.state.attributes.SIGNTEXT}
+                                    value={this.state.attributes.SIGNTEXT === null
+                                    ? ""
+                                    : this.state.attributes.SIGNTEXT}
                                     onChange={this.signTextChangeHandler}
                                     rows="4"
                                     className="SignText"></textarea>
@@ -585,7 +599,7 @@ export default class SignEditor extends Component {
                             placeholder="TYPE DESCRIPTION"
                             disabled={this.state.showInfo}
                             inputProps={{
-                            'size': 70
+                            'size': 50
                         }}
                             ref={myRef}/>
                     </div>
