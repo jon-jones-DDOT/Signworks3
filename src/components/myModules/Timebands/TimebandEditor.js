@@ -28,31 +28,31 @@ export default class TimebandEditor extends Component {
                 <button onClick= {(evt) => this.deleteBand(evt,this.props.index)}>
                     <b>X</b>
                 </button>
-                <select
+                <select className= "TimebandSelect"
                     value={this.props.value.attributes.STARTDAY
                     ? this.props.value.attributes.STARTDAY
                     : ""}
                     onChange={(evt) => this.props.change(evt, this.props.index, 0)}>
                     {addOptionsToSelect(signTypes._codedValuesTimebandDays)}</select>
-                <select
+                <select className= "TimebandSelect"
                     value={this.props.value.attributes.ENDDAY
                     ? this.props.value.attributes.ENDDAY
                     : ""}
                     onChange={(evt) => this.props.change(evt, this.props.index, 1)}>
                     {addOptionsToSelect(signTypes._codedValuesTimebandDays)}</select>
-                <select
+                <select className= "TimebandSelect"
                     value={this.props.value.attributes.STARTTIME
                     ? this.props.value.attributes.STARTTIME
                     : ""}
                     onChange={(evt) => this.props.change(evt, this.props.index, 2)}>
                     {addOptionsToSelect(signTypes._codedValuesTimebandHours)}</select>
-                <select
+                <select className= "TimebandSelect"
                     value={this.props.value.attributes.ENDTIME
                     ? this.props.value.attributes.ENDTIME
                     : ""}
                     onChange={(evt) => this.props.change(evt, this.props.index, 3)}>
                     {addOptionsToSelect(signTypes._codedValuesTimebandHours)}</select>
-                <select
+                <select className= "TimebandSelect"
                     value={this.props.value.attributes.HOURLIMIT
                     ? this.props.value.attributes.HOURLIMIT
                     : ""}
