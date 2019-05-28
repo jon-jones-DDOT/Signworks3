@@ -594,7 +594,7 @@ export default class SignEditor extends Component {
                     <div className="TypeAheadDiv">
                         <Typeahead
                             options={this.getOptions()}
-                            maxVisible={10}
+                            maxVisible={15}
                             onOptionSelected={this.mutcdLookUpSelectHandler}
                             placeholder="TYPE DESCRIPTION"
                             disabled={this.state.showInfo}
@@ -607,8 +607,8 @@ export default class SignEditor extends Component {
                     <p>
                         "Enter Partial Description or MUTCD"</p>
 
-                    <button disabled={this.state.showInfo} onClick={this.cancelMUTCDselectHandler}>
-                        CANCEL</button>
+                    <button onClick={this.cancelMUTCDselectHandler}>
+                        GO BACK</button>
                     <div
                         className={this.state.showInfo
                         ? "MutcdInfoDiv"
