@@ -6,19 +6,20 @@ let Typeahead = require('react-typeahead').Typeahead;
 
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
 
-
 export default class SuperQuery extends Component {
 
     constructor(props) {
         super(props)
-this.myRef = React.createRef();
+        this.myRef = React.createRef();
         this.state = {
             selectedMutt: null,
-            selected:false,
-            ready:true
+            selected: false,
+            ready: true
         }
 
     }
+
+   
 
     getOptions = () => {
         let bob = [];
@@ -33,9 +34,12 @@ this.myRef = React.createRef();
     mutcdLookUpSelectHandler = (desc) => {
 
         let option = desc.split(':')
-        this.setState({selectedMutt: option[0], selected:true})
-        this.myRef.current.focus();
-        
+        this.setState({selectedMutt: option[0], selected: true})
+        this
+            .myRef
+            .current
+            .focus();
+
     }
 
     cancelClickHandler = () => {
@@ -49,24 +53,23 @@ this.myRef = React.createRef();
         // when this finally breaks , remember to check and see if they updated the
         // table to 'SIGNCODE'
         this
-        .props
-        .removeQueryGraphics();
+            .props
+            .removeQueryGraphics();
         const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND MUTCD='" + this.state.selectedMutt + "'";
         const extent = this.props.map.extent;
         const layer = this.props.config.featureURLs.superquery;
-        
+
         this
             .props
             .querySuperQuery(where, extent, layer)
 
         // const features =
         // queryLayers(where,extent,this.props.config.featureURLs.Superquery).next();
-      
 
     }
 
     render() {
-console.log('this.props.graphic', this.props);
+        console.log('this.props.graphic', this.props);
         return (
 
             <ModalWrapper
@@ -86,7 +89,6 @@ console.log('this.props.graphic', this.props);
                         <p>Type a partial MUTCD and select from results</p>
 
                         <Typeahead
-                       
                             options={this.getOptions()}
                             maxVisible={10}
                             onOptionSelected={this.mutcdLookUpSelectHandler}
@@ -95,10 +97,13 @@ console.log('this.props.graphic', this.props);
                             'size': 50
                         }}/>
                     </div>
-<div>  features found</div>
+                    <div>
+                        {this.props.graphic.queryCount}
+                        &nbsp;  features found</div>
                     <p>
                         The Extent for the query will be the current extent of the displayed map</p>
-                    < button ref= {this.myRef} onClick={this.searchClickHandler} disabled={this.selected}> SEARCH</button>
+                    < button ref={this.myRef} onClick={this.searchClickHandler} disabled={this.selected}>
+                        SEARCH</button>
 
                 </div>
             </ModalWrapper>

@@ -100,7 +100,7 @@ const mapStateToProps = state => ({
   map: state.map,
   auth: state.auth,
   config: state.config,
-  graphics:state.graphics
+  graphic:state.graphic
 })
 
 const mapDispatchToProps = function (dispatch) {

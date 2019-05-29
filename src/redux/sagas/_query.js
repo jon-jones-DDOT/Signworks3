@@ -12,18 +12,19 @@ function * query(action) {
        const queryResult =   yield call(superQuery, [action.payload.where, action.payload.extent,action.payload.layer]);
        
        const features = queryResult.data.features;
-       
+       console.log('features :', features);
        yield put({
         type: graphicTypes.SET_QUERY_RESULTS_RG,
         payload: {
-            queryFeatures:features
+            queryFeatures:features,
+            queryCount: features.length
         }
     });
         
     }
     
     catch (e) {
-        console.log('SAGA ERROR: map/saveSelectedSign, ', e);
+        console.log('SAGA ERROR: graphic/query, ', e);
     }
 }
 
