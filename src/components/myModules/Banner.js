@@ -11,12 +11,12 @@ import logo from "../../img/logo.png"
 class Banner extends Component {
 
     bannerToolHandler = (evt) => {
-        console.log('clicked', evt.target.value);
+        
         switch (evt.target.value) {
             case '0':
                 return;
                 case '1':
-                console.log('evt.target.value', evt.target.value)
+               
                 this
                     .props
                     .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
@@ -52,7 +52,7 @@ class Banner extends Component {
                     .props
                     .removeQueryGraphics();
                 evt.target.value = "0"
-                console.log('action fired')
+               
                 break;
             default:
                 return null;
