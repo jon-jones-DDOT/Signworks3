@@ -11,22 +11,30 @@ import logo from "../../img/logo.png"
 class Banner extends Component {
 
     bannerToolHandler = (evt) => {
-
+        console.log('clicked', evt.target.value);
         switch (evt.target.value) {
             case '0':
-            this.props.setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default')
+                console.log('evt.target.value', evt.target.value)
+                this
+                    .props
+                    .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
+                    evt.target.value = '5';
                 break;
             case "1": //SuperQuery™
-
+            this
+            .props
+            .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
                 this
                     .props
                     .modalClicked(true, "QUERY", null);
-                evt.target.value = '0'
+                evt.target.value = '5'
                 break;
             case "2":
-                
-                    this.props.setMapClickMode(mapModes.ADD_SUPPORT_MODE, 'crosshair')
 
+                this
+                    .props
+                    .setMapClickMode(mapModes.ADD_SUPPORT_MODE, 'crosshair');
+                    evt.target.value = '5';
                 break;
             default:
                 //do nothing
@@ -42,6 +50,7 @@ class Banner extends Component {
                     .props
                     .removeQueryGraphics();
                 evt.target.value = "0"
+                console.log('action fired')
                 break;
             default:
                 return null;
@@ -51,12 +60,13 @@ class Banner extends Component {
     render() {
         return (
             <div className="Banner">
-                <img src={logo} className="AppLogo" alt= "logo" />
+                <img src={logo} className="AppLogo" alt="logo"/>
 
                 <div className="AppTools">
                     <span>
                         <select onChange={this.bannerToolHandler} className="ActionSelect">
-                            <option value={0}>...Tools</option>
+                     
+                            <option value={0}>Select Support</option>
                             <option value={1}>Sign Query</option>
                             <option value={2}>Add Support</option>
                         </select>
