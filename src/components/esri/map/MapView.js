@@ -303,6 +303,7 @@ class MapView extends Component {
                     this
                     .props
                     .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
+                    this.view.surface.style.cursor = "default";
                 break;
             default:
                 return

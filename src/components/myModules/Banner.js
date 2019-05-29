@@ -10,6 +10,11 @@ import logo from "../../img/logo.png"
 
 class Banner extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {noAdd :false}
+        
+    }
     bannerToolHandler = (evt) => {
         
         switch (evt.target.value) {
@@ -21,6 +26,7 @@ class Banner extends Component {
                     .props
                     .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
                     evt.target.value = '0';
+                    this.setState({noAdd:false})
                 break;
             case "2": //SuperQuery™
             this
@@ -29,7 +35,8 @@ class Banner extends Component {
                 this
                     .props
                     .modalClicked(true, "QUERY", null);
-                evt.target.value = '0'
+                evt.target.value = '0';
+                this.setState({noAdd:false})
                 break;
             case "3":
 
@@ -37,6 +44,7 @@ class Banner extends Component {
                     .props
                     .setMapClickMode(mapModes.ADD_SUPPORT_MODE, 'crosshair');
                     evt.target.value = '0';
+                    this.setState({noAdd:true})
                 break;
             default:
                 //do nothing
@@ -70,7 +78,7 @@ class Banner extends Component {
                      <option value={0}>...Tools</option>
                             <option value={1}>Select Support</option>
                             <option value={2}>Sign Query</option>
-                            <option value={3}>Add Support</option>
+                            <option value={3} disabled= {this.state.noAdd} >Add Support</option>
                         </select>
                     </span>
                     <span>
