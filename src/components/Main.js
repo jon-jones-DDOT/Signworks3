@@ -88,7 +88,7 @@ class Main extends Component {
             is3DScene={false}
           />
            <RightBar/>
-           <ModalConductor {...this.props.map}  />
+           <ModalConductor {...this.props}  />
         </MapWrapper>
        
       </Container>

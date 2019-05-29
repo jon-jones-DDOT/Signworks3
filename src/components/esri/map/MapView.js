@@ -116,6 +116,7 @@ class MapView extends Component {
             /*   this
                 .markerLayer
                 .removeAll();  */
+              console.log('unexpected call to cone graphics');
             this
                 .queryMarkerLayer
                 .removeAll();
@@ -129,7 +130,7 @@ class MapView extends Component {
         }
 
         if (this.props.graphic.showQuery === false && this.queryMarkerLayer.graphics.length > 0) {
-            //        console.log('removing query markers')
+                    console.log('removing query markers')
             this
                 .queryMarkerLayer
                 .removeAll();
@@ -169,6 +170,7 @@ class MapView extends Component {
                 for (let i = 0; i < graphics.length; i++) {
                     graphics[i].geometry.type = "point"
                     gr = new Graphic({geometry: graphics[i].geometry, symbol: querySymb})
+                    console.log('shold reach this point');
                     this
                         .queryMarkerLayer
                         .add(gr)
@@ -215,7 +217,6 @@ class MapView extends Component {
             this.view.center = addMark.geometry;
             this.view.zoom = 19;
         }
-        console.log('this.props.graphic.cursor, prevProps.graphic.cursor :', this.props.graphic.cursor, prevProps.graphic.cursor);
         this.view.surface.style.cursor = this.props.graphic.cursor;
     }
 
@@ -285,7 +286,7 @@ class MapView extends Component {
             case mapModes.ADD_SUPPORT_MODE:
                 // we should create a 'fake' feature out of the map click event 
                 //console.log('map // click happens here')
-              
+            
                 const newSupportFeature = {
                     atrributes: {},
                     geometry: {
