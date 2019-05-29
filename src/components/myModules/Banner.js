@@ -14,27 +14,29 @@ class Banner extends Component {
         console.log('clicked', evt.target.value);
         switch (evt.target.value) {
             case '0':
+                return;
+                case '1':
                 console.log('evt.target.value', evt.target.value)
                 this
                     .props
                     .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
-                    evt.target.value = '5';
+                    evt.target.value = '0';
                 break;
-            case "1": //SuperQuery™
+            case "2": //SuperQuery™
             this
             .props
             .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
                 this
                     .props
                     .modalClicked(true, "QUERY", null);
-                evt.target.value = '5'
+                evt.target.value = '0'
                 break;
-            case "2":
+            case "3":
 
                 this
                     .props
                     .setMapClickMode(mapModes.ADD_SUPPORT_MODE, 'crosshair');
-                    evt.target.value = '5';
+                    evt.target.value = '0';
                 break;
             default:
                 //do nothing
@@ -65,10 +67,10 @@ class Banner extends Component {
                 <div className="AppTools">
                     <span>
                         <select onChange={this.bannerToolHandler} className="ActionSelect">
-                     
-                            <option value={0}>Select Support</option>
-                            <option value={1}>Sign Query</option>
-                            <option value={2}>Add Support</option>
+                     <option value={0}>...Tools</option>
+                            <option value={1}>Select Support</option>
+                            <option value={2}>Sign Query</option>
+                            <option value={3}>Add Support</option>
                         </select>
                     </span>
                     <span>
