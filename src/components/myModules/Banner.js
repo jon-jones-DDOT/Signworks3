@@ -9,7 +9,13 @@ import UserAccount from '../UserAccount';
 import logo from "../../img/logo.png"
 
 class Banner extends Component {
-
+    signIn = () => {
+        this.props.checkAuth("https://dcgis.maps.arcgis.com");
+      }
+    
+      signOut = () => {
+        this.props.logout();
+      }
   
     bannerToolHandler = (evt) => {
      

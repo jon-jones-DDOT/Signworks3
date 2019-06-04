@@ -62,13 +62,7 @@ const MapWrapper = styled.div`
 
 // Class
 class Main extends Component {
-  signIn = () => {
-    this.props.checkAuth('https://www.arcgis.com');
-  }
 
-  signOut = () => {
-    this.props.logout();
-  }
  
   render() {
  
