@@ -48,9 +48,11 @@ this.myRef = React.createRef();
     searchClickHandler = (evt) => {
         // when this finally breaks , remember to check and see if they updated the
         // table to 'SIGNCODE'
-
+        this
+        .props
+        .removeQueryGraphics();
         const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND MUTCD='" + this.state.selectedMutt + "'";
-        const extent = this.props.extent;
+        const extent = this.props.map.extent;
         const layer = this.props.config.featureURLs.superquery;
         
         this
@@ -64,7 +66,7 @@ this.myRef = React.createRef();
     }
 
     render() {
-
+console.log('this.props.graphic', this.props);
         return (
 
             <ModalWrapper
@@ -93,7 +95,7 @@ this.myRef = React.createRef();
                             'size': 50
                         }}/>
                     </div>
-
+<div>  features found</div>
                     <p>
                         The Extent for the query will be the current extent of the displayed map</p>
                     < button ref= {this.myRef} onClick={this.searchClickHandler} disabled={this.selected}> SEARCH</button>

@@ -10,7 +10,7 @@ export default class SupportEditor extends Component {
 
         this.state = {
 
-            ...this.props.support.attributes
+            ...this.props.map.support.attributes
 
         }
     }
@@ -20,7 +20,7 @@ export default class SupportEditor extends Component {
             .props
             .modalClicked(false, null);
 
-   let tempFeature = {...this.props.support};
+   let tempFeature = {...this.props.map.support};
    tempFeature.attributes = {...this.state};
 
         this
@@ -60,7 +60,7 @@ export default class SupportEditor extends Component {
                 title="Edit Support"
                 width
                 ={400}
-                showOk={this.props.showOk}>
+                showOk={this.props.map.showOk}>
                    
                 <div className="SupportEditor">
                 <div

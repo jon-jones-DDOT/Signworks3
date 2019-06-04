@@ -20,12 +20,13 @@ const amp = /[&]/;
 export default class SignEditor extends Component {
 
     constructor(props) {
+        console.log('props :', props);
         super(props)
-        const zone = this.zoneParse(this.props.signs[this.props.editSignIndex].feature.attributes.ZONE_ID)
+        const zone = this.zoneParse(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
 
-            ...this.props.signs[this.props.editSignIndex],
-            ...this.props.signs[this.props.editSignIndex].feature,
+            ...this.props.map.signs[this.props.map.editSignIndex],
+            ...this.props.map.signs[this.props.map.editSignIndex].feature,
             paneSelection: 1,
             muttSelected: false,
             showInfo: false,
@@ -180,7 +181,7 @@ export default class SignEditor extends Component {
 
         this
             .props
-            .saveSign(this.props.support, editedFeature, layers)
+            .saveSign(this.props.map.support, editedFeature, layers)
         this
             .props
             .modalClicked(false, null)
@@ -200,7 +201,7 @@ export default class SignEditor extends Component {
 
     muttSelectorSaveHandler = () => {
         //
-        const result = MutcdDuplicate(this.state.MUTCD.code, this.props.signs)
+        const result = MutcdDuplicate(this.state.MUTCD.code, this.props.map.signs)
 
         this.setState({paneSelection: 1, muttDupe: result, showInfo: false})
     }
@@ -476,7 +477,7 @@ export default class SignEditor extends Component {
                 title="Edit Sign"
                 width
                 ={400}
-                showOk={this.props.showOk}>
+                showOk={this.props.map.showOk}>
 
                 <div
                     className={this.state.paneSelection === 1
