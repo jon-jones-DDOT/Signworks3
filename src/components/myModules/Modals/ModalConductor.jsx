@@ -9,7 +9,7 @@ import SignEditor from '../Signs/SignEditor';
 import SuperQuery from '../SuperQuery'
 
 function ModalConductor(props) {
- console.log('props in modalConductor', props )
+ 
     switch (props.map.currentModal) {
         case 'SUPPORT':
             return <SupportEditor {...props}/>

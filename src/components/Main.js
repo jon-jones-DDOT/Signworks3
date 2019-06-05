@@ -34,6 +34,7 @@ import Banner from './myModules/Banner';
 import styled from 'styled-components';
 import ModalConductor from './myModules/Modals/ModalConductor';
 import LeftBar from './myModules/LeftBar';
+import "./Main.css"
 
 
 const Container = styled.div`
@@ -63,7 +64,26 @@ const MapWrapper = styled.div`
 // Class
 class Main extends Component {
 
+ mapIfLoggedIn(){
+   if(this.props.auth.loggedIn ){
+     return(
+    <MapWrapper>
+    <LeftBar></LeftBar>
+    <MapView
+    onMapClicked = {this.props.selectSupport}
+      onMapLoaded={this.props.mapLoaded}
+      mapConfig={this.props.config.mapConfig}
+      onMapChanged = {this.props.mapChanged}
+      is3DScene={false}
+    />
+     <RightBar/>
+     <ModalConductor {...this.props}  />
+  </MapWrapper>)
+   }
+   else{return (     <div className="MainNoLogIn"> </div>)
+   }
  
+ }
   render() {
  
     return (
@@ -71,19 +91,8 @@ class Main extends Component {
         <LoadScreen isLoading={this.props.mapLoaded} />
 
         <Banner {...this.props}></Banner>
-
-        <MapWrapper>
-          <LeftBar></LeftBar>
-          <MapView
-          onMapClicked = {this.props.selectSupport}
-            onMapLoaded={this.props.mapLoaded}
-            mapConfig={this.props.config.mapConfig}
-            onMapChanged = {this.props.mapChanged}
-            is3DScene={false}
-          />
-           <RightBar/>
-           <ModalConductor {...this.props}  />
-        </MapWrapper>
+        {this.mapIfLoggedIn()}
+      
        
       </Container>
     )
