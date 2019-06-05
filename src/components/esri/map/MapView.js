@@ -326,7 +326,10 @@ class MapView extends Component {
     }
 
     setupWidgetsAndLayers = () => {
-        loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic', "esri/layers/TileLayer", "esri/Basemap"]).then(([FeatureLayer, GraphicsLayer, Graphic, TileLayer, Basemap]) => {
+        loadModules(['esri/layers/FeatureLayer', 
+        "esri/layers/GraphicsLayer", 'esri/Graphic']).then(([FeatureLayer, GraphicsLayer, Graphic]) => {
+
+
 
             this.featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
             this.queryMarkerLayer = new GraphicsLayer();
