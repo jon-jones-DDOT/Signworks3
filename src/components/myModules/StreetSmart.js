@@ -197,7 +197,7 @@ class StreetSmart extends Component {
 
     }
 
-    render() {
+    render /* unto Caesar */() {
 
         return (
             <div className="StreetSmart">
