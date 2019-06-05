@@ -14,7 +14,7 @@ class Banner extends Component {
       }
     
       signOut = () => {
-        this.props.logout();
+        this.props.logout(this.props.config.portalUrl);
       }
   
     bannerToolHandler = (evt) => {

@@ -37,6 +37,7 @@ function* checkAuth(action) {
 
 function* authLogout(action) {
   try {
+   
     yield call(window.authManager.logout);
     yield call(logout, action.payload.portalUrl);
     window.location.reload();
