@@ -53,13 +53,8 @@ export default class SuperQuery extends Component {
         // when this finally breaks , remember to check and see if they updated the
         // table to 'SIGNCODE'
         this
-<<<<<<< HEAD
         .props
         .removeQueryGraphics();
-=======
-            .props
-            .removeQueryGraphics();
->>>>>>> 0d55df11d8f5f282689e92022d8fd33d23775b49
         const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND MUTCD='" + this.state.selectedMutt + "'";
         const extent = this.props.map.extent;
         const layer = this.props.config.featureURLs.superquery;
@@ -74,12 +69,7 @@ export default class SuperQuery extends Component {
     }
 
     render() {
-<<<<<<< HEAD
-console.log('this.props.graphic', this.props);
-=======
-        console.log('this.props.graphic', this.props);
->>>>>>> 0d55df11d8f5f282689e92022d8fd33d23775b49
-        return (
+       return (
 
             <ModalWrapper
                 {...this.props}
