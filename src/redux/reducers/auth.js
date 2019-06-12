@@ -17,19 +17,23 @@ export const types = {
 export const initialState = {
     user: null,
     loaded: false,
-    loggedIn: false
+    loggedIn: false,
+    isEditor:false,
+    isViewer:false
 }
 
 export default(state = initialState, action) => {
     switch (action.type) {
         case types.AUTH_SUCCESS:
-            const user = action.payload;
+            const user = action.payload.user;
 
             return {
                 ...state,
                 user,
                 loaded: true,
-                loggedIn: true
+                loggedIn: true,
+                isEditor: action.payload.isEditor,
+                isViewer:action.payload.isViewer
             };
 
         case types.AUTH_FAIL:
