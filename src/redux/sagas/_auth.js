@@ -19,13 +19,13 @@ function * checkAuth(action) {
         let isViewer = false;
         let isDev = false;
         const authObj = yield call(window.authManager.login, action.payload.config.portalUrl);
-        const edit = yield call(getGroups, [authObj.portal, "Signworks Editors"]);
+        const edit = yield call(getGroups, [authObj.portal, "Signworks Editorszz"]);
         if (edit.results.length > 0) {
             isEditor = true;
             isViewer = true;
 
         } else {
-            console.log('not reached, correct?')
+            
             const view = yield call(getGroups, [authObj.portal, "Signworks Viewers"]);
             isEditor = false;
             isViewer = true;

@@ -18,12 +18,20 @@ export function getGroups(args) {
     })
 }
 
-export function layerURLs(props){
-  //  console.log('props', props)
-    if(props.auth.isDev){
+export function layerURLs(props) {
+    //  console.log('props', props)
+    if (props.auth.isDev) {
+        console.log('dev layers');
         return props.config.featureURLs_dev_edit;
+    } else if (props.auth.isEditor) {
+        console.log('prod editor');
+        return props.config.featureURLs_prod_edit;
+    } else if (props.auth.isViewer) {
+        console.log('prod viewer');
+        return props.config.featureURLs_view;
+    } else 
+        return null;
     }
-}
 
 export function getSupportById(args) {
     const id = args[0];
