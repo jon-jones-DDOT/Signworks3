@@ -9,7 +9,8 @@
     "loginWithPopup": false,
     "portalUrl": "https://dcgis.maps.arcgis.com",
 
-    "appId": "hkdtqXBMmZ8JJ5tD",
+    "appId": "8z9QZSIF39R2lBVl",
+    "dontUse":"hkdtqXBMmZ8JJ5tD",
     "release":"dev",
 
     "mapConfig": {
