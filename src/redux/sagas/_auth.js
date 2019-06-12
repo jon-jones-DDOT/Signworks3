@@ -19,7 +19,7 @@ function * checkAuth(action) {
         let isViewer = false;
         let isDev = false;
         const authObj = yield call(window.authManager.login, action.payload.config.portalUrl);
-        const edit = yield call(getGroups, [authObj.portal, "Signworks Editorszz"]);
+        const edit = yield call(getGroups, [authObj.portal, "Signworks Editors"]);
         if (edit.results.length > 0) {
             isEditor = true;
             isViewer = true;
