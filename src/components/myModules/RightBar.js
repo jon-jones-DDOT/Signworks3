@@ -71,7 +71,7 @@ class RightBar extends Component {
                 <Support
                     sel={this.props.map.support}
                     editClick={this.handleModalClicked}
-                    SsClick={this.streetSmartClickHandler}></Support>
+                    SsClick={this.streetSmartClickHandler} canEdit={this.props.auth.isEditor}></Support>
                 <Signs signs={this.props.map.signs} editClick={this.handleModalClicked}></Signs>
                 <SignCreator sel={this.props.map.support} click={this.addSignHandler}></SignCreator>
             </RightDiv>
