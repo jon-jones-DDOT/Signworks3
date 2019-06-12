@@ -12,11 +12,7 @@ function * query(action) {
        const queryResult =   yield call(superQuery, [action.payload.where, action.payload.extent,action.payload.layer]);
        
        const features = queryResult.data.features;
-<<<<<<< HEAD
        
-=======
-       console.log('features :', features);
->>>>>>> 0d55df11d8f5f282689e92022d8fd33d23775b49
        yield put({
         type: graphicTypes.SET_QUERY_RESULTS_RG,
         payload: {

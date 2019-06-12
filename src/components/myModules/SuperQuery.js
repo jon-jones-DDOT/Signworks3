@@ -106,13 +106,9 @@ console.log('this.props.graphic', this.props);
                             'size': 50
                         }}/>
                     </div>
-<<<<<<< HEAD
-<div>  features found</div>
-=======
                     <div>
                         {this.props.graphic.queryCount}
                         &nbsp;  features found</div>
->>>>>>> 0d55df11d8f5f282689e92022d8fd33d23775b49
                     <p>
                         The Extent for the query will be the current extent of the displayed map</p>
                     < button ref={this.myRef} onClick={this.searchClickHandler} disabled={this.selected}>

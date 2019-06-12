@@ -116,15 +116,10 @@ class MapView extends Component {
             /*   this
                 .markerLayer
                 .removeAll();  */
-<<<<<<< HEAD
               console.log('unexpected call to cone graphics');
             this
                 .queryMarkerLayer
                 .removeAll();
-=======
-          
-        
->>>>>>> 0d55df11d8f5f282689e92022d8fd33d23775b49
             this
                 .conicLayer
                 .add(this.props.graphic.coneGraphic)
