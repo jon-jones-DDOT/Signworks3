@@ -24,6 +24,7 @@ export const mapModes = {
 export const initialState = {
     selSupportGeom: null,
     queryFeatures: [],
+    queryCount:0,
     showQuery: false,
     leftVisible: false,
     editMode: null,
@@ -32,7 +33,6 @@ export const initialState = {
     viewWidth: null,
     viewExtentWidth: null,
     view_spatRef: null,
-  
     cursor: 'default',
     mapClickMode: mapModes.SELECT_SUPPORT_MODE,
     needSupRefresh: false,
@@ -127,7 +127,8 @@ export const actions = {
     removeQueryGraphics: () => ({
         type: types.REMOVE_QUERY_GRAPHICS_RG,
         payload: {
-            showQuery: false
+            showQuery: false,
+            removed:true
         }
     }),
     querySuperQuery: (where, extent, layer) => ({

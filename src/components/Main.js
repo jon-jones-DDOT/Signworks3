@@ -91,8 +91,24 @@ class Main extends Component {
         <LoadScreen isLoading={this.props.mapLoaded} />
 
         <Banner {...this.props}></Banner>
+<<<<<<< HEAD
         {this.mapIfLoggedIn()}
       
+=======
+
+        <MapWrapper>
+          <LeftBar></LeftBar>
+          <MapView
+          onMapClicked = {this.props.selectSupport}
+            onMapLoaded={this.props.mapLoaded}
+            mapConfig={this.props.config.mapConfig}
+            onMapChanged = {this.props.mapChanged}
+            is3DScene={false}
+          />
+           <RightBar/>
+           <ModalConductor {...this.props}  />
+        </MapWrapper>
+>>>>>>> 0d55df11d8f5f282689e92022d8fd33d23775b49
        
       </Container>
     )
@@ -103,7 +119,7 @@ const mapStateToProps = state => ({
   map: state.map,
   auth: state.auth,
   config: state.config,
-  graphics:state.graphics
+  graphic:state.graphic
 })
 
 const mapDispatchToProps = function (dispatch) {
