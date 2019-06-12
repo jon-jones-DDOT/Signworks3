@@ -17,7 +17,8 @@ function * checkAuth(action) {
     try {
         let isEditor = false;
         let isViewer = false;
-        const authObj = yield call(window.authManager.login, action.payload.portalUrl);
+        let isDev = false;
+        const authObj = yield call(window.authManager.login, action.payload.config.portalUrl);
         const edit = yield call(getGroups, [authObj.portal, "Signworks Editors"]);
         if (edit.results.length > 0) {
             isEditor = true;
@@ -30,9 +31,12 @@ function * checkAuth(action) {
             isViewer = true;
         }
 
+        if ( action.payload.config.release === "dev"){
+            isDev = true;
+        }
         // Check if the authObj is undefined
         if (authObj) {
-            yield put({type: types.AUTH_SUCCESS, payload:{user:authObj, isEditor, isViewer} });
+            yield put({type: types.AUTH_SUCCESS, payload:{user:authObj, isEditor, isViewer, isDev} });
         } else {
             // putting a fail call here just means that we didn't need to login
             yield put({type: types.AUTH_FAIL});

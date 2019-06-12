@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
 import {actions as graphicActions} from '../../redux/reducers/graphic'
+import {layerURLs} from "../../utils/JSAPI"
 import Signs from './Signs/Signs';
 import SignCreator from './Signs/SignCreator';
 import "./RightBar.css"
@@ -26,7 +27,7 @@ class RightBar extends Component {
 
     streetSmartClickHandler = (evt, sel) => {
      
-        this.props.startStreetSmartViewer([sel],this.props.config.featureURLs,4326,2248,
+        this.props.startStreetSmartViewer([sel],layerURLs(this.props),4326,2248,
              this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false)
     }
 
@@ -57,7 +58,7 @@ class RightBar extends Component {
         //save new sign
         this
             .props
-            .newSign(this.props.map.support, signWrapper, this.props.config.featureURLs)
+            .newSign(this.props.map.support, signWrapper, layerURLs(this.props))
 
     }
 
@@ -78,7 +79,7 @@ class RightBar extends Component {
     }
 }
 
-const mapStateToProps = state => ({map: state.map, graphic: state.graphic, config: state.config});
+const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth:state.auth,  config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

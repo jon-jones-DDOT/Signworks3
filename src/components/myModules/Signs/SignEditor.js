@@ -6,7 +6,7 @@ import './SignEditor.css'
 import ModalWrapper from '../Modals/ModalWrapper';
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
 
-import {muttGenerator} from "../../../utils/JSAPI";
+import {muttGenerator, layerURLs} from "../../../utils/JSAPI";
 
 import Timebands from '../Timebands/Timebands';
 import Zone from './Zone';
@@ -20,7 +20,7 @@ const amp = /[&]/;
 export default class SignEditor extends Component {
 
     constructor(props) {
-        console.log('props :', props);
+        
         super(props)
         const zone = this.zoneParse(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
@@ -177,7 +177,7 @@ export default class SignEditor extends Component {
             }
 
         }
-        const layers = this.props.config.featureURLs;
+        const layers = layerURLs(this.props);
 
         this
             .props

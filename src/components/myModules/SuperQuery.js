@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './SuperQuery.css'
 import ModalWrapper from './Modals/ModalWrapper';
-
+import {layerURLs} from '../../utils/JSAPI'
 let Typeahead = require('react-typeahead').Typeahead;
 
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
@@ -10,6 +10,7 @@ export default class SuperQuery extends Component {
 
     constructor(props) {
         super(props)
+        console.log('props :', props);
         this.myRef = React.createRef();
         this.state = {
             selectedMutt: null,
@@ -57,14 +58,11 @@ export default class SuperQuery extends Component {
         .removeQueryGraphics();
         const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND MUTCD='" + this.state.selectedMutt + "'";
         const extent = this.props.map.extent;
-        const layer = this.props.config.featureURLs.superquery;
+        const layer = layerURLs(this.props).superquery;
 
         this
             .props
             .querySuperQuery(where, extent, layer)
-
-        // const features =
-        // queryLayers(where,extent,this.props.config.featureURLs.Superquery).next();
 
     }
 

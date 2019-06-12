@@ -5,6 +5,8 @@ import arrayMove from 'array-move';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {actions as mapActions} from '../../../redux/reducers/map';
+import {layerURLs} from "../../../utils/JSAPI"
+import { layer } from '@fortawesome/fontawesome-svg-core';
 
 let editClicker = null
 const SortableItem = SortableElement(({value, index}) => <Sign sign={value} index = {index} editClick={editClicker}></Sign>);
@@ -31,10 +33,10 @@ class Signs extends Component {
             newOrder[i].feature.attributes.SIGNORDER = i;
 
         }
-
+        console.log('this.props :', this.props);
         this
             .props
-            .signOrderChanged(newOrder, this.props.map.support, this.props.config.featureURLs);
+            .signOrderChanged(newOrder, this.props.map.support, layerURLs(this.props));
         /* */
     };
 
@@ -53,7 +55,7 @@ class Signs extends Component {
     }
 }
 
-const mapStateToProps = state => ({map: state.map, config: state.config});
+const mapStateToProps = state => ({map: state.map, config: state.config, auth:state.auth});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

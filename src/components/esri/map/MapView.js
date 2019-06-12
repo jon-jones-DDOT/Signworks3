@@ -27,7 +27,7 @@ import {createView} from '../../../utils/esriHelper';
 // Styled Components
 import styled from 'styled-components';
 
-import {pointToExtent} from '../../../utils/JSAPI';
+import {pointToExtent, layerURLs} from '../../../utils/JSAPI';
 
 const Container = styled.div `
   height: 100%;
@@ -258,7 +258,7 @@ class MapView extends Component {
 
         this
             .props
-            .onMapClicked(expandedMapPoint, this.props.config.featureURLs);
+            .onMapClicked(expandedMapPoint, layerURLs(this.props));
 
     }
 
@@ -300,7 +300,7 @@ class MapView extends Component {
                 this.setState({newSupportClickGeom: evt.mapPoint});
                 this
                     .props
-                    .startStreetSmartViewer([newSupportFeature], this.props.config.featureURLs, 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, true);
+                    .startStreetSmartViewer([newSupportFeature], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, true);
                     this
                     .props
                     .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
@@ -331,7 +331,7 @@ class MapView extends Component {
 
 
 
-            this.featureLayer = new FeatureLayer({url: this.props.config.featureURLs.supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
+            this.featureLayer = new FeatureLayer({url: layerURLs(this.props).supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
             this.conicLayer = new GraphicsLayer();
@@ -384,7 +384,7 @@ class MapView extends Component {
 
 }
 
-const mapStateToProps = state => ({config: state.config, map: state.map, graphic: state.graphic});
+const mapStateToProps = state => ({config: state.config,auth:state.auth, map: state.map, graphic: state.graphic});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

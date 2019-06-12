@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
-import {mapModes, actions as graphicActions} from '../../redux/reducers/graphic'
-
+import {mapModes, actions as graphicActions} from '../../redux/reducers/graphic';
+import {layerURLs} from '../../utils/JSAPI';
 import './StreetSmart.css'
 
 const containerID = "StreetSmart-container";
@@ -46,7 +46,7 @@ class StreetSmart extends Component {
         const coneCode = this.props.getNewCone;
         const editMode = this.props.graphic.editMode;
         const save = this.props.newSupport;
-        const layers = this.props.config.featureURLs;
+        const layers = layerURLs(this.props);
         const ciao = this.props.setMapClickMode;
         const bye = this.ssCancel;
         let imagePitch,
@@ -208,7 +208,7 @@ class StreetSmart extends Component {
         )
     }
 }
-const mapStateToProps = state => ({map: state.map, graphic: state.graphic, config: state.config});
+const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth:state.auth, config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

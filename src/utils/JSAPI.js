@@ -18,6 +18,13 @@ export function getGroups(args) {
     })
 }
 
+export function layerURLs(props){
+  //  console.log('props', props)
+    if(props.auth.isDev){
+        return props.config.featureURLs_dev_edit;
+    }
+}
+
 export function getSupportById(args) {
     const id = args[0];
     const layer = args[1];

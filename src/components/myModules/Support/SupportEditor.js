@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import './SupportEditor.css'
 import ModalWrapper from '../Modals/ModalWrapper';
+import { layerURLs} from "../../../utils/JSAPI";
 import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
 
 export default class SupportEditor extends Component {
 
     constructor(props) {
         super(props)
-
+console.log('props in suppor t deditor', props);
         this.state = {
 
             ...this.props.map.support.attributes
@@ -25,7 +26,7 @@ export default class SupportEditor extends Component {
 
         this
             .props
-            .saveSupport(tempFeature, this.props.config.featureURLs);
+            .saveSupport(tempFeature, layerURLs(this.props));
         
 
     }

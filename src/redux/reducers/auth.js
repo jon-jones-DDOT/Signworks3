@@ -33,7 +33,8 @@ export default(state = initialState, action) => {
                 loaded: true,
                 loggedIn: true,
                 isEditor: action.payload.isEditor,
-                isViewer:action.payload.isViewer
+                isViewer:action.payload.isViewer,
+                isDev:action.payload.isDev
             };
 
         case types.AUTH_FAIL:
@@ -51,10 +52,10 @@ export default(state = initialState, action) => {
 
 // ACTIONS //
 export const actions = {
-    checkAuth: (url) => ({
+    checkAuth: (config) => ({
         type: types.AUTH_CHECK,
         payload: {
-            portalUrl: url
+            config
         }
     }),
 

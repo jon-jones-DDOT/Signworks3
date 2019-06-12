@@ -44,7 +44,7 @@ class App extends Component {
         this.props.config.jsapiV4,
         this.props.config.loginWithPopup
       );
-      window.authManager.startup().then(this.props.checkAuth(this.props.config.portalUrl));
+      window.authManager.startup().then(this.props.checkAuth(this.props.config));
     }
   }
 
