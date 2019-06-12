@@ -31,7 +31,7 @@ class RightBar extends Component {
     }
 
     addSignHandler = (evt) => {
-alert('we awake?')
+
         // this may look dumb, but we are sharing a function with saveSign and the input
         // parameter must match structure
         let signWrapper = {};
