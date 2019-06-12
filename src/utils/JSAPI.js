@@ -2,14 +2,27 @@ import {loadModules} from 'esri-loader';
 import {call} from 'redux-saga/effects';
 import LatLon from './geodesy/latlon-spherical';
 
+export function getGroups(args) {
+    const portal = args[0];
+    const title = args[1];
+    let queryParams = {
 
+        query: "title:" + title,
+        num: 50
+    };
+    return new Promise((resolve, reject) => {
+        portal
+            .queryGroups(queryParams)
+            .then(resp => resolve(resp), error => reject(error));
 
-//currently not being used, needs a slight rewrite
+    })
+}
+
 export function getSupportById(args) {
     const id = args[0];
     const layer = args[1];
     const outSR = args[2];
-    //needs a Promis here
+
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(layer + '/query', {
@@ -219,8 +232,6 @@ export function superQuery(args) {
     const layer = args[2];
 
     return new Promise((resolve, reject) => {
-
- 
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(layer + '/query', {
