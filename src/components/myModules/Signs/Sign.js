@@ -14,7 +14,8 @@ export default function Sign(props) {
         .MUTCD
         .serverImagePath
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
-    const imgServerDown = window.location.href + "/img/PR-OTHER.png"
+    const imgServerDown = window.location.href + "/img/PR-OTHER.png";
+    
     return (
         <div className="Sign">
             <div className="SignMUTCDdiv">
@@ -36,13 +37,13 @@ export default function Sign(props) {
                     className="SignArrowImage"/>
             </div>
             <hr/>
-            <div>
-            <button
+            <div>{props.canEdit? <button
                     onClick=
                     {(evt) => props.editClick(evt, 'SIGN', props.index)}
                     className="SignEditButton">
                     <FontAwesomeIcon icon={faUserEdit} title="Edit Sign"/>
-                </button>
+                </button>:null}
+           
                 <Timebands bands={props.sign.timebands} edit={false}></Timebands>
 
                 

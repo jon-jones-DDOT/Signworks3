@@ -10,7 +10,7 @@
     "portalUrl": "https://dcgis.maps.arcgis.com",
 
     "appId": "hkdtqXBMmZ8JJ5tD",
-    "release":"prod",
+    "release":"dev",
 
     "mapConfig": {
         "basemap": "streets",

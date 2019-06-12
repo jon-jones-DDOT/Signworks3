@@ -9,12 +9,12 @@ import {layerURLs} from "../../../utils/JSAPI"
 import { layer } from '@fortawesome/fontawesome-svg-core';
 
 let editClicker = null
-const SortableItem = SortableElement(({value, index}) => <Sign sign={value} index = {index} editClick={editClicker}></Sign>);
-const SortableList = SortableContainer(({items}) => {
+const SortableItem = SortableElement(({value, index, canEdit}) => <Sign sign={value} index = {index} canEdit={canEdit} editClick={editClicker}></Sign>);
+const SortableList = SortableContainer(({items,canEdit}) => {
 
     return (
         <div>
-            {items.map((value, index) => (<SortableItem key={`item-${index}`} index={index} value={value}/>))}
+            {items.map((value, index) => (<SortableItem key={`item-${index}`} canEdit={canEdit} index={index} value={value}/>))}
         </div>
 
     );
@@ -33,7 +33,7 @@ class Signs extends Component {
             newOrder[i].feature.attributes.SIGNORDER = i;
 
         }
-        console.log('this.props :', this.props);
+       
         this
             .props
             .signOrderChanged(newOrder, this.props.map.support, layerURLs(this.props));
@@ -49,7 +49,8 @@ class Signs extends Component {
             return <SortableList
                 items={this.props.signs}
                 onSortEnd={this.onSortEnd}
-                distance={10}/>;
+                distance={10}
+                canEdit={this.props.auth.isEditor}/>;
         } else 
             return <p></p>
     }

@@ -79,7 +79,7 @@ class Banner extends Component {
                      <option value={0}>...Tools</option>
                             <option value={1}>Select Support</option>
                             <option value={2}>Sign Query</option>
-                            <option value={3} disabled= {this.props.graphic.leftVisible} >Add Support</option>
+                        {this.props.auth.isEditor?<option value={3} disabled= {this.props.graphic.leftVisible} >Add Support</option>:null}    
                         </select>
                     </span>
                     <span>
@@ -106,7 +106,7 @@ class Banner extends Component {
     }
 }
 
-const mapStateToProps = state => ({map: state.map, graphic: state.graphic, config: state.config});
+const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth:state.auth, config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({
