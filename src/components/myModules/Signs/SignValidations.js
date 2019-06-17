@@ -65,7 +65,7 @@ export function zoneVerify(edState) {
 
     }
 
-    // alert(zoneValue); verify zone with same script as python server side this
+    //  verify zone with same script as python server side this
     // algorithm is overly rigorous since unlike the server side, the zone value is
     // constrained by input controls.  But it should work and might be needed later
 

@@ -25,7 +25,7 @@ export function getAppConfig() {
 }
 
 export function logout(portalUrl) {
-  alert( portalUrl)
+ 
   return new Promise((resolve, reject) => {
     makeRequest({
       url: `${portalUrl}/sharing/rest/oauth2/signout`,
