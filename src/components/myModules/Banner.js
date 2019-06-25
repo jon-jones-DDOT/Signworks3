@@ -6,7 +6,10 @@ import {actions as graphicActions} from '../../redux/reducers/graphic'
 import {mapModes} from '../../redux/reducers/graphic'
 import './Banner.css'
 import UserAccount from '../UserAccount';
+import styled, { css } from 'styled-components';
 import logo from "../../img/logo.png"
+
+
 
 class Banner extends Component {
     signIn = () => {
