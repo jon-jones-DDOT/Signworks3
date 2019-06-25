@@ -31,7 +31,7 @@ export default function Timebands(props) {
                 className={props.edit
                 ? "TimebandTitle_Edit"
                 : "TimebandTitle_View"}>
-                Time Restrictions:
+                
             </div><br></br>
 
             <div className= {props.edit?"Timebands_Edit":"Timebands_View"}>{props.bands.length > 0

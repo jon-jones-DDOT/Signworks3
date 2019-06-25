@@ -11,7 +11,7 @@ function * setSelectSupport(action) {
 
         // call API to fetch support
         const features = yield call(getSupportByExtent, [action.payload.geom, action.payload.layers.supports,4326]);
-
+console.log('features', features)
       
         if (features.data.features.length === 0) {
            
