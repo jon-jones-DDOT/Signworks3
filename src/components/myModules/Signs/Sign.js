@@ -14,7 +14,8 @@ export default function Sign(props) {
         .MUTCD
         .serverImagePath
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
-    const imgServerDown = window.location.href + "/img/PR-OTHER.png";
+    const imgServerDown = window.location.origin + "/img/PR-OTHER.png";
+
     
     return (
         <div className="Sign">
@@ -33,7 +34,7 @@ export default function Sign(props) {
                 </div>
 
                 <Img
-                    src={window.location.href + "/img/" + props.sign.feature.attributes.SIGNARROWDIRECTION + ".png"}
+                    src={window.location.origin + "/img/" + props.sign.feature.attributes.SIGNARROWDIRECTION + ".png"}
                     className="SignArrowImage"/>
             </div>
             <hr/>
