@@ -8,7 +8,7 @@ TimebandRow {
 }
 .timebandElement {
     font-size: 11px;
-   color:red;
-   
+   color:white;
+   background-color: rgb(219, 33, 33);
 
 }
