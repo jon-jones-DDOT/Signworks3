@@ -1,8 +1,8 @@
 .Banner{
 display:flex;
 flex-direction: row;
-background-color: rgb(155, 177, 228);
-color:white;
+background-color: #1C2F5A;
+
 
 
    
@@ -10,7 +10,7 @@ color:white;
 
 .UserAccount{
    display: inline;
-   color:white;
+
    
 }
 .AppLogo{

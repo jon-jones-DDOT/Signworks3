@@ -20,6 +20,11 @@ import TopNavActionsList from 'calcite-react/TopNav/TopNavActionsList';
 import ArcgisAccount from 'calcite-react/ArcgisAccount';
 import ArcgisAccountMenuItem from 'calcite-react/ArcgisAccount/ArcgisAccountMenuItem';
 import Button from 'calcite-react/Button';
+import styled, { css } from 'styled-components';
+
+const PrettyAccount = styled(ArcgisAccount)`  
+color: white;
+`
 
 // Class
 class UserAccount extends Component {
@@ -29,7 +34,7 @@ class UserAccount extends Component {
                 <TopNavActionsList style={{
                     padding: 0
                 }}>
-                    <ArcgisAccount
+                    <PrettyAccount
                         user={this.props.user}
                         portal={this.props.portal}
                         onRequestSwitchAccount={() => console.log('switch account clicked')}
@@ -51,7 +56,7 @@ class UserAccount extends Component {
                         <ArcgisAccountMenuItem onClick={() => console.log('ArcGIS Online clicked')}>
                             ArcGIS Online
                         </ArcgisAccountMenuItem>
-                    </ArcgisAccount>
+                    </PrettyAccount>
                 </TopNavActionsList>
             )
             : null;
