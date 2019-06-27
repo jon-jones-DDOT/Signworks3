@@ -113,7 +113,7 @@ class StreetSmart extends Component {
 
         const changeView = function (evt) {
             // view cone stuff
-
+console.log('changeView');
             imagePitch = evt.detail.pitch;
             imageYaw = evt.detail.yaw;
             
@@ -122,12 +122,13 @@ class StreetSmart extends Component {
         };
 
         const loadViewEnd = function (evt) {
-            //some hack for the view cone gonna comment it out and see if we need it now
-            /*
+            console.log('loadViewEnd');
+         
+            
             window
                 .panoramaViewer
                 .rotateLeft(1);
-                */
+                
         };
 
         window
