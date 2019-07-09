@@ -7,6 +7,9 @@ export const types = {
     SHOW_STREETSMART_VIEWER_RG: 'SHOW_STREETSMART_VIEWER_RG',
     START_STREETSMART_VIEWER_S: "START_STREETSMART_VIEWER_S",
     CLOSE_STREETSMART_VIEWER_RG: "CLOSE_STREETSMART_VIEWER_RG",
+    SHOW_GOOGLE_STREET_VIEWER_RG:"SHOW_GOOGLE_STREET_VIEWER_RG",
+    START_GOOGLE_STREET_VIEWER_S:"START_GOOGLE_STREET_VIEWER_S",
+    CLOSE_GOOGLE_STREET_VIEWER_RG:"CLOSE_GOOGLE_STREET_VIEWER_RG",
     GET_NEW_CONE_S: "GET_NEW_CONE",
     SET_NEW_CONE_RG: "SET_NEW_CONE",
     SET_POINT_BUFFER_RG: "SET_POINT_BUFFER_RG",
@@ -37,7 +40,8 @@ export const initialState = {
     mapClickMode: mapModes.SELECT_SUPPORT_MODE,
     needSupRefresh: false,
     coneGraphic:null,
-    conePointGraphic:null
+    conePointGraphic:null,
+    leftMode:null
 }
 
 export default(state = initialState, action) => {
@@ -75,6 +79,11 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
+            case types.SHOW_GOOGLE_STREET_VIEWER_RG:
+                return{
+                    ...state,
+                    ...action.payload
+                }
         case types.CLOSE_STREETSMART_VIEWER_RG:
             return {
                 ...state,
@@ -171,6 +180,12 @@ export const actions = {
             viewExtentWidth,
             view_spatRef,
             editMode
+        }
+    }),
+    startGoogleStreetViewer:(sel)=>({
+        type: types.START_GOOGLE_STREET_VIEWER_S,
+        payload:{
+            sel
         }
     })
 };

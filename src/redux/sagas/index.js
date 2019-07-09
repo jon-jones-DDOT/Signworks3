@@ -25,8 +25,10 @@ import * as mapLoadedSaga from './_mapLoaded';
 import * as newSignSaga from './_newSign';
 import * as querySaga from './_query';
 import * as streetSmartSaga from './_openStreetSmart';
+import * as googleStreetSaga from './_openGoogleStreetView';
 import * as newSupportSaga from './_newSupport';
 import * as getConeSaga from './_getNewCone';
+
 
 
 export default function* rootSaga() {
@@ -42,7 +44,8 @@ export default function* rootSaga() {
     ...Object.values(querySaga),
     ...Object.values(streetSmartSaga),
     ...Object.values(newSupportSaga),
-    ...Object.values(getConeSaga)
+    ...Object.values(getConeSaga),
+    ...Object.values(googleStreetSaga)
 
     // more sagas from different files
   ].map(fork));

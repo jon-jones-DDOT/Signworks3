@@ -58,6 +58,7 @@ function * openStreetSmart(action) {
             type: graphicTypes.SHOW_STREETSMART_VIEWER_RG,
             payload: {
                 leftVisible: true,
+                leftMode:'StreetSmart',
                 editMode: action.payload.editMode,
                 ssInputGeom: projectResult,
                 ssgeoJSONselPoint: gjPt,

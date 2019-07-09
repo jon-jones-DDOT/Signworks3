@@ -31,6 +31,11 @@ class RightBar extends Component {
              this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false)
     }
 
+    googleStreetsClickHandler = (evt, sel) =>{
+  
+        this.props.startGoogleStreetViewer([sel]);
+    }
+
     addSignHandler = (evt) => {
 
         // this may look dumb, but we are sharing a function with saveSign and the input
@@ -71,7 +76,7 @@ class RightBar extends Component {
                 <Support
                     sel={this.props.map.support}
                     editClick={this.handleModalClicked}
-                    SsClick={this.streetSmartClickHandler} canEdit={this.props.auth.isEditor}></Support>
+                    SsClick={this.streetSmartClickHandler} GsClick = {this.googleStreetsClickHandler} canEdit={this.props.auth.isEditor}></Support>
                 <Signs signs={this.props.map.signs} editClick={this.handleModalClicked } canEdit={this.props.auth.isEditor}></Signs>
                 {  this.props.auth.isEditor? <SignCreator sel={this.props.map.support} click={this.addSignHandler}></SignCreator>:null}
                
