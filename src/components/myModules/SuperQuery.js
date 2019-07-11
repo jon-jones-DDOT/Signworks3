@@ -10,7 +10,7 @@ export default class SuperQuery extends Component {
 
     constructor(props) {
         super(props)
-        console.log('props :', props);
+ 
         this.myRef = React.createRef();
         this.state = {
             selectedMutt: null,

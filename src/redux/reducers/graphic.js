@@ -182,10 +182,11 @@ export const actions = {
             editMode
         }
     }),
-    startGoogleStreetViewer:(sel)=>({
+    startGoogleStreetViewer:(sel,layers)=>({
         type: types.START_GOOGLE_STREET_VIEWER_S,
         payload:{
-            sel
+            sel,
+            layers
         }
     })
 };

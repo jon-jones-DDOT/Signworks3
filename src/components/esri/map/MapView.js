@@ -170,7 +170,7 @@ class MapView extends Component {
                 for (let i = 0; i < graphics.length; i++) {
                     graphics[i].geometry.type = "point"
                     gr = new Graphic({geometry: graphics[i].geometry, symbol: querySymb})
-                    console.log('shold reach this point');
+           
                     this
                         .queryMarkerLayer
                         .add(gr)

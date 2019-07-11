@@ -8,7 +8,7 @@ export default class SupportEditor extends Component {
 
     constructor(props) {
         super(props)
-console.log('props in suppor t deditor', props);
+
         this.state = {
 
             ...this.props.map.support.attributes

@@ -19,15 +19,15 @@ export function getGroups(args) {
 }
 
 export function layerURLs(props) {
-    //  console.log('props', props)
+
     if (props.auth.isDev) {
-        console.log('dev layers');
+   
         return props.config.featureURLs_dev_edit;
     } else if (props.auth.isEditor) {
-        console.log('prod editor');
+     
         return props.config.featureURLs_prod_edit;
     } else if (props.auth.isViewer) {
-        console.log('prod viewer');
+     
         return props.config.featureURLs_view;
     } else 
         return null;
@@ -373,6 +373,7 @@ export function createFeatureSet(args) {
 export function getPointOnRouteLRS(args) {
 
     const point = args[0];
+   
 
     const layer = args[1];
 
@@ -400,7 +401,7 @@ export function createTriangle(args) {
     const point = args[0]
     const imagePitch = args[1];
     const imageYaw = args[2];
-    console.log('imageYaw,imagePitch :', imageYaw, imagePitch);
+  
     if (typeof point[0] == 'undefined') {
         return
     }

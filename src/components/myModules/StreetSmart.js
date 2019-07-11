@@ -113,7 +113,7 @@ class StreetSmart extends Component {
 
         const changeView = function (evt) {
             // view cone stuff
-console.log('changeView');
+
             imagePitch = evt.detail.pitch;
             imageYaw = evt.detail.yaw;
             
@@ -122,7 +122,7 @@ console.log('changeView');
         };
 
         const loadViewEnd = function (evt) {
-            console.log('loadViewEnd');
+     
          
             
             window

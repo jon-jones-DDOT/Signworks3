@@ -9,6 +9,7 @@ import {layerURLs} from "../../utils/JSAPI"
 import Signs from './Signs/Signs';
 import SignCreator from './Signs/SignCreator';
 import "./RightBar.css"
+import {layer} from '@fortawesome/fontawesome-svg-core';
 
 const RightDiv = styled.div ` 
 
@@ -26,14 +27,25 @@ class RightBar extends Component {
     }
 
     streetSmartClickHandler = (evt, sel) => {
-     
-        this.props.startStreetSmartViewer([sel],layerURLs(this.props),4326,2248,
-             this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false)
+
+        this
+            .props
+            .startStreetSmartViewer([sel], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false)
     }
 
-    googleStreetsClickHandler = (evt, sel) =>{
-  
-        this.props.startGoogleStreetViewer([sel]);
+    googleStreetsClickHandler = (evt, sel) => {
+    
+        const point = {
+            type: "point", // autocasts as new Point()
+            x: sel.geometry.x,
+            y: sel.geometry.y,
+            spatialReference: {
+                wkid: 4326
+            }
+        }
+        this
+            .props
+            .startGoogleStreetViewer(sel, layerURLs(this.props));
     }
 
     addSignHandler = (evt) => {
@@ -76,16 +88,23 @@ class RightBar extends Component {
                 <Support
                     sel={this.props.map.support}
                     editClick={this.handleModalClicked}
-                    SsClick={this.streetSmartClickHandler} GsClick = {this.googleStreetsClickHandler} canEdit={this.props.auth.isEditor}></Support>
-                <Signs signs={this.props.map.signs} editClick={this.handleModalClicked } canEdit={this.props.auth.isEditor}></Signs>
-                {  this.props.auth.isEditor? <SignCreator sel={this.props.map.support} click={this.addSignHandler}></SignCreator>:null}
-               
+                    SsClick={this.streetSmartClickHandler}
+                    GsClick={this.googleStreetsClickHandler}
+                    canEdit={this.props.auth.isEditor}></Support>
+                <Signs
+                    signs={this.props.map.signs}
+                    editClick={this.handleModalClicked}
+                    canEdit={this.props.auth.isEditor}></Signs>
+                {this.props.auth.isEditor
+                    ? <SignCreator sel={this.props.map.support} click={this.addSignHandler}></SignCreator>
+                    : null}
+
             </RightDiv>
         )
     }
 }
 
-const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth:state.auth,  config: state.config});
+const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth: state.auth, config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

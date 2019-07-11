@@ -12,7 +12,7 @@ export  class GoogleMaps extends Component {
        
               // see https://developers.google.com/maps/documentation/javascript
               const googleMapsApiKey = 'AIzaSyDXDefktZL_z_aT5bUbPA9V5HsPcegIIEI';
- console.log('props :', this.props.graphic.selSupportGeom);
+
               // see https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanoramaOptions
               const streetViewPanoramaOptions = {
                   position: {lat: this.props.graphic.selSupportGeom.y, lng: this.props.graphic.selSupportGeom.x},
