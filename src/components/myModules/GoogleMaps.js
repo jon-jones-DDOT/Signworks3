@@ -7,7 +7,12 @@ import ReactStreetview from 'react-streetview'
 import './GoogleMaps.css'
 
 export  class GoogleMaps extends Component {
-    ggCancel = () => {}
+    ggCancel = () => {
+
+        this
+        .props
+        .closeStreetSmartViewer();
+    }
     render() {
        
               // see https://developers.google.com/maps/documentation/javascript
@@ -15,9 +20,10 @@ export  class GoogleMaps extends Component {
 
               // see https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanoramaOptions
               const streetViewPanoramaOptions = {
+                 
                   position: {lat: this.props.graphic.selSupportGeom.y, lng: this.props.graphic.selSupportGeom.x},
                   pov: {heading: this.props.graphic.initialBearing, pitch: -5},
-                  zoom: 1
+                  zoom: 2
               };
        
               return (
