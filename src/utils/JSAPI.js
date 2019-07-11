@@ -21,13 +21,13 @@ export function getGroups(args) {
 export function layerURLs(props) {
 
     if (props.auth.isDev) {
-   
+
         return props.config.featureURLs_dev_edit;
     } else if (props.auth.isEditor) {
-     
+
         return props.config.featureURLs_prod_edit;
     } else if (props.auth.isViewer) {
-     
+
         return props.config.featureURLs_view;
     } else 
         return null;
@@ -373,13 +373,12 @@ export function createFeatureSet(args) {
 export function getPointOnRouteLRS(args) {
 
     const point = args[0];
-   
 
     const layer = args[1];
 
     const inSR = args[2];
 
-    const outSR= args[3];
+    const outSR = args[3];
 
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
@@ -397,11 +396,41 @@ export function getPointOnRouteLRS(args) {
     })
 }
 
+export function calculateBearingPoints(args) {
+    // wkid 4326 ONLY
+    const pt1 = args[0];
+    const pt2 = args[1];
+    const lat1 = pt1.y;
+    const lat2 = pt2.y;
+    let lon1 = pt1.x;
+    let lon2 = pt2.x;
+
+    console.log(lat1, lat2, lon1, lon2);
+    const xscale = Math.cos(lat1 * Math.PI / 180);
+
+    lon1 = lon1 * xscale;
+    lon2 = lon2 * xscale;
+
+    const dlon = lon2 - lon1;
+    const dlat = lat2 - lat1;
+
+    if (Math.abs(dlon) < 0.000000001) {
+
+        if (dlat < 0)
+            return 180;
+        else
+            return 0;
+    }
+
+    return Math.atan2(dlon, dlat) * 180 / Math.PI;
+
+}
+
 export function createTriangle(args) {
     const point = args[0]
     const imagePitch = args[1];
     const imageYaw = args[2];
-  
+
     if (typeof point[0] == 'undefined') {
         return
     }

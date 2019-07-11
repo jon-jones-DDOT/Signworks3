@@ -41,7 +41,8 @@ export const initialState = {
     needSupRefresh: false,
     coneGraphic:null,
     conePointGraphic:null,
-    leftMode:null
+    leftMode:null,
+    initialBearing:null
 }
 
 export default(state = initialState, action) => {

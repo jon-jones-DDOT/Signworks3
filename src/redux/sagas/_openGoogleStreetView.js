@@ -1,22 +1,26 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {types as graphicTypes} from '../reducers/graphic';
-import { getPointOnRouteLRS, projectGeometry, getSupportByExtent, pointToExtentSaga, createFeatureSet} from '../../utils/JSAPI'
-
+import {getPointOnRouteLRS, calculateBearingPoints, getSupportByExtent, pointToExtentSaga, createFeatureSet} from '../../utils/JSAPI'
 
 // WORKER //
 
 function * openGoogleStreetView(action) {
     try {
-     
-       const lrsResults = yield call(getPointOnRouteLRS, [action.payload.sel, action.payload.layers.LRS_Service, 4326,4326]);
-      
+
+        const lrsResults = yield call(getPointOnRouteLRS, [action.payload.sel, action.payload.layers.LRS_Service, 4326, 4326]);
+
         const lrsInfo = lrsResults.data.pointOnRoutes[0];
+    
+
+        const bearing = calculateBearingPoints([action.payload.sel.geometry,lrsInfo.geometry]);
+
 
         yield put({
             type: graphicTypes.SHOW_GOOGLE_STREET_VIEWER_RG,
             payload: {
                 leftVisible: true,
-                leftMode:'Google'
+                leftMode: 'Google',
+                initialBearing:bearing
             }
         });
 

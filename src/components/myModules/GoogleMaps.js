@@ -16,7 +16,7 @@ export  class GoogleMaps extends Component {
               // see https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanoramaOptions
               const streetViewPanoramaOptions = {
                   position: {lat: this.props.graphic.selSupportGeom.y, lng: this.props.graphic.selSupportGeom.x},
-                  pov: {heading: 100, pitch: -5},
+                  pov: {heading: this.props.graphic.initialBearing, pitch: -5},
                   zoom: 1
               };
        
