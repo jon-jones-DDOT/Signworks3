@@ -370,11 +370,15 @@ export function createFeatureSet(args) {
     })
 }
 
-export function getPointOnRouteStreetSmart(args) {
+export function getPointOnRouteLRS(args) {
 
     const point = args[0];
 
     const layer = args[1];
+
+    const inSR = args[2];
+
+    const outSR= args[3];
 
     return new Promise((resolve, reject) => {
         loadModules(["esri/request"]).then(([esriRequest]) => {
@@ -382,8 +386,8 @@ export function getPointOnRouteStreetSmart(args) {
                 query: {
                     'x': point.geometry.x,
                     'y': point.geometry.y,
-                    'inSR': 2248,
-                    'outSR': 26985,
+                    'inSR': inSR,
+                    'outSR': outSR,
                     'searchRadius': 50,
                     'f': "json"
                 }

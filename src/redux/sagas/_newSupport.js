@@ -3,7 +3,7 @@ import {types as mapTypes} from '../reducers/map';
 import {types as graphicTypes} from '../reducers/graphic';
 
 import {getFullSignPost} from './reload'
-import {saveSupport, getPointOnRouteStreetSmart, getSupportById} from '../../utils/JSAPI';
+import {saveSupport, getPointOnRouteLRS, getSupportById} from '../../utils/JSAPI';
 
 // WORKER //
 
@@ -59,7 +59,7 @@ function * addNewSupport(action) {
 
         //add LRS info
 
-        const lrsResults = yield call(getPointOnRouteStreetSmart, [newSupport, action.payload.layers.LRS_Service]);
+        const lrsResults = yield call(getPointOnRouteLRS, [newSupport, action.payload.layers.LRS_Service, 2248,26985]);
         const lrsInfo = lrsResults.data.pointOnRoutes[0];
         newSupport.attributes.ROUTEID = lrsInfo.routeID;
         newSupport.attributes.MEASURE = lrsInfo.measureInMeters;
