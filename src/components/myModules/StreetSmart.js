@@ -26,6 +26,9 @@ class StreetSmart extends Component {
             .StreetSmartApi
             .off(msEvents.MEASUREMENT_CHANGED);
         window
+            .panoramaViewer
+            .off(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHANGE).off(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOAD_END)
+        window
             .StreetSmartApi
             .destroy({
                 targetElement: document.getElementById(containerID)
@@ -104,31 +107,28 @@ class StreetSmart extends Component {
             window
                 .StreetSmartApi
                 .off(msEvents.MEASUREMENT_CHANGED);
-          
+
             ciao(mapModes.SELECT_SUPPORT_MODE, 'default');
             bye();
 
         };
-
 
         const changeView = function (evt) {
             // view cone stuff
 
             imagePitch = evt.detail.pitch;
             imageYaw = evt.detail.yaw;
-            
+
             coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch, imageYaw, layers)
 
         };
 
         const loadViewEnd = function (evt) {
-     
-         
-            
+
             window
                 .panoramaViewer
                 .rotateLeft(1);
-                
+
         };
 
         window
@@ -198,18 +198,15 @@ class StreetSmart extends Component {
 
     }
 
-    render /* unto Caesar */() {
-
-        return (
+    render/* unto Caesar */() {return(
             <div className="StreetSmart">
                 <div className="ssCancel" onClick={this.ssCancel}>X</div>
                 <div ref="ssDiv" className="ssPane" id={containerID}></div>
 
             </div>
-        )
-    }
+        )}
 }
-const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth:state.auth, config: state.config});
+const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth: state.auth, config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

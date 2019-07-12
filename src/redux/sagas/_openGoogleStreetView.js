@@ -12,7 +12,7 @@ function * openGoogleStreetView(action) {
         const lrsInfo = lrsResults.data.pointOnRoutes[0];
     
 
-        const bearing = calculateBearingPoints([action.payload.sel.geometry,lrsInfo.geometry]);
+        const bearing = calculateBearingPoints([lrsInfo.geometry,action.payload.sel.geometry]);
 
 
         yield put({
