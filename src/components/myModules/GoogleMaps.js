@@ -29,12 +29,13 @@ export  class GoogleMaps extends Component {
               return (
                   <div className="GoogleMaps">
                       <div className="ggCancel" onClick={this.ggCancel}>X</div>
-                      <div className="ggPane">
+                    
                            <ReactStreetview
+                           className= "ggPane"
                           apiKey={googleMapsApiKey}
                           streetViewPanoramaOptions={streetViewPanoramaOptions}
                       />
-                      </div>
+                     
                      
                   </div>
               );

@@ -13,7 +13,7 @@
 .ggCancel{
     width: 10px;
     height: 10px;
-    float: right;
+    text-align: center;
     margin-right: 5px;
     margin-bottom:20px;
     cursor: pointer;
