@@ -1,0 +1,10 @@
+.MAR{
+    position:fixed;
+  background: lightgrey;
+  width: 25%;
+  height: 40%;
+  top:50%;
+  left:57%;
+  transform: translate(-50%,-50%);
+  font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+}

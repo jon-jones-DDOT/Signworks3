@@ -7,6 +7,7 @@ import {actions as graphicsActions} from '../../../redux/reducers/graphic'
 import SupportEditor from '../Support/SupportEditor';
 import SignEditor from '../Signs/SignEditor';
 import SuperQuery from '../SuperQuery'
+import MAR from '../MAR';
 
 function ModalConductor(props) {
  
@@ -17,6 +18,9 @@ function ModalConductor(props) {
             return <SignEditor {...props}/>
             case 'QUERY':
             return <SuperQuery {...props}></SuperQuery>
+            case 'MAR':
+                
+                return <MAR {...props}></MAR>
         default:
             return null
     }

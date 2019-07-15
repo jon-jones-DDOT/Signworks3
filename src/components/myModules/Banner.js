@@ -6,50 +6,57 @@ import {actions as graphicActions} from '../../redux/reducers/graphic'
 import {mapModes} from '../../redux/reducers/graphic'
 import './Banner.css'
 import UserAccount from '../UserAccount';
-import styled, { css } from 'styled-components';
+import styled, {css} from 'styled-components';
 import logo from "../../img/logo.png"
-
-
 
 class Banner extends Component {
     signIn = () => {
-        this.props.checkAuth("https://dcgis.maps.arcgis.com");
-      }
-    
-      signOut = () => {
-        this.props.logout(this.props.config.portalUrl);
-      }
-  
+        this
+            .props
+            .checkAuth("https://dcgis.maps.arcgis.com");
+    }
+
+    signOut = () => {
+        this
+            .props
+            .logout(this.props.config.portalUrl);
+    }
+
     bannerToolHandler = (evt) => {
-     
+
         switch (evt.target.value) {
             case '0':
                 return;
-                case '1':
-               
+            case '1':
+
                 this
                     .props
                     .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
-                    evt.target.value = '0';          
+                evt.target.value = '0';
                 break;
 
             case "2": //SuperQuery™
-            this
-            .props
-            .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
+                this
+                    .props
+                    .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
                 this
                     .props
                     .modalClicked(true, "QUERY", null);
                 evt.target.value = '0';
-                 break;
+                break;
 
             case "3":
                 this
                     .props
                     .setMapClickMode(mapModes.ADD_SUPPORT_MODE, 'crosshair');
-                    evt.target.value = '0';
+                evt.target.value = '0';
                 break;
-                
+            case "4":
+                this
+                    .props
+                    .modalClicked(true, "MAR", null);
+                evt.target.value = '0';
+
             default:
                 //do nothing
 
@@ -64,7 +71,7 @@ class Banner extends Component {
                     .props
                     .removeQueryGraphics();
                 evt.target.value = "0"
-               
+
                 break;
             default:
                 return null;
@@ -79,11 +86,16 @@ class Banner extends Component {
                 <div className="AppTools">
                     <span>
                         <select onChange={this.bannerToolHandler} className="ActionSelect">
-                     <option value={0}>...Tools</option>
+                            <option value={0}>...Tools</option>
                             <option value={1}>Select Support</option>
                             <option value={2}>Sign Query</option>
-                        {this.props.auth.isEditor?<option value={3} disabled= {this.props.graphic.leftVisible} >Add Support</option>:null}    
+                            {this.props.auth.isEditor
+                                ? <option value={3} disabled={this.props.graphic.leftVisible}>Add Support</option>
+                                : null}
+                            <option value={4}>MAR Query</option>
+                           
                         </select>
+
                     </span>
                     <span>
                         <select onChange={this.bannerActionHandler} className="ActionSelect">
@@ -109,7 +121,7 @@ class Banner extends Component {
     }
 }
 
-const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth:state.auth, config: state.config});
+const mapStateToProps = state => ({map: state.map, graphic: state.graphic, auth: state.auth, config: state.config});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

@@ -10,13 +10,13 @@
     "portalUrl": "https://dcgis.maps.arcgis.com",
 
     "appId": "8z9QZSIF39R2lBVl",
-    "dontUse":"hkdtqXBMmZ8JJ5tD",
-    "release":"dev",
+    "dontUse": "hkdtqXBMmZ8JJ5tD",
+    "release": "dev",
 
     "mapConfig": {
         "basemap": "streets",
         "zoom": 18,
-        "center":  [-76.994990, 38.888686]
+        "center": [-76.994990, 38.888686]
     },
 
     "sceneConfig": {
@@ -28,35 +28,37 @@
         "id": "2c831005fd7b437787e3fd9ea53788e6"
     },
 
-  
     "featureURLs_view": {
         "supports": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/0",
-        "signs":  "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/1",
-        "timebands":"https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/2",
-        "superquery":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
-        "geometryService":"https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
-        "LRS_Service":"https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools"
+        "signs": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/1",
+        "timebands": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/2",
+        "superquery": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
+        "geometryService": "https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
+        "LRS_Service": "https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools",
+        "MAR_Service": "https://citizenatlas.dc.gov/newwebservices/locationverifier.asmx"
 
     },
-    
+
     "featureURLs_prod_edit": {
         "supports": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/0",
-        "signs":  "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/1",
-        "timebands":"https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/2",
-        "superquery":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
-        "geometryService":"https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
-        "LRS_Service":"https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools"
+        "signs": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/1",
+        "timebands": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/2",
+        "superquery": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
+        "geometryService": "https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
+        "LRS_Service": "https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools",
+        "MAR_Service": "https://citizenatlas.dc.gov/newwebservices/locationverifier.asmx"
 
     },
     "featureURLs_dev_edit": {
         "supports": "https://utility.arcgis.com/usrsvcs/servers/6126753fccf045f59793c80422c43476/rest/services/Signs/SignWorks_Secured/FeatureServer/0",
-        "signs":  "https://utility.arcgis.com/usrsvcs/servers/6126753fccf045f59793c80422c43476/rest/services/Signs/SignWorks_Secured/FeatureServer/1",
-        "timebands":"https://utility.arcgis.com/usrsvcs/servers/6126753fccf045f59793c80422c43476/rest/services/Signs/SignWorks_Secured/FeatureServer/2",
-        "superquery":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
-        "geometryService":"https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
-        "LRS_Service":"https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools"
+        "signs": "https://utility.arcgis.com/usrsvcs/servers/6126753fccf045f59793c80422c43476/rest/services/Signs/SignWorks_Secured/FeatureServer/1",
+        "timebands": "https://utility.arcgis.com/usrsvcs/servers/6126753fccf045f59793c80422c43476/rest/services/Signs/SignWorks_Secured/FeatureServer/2",
+        "superquery": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
+        "geometryService": "https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
+        "LRS_Service": "https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools",
+        "MAR_Service":"https://citizenatlas.dc.gov/newwebservices/locationverifier.asmx"
 
     },
-    "featureURLs":{}
-    
+    "featureURLs": {}
+
 }
