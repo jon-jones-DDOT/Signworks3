@@ -152,7 +152,7 @@ export const actions = {
             layer
         }
     }),
-    queryMAR:(args)=>({}),
+    queryMAR:(where)=>({type:types.QUERY_MAR_S, payload:{where} }),
 
     setMapClickMode: (mode, cursor) => ({
         type: types.SET_MAP_CLICK_MODE_RG,

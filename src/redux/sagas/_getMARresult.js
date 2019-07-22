@@ -1,6 +1,6 @@
 import {call, put,takeLatest} from 'redux-saga/effects';
 import {types as graphicTypes} from '../reducers/graphic';
-import {superQuery} from '../../utils/JSAPI'
+import {getLocation2} from '../../utils/JSAPI'
 
 
 
@@ -9,9 +9,12 @@ import {superQuery} from '../../utils/JSAPI'
 function * query(action) {
     try{
      
-       const queryResult =   yield call(superQuery, [action.payload.where, action.payload.extent,action.payload.layer]);
+     //  const queryResult =   yield call(superQuery, [action.payload.where, action.payload.extent,action.payload.layer]);
        
-       const features = queryResult.data.features;
+    //   const features = queryResult.data.features;
+
+    const queryResult = yield call(getLocation2,"white");
+    console.log('queryResult', queryResult)
        
        yield put({
         type: graphicTypes.SET_MAR_RESULTS_RG,
@@ -31,5 +34,5 @@ function * query(action) {
 // WATCHER //
 export function * watchMAR() {
    
-    yield takeLatest(graphicTypes.queryResult, query);
+    yield takeLatest(graphicTypes.QUERY_MAR_S, query);
 }
