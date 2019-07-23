@@ -28,6 +28,7 @@ import * as streetSmartSaga from './_openStreetSmart';
 import * as googleStreetSaga from './_openGoogleStreetView';
 import * as newSupportSaga from './_newSupport';
 import * as getConeSaga from './_getNewCone';
+import * as getMARSaga from './_getMARresult';
 
 
 
@@ -45,7 +46,8 @@ export default function* rootSaga() {
     ...Object.values(streetSmartSaga),
     ...Object.values(newSupportSaga),
     ...Object.values(getConeSaga),
-    ...Object.values(googleStreetSaga)
+    ...Object.values(googleStreetSaga),
+    ...Object.values(getMARSaga)
 
     // more sagas from different files
   ].map(fork));

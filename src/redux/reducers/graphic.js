@@ -30,6 +30,8 @@ export const initialState = {
     selSupportGeom: null,
     queryFeatures: [],
     queryCount:0,
+    marFeatures:[],
+    marCount:0,
     showQuery: false,
     leftVisible: false,
     editMode: null,
@@ -113,6 +115,11 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
+            case types.SET_MAR_RESULTS_RG:
+                return{
+                    ...state,
+                    ...action.payload
+                }
         default:
             return state;
     }

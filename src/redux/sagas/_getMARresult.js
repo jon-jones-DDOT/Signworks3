@@ -9,18 +9,17 @@ import {getLocation2} from '../../utils/JSAPI'
 function * query(action) {
     try{
      
-     //  const queryResult =   yield call(superQuery, [action.payload.where, action.payload.extent,action.payload.layer]);
-       
-    //   const features = queryResult.data.features;
+     
 
-    const queryResult = yield call(getLocation2,"white");
-    console.log('queryResult', queryResult)
+    const queryResult = yield call(getLocation2,[action.payload.where, "address"]);
+    const features = queryResult.returnDataset.Table1;
+    console.log('queryResult', features)
        
        yield put({
         type: graphicTypes.SET_MAR_RESULTS_RG,
         payload: {
-            queryFeatures:features,
-            queryCount: features.length
+            marFeatures:features,
+            marCount: features.length
         }
     });
         

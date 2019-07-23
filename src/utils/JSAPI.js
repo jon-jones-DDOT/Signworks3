@@ -556,19 +556,22 @@ export async function getLocation2(args) {
     // in the old version I coded stuff for it to take roadways and street segments
     // not sure where I was going with that , but I will code it now to be able to
     // expand if those come back up as requests. so args[1] will always be 'address'
-
-    let baseUrl = "https://citizenatlas.dc.gov/newwebservices/locationverifier.asmx";
+    const proxy = "http://ddotgisapp02/proxy/proxy.ashx?"
+  
+    let baseUrl = proxy + "http://citizenatlas.dc.gov/newwebservices/locationverifier.asmx";
     if (args[1] === "address") {
         baseUrl += "/findLocation2?f=json&str=" + args[0];
     }
 
     try {
+        console.log('baseUrl', baseUrl)
         const response = await fetch(baseUrl);
         if (response.ok) {
             const results = await response.json();
             return results;
         }
     } catch (err) {
+        console.log('err', err)
         console.error('Something went wrong with MAR');
         throw new Error('Bad stuff happened. In MAR');
     }

@@ -23,9 +23,9 @@ export default function Support(props) {
             return 'no support found...'
         }
         else{
-            const myImage = window.location.href + "/img/supports/" + props.sel.attributes.SUPPORTTYPE + ".png";   
+            const myImage = window.location.origin + window.location.pathname + "/img/supports/" + props.sel.attributes.SUPPORTTYPE + ".png";   
        
-            const errImage = window.location.href + "/img/supports/666.png";
+            const errImage = window.location.origin+ window.location.pathname  + "/img/supports/666.png";
           
             return (
 

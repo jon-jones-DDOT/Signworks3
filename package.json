@@ -43,6 +43,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+ 
   "devDependencies": {
     "react-scripts": "^2.1.8"
   },
