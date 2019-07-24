@@ -68,7 +68,7 @@ export class MAR extends Component {
                         Results Appear Here</option >
                 </select>
             )
-        } else if (results.returnDataset.Table1.length > 0) {
+        } else if (results.returnDataset) {
             return (
                 <select multiple className="MARresults">
                     {this
@@ -80,6 +80,15 @@ export class MAR extends Component {
                         .map((value, index) => this.optionMap(value, index, results.sourceOperation))}
                 </select>
 
+            )
+        }
+        else  {
+            console.log('this.props.graphic.marres :', this.props.graphic.marFeatures);
+            return (
+                <select multiple className="MARresults">
+                    <option>
+                        No Results Returned</option >
+                </select>
             )
         }
 
