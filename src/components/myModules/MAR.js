@@ -6,29 +6,110 @@ import {actions as mapActions} from '../../redux/reducers/map';
 import {mapModes, actions as graphicActions} from '../../redux/reducers/graphic';
 import "./MAR.css"
 
-export  class MAR extends Component {
-constructor(props) {
-    super(props);
-    this.state = {searchText:""}
-}
+export class MAR extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchText: ""
+        }
+    }
 
     addressSearch = (evt) => {
         if (evt.which === 13) {
-            
-          this.props.queryMAR(this.state.searchText)
+
+            this
+                .props
+                .queryMAR(this.state.searchText)
         }
 
     }
 
-    textChange = (evt) =>{
-       this.setState({searchText:evt.target.value});
-      
+    textChange = (evt) => {
+        this.setState({searchText: evt.target.value});
 
     }
     cancelClickHandler = (evt) => {
         this
             .props
             .modalClicked(false, null)
+    }
+
+    renderOptions = () => {
+        const results = this.props.graphic.marResults;
+        if (!results) {
+            console.log('this.props.graphic.marFeatures :', this.props.graphic.marFeatures);
+            return (
+                <select multiple className="MARresults">
+                    <option>
+                        Results Appear Here</option >
+                </select>
+            )
+        } else if (results.returnDataset.Table1.length > 0 && results.sourceOperation ==="DC Place") {
+            return (
+                <select multiple className="MARresults">
+                    {this
+                        .props
+                        .graphic
+                        .marResults
+                        .returnDataset
+                        .Table1
+                        .map((value, index) => (
+                            <option key={`item-${index}`} index={index}>{value.ALIASNAME+ " (" + value.WARD + ")"}</option>
+                        ))}
+                </select>
+
+            )
+        }
+        else if (results.returnDataset.Table1.length > 0 && results.sourceOperation ==="DC Address") {
+            return (
+                <select multiple className="MARresults">
+                    {this
+                        .props
+                        .graphic
+                        .marResults
+                        .returnDataset
+                        .Table1
+                        .map((value, index) => (
+                            <option key={`item-${index}`} index={index}>{value.FULLADDRESS}</option>
+                        ))}
+                </select>
+
+            )
+        }
+        else if (results.returnDataset.Table1.length > 0 && results.sourceOperation ==="DC Intersection") {
+            return (
+                <select multiple className="MARresults">
+                    {this
+                        .props
+                        .graphic
+                        .marResults
+                        .returnDataset
+                        .Table1
+                        .map((value, index) => (
+                            <option key={`item-${index}`} index={index}>{value.FULLINTERSECTION}</option>
+                        ))}
+                </select>
+
+            )
+        }
+        else if (results.returnDataset.Table1.length > 0 && results.sourceOperation ==="DC Block Address") {
+            return (
+                <select multiple className="MARresults">
+                    {this
+                        .props
+                        .graphic
+                        .marResults
+                        .returnDataset
+                        .Table1
+                        .map((value, index) => (
+                            <option key={`item-${index}`} index={index}>{value.BLOCKNAME}</option>
+                        ))}
+                </select>
+
+            )
+        }
+       
+
     }
 
     render() {
@@ -46,7 +127,15 @@ constructor(props) {
                         onClick={this.cancelClickHandler}>X</div>
                     <p>
                         TYPE AN ADDRESS AND PRESS ENTER</p>
-                    <input onKeyPress={this.addressSearch} onChange = {this.textChange} value={this.state.searchText}></input>
+                    <input
+                        onKeyPress={this.addressSearch}
+                        className="MARsearch"
+                        onChange={this.textChange}
+                        value={this.state.searchText}></input>
+
+                    {this.props.graphic.returnDataset
+                        ? this.renderOptions()
+                        : this.renderOptions()}
 
                 </div>
             </ModalWrapper>

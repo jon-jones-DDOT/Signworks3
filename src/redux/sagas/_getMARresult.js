@@ -12,14 +12,14 @@ function * query(action) {
      
 
     const queryResult = yield call(getLocation2,[action.payload.where, "address"]);
-    const features = queryResult.returnDataset.Table1;
-    console.log('queryResult', features)
+    console.log('queryResult', queryResult)
+    const features = queryResult;
+   
        
        yield put({
         type: graphicTypes.SET_MAR_RESULTS_RG,
         payload: {
-            marFeatures:features,
-            marCount: features.length
+            marResults:features
         }
     });
         

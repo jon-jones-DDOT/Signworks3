@@ -9,7 +9,8 @@ import {layerURLs} from "../../../utils/JSAPI"
 import { layer } from '@fortawesome/fontawesome-svg-core';
 
 let editClicker = null
-const SortableItem = SortableElement(({value, index, canEdit}) => <Sign sign={value} index = {index} canEdit={canEdit} editClick={editClicker}></Sign>);
+const SortableItem = SortableElement(({value, index, canEdit}) => <Sign sign={value} index = {index}
+ canEdit={canEdit} editClick={editClicker}></Sign>);
 const SortableList = SortableContainer(({items,canEdit}) => {
 
     return (
