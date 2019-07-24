@@ -34,6 +34,30 @@ export class MAR extends Component {
             .modalClicked(false, null)
     }
 
+    addressSelectHandler = (evt) => {}
+
+    optionMap = (value, index, srcOp) => {
+        switch (srcOp) {
+            case "DC Place":
+                return (
+                    <option key={`item-${index}`} index={index}>{value.ALIASNAME + " (" + value.WARD + ")"}</option>
+                )
+            case "DC Address":
+                return (
+                    <option key={`item-${index}`} index={index}>{value.FULLADDRESS + " (" + value.WARD + ")"}</option>
+                )
+            case "DC Intersection":
+                return (
+                    <option key={`item-${index}`} index={index}>{value.FULLINTERSECTION + " (" + value.WARD + ")"}</option>
+                )
+            case "DC Block Address":
+                return (
+                    <option key={`item-${index}`} index={index}>{value.BLOCKNAME + " (" + value.WARD + ")"}</option>
+                )
+        }
+
+    }
+
     renderOptions = () => {
         const results = this.props.graphic.marResults;
         if (!results) {
@@ -44,7 +68,7 @@ export class MAR extends Component {
                         Results Appear Here</option >
                 </select>
             )
-        } else if (results.returnDataset.Table1.length > 0 && results.sourceOperation ==="DC Place") {
+        } else if (results.returnDataset.Table1.length > 0) {
             return (
                 <select multiple className="MARresults">
                     {this
@@ -53,62 +77,11 @@ export class MAR extends Component {
                         .marResults
                         .returnDataset
                         .Table1
-                        .map((value, index) => (
-                            <option key={`item-${index}`} index={index}>{value.ALIASNAME+ " (" + value.WARD + ")"}</option>
-                        ))}
+                        .map((value, index) => this.optionMap(value, index, results.sourceOperation))}
                 </select>
 
             )
         }
-        else if (results.returnDataset.Table1.length > 0 && results.sourceOperation ==="DC Address") {
-            return (
-                <select multiple className="MARresults">
-                    {this
-                        .props
-                        .graphic
-                        .marResults
-                        .returnDataset
-                        .Table1
-                        .map((value, index) => (
-                            <option key={`item-${index}`} index={index}>{value.FULLADDRESS}</option>
-                        ))}
-                </select>
-
-            )
-        }
-        else if (results.returnDataset.Table1.length > 0 && results.sourceOperation ==="DC Intersection") {
-            return (
-                <select multiple className="MARresults">
-                    {this
-                        .props
-                        .graphic
-                        .marResults
-                        .returnDataset
-                        .Table1
-                        .map((value, index) => (
-                            <option key={`item-${index}`} index={index}>{value.FULLINTERSECTION}</option>
-                        ))}
-                </select>
-
-            )
-        }
-        else if (results.returnDataset.Table1.length > 0 && results.sourceOperation ==="DC Block Address") {
-            return (
-                <select multiple className="MARresults">
-                    {this
-                        .props
-                        .graphic
-                        .marResults
-                        .returnDataset
-                        .Table1
-                        .map((value, index) => (
-                            <option key={`item-${index}`} index={index}>{value.BLOCKNAME}</option>
-                        ))}
-                </select>
-
-            )
-        }
-       
 
     }
 
