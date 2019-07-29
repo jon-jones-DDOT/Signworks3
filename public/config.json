@@ -50,9 +50,9 @@
 
     },
     "featureURLs_dev_edit": {
-        "supports": "https://utility.arcgis.com/usrsvcs/servers/6126753fccf045f59793c80422c43476/rest/services/Signs/SignWorks_Secured/FeatureServer/0",
-        "signs": "https://utility.arcgis.com/usrsvcs/servers/6126753fccf045f59793c80422c43476/rest/services/Signs/SignWorks_Secured/FeatureServer/1",
-        "timebands": "https://utility.arcgis.com/usrsvcs/servers/6126753fccf045f59793c80422c43476/rest/services/Signs/SignWorks_Secured/FeatureServer/2",
+        "signs": "https://utility.arcgis.com/usrsvcs/servers/a91ea40aff3743bcaac12d66927b118d/rest/services/Signs/SignWorks_Secured/FeatureServer/1",
+        "timebands": "https://utility.arcgis.com/usrsvcs/servers/a91ea40aff3743bcaac12d66927b118d/rest/services/Signs/SignWorks_Secured/FeatureServer/2",
+        "supports": "https://utility.arcgis.com/usrsvcs/servers/a91ea40aff3743bcaac12d66927b118d/rest/services/Signs/SignWorks_Secured/FeatureServer/0",
         "superquery": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
         "geometryService": "https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
         "LRS_Service": "https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools",

@@ -69,7 +69,8 @@ export default class SupportEditor extends Component {
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
                     <p>{this.state.OBJECTID}</p>
-                    <p>Support Type:<select value={this.state.SUPPORTTYPE} onChange={this.supportTypeChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportType)}</select>
+                    <p>Support Type:<select value={this.state.SUPPORTTYPE} onChange={this.supportTypeChangeHandler}>
+                    {addOptionsToSelect(this.supportTypes._codedValuesSupportType)}</select>
                     </p>
                     <p>Support Status:
                         <select

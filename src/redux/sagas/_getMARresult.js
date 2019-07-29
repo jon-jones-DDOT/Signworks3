@@ -12,7 +12,7 @@ function * query(action) {
      
 
     const queryResult = yield call(getLocation2,[action.payload.where, "address"]);
-    console.log('queryResult', queryResult)
+ 
     const features = queryResult;
    
        

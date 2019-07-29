@@ -405,7 +405,7 @@ export function calculateBearingPoints(args) {
     let lon1 = pt1.x;
     let lon2 = pt2.x;
 
-    console.log(lat1, lat2, lon1, lon2);
+  
     const xscale = Math.cos(lat1 * Math.PI / 180);
 
     lon1 = lon1 * xscale;
@@ -564,7 +564,7 @@ export async function getLocation2(args) {
     }
 
     try {
-        console.log('baseUrl', baseUrl)
+  
         const response = await fetch(baseUrl);
         if (response.ok) {
             const results = await response.json();

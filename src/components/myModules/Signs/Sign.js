@@ -15,7 +15,7 @@ export default function Sign(props) {
         .serverImagePath
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
     const imgServerDown = window.location.origin+ window.location.pathname  + "/img/PR-OTHER.png";
-    console.log('window.location :', window.location);
+
 
     
     return (

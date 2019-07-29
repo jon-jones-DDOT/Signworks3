@@ -10,7 +10,8 @@ export class MAR extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchText: ""
+            searchText: "",
+            selectedOpt: null
         }
     }
 
@@ -28,40 +29,78 @@ export class MAR extends Component {
         this.setState({searchText: evt.target.value});
 
     }
+
     cancelClickHandler = (evt) => {
         this
             .props
             .modalClicked(false, null)
     }
 
-    addressSelectHandler = (evt) => {}
+    addressSelectHandler = (evt) => {
+        console.log('event :', evt.target.value);
+        const selectedOption = this.props.graphic.marResults.returnDataset.Table1[evt.target.value];
+        console.log('selectedOption', selectedOption)
+        this.setState({selectedOpt: selectedOption})
+    }
+    GoToPointonMapButtonHandler = (evt) =>{
+        console.log('evt', this.state.selectedOpt)
+        const point = {
+            type: "point", // autocasts as new Point()
+            x: this.state.selectedOpt.LONGITUDE,
+            y: this.state.selectedOpt.LATITUDE,
+            spatialReference: {
+                wkid: 4326
+            }
+        }
+      
+        this.props.zoomToSelectedPoint(point);
+    }
 
     optionMap = (value, index, srcOp) => {
+
         switch (srcOp) {
             case "DC Place":
                 return (
-                    <option key={`item-${index}`} index={index}>{value.ALIASNAME + " (" + value.WARD + ")"}</option>
+                    <option key={`item-${index}`} index={index} value={index}>{value.ALIASNAME + " (" + value.WARD + ")"}</option>
                 )
             case "DC Address":
                 return (
-                    <option key={`item-${index}`} index={index}>{value.FULLADDRESS + " (" + value.WARD + ")"}</option>
+                    <option key={`item-${index}`} index={index}  value={index}>{value.FULLADDRESS + " (" + value.WARD + ")"}</option>
                 )
             case "DC Intersection":
                 return (
-                    <option key={`item-${index}`} index={index}>{value.FULLINTERSECTION + " (" + value.WARD + ")"}</option>
+                    <option key={`item-${index}`} index={index}  value={index}>{value.FULLINTERSECTION + " (" + value.WARD + ")"}</option>
                 )
             case "DC Block Address":
                 return (
-                    <option key={`item-${index}`} index={index}>{value.BLOCKNAME + " (" + value.WARD + ")"}</option>
+                    <option key={`item-${index}`} index={index}  value={index}>{value.BLOCKNAME + " (" + value.WARD + ")"}</option>
                 )
         }
 
     }
 
+    renderDetails = (opt) => {
+      
+        if (!opt) {
+            return;
+        } else  {
+            return (<div className= "MARresultsDetails">
+         { opt.ALIASNAME? <p>ALIAS: {opt.ALIASNAME}</p>:null }
+        { opt.FULLADDRESS? <p>ADDRESS:{opt.FULLADDRESS}</p>:null }
+         {opt.SMD? <p>SMD:{opt.SMD}</p>:null}
+          {opt.ANC?<p>ANC: {opt.ANC} </p>:null}
+               {opt.WARD? <p>WARD:{opt.WARD}</p>:null}
+               {opt.VOTE_PRCNCT? <p>VOTER PRECINCT:{opt.VOTE_PRCNCT}</p>:null}
+               <button onClick={this.GoToPointonMapButtonHandler}>Go To This Location</button>
+
+            </div>)
+        }
+    }
+
     renderOptions = () => {
         const results = this.props.graphic.marResults;
         if (!results) {
-            console.log('this.props.graphic.marFeatures :', this.props.graphic.marFeatures);
+          
             return (
                 <select multiple className="MARresults">
                     <option>
@@ -70,7 +109,7 @@ export class MAR extends Component {
             )
         } else if (results.returnDataset) {
             return (
-                <select multiple className="MARresults">
+                <select multiple className="MARresults" onChange={this.addressSelectHandler}>
                     {this
                         .props
                         .graphic
@@ -81,9 +120,8 @@ export class MAR extends Component {
                 </select>
 
             )
-        }
-        else  {
-            console.log('this.props.graphic.marres :', this.props.graphic.marFeatures);
+        } else {
+           
             return (
                 <select multiple className="MARresults">
                     <option>
@@ -118,7 +156,7 @@ export class MAR extends Component {
                     {this.props.graphic.returnDataset
                         ? this.renderOptions()
                         : this.renderOptions()}
-
+                    <div >{this.renderDetails(this.state.selectedOpt)}</div>
                 </div>
             </ModalWrapper>
         )

@@ -103,20 +103,25 @@ class MapView extends Component {
             //     console.log('update because view cone needs to be removed');
             return true;
         }
+        
+        if(nextProps.graphic.zoomPoint != this.props.graphic.zoomPoint){
+           
+            return true;
+        }
         //    console.log('did not update');
         return false;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+      
+        // changes cone graphic in response to evt
         if (this.props.graphic.coneGraphic !== prevProps.graphic.coneGraphic) {
-            //          console.log('changing cone');
+
             this
                 .conicLayer
                 .removeAll();
-            /*   this
-                .markerLayer
-                .removeAll();  */
-              console.log('unexpected call to cone graphics');
+
+            console.log('unexpected call to cone graphics');
             this
                 .queryMarkerLayer
                 .removeAll();
@@ -128,13 +133,14 @@ class MapView extends Component {
                 .add(this.props.graphic.conePointGraphic)
             return;
         }
-
+        // removes all query graphics
         if (this.props.graphic.showQuery === false && this.queryMarkerLayer.graphics.length > 0) {
-                    console.log('removing query markers')
+            console.log('removing query markers')
             this
                 .queryMarkerLayer
                 .removeAll();
         }
+        //removes cone graphics
         if (this.props.graphic.ssOverlay === null && this.conicLayer.graphics.length > 0) {
             //      console.log('removing conic graphics')
             this
@@ -170,7 +176,7 @@ class MapView extends Component {
                 for (let i = 0; i < graphics.length; i++) {
                     graphics[i].geometry.type = "point"
                     gr = new Graphic({geometry: graphics[i].geometry, symbol: querySymb})
-           
+
                     this
                         .queryMarkerLayer
                         .add(gr)
@@ -181,20 +187,21 @@ class MapView extends Component {
         }
 
         //let's see if the support layer has been added to
-
+       
         if (this.props.graphic.needSupRefresh === true) {
             //       console.log('refershing support layer on map after add')
             this
                 .featureLayer
                 .refresh();
         }
-
+   
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && !this.props.graphic.selSupportGeom) {
-            //        console.log('not even sure why')
-            return;
+                    console.log('not even sure why')
+         //   return;
         }
+      
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && this.props.map.support !== prevProps.map.support) {
 
             //       console.log('changing selected support graphics in response to click')
@@ -208,14 +215,22 @@ class MapView extends Component {
                 .add(this.selPoint)
 
             this.view.zoom = 20
+            console.log('this.selPoint.geometry', this.selPoint.geometry)
             this.view.center = this.selPoint.geometry
         } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE && prevState.newSupportClickGeom !== this.state.newSupportClickGeom) {
-            // gonna try to keep the selected point in local state      console.log('changing
-            // add support target graphic because of click')
+            // gonna try to keep the selected point in local state
+            // console.log('changing add support target graphic because of click')
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
+            console.log('addMark.geometry', addMark.geometry)
             this.view.center = addMark.geometry;
             this.view.zoom = 19;
+        }
+       
+        if (this.props.graphic.zoomPoint != prevProps.graphic.zoomPoint) {
+            console.log('should do something', this.props.graphic.zoomPoint);
+           this.view.center = this.props.graphic.zoomPoint;
+           this.view.zoom = 19;
         }
         this.view.surface.style.cursor = this.props.graphic.cursor;
     }
@@ -284,9 +299,9 @@ class MapView extends Component {
                 break;
                 //ok now we are in add support mode
             case mapModes.ADD_SUPPORT_MODE:
-                // we should create a 'fake' feature out of the map click event 
-                //console.log('map // click happens here')
-            
+                // we should create a 'fake' feature out of the map click event console.log('map
+                // // click happens here')
+
                 const newSupportFeature = {
                     atrributes: {},
                     geometry: {
@@ -301,10 +316,10 @@ class MapView extends Component {
                 this
                     .props
                     .startStreetSmartViewer([newSupportFeature], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, true);
-                    this
+                this
                     .props
                     .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
-                    this.view.surface.style.cursor = "default";
+                this.view.surface.style.cursor = "default";
                 break;
             default:
                 return
@@ -326,12 +341,14 @@ class MapView extends Component {
     }
 
     setupWidgetsAndLayers = () => {
-        loadModules(['esri/layers/FeatureLayer', 
-        "esri/layers/GraphicsLayer", 'esri/Graphic']).then(([FeatureLayer, GraphicsLayer, Graphic]) => {
+        loadModules(['esri/layers/FeatureLayer', "esri/layers/GraphicsLayer", 'esri/Graphic']).then(([FeatureLayer, GraphicsLayer, Graphic]) => {
 
-
-
-            this.featureLayer = new FeatureLayer({url: layerURLs(this.props).supports, definitionExpression: "SUPPORTSTATUS = 1", outFields: ["*"], id: "support"});
+            this.featureLayer = new FeatureLayer({
+                url: layerURLs(this.props).supports,
+                definitionExpression: "SUPPORTSTATUS = 1",
+                outFields: ["*"],
+                id: "support"
+            });
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
             this.conicLayer = new GraphicsLayer();
@@ -384,7 +401,7 @@ class MapView extends Component {
 
 }
 
-const mapStateToProps = state => ({config: state.config,auth:state.auth, map: state.map, graphic: state.graphic});
+const mapStateToProps = state => ({config: state.config, auth: state.auth, map: state.map, graphic: state.graphic});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({

@@ -6,6 +6,7 @@ export const types = {
     REMOVE_QUERY_GRAPHICS_RG: 'REMOVE_QUERY_GRAPHICS_RG',
     QUERY_MAR_S:"QUERY_MAR_S",
     SET_MAR_RESULTS_RG:"SET_MAR_RESULTS_RG",
+    ZOOM_TO_SELECTED_POINT_RG:"ZOOM_TO_SELECTED_POINT_RG",
     SHOW_STREETSMART_VIEWER_RG: 'SHOW_STREETSMART_VIEWER_RG',
     START_STREETSMART_VIEWER_S: "START_STREETSMART_VIEWER_S",
     CLOSE_STREETSMART_VIEWER_RG: "CLOSE_STREETSMART_VIEWER_RG",
@@ -45,7 +46,8 @@ export const initialState = {
     coneGraphic:null,
     conePointGraphic:null,
     leftMode:null,
-    initialBearing:null
+    initialBearing:null,
+    zoomPoint:null
 }
 
 export default(state = initialState, action) => {
@@ -119,6 +121,11 @@ export default(state = initialState, action) => {
                     ...state,
                     ...action.payload
                 }
+                case types.ZOOM_TO_SELECTED_POINT_RG:
+                    return{
+                        ...state,
+                        ...action.payload
+                    }
         default:
             return state;
     }
@@ -197,6 +204,12 @@ export const actions = {
         payload:{
             sel,
             layers
+        }
+    }),
+    zoomToSelectedPoint:(point) =>({
+        type:types.ZOOM_TO_SELECTED_POINT_RG,
+        payload:{
+            zoomPoint:point
         }
     })
 };
