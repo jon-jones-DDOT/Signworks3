@@ -70,6 +70,7 @@ class Banner extends Component {
                 this
                     .props
                     .removeQueryGraphics();
+                    
                 evt.target.value = "0"
 
                 break;

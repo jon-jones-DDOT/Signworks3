@@ -36,13 +36,22 @@ export class MAR extends Component {
             .modalClicked(false, null)
     }
 
+    funTricks = () => {
+        let fish = "tuna";
+        let fish2 = fish;
+        console.log(fish, fish2);
+        fish = "trout";
+        console.log(fish, fish2);
+    }
+
     addressSelectHandler = (evt) => {
+        this.funTricks();
         console.log('event :', evt.target.value);
         const selectedOption = this.props.graphic.marResults.returnDataset.Table1[evt.target.value];
         console.log('selectedOption', selectedOption)
         this.setState({selectedOpt: selectedOption})
     }
-    GoToPointonMapButtonHandler = (evt) =>{
+    GoToPointonMapButtonHandler = (evt) => {
         console.log('evt', this.state.selectedOpt)
         const point = {
             type: "point", // autocasts as new Point()
@@ -52,8 +61,10 @@ export class MAR extends Component {
                 wkid: 4326
             }
         }
-      
-        this.props.zoomToSelectedPoint(point);
+
+        this
+            .props
+            .zoomToSelectedPoint(point);
     }
 
     optionMap = (value, index, srcOp) => {
@@ -65,42 +76,57 @@ export class MAR extends Component {
                 )
             case "DC Address":
                 return (
-                    <option key={`item-${index}`} index={index}  value={index}>{value.FULLADDRESS + " (" + value.WARD + ")"}</option>
+                    <option key={`item-${index}`} index={index} value={index}>{value.FULLADDRESS + " (" + value.WARD + ")"}</option>
                 )
             case "DC Intersection":
                 return (
-                    <option key={`item-${index}`} index={index}  value={index}>{value.FULLINTERSECTION + " (" + value.WARD + ")"}</option>
+                    <option key={`item-${index}`} index={index} value={index}>{value.FULLINTERSECTION + " (" + value.WARD + ")"}</option>
                 )
             case "DC Block Address":
                 return (
-                    <option key={`item-${index}`} index={index}  value={index}>{value.BLOCKNAME + " (" + value.WARD + ")"}</option>
+                    <option key={`item-${index}`} index={index} value={index}>{value.BLOCKNAME + " (" + value.WARD + ")"}</option>
                 )
         }
 
     }
 
     renderDetails = (opt) => {
-      
+
         if (!opt) {
             return;
-        } else  {
-            return (<div className= "MARresultsDetails">
-         { opt.ALIASNAME? <p>ALIAS: {opt.ALIASNAME}</p>:null }
-        { opt.FULLADDRESS? <p>ADDRESS:{opt.FULLADDRESS}</p>:null }
-         {opt.SMD? <p>SMD:{opt.SMD}</p>:null}
-          {opt.ANC?<p>ANC: {opt.ANC} </p>:null}
-               {opt.WARD? <p>WARD:{opt.WARD}</p>:null}
-               {opt.VOTE_PRCNCT? <p>VOTER PRECINCT:{opt.VOTE_PRCNCT}</p>:null}
-               <button onClick={this.GoToPointonMapButtonHandler}>Go To This Location</button>
+        } else {
+            return (
+                <div className="MARresultsDetails">
+                    {opt.ALIASNAME
+                        ? <p>ALIAS: {opt.ALIASNAME}</p>
+                        : null}
+                    {opt.FULLADDRESS
+                        ? <p>ADDRESS:{opt.FULLADDRESS}</p>
+                        : null}
+                    {opt.SMD
+                        ? <p>SMD:{opt.SMD}</p>
+                        : null}
+                    {opt.ANC
+                        ? <p>ANC: {opt.ANC}
+                            </p>
+                        : null}
+                    {opt.WARD
+                        ? <p>WARD:{opt.WARD}</p>
+                        : null}
+                    {opt.VOTE_PRCNCT
+                        ? <p>VOTER PRECINCT:{opt.VOTE_PRCNCT}</p>
+                        : null}
+                    <button onClick={this.GoToPointonMapButtonHandler}>Go To This Location</button>
 
-            </div>)
+                </div>
+            )
         }
     }
 
     renderOptions = () => {
         const results = this.props.graphic.marResults;
         if (!results) {
-          
+
             return (
                 <select multiple className="MARresults">
                     <option>
@@ -121,7 +147,7 @@ export class MAR extends Component {
 
             )
         } else {
-           
+
             return (
                 <select multiple className="MARresults">
                     <option>

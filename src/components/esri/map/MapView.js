@@ -23,7 +23,7 @@ import {mapModes} from '../../../redux/reducers/graphic'
 // ESRI
 import {loadModules} from 'esri-loader';
 import {createView} from '../../../utils/esriHelper';
-
+import cloneDeep from 'lodash.clonedeep';
 // Styled Components
 import styled from 'styled-components';
 
@@ -47,6 +47,7 @@ class MapView extends Component {
     conicLayer = null;
     symb = null;
     addSymb = null;
+    marSymb = null;
     geom = null;
 
     constructor(props) {
@@ -103,9 +104,9 @@ class MapView extends Component {
             //     console.log('update because view cone needs to be removed');
             return true;
         }
-        
-        if(nextProps.graphic.zoomPoint != this.props.graphic.zoomPoint){
-           
+
+        if (nextProps.graphic.zoomPoint != this.props.graphic.zoomPoint) {
+
             return true;
         }
         //    console.log('did not update');
@@ -113,7 +114,7 @@ class MapView extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-      
+
         // changes cone graphic in response to evt
         if (this.props.graphic.coneGraphic !== prevProps.graphic.coneGraphic) {
 
@@ -187,21 +188,21 @@ class MapView extends Component {
         }
 
         //let's see if the support layer has been added to
-       
+
         if (this.props.graphic.needSupRefresh === true) {
             //       console.log('refershing support layer on map after add')
             this
                 .featureLayer
                 .refresh();
         }
-   
+
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && !this.props.graphic.selSupportGeom) {
-                    console.log('not even sure why')
-         //   return;
+            console.log('not even sure why')
+            //   return;
         }
-      
+
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && this.props.map.support !== prevProps.map.support) {
 
             //       console.log('changing selected support graphics in response to click')
@@ -215,23 +216,33 @@ class MapView extends Component {
                 .add(this.selPoint)
 
             this.view.zoom = 20
-            console.log('this.selPoint.geometry', this.selPoint.geometry)
+            
             this.view.center = this.selPoint.geometry
         } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE && prevState.newSupportClickGeom !== this.state.newSupportClickGeom) {
-            // gonna try to keep the selected point in local state
-            // console.log('changing add support target graphic because of click')
+            // gonna try to keep the selected point in local state console.log('changing add
+            // support target graphic because of click')
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
-            console.log('addMark.geometry', addMark.geometry)
+
             this.view.center = addMark.geometry;
             this.view.zoom = 19;
         }
-       
+
         if (this.props.graphic.zoomPoint != prevProps.graphic.zoomPoint) {
-            console.log('should do something', this.props.graphic.zoomPoint);
-           this.view.center = this.props.graphic.zoomPoint;
-           this.view.zoom = 19;
+            let marPoint = {};
+            marPoint.geometry = cloneDeep(this.props.graphic.zoomPoint);
+
+            marPoint.symbol = this.marSymb;
+            console.log('this.queryMarkerLayer', this.queryMarkerLayer)
+            this
+                .queryMarkerLayer
+                .removeAll();
+            this.queryMarkerLayer.addMany([marPoint]);
+            this.view.center = marPoint.geometry;
+            this.view.zoom = 19;
+            console.log('marPoint', marPoint)
         }
+
         this.view.surface.style.cursor = this.props.graphic.cursor;
     }
 
@@ -383,6 +394,18 @@ class MapView extends Component {
             this.addSymb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
                 style: "circle",
+                color: [
+                    0, 255, 0, 0.0
+                ],
+                size: "30px", // pixels
+                outline: { // autocasts as new SimpleLineSymbol()
+                    color: 'green',
+                    width: 3 // points
+                }
+            };
+            this.marSymb = {
+                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                style: "square",
                 color: [
                     0, 255, 0, 0.0
                 ],

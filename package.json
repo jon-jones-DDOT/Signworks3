@@ -18,6 +18,7 @@
     "esri-loader": "^2.9.2",
     "geodesy": "^2.0.1",
     "google-maps-react": "^2.0.2",
+    "lodash.clonedeep": "^4.5.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-image": "^2.1.1",
@@ -43,7 +44,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
- 
   "devDependencies": {
     "react-scripts": "^2.1.8"
   },
