@@ -36,23 +36,17 @@ export class MAR extends Component {
             .modalClicked(false, null)
     }
 
-    funTricks = () => {
-        let fish = "tuna";
-        let fish2 = fish;
-        console.log(fish, fish2);
-        fish = "trout";
-        console.log(fish, fish2);
-    }
+ 
 
     addressSelectHandler = (evt) => {
         this.funTricks();
-        console.log('event :', evt.target.value);
+ 
         const selectedOption = this.props.graphic.marResults.returnDataset.Table1[evt.target.value];
-        console.log('selectedOption', selectedOption)
+  
         this.setState({selectedOpt: selectedOption})
     }
     GoToPointonMapButtonHandler = (evt) => {
-        console.log('evt', this.state.selectedOpt)
+
         const point = {
             type: "point", // autocasts as new Point()
             x: this.state.selectedOpt.LONGITUDE,

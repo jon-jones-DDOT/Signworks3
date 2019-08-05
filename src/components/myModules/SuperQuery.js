@@ -2,35 +2,43 @@ import React, {Component} from 'react'
 import './SuperQuery.css'
 import ModalWrapper from './Modals/ModalWrapper';
 import {layerURLs} from '../../utils/JSAPI'
-let Typeahead = require('react-typeahead').Typeahead;
+import Downshift from 'downshift'
 
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
+
 
 export default class SuperQuery extends Component {
 
     constructor(props) {
         super(props)
- 
+
         this.myRef = React.createRef();
         this.state = {
             selectedMutt: null,
             selected: false,
             ready: true
         }
+        //  this.items = this.getOptions();
+        this.items = this.formattedMuttArray();
+    }
 
+    items = [];
+
+    formattedMuttArray = () =>{
+
+        let mutt = [];
+        for (let i = 0;i < this.props.map.muttArray.length;i++){
+            let leMutt = {};
+            leMutt.name = this.props.map.muttArray[i].code.toUpperCase() + ":" + this.props.map.muttArray[i].name.toUpperCase();
+            leMutt.id = this.props.map.muttArray[i].id;
+            mutt.push(leMutt);
+
+        }
+        return mutt;
     }
 
    
-
-    getOptions = () => {
-        let bob = [];
-        for (let i = 0; i < this.props.map.muttArray.length; i++) {
-            bob.push(this.props.map.muttArray[i].code + ": " + this.props.map.muttArray[i].name)
-        }
-
-        return bob;
-
-    }
+   
 
     mutcdLookUpSelectHandler = (desc) => {
 
@@ -49,13 +57,15 @@ export default class SuperQuery extends Component {
             .props
             .modalClicked(false, null)
     }
+    inputProps = {size:40,autofocus:'autofocus'};
+    menuProps = { style:{ 'list-style': 'none'}};
 
     searchClickHandler = (evt) => {
         // when this finally breaks , remember to check and see if they updated the
         // table to 'SIGNCODE'
         this
-        .props
-        .removeQueryGraphics();
+            .props
+            .removeQueryGraphics();
         const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND MUTCD='" + this.state.selectedMutt + "'";
         const extent = this.props.map.extent;
         const layer = layerURLs(this.props).superquery;
@@ -67,7 +77,7 @@ export default class SuperQuery extends Component {
     }
 
     render() {
-       return (
+        return (
 
             <ModalWrapper
                 {...this.props}
@@ -84,19 +94,46 @@ export default class SuperQuery extends Component {
                     <div>
 
                         <p>Type a partial MUTCD and select from results</p>
+                        <Downshift
+                           
+                            itemToString={item => (item
+                            ? item.name
+                            : '')}>
+                            {({
+                                getInputProps,
+                                getItemProps,
+                               
+                                getMenuProps,
+                                isOpen,
+                                inputValue,
+                                highlightedIndex,
+                                selectedItem
+                            }) => (
+                                <div>
+                                    
+                                    <input {...getInputProps(this.inputProps)}/>
+                                    <ul {...getMenuProps(this.menuProps)}>
+                                       
+                                        {isOpen
+                                            ? this
+                                                .items
+                                                .filter(item => !inputValue || item.name.includes(inputValue.toUpperCase()))
+                                                .map((item, index) => (
+                                                    <li
+                                                        {...getItemProps({ key: item.id, index, item, style: { backgroundColor: highlightedIndex === index ? 'lightgray' : 'white', fontWeight: selectedItem === item ? 'bold' : 'normal', }, })}>
+                                                        {item.name}
+                                                    </li>
+                                                ))
+                                            : null}
+                                    </ul>
+                                </div>
+                            )}
+                        </Downshift>
 
-                        <Typeahead
-                            options={this.getOptions()}
-                            maxVisible={10}
-                            onOptionSelected={this.mutcdLookUpSelectHandler}
-                            placeholder="TYPE DESCRIPTION"
-                            inputProps={{
-                            'size': 50
-                        }}/>
                     </div>
                     <div>
                         {this.props.graphic.queryCount}
-                        &nbsp;  features found</div>
+                        &nbsp; features found</div>
                     <p>
                         The Extent for the query will be the current extent of the displayed map</p>
                     < button ref={this.myRef} onClick={this.searchClickHandler} disabled={this.selected}>
