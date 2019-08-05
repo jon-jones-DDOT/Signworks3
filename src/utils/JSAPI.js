@@ -245,6 +245,7 @@ export function superQuery(args) {
     const where = args[0];
     const geom = args[1];
     const layer = args[2];
+    console.log(where,geom,layer);
 
     return new Promise((resolve, reject) => {
 

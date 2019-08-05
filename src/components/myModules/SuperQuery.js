@@ -41,8 +41,8 @@ export default class SuperQuery extends Component {
    
 
     mutcdLookUpSelectHandler = (desc) => {
-
-        let option = desc.split(':')
+        console.log('desc', desc)
+        let option = desc.name.split(':')
         this.setState({selectedMutt: option[0], selected: true})
         this
             .myRef
@@ -57,8 +57,8 @@ export default class SuperQuery extends Component {
             .props
             .modalClicked(false, null)
     }
-    inputProps = {size:40,autofocus:'autofocus'};
-    menuProps = { style:{ 'list-style': 'none'}};
+    inputProps = {size:40,autoFocus:true};
+    menuProps = { style:{ listStyle: 'none'}};
 
     searchClickHandler = (evt) => {
         // when this finally breaks , remember to check and see if they updated the
@@ -66,7 +66,7 @@ export default class SuperQuery extends Component {
         this
             .props
             .removeQueryGraphics();
-        const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND MUTCD='" + this.state.selectedMutt + "'";
+        const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND SIGNCODE='" + this.state.selectedMutt + "'";
         const extent = this.props.map.extent;
         const layer = layerURLs(this.props).superquery;
 
@@ -95,17 +95,16 @@ export default class SuperQuery extends Component {
 
                         <p>Type a partial MUTCD and select from results</p>
                         <Downshift
-                           
+                           onChange = {(sel) => this.mutcdLookUpSelectHandler(sel)}
                             itemToString={item => (item
                             ? item.name
                             : '')}>
                             {({
                                 getInputProps,
-                                getItemProps,
-                               
+                                getItemProps,                               
                                 getMenuProps,
                                 isOpen,
-                                inputValue,
+                                inputValue ,
                                 highlightedIndex,
                                 selectedItem
                             }) => (
