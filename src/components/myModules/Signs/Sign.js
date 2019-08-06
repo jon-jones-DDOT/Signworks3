@@ -35,7 +35,8 @@ export default function Sign(props) {
                 </div>
 
                 <Img
-                    src={window.location.origin + window.location.pathname + "/img/" + props.sign.feature.attributes.SIGNARROWDIRECTION + ".png"}
+                    src={props.sign.feature.attributes.SIGNARROWDIRECTION != 0?
+                        window.location.origin + window.location.pathname + "/img/" + props.sign.feature.attributes.SIGNARROWDIRECTION + ".png":null}
                     className="SignArrowImage"/>
             </div>
             <hr/>

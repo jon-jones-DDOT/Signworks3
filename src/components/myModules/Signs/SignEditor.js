@@ -144,9 +144,9 @@ export default class SignEditor extends Component {
         editedFeature.sign.attributes = {
             ...this.state.attributes
         };
-        if (editedFeature.sign.attributes.SIGNARROWDIRECTION === 0) {
+      /*  if (editedFeature.sign.attributes.SIGNARROWDIRECTION === 0) {
             editedFeature.sign.attributes.SIGNARROWDIRECTION = null;
-        }
+        }  */
 
         editedFeature.sign.attributes.ZONE_ID = this.zoneAssembler();
 
@@ -298,7 +298,7 @@ export default class SignEditor extends Component {
 
     signArrowSelectHandler = (evt) => {
         let id = Number(evt.target.id.charAt(4))
-
+console.log('evt', evt, 'id', id)
         this.setState({
             attributes: {
                 ...this.state.attributes,
@@ -586,10 +586,11 @@ export default class SignEditor extends Component {
                             ? this.renderMuttDownshift()
                             : this.renderMuttInput()}
                         <span>
+                            {console.log('windows.location.origin + windows.location.pathname :', window.location.origin + window.location.pathname + this.state.attributes.SIGNARROWDIRECTION + ".png")}
                             <Img
                                 alt="sign direction"
-                                src={[
-                                window.location.origin + window.location.pathname + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png",
+                                src={[this.state.attributes.SIGNARROWDIRECTION?
+                                     window.location.origin + window.location.pathname + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png":
                                 window.location.origin + window.location.pathname + "/img/0.png"
                             ]}
                                 onClick={this.signDirectionClickHandler}
