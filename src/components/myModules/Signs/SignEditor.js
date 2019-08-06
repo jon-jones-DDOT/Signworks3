@@ -310,7 +310,7 @@ console.log('evt', evt, 'id', id)
     }
 
     renderMuttInput = () => {
-
+        console.log('this.state.MUTCD', this.state.MUTCD)
         return <span
             className={this.state.muttDupe
             ? "InnerMUTCD_error"
@@ -319,7 +319,7 @@ console.log('evt', evt, 'id', id)
                 {this
                     .state
                     .MUTCD
-                    .code
+                    .name
                     .toUpperCase()}:
             </div>
             <div className="EditorMuteDesc">
