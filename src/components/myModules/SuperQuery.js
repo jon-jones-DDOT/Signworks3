@@ -61,8 +61,7 @@ export default class SuperQuery extends Component {
     menuProps = { style:{ listStyle: 'none'}};
 
     searchClickHandler = (evt) => {
-        // when this finally breaks , remember to check and see if they updated the
-        // table to 'SIGNCODE'
+  
         this
             .props
             .removeQueryGraphics();
