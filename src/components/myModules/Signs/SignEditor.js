@@ -7,7 +7,7 @@ import ModalWrapper from '../Modals/ModalWrapper';
 import {SignType, addOptionsToSelect} from '../../../SignworksJSON';
 
 import {muttGenerator, layerURLs} from "../../../utils/JSAPI";
-
+import Downshift from 'downshift'
 import Timebands from '../Timebands/Timebands';
 import Zone from './Zone';
 import {MutcdDuplicate, isSpeedLimit, zoneVerify, timebandVerify} from './SignValidations';
@@ -20,7 +20,7 @@ const amp = /[&]/;
 export default class SignEditor extends Component {
 
     constructor(props) {
-        
+
         super(props)
         const zone = this.zoneParse(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.ZONE_ID)
         this.state = {
@@ -30,7 +30,7 @@ export default class SignEditor extends Component {
             paneSelection: 1,
             muttSelected: false,
             showInfo: false,
-            selMUTCD: null,
+            muttInput: false,
             ward1: zone[0],
             anc1: zone[1],
             ward2: zone[2],
@@ -44,6 +44,7 @@ export default class SignEditor extends Component {
         for (let i = 0; i < this.state.timebands.length; i++) {
             this.state.timebands[i].action = 0;
         }
+        this.items = this.formattedMuttArray();
     }
 
     zoneChangeHandler = (evt) => {
@@ -194,9 +195,9 @@ export default class SignEditor extends Component {
             .modalClicked(false, null)
     }
 
-    muttSelectorOpenHandler = () => {
-
-        this.setState({paneSelection: 2, showInfo: false})
+    muttSelectorOpenHandler = (evt) => {
+        console.log('this.state.muttDisplay :', this.state.muttInput);
+        this.setState({muttInput: true})
     }
 
     muttSelectorSaveHandler = () => {
@@ -206,27 +207,24 @@ export default class SignEditor extends Component {
         this.setState({paneSelection: 1, muttDupe: result, showInfo: false})
     }
 
-    cancelMUTCDselectHandler = () => {
-
-        this.setState({paneSelection: 1, showInfo: false})
-    }
-
     mutcdLookUpSelectHandler = (desc) => {
 
-        let option = desc.split(':')
+        let option = desc
+            .name
+            .split(':')
 
         let chosenOne = this
             .props
             .map
             .muttArray
             .find(function (element) {
-                return element.code === option[0]
+                return element.code === option[0].toLowerCase()
             })
-        //myRef.current.focus();
+
         const mutt = muttGenerator(chosenOne).next();
 
-        this.setState({MUTCD: mutt.value.payload.args[0][0], showInfo: true})
-        //this.muttSelectorHandler()
+        this.setState({MUTCD: mutt.value.payload.args[0][0], muttInput:false, showInfo: true})
+
     }
 
     cancelSelectionHandler = (evt) => {
@@ -309,6 +307,65 @@ export default class SignEditor extends Component {
             paneSelection: 1
         })
 
+    }
+
+    renderMuttInput = () => {
+
+        return <span
+            className={this.state.muttDupe
+            ? "InnerMUTCD_error"
+            : "InnerMUTCD"}>
+            <div className="EditorMuttCode">
+                {this
+                    .state
+                    .MUTCD
+                    .code
+                    .toUpperCase()}:
+            </div>
+            <div className="EditorMuteDesc">
+                {this.state.MUTCD.name}
+            </div>
+
+        </span>
+
+    }
+
+    renderMuttDownshift = () => {
+        return <Downshift
+            onChange=
+            {(sel) => this.mutcdLookUpSelectHandler(sel)}
+            itemToString={item => (item
+            ? item.name
+            : '')}>
+            {({
+                getInputProps,
+                getItemProps,
+                getMenuProps,
+                isOpen,
+                inputValue,
+                highlightedIndex,
+                selectedItem
+            }) => (
+                <div>
+
+                    <input {...getInputProps(this.inputProps)}/>
+                    <ul {...getMenuProps(this.menuProps)}>
+
+                        {isOpen
+                            ? this
+                                .items
+                                .filter(item => !inputValue || item.name.includes(inputValue.toUpperCase()))
+                                .map((item, index) => (
+                                    <li
+                                        {...getItemProps({ key: item.id, index, item, style: { backgroundColor: highlightedIndex === index ? 'lightgray' : 'white', fontWeight: selectedItem === item ? 'bold' : 'normal', }, })}>
+                                        {item.name}
+                                    </li>
+                                ))
+                            : null}
+                    </ul>
+                </div>
+            )}
+        </Downshift>
     }
 
     readMUTCDinfo = () => {
@@ -467,6 +524,39 @@ export default class SignEditor extends Component {
     }
 
     signTypes = new SignType();
+    items = [];
+    inputProps = {
+        size: 40,
+        autoFocus: true
+    };
+    menuProps = {
+        style: {
+            listStyle: 'none'
+        }
+    };
+
+    formattedMuttArray = () => {
+
+        let mutt = [];
+        for (let i = 0; i < this.props.map.muttArray.length; i++) {
+            let leMutt = {};
+            leMutt.name = this
+                .props
+                .map
+                .muttArray[i]
+                .code
+                .toUpperCase() + ":" + this
+                .props
+                .map
+                .muttArray[i]
+                .name
+                .toUpperCase();
+            leMutt.id = this.props.map.muttArray[i].id;
+            mutt.push(leMutt);
+
+        }
+        return mutt;
+    }
 
     render() {
         const imgServerDown = window.location.origin + window.location.pathname + "/img/PR-OTHER.png"
@@ -492,29 +582,15 @@ export default class SignEditor extends Component {
                             src={[this.state.MUTCD.serverImagePath, imgServerDown]}
                             className="SignEditorImage"
                             alt="sign"></Img>
-
-                        <span
-                            className={this.state.muttDupe
-                            ? "InnerMUTCD_error"
-                            : "InnerMUTCD"}>
-                            <div className="EditorMuttCode">
-                                {this
-                                    .state
-                                    .MUTCD
-                                    .code
-                                    .toUpperCase()}:
-                            </div>
-                            <div className="EditorMuteDesc">
-                                {this.state.MUTCD.name}
-                            </div>
-
-                        </span>
+                        {this.state.muttInput
+                            ? this.renderMuttDownshift()
+                            : this.renderMuttInput()}
                         <span>
                             <Img
                                 alt="sign direction"
                                 src={[
-                                window.location.origin+ window.location.pathname  + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png",
-                                window.location.origin+ window.location.pathname  + "/img/0.png"
+                                window.location.origin + window.location.pathname + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png",
+                                window.location.origin + window.location.pathname + "/img/0.png"
                             ]}
                                 onClick={this.signDirectionClickHandler}
                                 className="SignDirectionArrow"></Img>
@@ -522,7 +598,7 @@ export default class SignEditor extends Component {
 
                     </div>
                     <div>
-                        <hr className= "EditorHorizontalBar" />
+                        <hr className="EditorHorizontalBar"/>
                     </div>
 
                     <div className="SignAttributes">
@@ -584,48 +660,7 @@ export default class SignEditor extends Component {
                     </div>
 
                 </div>
-                <div
-                    className={this.state.paneSelection === 2
-                    ? "SignEditorOver"
-                    : "SignEditorUnder"}>
-                    <div
-                        className="SignEditCancel"
-                        title="Close Window"
-                        onClick={this.cancelMUTCDselectHandler}>X</div>
-                    <div className="TypeAheadDiv">
-                        <Typeahead
-                            options={this.getOptions()}
-                            maxVisible={15}
-                            onOptionSelected={this.mutcdLookUpSelectHandler}
-                            placeholder="TYPE DESCRIPTION"
-                            disabled={this.state.showInfo}
-                            inputProps={{
-                            'size': 50
-                        }}
-                            ref={myRef}/>
-                    </div>
 
-                    <p>
-                        "Enter Partial Description or MUTCD"</p>
-
-                    <button onClick={this.cancelMUTCDselectHandler}>
-                        GO BACK</button>
-                    <div
-                        className={this.state.showInfo
-                        ? "MutcdInfoDiv"
-                        : "MutcdInfoDiv_hidden"}>
-
-                        {this.state.MUTCD
-                            ? this.readMUTCDinfo()
-                            : null}
-                        <button onClick={this.muttSelectorSaveHandler}>SELECT</button>
-
-                    </div>
-                    <div className="SignEditButtonDiv">
-                        <button onClick={this.cancelClickHandler}>CANCEL</button>
-                        <button onClick={this.saveClickHandler}>SAVE</button>
-                    </div>
-                </div>
                 <div
                     className={this.state.paneSelection === 3
                     ? "SignEditorOver"

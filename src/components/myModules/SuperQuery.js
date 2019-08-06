@@ -58,7 +58,7 @@ export default class SuperQuery extends Component {
             .modalClicked(false, null)
     }
     inputProps = {size:40,autoFocus:true};
-    menuProps = { style:{ listStyle: 'none'}};
+    menuProps = { style:{ listStyle: 'none', zIndex:10}};
 
     searchClickHandler = (evt) => {
   
@@ -118,7 +118,11 @@ export default class SuperQuery extends Component {
                                                 .filter(item => !inputValue || item.name.includes(inputValue.toUpperCase()))
                                                 .map((item, index) => (
                                                     <li
-                                                        {...getItemProps({ key: item.id, index, item, style: { backgroundColor: highlightedIndex === index ? 'lightgray' : 'white', fontWeight: selectedItem === item ? 'bold' : 'normal', }, })}>
+                                                        {...getItemProps({ key: item.id, index, item,
+                                                         style: { backgroundColor: highlightedIndex === index ? 
+                                                         'lightgray' : 'white', fontWeight: selectedItem === item ? 
+                                                         'bold' : 'normal', },
+                                                         zIndex:10 })}>
                                                         {item.name}
                                                     </li>
                                                 ))
@@ -129,13 +133,16 @@ export default class SuperQuery extends Component {
                         </Downshift>
 
                     </div>
-                    <div>
+                    <div className="bottomDiv">
+                         <div >
                         {this.props.graphic.queryCount}
                         &nbsp; features found</div>
                     <p>
-                        The Extent for the query will be the current extent of the displayed map</p>
+                        The Extent for the query will be the extent of the displayed map</p>
                     < button ref={this.myRef} onClick={this.searchClickHandler} disabled={this.selected}>
                         SEARCH</button>
+                    </div>
+                   
 
                 </div>
             </ModalWrapper>

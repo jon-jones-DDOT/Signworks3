@@ -39,6 +39,7 @@
     min-width: 90%;
     height: 50px;
     margin: 20px;
+  
 }
 .MutcdInfoDiv_hidden {
     visibility: hidden;
@@ -58,7 +59,6 @@
     text-align: left;
     display: flex;
     top: 20px;
-  
     padding: 5px;
 
 }
@@ -100,6 +100,7 @@
     margin-right: 30px;
     margin-top: 5px;
 
+
 }
 
 .InnerMUTCD_error {
@@ -124,15 +125,28 @@
 }
 
 .SignAttributes {
-    position: relative;
+    position: absolute;
+    z-index: -1;
     height: 110px;
     width: 90%;
-    top: 3px;
+    top: 150px;
+    left:20px;
     text-align: left;
     margin-left: 15px;
    
 
 }
+
+.EditorHorizontalBar {
+    margin: 25px;
+    position: absolute;
+    z-index: -1;
+    top:100px;
+    width:430px;
+ 
+
+}
+
 .ZoneSpan {
     padding-left: 155px;
 
@@ -164,10 +178,7 @@
     padding-top: 10px;
 }
 
-.EditorHorizontalBar {
-    margin: 25px;
 
-}
 
 .typeahead-selector {
   

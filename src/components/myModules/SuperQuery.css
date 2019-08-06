@@ -20,3 +20,10 @@
   cursor: pointer;
 }
 
+.bottomDiv{
+  position: absolute;
+  top:150px;
+  left:40px;
+ text-align:center;
+  z-index: -1;
+}
