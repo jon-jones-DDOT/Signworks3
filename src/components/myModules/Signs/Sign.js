@@ -16,10 +16,21 @@ export default function Sign(props) {
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
     const imgServerDown = window.location.origin+ window.location.pathname  + "/img/PR-OTHER.png";
 
-
+const getSignClass= () =>{
+console.log('props.showRetired', props.showRetired)
+    if (props.sign.feature.attributes.SIGNSTATUS === 1){
+        return "Sign"
+    }
+    else if(props.sign.feature.attributes.SIGNSTATUS === 5 && props.showRetired){
+        return "SignRetired_Visible"
+    }
+    else{
+        return 'SignRetired_Hidden'
+    }
+}
     
     return (
-        <div className="Sign">
+        <div className={getSignClass()}>
             <div className="SignMUTCDdiv">
                 <Img
                     src={[props.sign.MUTCD.serverImagePath, imgErrorPath, imgServerDown]}

@@ -18,6 +18,7 @@ export const types = {
     NEW_SIGN_S: "NEW_SIGN_S",
     NEW_SUPPORT_S: "NEW_SUPPORT_S",
     INIT_RM: "INIT_RM",
+    SHOW_RETIRED_SIGNS_RM:"SHOW_RETIRED_SIGNS_RM"
 
 };
 
@@ -32,7 +33,9 @@ export const initialState = {
     showOk: true,
     editSignIndex: NaN,
     muttArray: [],
-    extent:null
+    extent:null,
+    retiredSigns:true,
+    retiredPosts:false
 };
 
 export default(state = initialState, action) => {
@@ -132,6 +135,10 @@ export const actions = {
             support,
             layers
         }
+    }),
+    showRetiredSigns:(retiredSigns) =>({
+        type:types.SHOW_RETIRED_SIGNS_RM,
+        payload:{ retiredSigns}
     })
 
 }

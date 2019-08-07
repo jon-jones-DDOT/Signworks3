@@ -7,6 +7,18 @@
     font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
 
 }
+.SignRetired_Hidden{
+    display:none;
+}
+.SignRetired_Visible{
+    height: 100%;
+    border: 2px solid darkgray;
+    padding: 10px;
+    background-color: lightskyblue;
+    display: block;
+    font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+}
+
 .SignMUTCDdiv {
     display: flex;
     text-align: left;

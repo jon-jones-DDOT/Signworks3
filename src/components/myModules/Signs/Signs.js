@@ -9,13 +9,14 @@ import {layerURLs} from "../../../utils/JSAPI"
 import { layer } from '@fortawesome/fontawesome-svg-core';
 
 let editClicker = null
-const SortableItem = SortableElement(({value, index, canEdit}) => <Sign sign={value} index = {index}
- canEdit={canEdit} editClick={editClicker}></Sign>);
-const SortableList = SortableContainer(({items,canEdit}) => {
+const SortableItem = SortableElement(({value, index, canEdit,showRet}) => <Sign sign={value} index = {index}
+ canEdit={canEdit} showRetired = {showRet} editClick={editClicker}></Sign>);
+const SortableList = SortableContainer(({items,canEdit,showSigns}) => {
 
     return (
         <div>
-            {items.map((value, index) => (<SortableItem key={`item-${index}`} canEdit={canEdit} index={index} value={value}/>))}
+            {items.map((value, index) => (<SortableItem key={`item-${index}`} showRet={showSigns}
+             canEdit={canEdit}  index={index} value={value}/>))}
         </div>
 
     );
@@ -43,7 +44,7 @@ class Signs extends Component {
 
     render() {
         editClicker = this.props.editClick;
-      
+     
 
         if (this.props.signs) {
 
@@ -51,7 +52,9 @@ class Signs extends Component {
                 items={this.props.signs}
                 onSortEnd={this.onSortEnd}
                 distance={10}
-                canEdit={this.props.auth.isEditor}/>;
+                canEdit={this.props.auth.isEditor}
+                showSigns = { this.props.map.retiredSigns}
+                />;
         } else 
             return <p></p>
     }
