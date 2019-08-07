@@ -9,6 +9,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 export default function Support(props) {
 
     const SBT = new SupportType();
+    console.log('props.sel', props.sel)
 
     const supportInnards = () => {
 

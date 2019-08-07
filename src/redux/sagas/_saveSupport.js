@@ -7,7 +7,7 @@ import {saveSupport} from '../../utils/JSAPI';
 
 function * saveSelectSupport(action) {
     try{
-      
+      action.payload.support.geometry.spatialReference ={ wkid: 4326};
          yield call(saveSupport, [action.payload.support, false, action.payload.layers.supports]);
 
          yield getFullSignPost(action);

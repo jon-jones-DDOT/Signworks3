@@ -356,10 +356,11 @@ class MapView extends Component {
 
             this.featureLayer = new FeatureLayer({
                 url: layerURLs(this.props).supports,
-                definitionExpression: "SUPPORTSTATUS = 1",
+            
                 outFields: ["*"],
                 id: "support"
             });
+            console.log('this.featureLayer.spatialReference', this.featureLayer.spatialReference)
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
             this.conicLayer = new GraphicsLayer();

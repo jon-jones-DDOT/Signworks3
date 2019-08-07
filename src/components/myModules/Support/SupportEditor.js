@@ -8,7 +8,7 @@ export default class SupportEditor extends Component {
 
     constructor(props) {
         super(props)
-
+console.log('this.prop.map.support :', this.props.map.support);
         this.state = {
 
             ...this.props.map.support.attributes
@@ -44,7 +44,7 @@ export default class SupportEditor extends Component {
     }
 
     supportStatusChangeHandler = (evt) => {
-        
+        console.log('evt.target.value :', evt.target.value);
         this.setState({
             "SUPPORTSTATUS": Number(evt.target.value)
         })
