@@ -196,7 +196,7 @@ export default class SignEditor extends Component {
     }
 
     muttSelectorOpenHandler = (evt) => {
-        console.log('this.state.muttDisplay :', this.state.muttInput);
+      
         this.setState({muttInput: true})
     }
 
@@ -218,8 +218,9 @@ export default class SignEditor extends Component {
             .map
             .muttArray
             .find(function (element) {
-                return element.code === option[0].toLowerCase()
+                return element.code.toLowerCase() === option[0].toLowerCase()
             })
+           
 
         const mutt = muttGenerator(chosenOne).next();
 
@@ -298,7 +299,7 @@ export default class SignEditor extends Component {
 
     signArrowSelectHandler = (evt) => {
         let id = Number(evt.target.id.charAt(4))
-console.log('evt', evt, 'id', id)
+
         this.setState({
             attributes: {
                 ...this.state.attributes,
@@ -310,7 +311,7 @@ console.log('evt', evt, 'id', id)
     }
 
     renderMuttInput = () => {
-        console.log('this.state.MUTCD', this.state.MUTCD)
+      
         return <span
             className={this.state.muttDupe
             ? "InnerMUTCD_error"
@@ -586,8 +587,7 @@ console.log('evt', evt, 'id', id)
                             ? this.renderMuttDownshift()
                             : this.renderMuttInput()}
                         <span>
-                            {console.log('windows.location.origin + windows.location.pathname :', window.location.origin + window.location.pathname + this.state.attributes.SIGNARROWDIRECTION + ".png")}
-                            <Img
+                             <Img
                                 alt="sign direction"
                                 src={[this.state.attributes.SIGNARROWDIRECTION?
                                      window.location.origin + window.location.pathname + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png":

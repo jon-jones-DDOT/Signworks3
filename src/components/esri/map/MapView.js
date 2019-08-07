@@ -233,14 +233,14 @@ class MapView extends Component {
             marPoint.geometry = cloneDeep(this.props.graphic.zoomPoint);
 
             marPoint.symbol = this.marSymb;
-            console.log('this.queryMarkerLayer', this.queryMarkerLayer)
+        
             this
                 .queryMarkerLayer
                 .removeAll();
             this.queryMarkerLayer.addMany([marPoint]);
             this.view.center = marPoint.geometry;
             this.view.zoom = 19;
-            console.log('marPoint', marPoint)
+        
         }
 
         this.view.surface.style.cursor = this.props.graphic.cursor;

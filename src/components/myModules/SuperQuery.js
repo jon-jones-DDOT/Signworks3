@@ -41,7 +41,7 @@ export default class SuperQuery extends Component {
    
 
     mutcdLookUpSelectHandler = (desc) => {
-        console.log('desc', desc)
+    
         let option = desc.name.split(':')
         this.setState({selectedMutt: option[0], selected: true})
         this
