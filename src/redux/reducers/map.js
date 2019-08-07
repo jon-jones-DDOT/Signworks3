@@ -18,7 +18,7 @@ export const types = {
     NEW_SIGN_S: "NEW_SIGN_S",
     NEW_SUPPORT_S: "NEW_SUPPORT_S",
     INIT_RM: "INIT_RM",
-    SHOW_RETIRED_SIGNS_RM:"SHOW_RETIRED_SIGNS_RM"
+    SHOW_RETIRED_SIGNS_RM: "SHOW_RETIRED_SIGNS_RM"
 
 };
 
@@ -33,9 +33,9 @@ export const initialState = {
     showOk: true,
     editSignIndex: NaN,
     muttArray: [],
-    extent:null,
-    retiredSigns:true,
-    retiredPosts:false
+    extent: null,
+    retiredSigns: false,
+    retiredPosts: false
 };
 
 export default(state = initialState, action) => {
@@ -60,8 +60,14 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
-            case types.MAP_CHANGED_RM:
-            return{
+        case types.MAP_CHANGED_RM:
+            return {
+                ...state,
+                ...action.payload
+            }
+
+        case types.SHOW_RETIRED_SIGNS_RM:
+            return {
                 ...state,
                 ...action.payload
             }
@@ -73,13 +79,12 @@ export default(state = initialState, action) => {
 
 // ACTIONS //
 export const actions = {
-    mapLoaded: (extent) => ({type: types.MAP_LOADED_S, payload: {extent}}),
-    mapChanged: (extent) => ({
-        type: types.MAP_CHANGED_RM, 
-        payload: {
+    mapLoaded: (extent) => ({type: types.MAP_LOADED_S, payload: {
             extent
-        }
-    }),
+        }}),
+    mapChanged: (extent) => ({type: types.MAP_CHANGED_RM, payload: {
+            extent
+        }}),
     selectSupport: (geom, layers) => ({
 
         type: types.SELECT_SUPPORT_S,
@@ -129,16 +134,15 @@ export const actions = {
             layers
         }
     }),
-    newSupport:(support, layers) =>({
-        type:types.NEW_SUPPORT_S,
-        payload:{
+    newSupport: (support, layers) => ({
+        type: types.NEW_SUPPORT_S,
+        payload: {
             support,
             layers
         }
     }),
-    showRetiredSigns:(retiredSigns) =>({
-        type:types.SHOW_RETIRED_SIGNS_RM,
-        payload:{ retiredSigns}
-    })
+    showRetiredSigns: (retiredSigns) => ({type: types.SHOW_RETIRED_SIGNS_RM, payload: {
+            retiredSigns
+        }})
 
 }

@@ -34,7 +34,7 @@ class RightBar extends Component {
     }
 
     googleStreetsClickHandler = (evt, sel) => {
-    
+
         const point = {
             type: "point", // autocasts as new Point()
             x: sel.geometry.x,
@@ -79,6 +79,12 @@ class RightBar extends Component {
 
     }
 
+    toggleShowRetiredSignsHandler = (evt) => {
+        this
+            .props
+            .showRetiredSigns(evt.currentTarget.checked)
+    }
+
     render() {
 
         return (
@@ -90,7 +96,9 @@ class RightBar extends Component {
                     editClick={this.handleModalClicked}
                     SsClick={this.streetSmartClickHandler}
                     GsClick={this.googleStreetsClickHandler}
-                    canEdit={this.props.auth.isEditor}></Support>
+                    retCheck={this.toggleShowRetiredSignsHandler}
+                    canEdit={this.props.auth.isEditor}
+                    showRet={this.props.map.retiredSigns}></Support>
                 <Signs
                     signs={this.props.map.signs}
                     editClick={this.handleModalClicked}
