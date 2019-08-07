@@ -109,6 +109,9 @@ class MapView extends Component {
 
             return true;
         }
+        if(nextProps.map.retiredPosts != this.props.map.retiredPosts){
+            return true;
+        }
         //    console.log('did not update');
         return false;
     }
@@ -242,6 +245,18 @@ class MapView extends Component {
             this.view.zoom = 19;
         
         }
+        if( this.props.map.retiredPosts != prevProps.map.retiredPosts){
+   
+         if(this.props.map.retiredPosts ===2){
+            this.featureLayer.definitionExpression = ' SUPPORTSTATUS = 5'
+         }
+         else if(this.props.map.retiredPosts ===1 ){
+            this.featureLayer.definitionExpression = 'SUPPORTSTATUS = 1 OR SUPPORTSTATUS = 5'
+         }
+         else{
+            this.featureLayer.definitionExpression = "SUPPORTSTATUS = 1"
+         }
+        }
 
         this.view.surface.style.cursor = this.props.graphic.cursor;
     }
@@ -356,11 +371,10 @@ class MapView extends Component {
 
             this.featureLayer = new FeatureLayer({
                 url: layerURLs(this.props).supports,
-            
+            definitionExpression:"SUPPORTSTATUS = 1",
                 outFields: ["*"],
                 id: "support"
             });
-            console.log('this.featureLayer.spatialReference', this.featureLayer.spatialReference)
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
             this.conicLayer = new GraphicsLayer();

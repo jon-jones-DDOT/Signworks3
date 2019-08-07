@@ -70,11 +70,26 @@ class Banner extends Component {
                 this
                     .props
                     .removeQueryGraphics();
-                    
+
                 evt.target.value = "0"
 
                 break;
-            default:
+            case '2':
+                this
+                    .props
+                    .showRetiredPosts(1);
+                break;
+            case '3':
+                this
+                    .props
+                    .showRetiredPosts(2);
+                break;
+            case '4':
+                this
+                    .props
+                    .showRetiredPosts(0);
+                    break;
+                default:
                 return null;
         }
     }
@@ -94,7 +109,7 @@ class Banner extends Component {
                                 ? <option value={3} disabled={this.props.graphic.leftVisible}>Add Support</option>
                                 : null}
                             <option value={4}>MAR Query</option>
-                           
+
                         </select>
 
                     </span>
@@ -102,6 +117,9 @@ class Banner extends Component {
                         <select onChange={this.bannerActionHandler} className="ActionSelect">
                             <option value={0}>...Actions</option>
                             <option value={1}>Clear Query Graphics</option>
+                            <option value={2}>Show Retired Supports</option>
+                            <option value={3}>Show Only Retired Supports</option>
+                            <option value={4}>Hide Retired Supports</option>
                         </select>
                     </span>
 

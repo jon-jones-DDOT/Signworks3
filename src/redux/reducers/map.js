@@ -18,7 +18,8 @@ export const types = {
     NEW_SIGN_S: "NEW_SIGN_S",
     NEW_SUPPORT_S: "NEW_SUPPORT_S",
     INIT_RM: "INIT_RM",
-    SHOW_RETIRED_SIGNS_RM: "SHOW_RETIRED_SIGNS_RM"
+    SHOW_RETIRED_SIGNS_RM: "SHOW_RETIRED_SIGNS_RM",
+    SHOW_RETIRED_POSTS_RM: "SHOW_RETIRED_POSTS_RM"
 
 };
 
@@ -35,7 +36,7 @@ export const initialState = {
     muttArray: [],
     extent: null,
     retiredSigns: false,
-    retiredPosts: false
+    retiredPosts: 0
 };
 
 export default(state = initialState, action) => {
@@ -71,6 +72,8 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
+            case types.SHOW_RETIRED_POSTS_RM:
+                return{...state,...action.payload}
 
         default:
             return state;
@@ -143,6 +146,9 @@ export const actions = {
     }),
     showRetiredSigns: (retiredSigns) => ({type: types.SHOW_RETIRED_SIGNS_RM, payload: {
             retiredSigns
+        }}),
+    showRetiredPosts: (retiredPosts) => ({type: types.SHOW_RETIRED_POSTS_RM, payload: {
+            retiredPosts
         }})
 
 }

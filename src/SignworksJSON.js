@@ -82,7 +82,7 @@ export class SupportType {
         {
             "name": "Active",
             "code": 1
-        },
+        },/*
          {
             "name": "Prospective",
             "code": 2
@@ -92,11 +92,11 @@ export class SupportType {
         }, {
             "name": "Temporary",
             "code": 4
-        },
+        },*/
         {
             "name": "Retired",
             "code": 5
-        },
+        },/*
          {
             "name": "Requested (New)",
             "code": 6
@@ -106,7 +106,7 @@ export class SupportType {
         }, {
             "name": "Requested (Remove)",
             "code": 8
-        } 
+        } */
     ]
 }
 
