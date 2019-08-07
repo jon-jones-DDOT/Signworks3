@@ -58,7 +58,7 @@ export default class SuperQuery extends Component {
             .modalClicked(false, null)
     }
     inputProps = {size:40,autoFocus:true};
-    menuProps = { style:{ listStyle: 'none', zIndex:10}};
+    menuProps = { style:{ listStyle: 'none'}};
 
     searchClickHandler = (evt) => {
   
@@ -121,8 +121,7 @@ export default class SuperQuery extends Component {
                                                         {...getItemProps({ key: item.id, index, item,
                                                          style: { backgroundColor: highlightedIndex === index ? 
                                                          'lightgray' : 'white', fontWeight: selectedItem === item ? 
-                                                         'bold' : 'normal', },
-                                                         zIndex:10 })}>
+                                                         'bold' : 'normal', } })}>
                                                         {item.name}
                                                     </li>
                                                 ))
