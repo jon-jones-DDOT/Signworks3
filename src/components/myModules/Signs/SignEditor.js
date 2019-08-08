@@ -691,7 +691,7 @@ export default class SignEditor extends Component {
                         className="SignEditCancel"
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
-                    SIGN ARROW DIRECTION SELECTOR TOOL™<table className="dirSignTable">
+                    SIGN ARROW DIRECTION SELECTOR TOOL<table className="dirSignTable">
                         <tbody>
                             <tr>
                                 <td><img
