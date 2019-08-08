@@ -94,9 +94,9 @@ export default(state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload,
-                ssEdit: false,
-                ssView: false,
                 leftVisible: false,
+                editMode:false,
+                leftMode:null,
                 mapClickMode: mapModes.SELECT_SUPPORT_MODE,
                 cursor:'default'
             }
