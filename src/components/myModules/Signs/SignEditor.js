@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react'
 
 import Img from 'react-image'
 import './SignEditor.css'
@@ -144,7 +144,7 @@ export default class SignEditor extends Component {
         editedFeature.sign.attributes = {
             ...this.state.attributes
         };
-      /*  if (editedFeature.sign.attributes.SIGNARROWDIRECTION === 0) {
+        /*  if (editedFeature.sign.attributes.SIGNARROWDIRECTION === 0) {
             editedFeature.sign.attributes.SIGNARROWDIRECTION = null;
         }  */
 
@@ -195,11 +195,6 @@ export default class SignEditor extends Component {
             .modalClicked(false, null)
     }
 
-    muttSelectorOpenHandler = (evt) => {
-      
-        this.setState({muttInput: true})
-    }
-
     muttSelectorSaveHandler = () => {
         //
         const result = MutcdDuplicate(this.state.MUTCD.code, this.props.map.signs)
@@ -207,26 +202,11 @@ export default class SignEditor extends Component {
         this.setState({paneSelection: 1, muttDupe: result, showInfo: false})
     }
 
-    mutcdLookUpSelectHandler = (desc) => {
+   
 
-        let option = desc
-            .name
-            .split(':')
+   
 
-        let chosenOne = this
-            .props
-            .map
-            .muttArray
-            .find(function (element) {
-                return element.code.toLowerCase() === option[0].toLowerCase()
-            })
-           
-
-        const mutt = muttGenerator(chosenOne).next();
-
-        this.setState({MUTCD: mutt.value.payload.args[0][0], muttInput:false, showInfo: true})
-
-    }
+  
 
     cancelSelectionHandler = (evt) => {
         this.setState({showInfo: false})
@@ -311,7 +291,7 @@ export default class SignEditor extends Component {
     }
 
     renderMuttInput = () => {
-      
+    
         return <span
             className={this.state.muttDupe
             ? "InnerMUTCD_error"
@@ -331,42 +311,81 @@ export default class SignEditor extends Component {
 
     }
 
+    mutcdLookUpSelectHandler = (desc) => {
+    
+        let option = desc
+            .name
+            .split(':')
+
+        let chosenOne = this
+            .props
+            .map
+            .muttArray
+            .find(function (element) {
+                return element
+                    .code
+                    .toLowerCase() === option[0].toLowerCase()
+            })
+
+        const mutt = muttGenerator(chosenOne).next();
+
+        this.setState({MUTCD: mutt.value.payload.args[0][0], muttInput: false, showInfo: true})
+
+    }
+
+    muttSelectorOpenHandler = (evt) => {
+
+        this.setState({muttInput: true})
+    }
+
+    cancelLookupHandler = (evt) => {
+
+        this.setState({muttInput: false});
+        evt.stopPropagation() 
+
+    }
+
     renderMuttDownshift = () => {
-        return <Downshift
-            onChange=
-            {(sel) => this.mutcdLookUpSelectHandler(sel)}
-            itemToString={item => (item
-            ? item.name
-            : '')}>
-            {({
-                getInputProps,
-                getItemProps,
-                getMenuProps,
-                isOpen,
-                inputValue,
-                highlightedIndex,
-                selectedItem
-            }) => (
-                <div>
 
-                    <input {...getInputProps(this.inputProps)}/>
-                    <ul {...getMenuProps(this.menuProps)}>
+        return <Fragment>
+            <label onClick={this.cancelLookupHandler} className="DownshiftLabel"> X </label>
+            <Downshift
+                onChange=
+                {(sel) => this.mutcdLookUpSelectHandler(sel)}
+                itemToString={item => (item
+                ? item.name
+                : '')}>
+                {({
+                    getInputProps,
+                    getItemProps,
+                    getLabelProps,
+                    getMenuProps,
+                    isOpen,
+                    inputValue,
+                    highlightedIndex,
+                    selectedItem
+                }) => (
+                    <div>
 
-                        {isOpen
-                            ? this
-                                .items
-                                .filter(item => !inputValue || item.name.includes(inputValue.toUpperCase()))
-                                .map((item, index) => (
-                                    <li
-                                        {...getItemProps({ key: item.id, index, item, style: { backgroundColor: highlightedIndex === index ? 'lightgray' : 'white', fontWeight: selectedItem === item ? 'bold' : 'normal', }, })}>
-                                        {item.name}
-                                    </li>
-                                ))
-                            : null}
-                    </ul>
-                </div>
-            )}
-        </Downshift>
+                        <input {...getInputProps(this.inputProps)}/>
+                        <ul {...getMenuProps(this.menuProps)}>
+
+                            {isOpen
+                                ? this
+                                    .items
+                                    .filter(item => !inputValue || item.name.includes(inputValue.toUpperCase()))
+                                    .map((item, index) => (
+                                        <li
+                                            {...getItemProps({ key: item.id, index, item, style: { backgroundColor: highlightedIndex === index ? 'lightgray' : 'white', fontWeight: selectedItem === item ? 'bold' : 'normal', }, })}>
+                                            {item.name}
+                                        </li>
+                                    ))
+                                : null}
+                        </ul>
+                    </div>
+                )}
+            </Downshift>
+        </Fragment>
     }
 
     readMUTCDinfo = () => {
@@ -414,6 +433,8 @@ export default class SignEditor extends Component {
         });
     }
 
+   
+
     statusChangeHandler = (evt) => {
 
         this.setState({
@@ -425,6 +446,7 @@ export default class SignEditor extends Component {
     }
 
     signTextChangeHandler = (evt) => {
+       
         this.setState({
             attributes: {
                 ...this.state.attributes,
@@ -527,7 +549,7 @@ export default class SignEditor extends Component {
     signTypes = new SignType();
     items = [];
     inputProps = {
-        size: 40,
+        size: 30,
         autoFocus: true
     };
     menuProps = {
@@ -587,12 +609,11 @@ export default class SignEditor extends Component {
                             ? this.renderMuttDownshift()
                             : this.renderMuttInput()}
                         <span>
-                             <Img
+                            <Img
                                 alt="sign direction"
-                                src={[this.state.attributes.SIGNARROWDIRECTION?
-                                     window.location.origin + window.location.pathname + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png":
-                                window.location.origin + window.location.pathname + "/img/0.png"
-                            ]}
+                                src={[this.state.attributes.SIGNARROWDIRECTION
+                                    ? window.location.origin + window.location.pathname + "/img/" + this.state.attributes.SIGNARROWDIRECTION + ".png"
+                                    : window.location.origin + window.location.pathname + "/img/0.png"]}
                                 onClick={this.signDirectionClickHandler}
                                 className="SignDirectionArrow"></Img>
                         </span>

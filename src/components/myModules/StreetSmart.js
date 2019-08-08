@@ -27,7 +27,8 @@ class StreetSmart extends Component {
             .off(msEvents.MEASUREMENT_CHANGED);
         window
             .panoramaViewer
-            .off(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHANGE).off(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOAD_END)
+            .off(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHANGE)
+            .off(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOAD_END)
         window
             .StreetSmartApi
             .destroy({
@@ -153,7 +154,12 @@ class StreetSmart extends Component {
                     .StreetSmartApi
                     .open(x + "," + y, {
                         viewerType: viewerType,
-                        srs: 'EPSG:2248'
+                        srs: 'EPSG:2248',
+                        panoramaViewer: {
+                            closable: false,
+                        replace:true}
+            
+                        
                     })
                     .then(function (result) {
                         if (result) {
@@ -174,7 +180,7 @@ class StreetSmart extends Component {
                                         .on(msEvents.MEASUREMENT_CHANGED, clkMap);
 
                                 }
-
+                                window.panoramaViewer.closable = false;
                                 window
                                     .panoramaViewer
                                     .on(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHANGE, changeView);

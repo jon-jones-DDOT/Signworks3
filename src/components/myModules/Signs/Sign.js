@@ -17,7 +17,7 @@ export default function Sign(props) {
     const imgServerDown = window.location.origin+ window.location.pathname  + "/img/PR-OTHER.png";
 
 const getSignClass= () =>{
-console.log('props.showRetired', props.showRetired)
+
     if (props.sign.feature.attributes.SIGNSTATUS === 1){
         return "Sign"
     }

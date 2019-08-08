@@ -78,16 +78,19 @@ class Banner extends Component {
                 this
                     .props
                     .showRetiredPosts(1);
+                    evt.target.value = '0';
                 break;
             case '3':
                 this
                     .props
                     .showRetiredPosts(2);
+                    evt.target.value = '0';
                 break;
             case '4':
                 this
                     .props
                     .showRetiredPosts(0);
+                    evt.target.value = '0';
                     break;
                 default:
                 return null;
