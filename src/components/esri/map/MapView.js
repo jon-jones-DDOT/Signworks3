@@ -253,6 +253,9 @@ class MapView extends Component {
          else if(this.props.map.retiredPosts ===1 ){
             this.featureLayer.definitionExpression = 'SUPPORTSTATUS = 1 OR SUPPORTSTATUS = 5'
          }
+         else if (this.props.map.retiredPosts ===3){
+            this.featureLayer.definitionExpression = 'SUPPORTSTATUS = 627'
+         }
          else{
             this.featureLayer.definitionExpression = "SUPPORTSTATUS = 1"
          }

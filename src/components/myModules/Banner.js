@@ -78,21 +78,29 @@ class Banner extends Component {
                 this
                     .props
                     .showRetiredPosts(1);
-                    evt.target.value = '0';
+                evt.target.value = '0';
                 break;
             case '3':
                 this
                     .props
                     .showRetiredPosts(2);
-                    evt.target.value = '0';
+                evt.target.value = '0';
                 break;
             case '4':
                 this
                     .props
                     .showRetiredPosts(0);
-                    evt.target.value = '0';
-                    break;
-                default:
+                evt.target.value = '0';
+                break;
+            case '5':
+                this
+                    .props
+                    .showRetiredPosts(3);
+                evt.target.value = '0';
+                break;
+         
+
+            default:
                 return null;
         }
     }
@@ -122,7 +130,9 @@ class Banner extends Component {
                             <option value={1}>Clear Query Graphics</option>
                             <option value={2}>Show Retired Supports</option>
                             <option value={3}>Show Only Retired Supports</option>
-                            <option value={4}>Hide Retired Supports</option>
+                         
+                            <option value={4}>Show Only Active Supports</option>
+                            <option value={5}>Hide All Supports</option>
                         </select>
                     </span>
 
