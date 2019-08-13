@@ -45,7 +45,7 @@ class Banner extends Component {
                 evt.target.value = '0';
                 break;
 
-            case "3":
+            case "3":// add support
                 this
                     .props
                     .setMapClickMode(mapModes.ADD_SUPPORT_MODE, 'crosshair');

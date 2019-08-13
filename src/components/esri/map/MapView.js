@@ -205,7 +205,7 @@ class MapView extends Component {
             console.log('not even sure why')
             //   return;
         }
-
+//changes map graphics when new support is selected
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && this.props.map.support !== prevProps.map.support) {
 
             //       console.log('changing selected support graphics in response to click')

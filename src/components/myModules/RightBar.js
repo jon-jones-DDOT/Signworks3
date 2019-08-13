@@ -6,6 +6,7 @@ import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
 import {actions as graphicActions} from '../../redux/reducers/graphic'
 import {layerURLs} from "../../utils/JSAPI"
+import {leftKeys} from '../../SignworksJSON'
 import Signs from './Signs/Signs';
 import SignCreator from './Signs/SignCreator';
 import "./RightBar.css"
@@ -35,6 +36,11 @@ class RightBar extends Component {
 
     googleStreetsClickHandler = (evt, sel) => {
 
+
+        let key;
+
+        this.props.graphic.leftKey === leftKeys.GOOGLE_FIRST? key = leftKeys.GOOGLE_REPEAT:key= leftKeys.GOOGLE_FIRST;
+       
         const point = {
             type: "point", // autocasts as new Point()
             x: sel.geometry.x,
@@ -43,9 +49,14 @@ class RightBar extends Component {
                 wkid: 4326
             }
         }
+        if(key === leftKeys.GOOGLE_REPEAT){
+            this
+            .props
+            .closeStreetSmartViewer();
+        }
         this
             .props
-            .startGoogleStreetViewer(sel, layerURLs(this.props));
+            .startGoogleStreetViewer(sel, layerURLs(this.props), key);
     }
 
     addSignHandler = (evt) => {

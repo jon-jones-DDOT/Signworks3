@@ -1,3 +1,5 @@
+import {leftKeys} from '../../SignworksJSON'
+
 export const types = {
     SET_SUPPORT_MARKER_RG: "SET_SUPPORT_MARKER_RG",
     QUERY_SUPERQUERY_S: "QUERY_SUPERQUERY_S",
@@ -46,6 +48,7 @@ export const initialState = {
     coneGraphic:null,
     conePointGraphic:null,
     leftMode:null,
+    leftKey:0,
     initialBearing:null,
     zoomPoint:null
 }
@@ -139,7 +142,9 @@ export const actions = {
     removeQueryResults: () => ({type: types.REMOVE_QUERY_RESULTS_RG, payload: {}}),
     closeStreetSmartViewer: () => ({type: types.CLOSE_STREETSMART_VIEWER_RG, payload: {
         ssOverlay:null,
-        ssgeoJSONselPoint:null
+        ssgeoJSONselPoint:null,
+        leftKey:leftKeys.NO_LEFT_PANE
+        
     }}),
     setPointBuffer: (viewWidth, viewExtentWidth, view_spatRef) => ({
         type: types.SET_POINT_BUFFER_RG,
@@ -199,11 +204,12 @@ export const actions = {
             editMode
         }
     }),
-    startGoogleStreetViewer:(sel,layers)=>({
+    startGoogleStreetViewer:(sel,layers, leftKey)=>({
         type: types.START_GOOGLE_STREET_VIEWER_S,
         payload:{
             sel,
-            layers
+            layers,
+            leftKey
         }
     }),
     zoomToSelectedPoint:(point) =>({

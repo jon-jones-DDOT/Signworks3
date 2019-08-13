@@ -678,6 +678,17 @@ export function addOptionsToSelect(options) {
     ))
 }
 
+export const leftKeys = {
+    NO_LEFT_PANE : 0,
+    SS_VIEW_FIRST :1,
+    SS_VIEW_REPEAT:2,
+    SS_ADD_FIRST:3,
+    SS_ADD_REPEAT:4,
+    GOOGLE_FIRST:5,
+    GOOGLE_REPEAT:6
+
+}
+
 export const mphSigns = [
     "R2-1",
     "R2-1(5)",

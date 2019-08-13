@@ -6,29 +6,33 @@ import {actions as mapActions} from '../../redux/reducers/map';
 import {actions as graphicActions} from '../../redux/reducers/graphic'
 import StreetSmart from './StreetSmart';
 import GoogleMaps from './GoogleMaps';
+import {leftKeys} from "../../SignworksJSON"
 
-
- class LeftBar extends Component {
-
-  
+class LeftBar extends Component {
 
     render() {
-        if(this.props.graphic.leftVisible && this.props.graphic.leftMode==="StreetSmart"){ return (
-            <div className="LeftBar">
+        
+        if (this.props.graphic.leftVisible && this.props.graphic.leftMode === "StreetSmart") {
+            return (
+                <div className="LeftBar">
+
+                    <StreetSmart></StreetSmart>
+                </div>
+            )
+        } else if (this.props.graphic.leftVisible && (this.props.graphic.leftKey === leftKeys.GOOGLE_FIRST || this.props.graphic.leftKey === leftKeys.GOOGLE_REPEAT)) {
          
-            <StreetSmart></StreetSmart>
-            </div>
-        )}
-        else if(this.props.graphic.leftVisible && this.props.graphic.leftMode==="Google"){ return (
-            <div className="LeftBar">
-         
-            <GoogleMaps></GoogleMaps>
-            </div>
-        )}
-        else{
+           
+            return (
+                <div className="LeftBar">
+
+                    <GoogleMaps ></GoogleMaps>
+                </div>
+            )
+        } else {
+            
             return null
         }
-       
+
     }
 }
 
