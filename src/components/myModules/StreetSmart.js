@@ -16,11 +16,10 @@ class StreetSmart extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (nextProps.graphic.leftKey != this.props.graphic.leftKey) {
-            console.log('next', nextProps.graphic.leftKey, "this", this.props.graphic.leftKey);
-            return true;
+        if (nextProps.graphic.ssInputGeom[0] != this.props.graphic.ssInputGeom[0]) {
+          return true;
         } else {
-            console.log('next', nextProps.graphic.leftKey, "this", this.props.graphic.leftKey);
+         
             return false;
         }
 
@@ -28,7 +27,8 @@ class StreetSmart extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        if(prevProps.graphic.leftKey != this.props.graphic.leftKey){
+        if(prevProps.graphic.ssInputGeom[0] != this.props.graphic.ssInputGeom[0]){
+ ;
             const msEvents = window.StreetSmartApi.Events.measurement;
             window
                 .StreetSmartApi
@@ -69,7 +69,7 @@ class StreetSmart extends Component {
     }
 
     startup = (divId) => {
-
+console.log('selSup and ssInputGeom',this.props.graphic.selSupportGeom.x, this.props.graphic.ssInputGeom[0].x);
         const x = this.props.graphic.ssInputGeom[0].x;
         const y = this.props.graphic.ssInputGeom[0].y;
         const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;

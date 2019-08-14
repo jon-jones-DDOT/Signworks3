@@ -7,16 +7,18 @@ import {projectGeometry, getSupportByExtent, pointToExtentSaga, createFeatureSet
 
 function * openStreetSmart(action) {
     try {
+
+       
         // this ball of wax has a ridiculous number of async calls, I am gonna try to do
         // them all here in the saga
-   
+   console.log('action.payload.sel[0].geometry :', action.payload.sel[0].geometry);
         const projectResult = yield call(projectGeometry, [
             [action.payload.sel[0].geometry],
             action.payload.layers.geometryService,
             action.payload.inSR,
             action.payload.outSR
         ]);
-
+        console.log('projectResult x:', projectResult[0].x);
         // now we have the projected (2248) support, let's make a geoJSON feature set
         // out of it yay
 
@@ -25,6 +27,7 @@ function * openStreetSmart(action) {
         }
         sel2.geometry = projectResult[0];
         const selPtFeatureSet = yield call(createFeatureSet, [sel2])
+       
         const gjPt = window
             .ArcgisToGeojsonUtils
             .arcgisToGeoJSON(selPtFeatureSet)
@@ -38,6 +41,7 @@ function * openStreetSmart(action) {
 
         //get neighboring points from the selected support
         const features = yield call(getSupportByExtent, [localExtent, action.payload.layers.supports, 2248]);
+       
         const neighborFeatures = features.data.features;
         //make them a featureset because the converter is picky like that
 

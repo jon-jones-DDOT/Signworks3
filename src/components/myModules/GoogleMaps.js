@@ -17,7 +17,7 @@ export class GoogleMaps extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.props.graphic.selSupportGeom != nextProps.graphic.selSupportGeom) {
-            console.log('should')
+           
             return true;
         } else 
             return false;
@@ -26,7 +26,7 @@ export class GoogleMaps extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.graphic.selSupportGeom != this.props.graphic.selSupportGeom) {
 
-            console.log('this is where the magic should happen');
+        
         }
     }
 
@@ -56,7 +56,7 @@ export class GoogleMaps extends Component {
         return (
             <div className="GoogleMaps">
                 <div className="ggCancel" onClick={this.ggCancel}>X</div>
-                {console.log('renderin', streetViewPanoramaOptions)}
+   
                 <ReactStreetview
                     className="ggPane"
                     apiKey={googleMapsApiKey}

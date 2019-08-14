@@ -20,6 +20,7 @@ import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../../redux/reducers/map';
 import {actions as graphicActions} from '../../../redux/reducers/graphic'
 import {mapModes} from '../../../redux/reducers/graphic'
+import {leftKeys} from '../../../SignworksJSON'
 // ESRI
 import {loadModules} from 'esri-loader';
 import {createView} from '../../../utils/esriHelper';
@@ -109,7 +110,7 @@ class MapView extends Component {
 
             return true;
         }
-        if(nextProps.map.retiredPosts != this.props.map.retiredPosts){
+        if (nextProps.map.retiredPosts != this.props.map.retiredPosts) {
             return true;
         }
         //    console.log('did not update');
@@ -125,7 +126,7 @@ class MapView extends Component {
                 .conicLayer
                 .removeAll();
 
-            console.log('unexpected call to cone graphics');
+         //   console.log('unexpected call to cone graphics');
             this
                 .queryMarkerLayer
                 .removeAll();
@@ -202,14 +203,20 @@ class MapView extends Component {
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && !this.props.graphic.selSupportGeom) {
-            console.log('not even sure why')
+          //  console.log('not even sure why')
             //   return;
         }
-//changes map graphics when new support is selected
+        //changes map graphics when new support is selected
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && this.props.map.support !== prevProps.map.support) {
-
-            //       console.log('changing selected support graphics in response to click')
+          
             this.selPoint.geometry = this.props.graphic.selSupportGeom;
+            if (this.props.graphic.leftKey === 1 || this.props.graphic.leftKey === leftKeys.SS_VIEW_REPEAT) {
+        
+                this
+                    .props
+                    .startStreetSmartViewer([this.selPoint], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false, leftKeys.SS_VIEW_FIRST)
+            }
+           
             this.selPoint.symbol = this.symb;
             this
                 .markerLayer
@@ -219,7 +226,7 @@ class MapView extends Component {
                 .add(this.selPoint)
 
             this.view.zoom = 20
-            
+
             this.view.center = this.selPoint.geometry
         } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE && prevState.newSupportClickGeom !== this.state.newSupportClickGeom) {
             // gonna try to keep the selected point in local state console.log('changing add
@@ -236,29 +243,28 @@ class MapView extends Component {
             marPoint.geometry = cloneDeep(this.props.graphic.zoomPoint);
 
             marPoint.symbol = this.marSymb;
-        
+
             this
                 .queryMarkerLayer
                 .removeAll();
-            this.queryMarkerLayer.addMany([marPoint]);
+            this
+                .queryMarkerLayer
+                .addMany([marPoint]);
             this.view.center = marPoint.geometry;
             this.view.zoom = 19;
-        
+
         }
-        if( this.props.map.retiredPosts != prevProps.map.retiredPosts){
-   
-         if(this.props.map.retiredPosts ===2){
-            this.featureLayer.definitionExpression = ' SUPPORTSTATUS = 5'
-         }
-         else if(this.props.map.retiredPosts ===1 ){
-            this.featureLayer.definitionExpression = 'SUPPORTSTATUS = 1 OR SUPPORTSTATUS = 5'
-         }
-         else if (this.props.map.retiredPosts ===3){
-            this.featureLayer.definitionExpression = 'SUPPORTSTATUS = 627'
-         }
-         else{
-            this.featureLayer.definitionExpression = "SUPPORTSTATUS = 1"
-         }
+        if (this.props.map.retiredPosts != prevProps.map.retiredPosts) {
+
+            if (this.props.map.retiredPosts === 2) {
+                this.featureLayer.definitionExpression = ' SUPPORTSTATUS = 5'
+            } else if (this.props.map.retiredPosts === 1) {
+                this.featureLayer.definitionExpression = 'SUPPORTSTATUS = 1 OR SUPPORTSTATUS = 5'
+            } else if (this.props.map.retiredPosts === 3) {
+                this.featureLayer.definitionExpression = 'SUPPORTSTATUS = 627'
+            } else {
+                this.featureLayer.definitionExpression = "SUPPORTSTATUS = 1"
+            }
         }
 
         this.view.surface.style.cursor = this.props.graphic.cursor;
@@ -374,7 +380,7 @@ class MapView extends Component {
 
             this.featureLayer = new FeatureLayer({
                 url: layerURLs(this.props).supports,
-            definitionExpression:"SUPPORTSTATUS = 1",
+                definitionExpression: "SUPPORTSTATUS = 1",
                 outFields: ["*"],
                 id: "support"
             });
