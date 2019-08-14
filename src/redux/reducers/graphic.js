@@ -191,7 +191,7 @@ export const actions = {
             layers
         }
     }),
-    startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth, viewExtentWidth, view_spatRef, editMode) => ({
+    startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth, viewExtentWidth, view_spatRef, editMode, leftKey) => ({
         type: types.START_STREETSMART_VIEWER_S,
         payload: {
             sel,
@@ -201,7 +201,8 @@ export const actions = {
             viewWidth,
             viewExtentWidth,
             view_spatRef,
-            editMode
+            editMode,
+            leftKey
         }
     }),
     startGoogleStreetViewer:(sel,layers, leftKey)=>({

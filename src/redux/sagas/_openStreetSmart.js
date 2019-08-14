@@ -60,9 +60,10 @@ function * openStreetSmart(action) {
                 leftVisible: true,
                 leftMode:'StreetSmart',
                 editMode: action.payload.editMode,
-                ssInputGeom: projectResult,
+               ssInputGeom: projectResult,
                 ssgeoJSONselPoint: gjPt,
-                ssOverlay: gjNeighbors
+                ssOverlay: gjNeighbors,
+                leftKey:action.payload.leftKey
             }
         });
 

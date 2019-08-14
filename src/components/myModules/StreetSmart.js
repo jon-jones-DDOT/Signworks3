@@ -16,9 +16,37 @@ class StreetSmart extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.graphic.leftKey != this.props.graphic.leftKey) {
+            console.log('next', nextProps.graphic.leftKey, "this", this.props.graphic.leftKey);
+            return true;
+        } else {
+            console.log('next', nextProps.graphic.leftKey, "this", this.props.graphic.leftKey);
+            return false;
+        }
 
-        return false;
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+        if(prevProps.graphic.leftKey != this.props.graphic.leftKey){
+            const msEvents = window.StreetSmartApi.Events.measurement;
+            window
+                .StreetSmartApi
+                .off(msEvents.MEASUREMENT_CHANGED);
+            window
+                .panoramaViewer
+                .off(window.StreetSmartApi.Events.panoramaViewer.VIEW_CHANGE)
+                .off(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOAD_END)
+            window
+                .StreetSmartApi
+                .destroy({
+                    targetElement: document.getElementById(containerID)
+                });
+
+                this.startup(containerID);
+        }
+    }
+
     ssCancel = () => {
 
         const msEvents = window.StreetSmartApi.Events.measurement;
@@ -157,9 +185,9 @@ class StreetSmart extends Component {
                         srs: 'EPSG:2248',
                         panoramaViewer: {
                             closable: false,
-                        replace:true}
-            
-                        
+                            replace: true
+                        }
+
                     })
                     .then(function (result) {
                         if (result) {

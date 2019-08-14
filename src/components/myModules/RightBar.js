@@ -28,18 +28,32 @@ class RightBar extends Component {
     }
 
     streetSmartClickHandler = (evt, sel) => {
+        let key;
+
+        if(this.props.graphic.leftKey === leftKeys.SS_VIEW_FIRST || this.props.graphic.leftKey === leftKeys.SS_VIEW_REPEAT){
+            key = leftKeys.SS_VIEW_REPEAT;
+        }
+        else {
+            key = leftKeys.SS_VIEW_FIRST;
+        }
+
+      
 
         this
             .props
-            .startStreetSmartViewer([sel], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false)
+            .startStreetSmartViewer([sel], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false, key)
     }
 
     googleStreetsClickHandler = (evt, sel) => {
 
+        let key;       
 
-        let key;
-
-        this.props.graphic.leftKey === leftKeys.GOOGLE_FIRST? key = leftKeys.GOOGLE_REPEAT:key= leftKeys.GOOGLE_FIRST;
+        if(this.props.graphic.leftKey === leftKeys.GOOGLE_FIRST || this.props.graphic.leftKey === leftKeys.GOOGLE_REPEAT){
+            key = leftKeys.GOOGLE_REPEAT;
+        }
+        else {
+            key = leftKeys.GOOGLE_FIRST;
+        }
        
         const point = {
             type: "point", // autocasts as new Point()
