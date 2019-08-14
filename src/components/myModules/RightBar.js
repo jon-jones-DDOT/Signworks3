@@ -29,8 +29,9 @@ class RightBar extends Component {
 
     streetSmartClickHandler = (evt, sel) => {
         let key;
+console.log('this.props.graphic.leftKey', this.props.graphic.leftKey)
 
-        if(this.props.graphic.leftKey === leftKeys.SS_VIEW_FIRST || this.props.graphic.leftKey === leftKeys.SS_VIEW_REPEAT){
+        if(this.props.graphic.leftKey === leftKeys.SS_VIEW_FIRST ){
             key = leftKeys.SS_VIEW_REPEAT;
         }
         else {
@@ -38,7 +39,7 @@ class RightBar extends Component {
         }
 
       
-
+        console.log('key :', key);
         this
             .props
             .startStreetSmartViewer([sel], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false, key)
