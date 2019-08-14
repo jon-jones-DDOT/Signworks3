@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux';
 import {actions as mapActions} from '../../redux/reducers/map';
 import {mapModes, actions as graphicActions} from '../../redux/reducers/graphic';
 import ReactStreetview from 'react-streetview'
+import {layerURLs} from "../../utils/JSAPI"
 import './GoogleMaps.css'
 
 export class GoogleMaps extends Component {
@@ -25,7 +26,13 @@ export class GoogleMaps extends Component {
     
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.graphic.selSupportGeom != this.props.graphic.selSupportGeom) {
-
+            this
+            .props
+            .closeStreetSmartViewer();
+            const sel = {geometry:this.props.graphic.selSupportGeom}
+            this
+            .props
+            .startGoogleStreetViewer(sel, layerURLs(this.props), 6);
         
         }
     }
