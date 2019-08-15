@@ -6,15 +6,15 @@ export const types = {
     SET_QUERY_RESULTS_RG: "SET_QUERY_RESULTS_RG",
     REMOVE_QUERY_RESULTS_RG: "REMOVE_QUERY_RESULTS_RG",
     REMOVE_QUERY_GRAPHICS_RG: 'REMOVE_QUERY_GRAPHICS_RG',
-    QUERY_MAR_S:"QUERY_MAR_S",
-    SET_MAR_RESULTS_RG:"SET_MAR_RESULTS_RG",
-    ZOOM_TO_SELECTED_POINT_RG:"ZOOM_TO_SELECTED_POINT_RG",
+    QUERY_MAR_S: "QUERY_MAR_S",
+    SET_MAR_RESULTS_RG: "SET_MAR_RESULTS_RG",
+    ZOOM_TO_SELECTED_POINT_RG: "ZOOM_TO_SELECTED_POINT_RG",
     SHOW_STREETSMART_VIEWER_RG: 'SHOW_STREETSMART_VIEWER_RG',
     START_STREETSMART_VIEWER_S: "START_STREETSMART_VIEWER_S",
     CLOSE_STREETSMART_VIEWER_RG: "CLOSE_STREETSMART_VIEWER_RG",
-    SHOW_GOOGLE_STREET_VIEWER_RG:"SHOW_GOOGLE_STREET_VIEWER_RG",
-    START_GOOGLE_STREET_VIEWER_S:"START_GOOGLE_STREET_VIEWER_S",
-    CLOSE_GOOGLE_STREET_VIEWER_RG:"CLOSE_GOOGLE_STREET_VIEWER_RG",
+    SHOW_GOOGLE_STREET_VIEWER_RG: "SHOW_GOOGLE_STREET_VIEWER_RG",
+    START_GOOGLE_STREET_VIEWER_S: "START_GOOGLE_STREET_VIEWER_S",
+    CLOSE_GOOGLE_STREET_VIEWER_RG: "CLOSE_GOOGLE_STREET_VIEWER_RG",
     GET_NEW_CONE_S: "GET_NEW_CONE",
     SET_NEW_CONE_RG: "SET_NEW_CONE",
     SET_POINT_BUFFER_RG: "SET_POINT_BUFFER_RG",
@@ -32,8 +32,8 @@ export const mapModes = {
 export const initialState = {
     selSupportGeom: null,
     queryFeatures: [],
-    queryCount:0,
-    marResults:null,
+    queryCount: 0,
+    marResults: null,
     showQuery: false,
     leftVisible: false,
     editMode: null,
@@ -45,12 +45,12 @@ export const initialState = {
     cursor: 'default',
     mapClickMode: mapModes.SELECT_SUPPORT_MODE,
     needSupRefresh: false,
-    coneGraphic:null,
-    conePointGraphic:null,
-    leftMode:null,
-    leftKey:0,
-    initialBearing:null,
-    zoomPoint:null
+    coneGraphic: null,
+    conePointGraphic: null,
+    leftMode: null,
+    leftKey: 0,
+    initialBearing: null,
+    zoomPoint: null
 }
 
 export default(state = initialState, action) => {
@@ -88,20 +88,20 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
-            case types.SHOW_GOOGLE_STREET_VIEWER_RG:
-                return{
-                    ...state,
-                    ...action.payload
-                }
+        case types.SHOW_GOOGLE_STREET_VIEWER_RG:
+            return {
+                ...state,
+                ...action.payload
+            }
         case types.CLOSE_STREETSMART_VIEWER_RG:
             return {
                 ...state,
                 ...action.payload,
                 leftVisible: false,
-                editMode:false,
-                leftMode:null,
+                editMode: false,
+                leftMode: null,
                 mapClickMode: mapModes.SELECT_SUPPORT_MODE,
-                cursor:'default'
+                cursor: 'default'
             }
 
         case types.SET_MAP_CLICK_MODE_RG:
@@ -119,16 +119,16 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
-            case types.SET_MAR_RESULTS_RG:
-                return{
-                    ...state,
-                    ...action.payload
-                }
-                case types.ZOOM_TO_SELECTED_POINT_RG:
-                    return{
-                        ...state,
-                        ...action.payload
-                    }
+        case types.SET_MAR_RESULTS_RG:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case types.ZOOM_TO_SELECTED_POINT_RG:
+            return {
+                ...state,
+                ...action.payload
+            }
         default:
             return state;
     }
@@ -140,12 +140,17 @@ export const actions = {
             selSupportGeom
         }}),
     removeQueryResults: () => ({type: types.REMOVE_QUERY_RESULTS_RG, payload: {}}),
-    closeStreetSmartViewer: () => ({type: types.CLOSE_STREETSMART_VIEWER_RG, payload: {
-        ssOverlay:null,
-        ssgeoJSONselPoint:null,
-        leftKey:leftKeys.NO_LEFT_PANE
-        
-    }}),
+
+    closeStreetSmartViewer: () => ({
+        type: types.CLOSE_STREETSMART_VIEWER_RG,
+        payload: {
+            ssOverlay: null,
+            ssgeoJSONselPoint: null,
+            leftKey: leftKeys.NO_LEFT_PANE
+
+        }
+    }),
+
     setPointBuffer: (viewWidth, viewExtentWidth, view_spatRef) => ({
         type: types.SET_POINT_BUFFER_RG,
         payload: {
@@ -154,11 +159,12 @@ export const actions = {
             view_spatRef
         }
     }),
+
     removeQueryGraphics: () => ({
         type: types.REMOVE_QUERY_GRAPHICS_RG,
         payload: {
             showQuery: false,
-            removed:true
+            removed: true
         }
     }),
     querySuperQuery: (where, extent, layer) => ({
@@ -170,7 +176,9 @@ export const actions = {
             layer
         }
     }),
-    queryMAR:(where)=>({type:types.QUERY_MAR_S, payload:{where} }),
+    queryMAR: (where) => ({type: types.QUERY_MAR_S, payload: {
+            where
+        }}),
 
     setMapClickMode: (mode, cursor) => ({
         type: types.SET_MAP_CLICK_MODE_RG,
@@ -182,7 +190,7 @@ export const actions = {
     needSupportRefresh: (needSupRefresh) => ({type: types.NEED_SUPPORT_REFRESH_RG, payload: {
             needSupRefresh
         }}),
-    getNewCone: (point, pitch, yaw,layers, source) => ({
+    getNewCone: (point, pitch, yaw, layers, source) => ({
         type: types.GET_NEW_CONE_S,
         payload: {
             point,
@@ -206,18 +214,18 @@ export const actions = {
             leftKey
         }
     }),
-    startGoogleStreetViewer:(sel,layers, leftKey)=>({
+    startGoogleStreetViewer: (sel, layers, leftKey) => ({
         type: types.START_GOOGLE_STREET_VIEWER_S,
-        payload:{
+        payload: {
             sel,
             layers,
             leftKey
         }
     }),
-    zoomToSelectedPoint:(point) =>({
-        type:types.ZOOM_TO_SELECTED_POINT_RG,
-        payload:{
-            zoomPoint:point
+    zoomToSelectedPoint: (point) => ({
+        type: types.ZOOM_TO_SELECTED_POINT_RG,
+        payload: {
+            zoomPoint: point
         }
     })
 };

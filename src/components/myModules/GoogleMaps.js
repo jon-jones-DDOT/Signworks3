@@ -9,6 +9,29 @@ import './GoogleMaps.css'
 
 export class GoogleMaps extends Component {
 
+    /*    constructor(props) {
+        super(props);
+        this.state = {
+            x: null,
+            y: null,
+            spatialReference: {
+                wkid: 4326
+            },
+            isWGS84: true,
+            type: "point"
+        };
+    }  */
+
+    pos = {
+        x: null,
+        y: null,
+        spatialReference: {
+            wkid: 4326
+        },
+        isWGS84: true,
+        type: "point"
+    }
+
     ggCancel = () => {
 
         this
@@ -18,7 +41,7 @@ export class GoogleMaps extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.props.graphic.selSupportGeom != nextProps.graphic.selSupportGeom) {
-           
+
             return true;
         } else 
             return false;
@@ -27,18 +50,31 @@ export class GoogleMaps extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.graphic.selSupportGeom != this.props.graphic.selSupportGeom) {
             this
-            .props
-            .closeStreetSmartViewer();
-            const sel = {geometry:this.props.graphic.selSupportGeom}
+                .props
+                .closeStreetSmartViewer();
+            const sel = {
+                geometry: this.props.graphic.selSupportGeom
+            }
             this
-            .props
-            .startGoogleStreetViewer(sel, layerURLs(this.props), 6);
-        
+                .props
+                .startGoogleStreetViewer(sel, layerURLs(this.props), 6);
+
         }
     }
 
-    povChangeHandler = (pov) =>{
-        console.log('pov :', pov);
+    povChangeHandler = (pov) => {
+  
+        this
+            .props
+            .getNewCone(this.pos, pov.pitch, pov.heading, layerURLs(this.props), "Google")
+    }
+
+    posChangeHandler = (pos) => {
+        
+
+        this.pos.x = pos.lng();
+        this.pos.y = pos.lat();
+        this.props.getNewCone(this.pos, -5, this.props.graphic.initialBearing,layerURLs(this.props), "Google")
     }
 
     render() {
@@ -67,14 +103,15 @@ export class GoogleMaps extends Component {
         return (
             <div className="GoogleMaps">
                 <div className="ggCancel" onClick={this.ggCancel}>X</div>
-   
+
                 <ReactStreetview
                     className="ggPane"
                     apiKey={googleMapsApiKey}
                     streetViewPanoramaOptions={streetViewPanoramaOptions()}
-                    onPositionChanged = {(pos) => {console.log('pos :', pos.lat(), pos.lng())} }
-                    onPovChanged = {(pov) => this.povChangeHandler(pov)}
-                   />
+                    onPositionChanged=
+                    {(pos) => this.posChangeHandler(pos) }
+                    onPovChanged=
+                    {(pov) => this.povChangeHandler(pov)}/>
 
             </div>
         );

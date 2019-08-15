@@ -431,6 +431,14 @@ export function createTriangle(args) {
     const point = args[0]
     const imagePitch = args[1];
     const imageYaw = args[2];
+    const source = args[3];
+    let sourceColor;
+    if (source ==="StreetSmart"){
+        sourceColor = "blue";
+    }
+    else{
+        sourceColor = "green"
+    }
 
     if (typeof point[0] == 'undefined') {
         return
@@ -452,8 +460,8 @@ export function createTriangle(args) {
             Color
         ]) => {
             try {
-                let pictureMarkerSymbol = new SimpleMarkerSymbol({style: "triangle", color: "blue", size: "10px"});
-                let symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([0, 0, 157, 0.0]), 2), new Color([0, 0, 157, 0.25]));
+                let pictureMarkerSymbol = new SimpleMarkerSymbol({style: "triangle", color: "black", size: "10px"});
+                let symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color(sourceColor), 2), new Color(sourceColor));
 
                 pictureMarkerSymbol.angle = imageYaw;
                 let radius = 45;
@@ -463,6 +471,7 @@ export function createTriangle(args) {
                 // coneLayer.removeAll();
 
                 let bob = new LatLon(point[0].y, point[0].x);
+                console.log('bob', bob)
 
                 let portAzimuth = imageYaw - 55;
                 if (portAzimuth < 0) {

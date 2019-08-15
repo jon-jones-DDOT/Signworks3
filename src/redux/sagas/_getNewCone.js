@@ -8,7 +8,7 @@ function * getCone(action) {
     try {
         let newPoint;
         let projPoint;
-
+console.log('action.payload.point', action.payload.point)
         if (action.payload.source === "StreetSmart") {
             const x = action.payload.point[0];
             const y = action.payload.point[1];
@@ -23,13 +23,16 @@ function * getCone(action) {
                 }
             }
             projPoint = yield call(projectGeometry, [[newPoint], action.payload.layers.geometryService, 2248, 4326]);
+            console.log('point from SS', projPoint);
         }
         else if(action.payload.source === "Google"){
-            projPoint = null;
+           
+            projPoint =[ action.payload.point];
+            console.log('point from Google', projPoint);
         }
 
-       
-        const triangle = yield call(createTriangle, [projPoint, action.payload.pitch, action.payload.yaw])
+       console.log('projPoint', projPoint)
+        const triangle = yield call(createTriangle, [projPoint, action.payload.pitch, action.payload.yaw, action.payload.source])
 
         yield put({
             type: graphicTypes.SET_NEW_CONE_RG,
