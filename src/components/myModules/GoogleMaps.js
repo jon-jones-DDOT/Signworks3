@@ -37,6 +37,10 @@ export class GoogleMaps extends Component {
         }
     }
 
+    povChangeHandler = (pov) =>{
+        console.log('pov :', pov);
+    }
+
     render() {
 
         // see https://developers.google.com/maps/documentation/javascript
@@ -67,7 +71,10 @@ export class GoogleMaps extends Component {
                 <ReactStreetview
                     className="ggPane"
                     apiKey={googleMapsApiKey}
-                    streetViewPanoramaOptions={streetViewPanoramaOptions()}/>
+                    streetViewPanoramaOptions={streetViewPanoramaOptions()}
+                    onPositionChanged = {(pos) => {console.log('pos :', pos.lat(), pos.lng())} }
+                    onPovChanged = {(pov) => this.povChangeHandler(pov)}
+                   />
 
             </div>
         );
