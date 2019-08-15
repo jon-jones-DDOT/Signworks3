@@ -147,8 +147,8 @@ console.log('selSup and ssInputGeom',this.props.graphic.selSupportGeom.x, this.p
 
             imagePitch = evt.detail.pitch;
             imageYaw = evt.detail.yaw;
-
-            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch, imageYaw, layers)
+//for the last arg, I could pass in leftMode from props, but I think that leftMode might go away in the future...
+            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch, imageYaw, layers, "StreetSmart" )
 
         };
 

@@ -182,13 +182,14 @@ export const actions = {
     needSupportRefresh: (needSupRefresh) => ({type: types.NEED_SUPPORT_REFRESH_RG, payload: {
             needSupRefresh
         }}),
-    getNewCone: (point, pitch, yaw,layers) => ({
+    getNewCone: (point, pitch, yaw,layers, source) => ({
         type: types.GET_NEW_CONE_S,
         payload: {
             point,
             pitch,
             yaw,
-            layers
+            layers,
+            source
         }
     }),
     startStreetSmartViewer: (sel, layers, inSR, outSR, viewWidth, viewExtentWidth, view_spatRef, editMode, leftKey) => ({
