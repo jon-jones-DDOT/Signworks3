@@ -428,7 +428,8 @@ export function calculateBearingPoints(args) {
 }
 
 export function createTriangle(args) {
-    const point = args[0]
+    const point1 = args[0][0];
+    
     const imagePitch = args[1];
     const imageYaw = args[2];
     const source = args[3];
@@ -440,13 +441,14 @@ export function createTriangle(args) {
         sourceColor = "green"
     }
 
-    if (typeof point[0] == 'undefined') {
+    if (typeof point1 == 'undefined') {
         return
     }
     return new Promise((resolve, reject) => {
         loadModules([
             "esri/Graphic",
             "esri/geometry/Polygon",
+            "esri/geometry/Point",
             "esri/symbols/SimpleFillSymbol",
             "esri/symbols/SimpleLineSymbol",
             "esri/symbols/SimpleMarkerSymbol",
@@ -454,13 +456,16 @@ export function createTriangle(args) {
         ]).then(([
             Graphic,
             Polygon,
+            Point,
             SimpleFillSymbol,
             SimpleLineSymbol,
             SimpleMarkerSymbol,
             Color
         ]) => {
             try {
+                let point2 = new Point({x:point1.x, y:point1.y})
                 let pictureMarkerSymbol = new SimpleMarkerSymbol({style: "triangle", color: "black", size: "10px"});
+console.log('pictureMarkerSymbol', pictureMarkerSymbol)
                 let symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, 
                     new Color("#FFFFFF"), 2), new Color(sourceColor));
 
@@ -471,8 +476,8 @@ export function createTriangle(args) {
 
                 // coneLayer.removeAll();
 
-                let bob = new LatLon(point[0].y, point[0].x);
-                console.log('bob', bob)
+                let bob = new LatLon(point2.y, point2.x);
+               
 
                 let portAzimuth = imageYaw - 55;
                 if (portAzimuth < 0) {
@@ -484,12 +489,13 @@ export function createTriangle(args) {
                 }
                 let portPoint = bob.destinationPoint(radius, portAzimuth);
                 let starboardPoint = bob.destinationPoint(radius, starboardAzimuth);
+                console.log('starboardPoint', starboardPoint)
 
                 const polygonJson = {
                     "rings": [
                         [
                             [
-                                point[0].x, point[0].y
+                                point2.x, point2.y
                             ],
                             [
                                 portPoint.lon, portPoint.lat
@@ -505,7 +511,8 @@ export function createTriangle(args) {
                 let polygon = new Polygon(polygonJson);
                 let graf = new Graphic(polygon, symbol)
                 // coneLayer.add(graf);
-                let pt = new Graphic(point[0], pictureMarkerSymbol);
+                let pt = new Graphic(point2, pictureMarkerSymbol);
+              
                 //  coneLayer.add(pt);
                 resolve([graf, pt])
             } catch (err) {
