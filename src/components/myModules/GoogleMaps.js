@@ -31,6 +31,7 @@ export class GoogleMaps extends Component {
         isWGS84: true,
         type: "point"
     }
+    pov = null;
 
     ggCancel = () => {
 
@@ -63,18 +64,26 @@ export class GoogleMaps extends Component {
     }
 
     povChangeHandler = (pov) => {
-  
+   console.log('pov ', pov.heading, this.pos);
         this
             .props
             .getNewCone(this.pos, pov.pitch, pov.heading, layerURLs(this.props), "Google")
+            this.pov = pov;
     }
 
     posChangeHandler = (pos) => {
         
-
+console.log('position changed, state.pov, incoming pov', this.pov, this.props.graphic.initialBearing)
         this.pos.x = pos.lng();
         this.pos.y = pos.lat();
-        this.props.getNewCone(this.pos, -5, this.props.graphic.initialBearing,layerURLs(this.props), "Google")
+        let pov;
+        if( this.pov === null){
+            pov = this.props.graphic.initialBearing
+        }
+        else{
+            pov = this.pov.heading;
+        }
+        this.props.getNewCone(this.pos, -5, pov,layerURLs(this.props), "Google")
     }
 
     render() {
