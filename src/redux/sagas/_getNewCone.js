@@ -23,7 +23,7 @@ console.log('action.payload.point', action.payload.point)
                 }
             }
             projPoint = yield call(projectGeometry, [[newPoint], action.payload.layers.geometryService, 2248, 4326]);
-            console.log('point from SS', projPoint);
+       
         }
         else if(action.payload.source === "Google"){
            
@@ -31,7 +31,7 @@ console.log('action.payload.point', action.payload.point)
             console.log('point from Google', projPoint);
         }
 
-       console.log('projPoint', projPoint)
+   
         const triangle = yield call(createTriangle, [projPoint, action.payload.pitch, action.payload.yaw, action.payload.source])
 
         yield put({

@@ -461,7 +461,8 @@ export function createTriangle(args) {
         ]) => {
             try {
                 let pictureMarkerSymbol = new SimpleMarkerSymbol({style: "triangle", color: "black", size: "10px"});
-                let symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color(sourceColor), 2), new Color(sourceColor));
+                let symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, 
+                    new Color("#FFFFFF"), 2), new Color(sourceColor));
 
                 pictureMarkerSymbol.angle = imageYaw;
                 let radius = 45;
