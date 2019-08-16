@@ -8,7 +8,7 @@ function * getCone(action) {
     try {
         let newPoint;
         let projPoint;
-console.log('action.payload.point', action.payload.point)
+
         if (action.payload.source === "StreetSmart") {
             const x = action.payload.point[0];
             const y = action.payload.point[1];
@@ -28,7 +28,7 @@ console.log('action.payload.point', action.payload.point)
         else if(action.payload.source === "Google"){
            
             projPoint =[ action.payload.point];
-            console.log('point from Google', projPoint);
+      
         }
 
    

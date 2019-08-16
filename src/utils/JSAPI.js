@@ -245,7 +245,7 @@ export function superQuery(args) {
     const where = args[0];
     const geom = args[1];
     const layer = args[2];
-    console.log(where,geom,layer);
+
 
     return new Promise((resolve, reject) => {
 
@@ -465,7 +465,7 @@ export function createTriangle(args) {
             try {
                 let point2 = new Point({x:point1.x, y:point1.y})
                 let pictureMarkerSymbol = new SimpleMarkerSymbol({style: "triangle", color: "black", size: "10px"});
-console.log('pictureMarkerSymbol', pictureMarkerSymbol)
+
                 let symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, 
                     new Color("#FFFFFF"), 2), new Color(sourceColor));
 
@@ -489,7 +489,7 @@ console.log('pictureMarkerSymbol', pictureMarkerSymbol)
                 }
                 let portPoint = bob.destinationPoint(radius, portAzimuth);
                 let starboardPoint = bob.destinationPoint(radius, starboardAzimuth);
-                console.log('starboardPoint', starboardPoint)
+           
 
                 const polygonJson = {
                     "rings": [
@@ -507,9 +507,10 @@ console.log('pictureMarkerSymbol', pictureMarkerSymbol)
                         "wkid": 4326
                     }
                 };
+                
                 symbol.color.a = .5 - (imagePitch * .01) / 2;
                 let polygon = new Polygon(polygonJson);
-                let graf = new Graphic(polygon, symbol)
+                let graf = new Graphic(polygon, symbol);
                 // coneLayer.add(graf);
                 let pt = new Graphic(point2, pictureMarkerSymbol);
               

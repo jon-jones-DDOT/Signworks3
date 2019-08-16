@@ -6,7 +6,7 @@ import {getPointOnRouteLRS, calculateBearingPoints, getSupportByExtent, pointToE
 
 function * openGoogleStreetView(action) {
     try {
-      console.log('action.payload.sel', action.payload.sel)
+  
 
         const lrsResults = yield call(getPointOnRouteLRS, [action.payload.sel, action.payload.layers.LRS_Service, 4326, 4326]);
 

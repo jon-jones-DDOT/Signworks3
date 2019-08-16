@@ -11,14 +11,14 @@ function * openStreetSmart(action) {
        
         // this ball of wax has a ridiculous number of async calls, I am gonna try to do
         // them all here in the saga
-   console.log('action.payload.sel[0].geometry :', action.payload.sel[0].geometry);
+
         const projectResult = yield call(projectGeometry, [
             [action.payload.sel[0].geometry],
             action.payload.layers.geometryService,
             action.payload.inSR,
             action.payload.outSR
         ]);
-        console.log('projectResult x:', projectResult[0].x);
+
         // now we have the projected (2248) support, let's make a geoJSON feature set
         // out of it yay
 

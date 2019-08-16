@@ -76,7 +76,7 @@ function * addNewSupport(action) {
 
         newSupport.geometry = antCraving[0];
 */
-      console.log('newSupport', newSupport)
+
         const elLation = yield call(saveSupport, [newSupport, true, action.payload.layers.supports]);
         const features = yield call(getSupportById, [elLation.data.addResults[0].objectId, action.payload.layers.supports, 4326])
  

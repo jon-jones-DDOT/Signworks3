@@ -69,7 +69,7 @@ class StreetSmart extends Component {
     }
 
     startup = (divId) => {
-console.log('selSup and ssInputGeom',this.props.graphic.selSupportGeom.x, this.props.graphic.ssInputGeom[0].x);
+
         const x = this.props.graphic.ssInputGeom[0].x;
         const y = this.props.graphic.ssInputGeom[0].y;
         const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;
