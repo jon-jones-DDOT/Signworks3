@@ -11,8 +11,19 @@ const containerID = "StreetSmart-container";
 class StreetSmart extends Component {
 
     componentDidMount() {
-
+       if(!window.StreetSmartApi.getApiReadyState()){
         this.startup(containerID);
+       }
+       else{
+           console.log('api already initialized');
+           window
+           .StreetSmartApi
+           .destroy({
+               targetElement: document.getElementById(containerID)
+           });
+           this.startup(containerID);
+       }
+       
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -185,7 +196,7 @@ class StreetSmart extends Component {
                         srs: 'EPSG:2248',
                         panoramaViewer: {
                             closable: false,
-                            replace: true
+                            replace: false
                         }
 
                     })
