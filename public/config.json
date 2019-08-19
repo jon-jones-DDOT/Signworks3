@@ -55,7 +55,8 @@
         "supports": "https://utility.arcgis.com/usrsvcs/servers/a91ea40aff3743bcaac12d66927b118d/rest/services/Signs/SignWorks_Secured/FeatureServer/0",
         "superquery": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
         "geometryService": "https://arcgis.ddot.dc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer",
-        "LRS_Service": "https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/LRSSupport/MapServer/exts/DDOTLRSTools",
+        "LRS_Service": "https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/RoadwayBlocks/MapServer/exts/DdotLrsExtensions",
+        
         "MAR_Service":"https://citizenatlas.dc.gov/newwebservices/locationverifier.asmx"
 
     },
