@@ -65,11 +65,13 @@ export function getSupportByExtent(args) {
         const supportLayer = args[1];
 
         const outSR = args[2];
+        const where = args[3];
 
         loadModules(["esri/request"]).then(([esriRequest]) => {
             esriRequest(supportLayer + '/query', {
                 query: {
                     geometry: JSON.stringify(extent),
+                    where:where,
                     returnGeometry: true,
                     outFields: '*', // attribute fields to return
                     token: null, // token

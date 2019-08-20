@@ -2,13 +2,11 @@ import {call, put, takeLatest} from 'redux-saga/effects';
 import {types as graphicTypes} from '../reducers/graphic';
 import {projectGeometry, getSupportByExtent, pointToExtentSaga, createFeatureSet} from '../../utils/JSAPI'
 
-
 // WORKER //
 
 function * openStreetSmart(action) {
     try {
 
-       
         // this ball of wax has a ridiculous number of async calls, I am gonna try to do
         // them all here in the saga
 
@@ -27,7 +25,7 @@ function * openStreetSmart(action) {
         }
         sel2.geometry = projectResult[0];
         const selPtFeatureSet = yield call(createFeatureSet, [sel2])
-       
+
         const gjPt = window
             .ArcgisToGeojsonUtils
             .arcgisToGeoJSON(selPtFeatureSet)
@@ -40,8 +38,30 @@ function * openStreetSmart(action) {
         ])
 
         //get neighboring points from the selected support
-        const features = yield call(getSupportByExtent, [localExtent, action.payload.layers.supports, 2248]);
-       
+        console.log('action.payload.retired :', action.payload.retired);
+        let where = null;
+        switch (action.payload.retired) {
+            case 0:
+                where = "SUPPORTSTATUS = 1";
+                break;
+            case 1:
+                where = "SUPPORTSTATUS = 1 OR SUPPORTSTATUS = 5";
+                break;
+            case 2:
+                where = "SUPPORTSTATUS = 5";
+                break;
+            case 3:
+                where = "SUPPORTSTATUS = 627";
+                break;
+                default:
+                        break;
+            }
+
+        
+
+console.log('where', where)
+        const features = yield call(getSupportByExtent, [localExtent, action.payload.layers.supports, 2248, where]);
+
         const neighborFeatures = features.data.features;
         //make them a featureset because the converter is picky like that
 
@@ -62,12 +82,12 @@ function * openStreetSmart(action) {
             type: graphicTypes.SHOW_STREETSMART_VIEWER_RG,
             payload: {
                 leftVisible: true,
-                leftMode:'StreetSmart',
+                leftMode: 'StreetSmart',
                 editMode: action.payload.editMode,
-               ssInputGeom: projectResult,
+                ssInputGeom: projectResult,
                 ssgeoJSONselPoint: gjPt,
                 ssOverlay: gjNeighbors,
-                leftKey:action.payload.leftKey
+                leftKey: action.payload.leftKey
             }
         });
 

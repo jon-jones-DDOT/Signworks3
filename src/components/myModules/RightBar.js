@@ -41,7 +41,7 @@ class RightBar extends Component {
       console.log('this.props', this.props)
         this
             .props
-            .startStreetSmartViewer([sel], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false, key)
+            .startStreetSmartViewer([sel], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false, key, this.props.map.retiredPosts)
     }
 
     googleStreetsClickHandler = (evt, sel) => {
