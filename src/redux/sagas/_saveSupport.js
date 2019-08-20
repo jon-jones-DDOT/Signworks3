@@ -1,5 +1,6 @@
-import {call, takeLatest} from 'redux-saga/effects';
+import {call,put, takeLatest} from 'redux-saga/effects';
 import {types as mapTypes} from '../reducers/map';
+import {types as graphicTypes} from '../reducers/graphic';
 import {getFullSignPost} from './reload'
 import {saveSupport} from '../../utils/JSAPI';
 
@@ -9,6 +10,12 @@ function * saveSelectSupport(action) {
     try{
       action.payload.support.geometry.spatialReference ={ wkid: 4326};
          yield call(saveSupport, [action.payload.support, false, action.payload.layers.supports]);
+         yield put({
+            type: graphicTypes.NEED_SUPPORT_REFRESH_RG,
+            payload: {
+                needSupRefresh: true
+            }
+        })
 
          yield getFullSignPost(action);
     }
