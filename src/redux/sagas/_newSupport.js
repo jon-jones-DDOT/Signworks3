@@ -63,7 +63,7 @@ function * addNewSupport(action) {
 
         const lrsResults = yield call(getPointOnRouteLRS, [newSupport, action.payload.layers.LRS_Service, 2248,26985]);
         const lrsInfo = lrsResults.data.pointOnRoutes[0];
-        console.log('lrsInfo :', lrsInfo);
+
         newSupport.attributes.ROUTEID = lrsInfo.routeID;
         newSupport.attributes.MEASURE = lrsInfo.measureInMeters;
         newSupport.attributes.STREETSEGID = lrsInfo.streetSegID;

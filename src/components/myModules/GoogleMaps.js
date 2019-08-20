@@ -64,7 +64,7 @@ export class GoogleMaps extends Component {
     }
 
     povChangeHandler = (pov) => {
-   console.log('pov ', pov.heading, this.pos);
+
         this
             .props
             .getNewCone(this.pos, pov.pitch, pov.heading, layerURLs(this.props), "Google")
@@ -73,7 +73,7 @@ export class GoogleMaps extends Component {
 
     posChangeHandler = (pos) => {
         
-console.log('position changed, state.pov, incoming pov', this.pov, this.props.graphic.initialBearing)
+
         this.pos.x = pos.lng();
         this.pos.y = pos.lat();
         let pov;

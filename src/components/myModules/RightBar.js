@@ -38,7 +38,7 @@ class RightBar extends Component {
             key = leftKeys.SS_VIEW_FIRST;
         }
 
-      
+      console.log('this.props', this.props)
         this
             .props
             .startStreetSmartViewer([sel], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false, key)

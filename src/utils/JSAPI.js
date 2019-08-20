@@ -78,14 +78,7 @@ export function getSupportByExtent(args) {
                 }
             }).then(resp => resolve(resp), error => reject(error));
 
-            /*     let query = new Query();
-            query.geometry = extent;
-            query.outFields = ["*"];
-            query.returnGeometry = true;
-
-            supportLayer
-                .queryFeatures(query)
-                .then(resp => resolve(resp), error => reject(error)); */
+           
         });
 
     })
