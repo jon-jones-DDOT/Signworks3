@@ -39,7 +39,7 @@ export class MAR extends Component {
  
 
     addressSelectHandler = (evt) => {
-        this.funTricks();
+        
  
         const selectedOption = this.props.graphic.marResults.returnDataset.Table1[evt.target.value];
   
