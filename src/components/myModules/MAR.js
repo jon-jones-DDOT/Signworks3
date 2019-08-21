@@ -171,7 +171,7 @@ export class MAR extends Component {
                         onKeyPress={this.addressSearch}
                         className="MARsearch"
                         onChange={this.textChange}
-                        value={this.state.searchText}></input>
+                        value={this.state.searchText} autoFocus={ true}></input>
 
                     {this.props.graphic.returnDataset
                         ? this.renderOptions()
