@@ -467,18 +467,23 @@ export default class SignEditor extends Component {
 
             case 0:
                 bands[index].attributes.STARTDAY = Number(evt.target.value);
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
                 break;
             case 1:
                 bands[index].attributes.ENDDAY = Number(evt.target.value);
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
                 break;
             case 2:
                 bands[index].attributes.STARTTIME = Number(evt.target.value);
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
                 break;
             case 3:
                 bands[index].attributes.ENDTIME = Number(evt.target.value);
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
                 break;
             case 4:
                 bands[index].attributes.HOURLIMIT = Number(evt.target.value);
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
                 break;
             default:
                 break;
@@ -521,7 +526,9 @@ export default class SignEditor extends Component {
                 SPACEARROW: null,
                 SPACEID: null,
                 STARTDAY: 8,
-                STARTTIME: 0
+                STARTTIME: 0,
+                SIGNWORKS_CREATED_BY : this.props.auth.user.username,
+                SIGNWORKS_LAST_EDITED_BY : this.props.auth.user.username
             },
             action: 1
         }

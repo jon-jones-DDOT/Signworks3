@@ -8,7 +8,7 @@ import Loader from 'react-loader-spinner'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export default function Sign(props) {
-
+console.log('props.sign.timebands', props.sign.timebands)
     const imgErrorPath = props
         .sign
         .MUTCD
