@@ -98,7 +98,7 @@ class LoadScreen extends Component {
           </Wrapper>
           <Title>
            
-            <Label>Esri-React-Boot</Label>
+            <Label>Signworks Inventory</Label>
           </Title>
         </Container>
       )
