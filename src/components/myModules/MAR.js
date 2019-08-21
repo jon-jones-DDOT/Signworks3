@@ -13,6 +13,7 @@ export class MAR extends Component {
             searchText: "",
             selectedOpt: null
         }
+        this.props.removeQueryResults();
     }
 
     addressSearch = (evt) => {

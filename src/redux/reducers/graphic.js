@@ -71,7 +71,8 @@ export default(state = initialState, action) => {
         case types.REMOVE_QUERY_RESULTS_RG:
             return {
                 ...state,
-                queryFeatures: []
+                queryFeatures: [],
+                marResults:null
 
             }
         case types.REMOVE_QUERY_GRAPHICS_RG:

@@ -53,3 +53,9 @@ font-size:11px;
    padding-bottom:5px;
   float:right;
 }
+
+.SignZoneDiv{
+    background-color: green;
+    color:white;
+    width:100px;
+}

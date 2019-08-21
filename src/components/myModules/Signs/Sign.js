@@ -28,6 +28,19 @@ const getSignClass= () =>{
         return 'SignRetired_Hidden'
     }
 }
+
+const getZone = ()=>{
+    const zone = props.sign.feature.attributes.ZONE_ID;
+    if (zone == 0 || !zone){
+        return;
+    }
+    else if(zone.includes('&')){
+        return "Zones " + zone
+    }
+    else{
+        return "Zone " + zone
+    }
+}
     
     return (
         <div className={getSignClass()}>
@@ -51,6 +64,7 @@ const getSignClass= () =>{
                     className="SignArrowImage"/>
             </div>
             <hr/>
+            <div className="SignZoneDiv">{ getZone() }</div>
             <div>{props.canEdit? <button
                     onClick=
                     {(evt) => props.editClick(evt, 'SIGN', props.index)}
