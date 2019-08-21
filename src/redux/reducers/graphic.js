@@ -165,7 +165,8 @@ export const actions = {
         type: types.REMOVE_QUERY_GRAPHICS_RG,
         payload: {
             showQuery: false,
-            removed: true
+            removed: true,
+            queryCount:0
         }
     }),
     querySuperQuery: (where, extent, layer) => ({

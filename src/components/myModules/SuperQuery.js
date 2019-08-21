@@ -11,7 +11,7 @@ export default class SuperQuery extends Component {
 
     constructor(props) {
         super(props)
-
+      
         this.myRef = React.createRef();
         this.state = {
             selectedMutt: null,
@@ -20,6 +20,9 @@ export default class SuperQuery extends Component {
         }
         //  this.items = this.getOptions();
         this.items = this.formattedMuttArray();
+        this
+            .props
+            .removeQueryGraphics();
     }
 
     items = [];
