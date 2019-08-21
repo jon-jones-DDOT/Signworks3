@@ -43,7 +43,9 @@ function * addNewSupport(action) {
             SUPPORTSTATUS: 1,
             SUPPORTTYPE: 14,
             TODATE: null,
-            Z: null
+            Z: null,
+            SIGNWORKS_CREATED_BY:action.payload.auth.user.username,
+            SIGNWORKS_LAST_EDITED_BY: action.payload.auth.user.username
         }
         newSupport.setAttributes = function (a) {
             this.attributes = a;

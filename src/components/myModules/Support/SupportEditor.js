@@ -14,6 +14,7 @@ export default class SupportEditor extends Component {
             ...this.props.map.support.attributes
 
         }
+
     }
 
     saveClickHandler = () => {
@@ -23,6 +24,9 @@ export default class SupportEditor extends Component {
 
    let tempFeature = {...this.props.map.support};
    tempFeature.attributes = {...this.state};
+
+   tempFeature.attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
+   
 
         this
             .props

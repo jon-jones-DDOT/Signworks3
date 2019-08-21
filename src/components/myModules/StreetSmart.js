@@ -11,26 +11,25 @@ const containerID = "StreetSmart-container";
 class StreetSmart extends Component {
 
     componentDidMount() {
-       if(!window.StreetSmartApi.getApiReadyState()){
-        this.startup(containerID);
-       }
-       else{
-           console.log('api already initialized');
-           window
-           .StreetSmartApi
-           .destroy({
-               targetElement: document.getElementById(containerID)
-           });
-           this.startup(containerID);
-       }
-       
+        if (!window.StreetSmartApi.getApiReadyState()) {
+            this.startup(containerID);
+        } else {
+            console.log('api already initialized');
+            window
+                .StreetSmartApi
+                .destroy({
+                    targetElement: document.getElementById(containerID)
+                });
+            this.startup(containerID);
+        }
+
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.graphic.ssInputGeom[0] != this.props.graphic.ssInputGeom[0]) {
-          return true;
+            return true;
         } else {
-         
+
             return false;
         }
 
@@ -38,8 +37,7 @@ class StreetSmart extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        if(prevProps.graphic.ssInputGeom[0] != this.props.graphic.ssInputGeom[0]){
- ;
+        if (prevProps.graphic.ssInputGeom[0] != this.props.graphic.ssInputGeom[0]) {;
             const msEvents = window.StreetSmartApi.Events.measurement;
             window
                 .StreetSmartApi
@@ -54,7 +52,7 @@ class StreetSmart extends Component {
                     targetElement: document.getElementById(containerID)
                 });
 
-                this.startup(containerID);
+            this.startup(containerID);
         }
     }
 
@@ -85,7 +83,7 @@ class StreetSmart extends Component {
         const y = this.props.graphic.ssInputGeom[0].y;
         const geoJSONSelect = this.props.graphic.ssgeoJSONselPoint;
         const geoJSONNeighbors = this.props.graphic.ssOverlay;
-
+        const auth = this.props.auth;
         const coneCode = this.props.getNewCone;
         const editMode = this.props.graphic.editMode;
         const save = this.props.newSupport;
@@ -142,7 +140,7 @@ class StreetSmart extends Component {
                 return;
             }
 
-            save(result, layers);
+                save(result, auth ,layers);
 
             window
                 .StreetSmartApi
@@ -158,8 +156,9 @@ class StreetSmart extends Component {
 
             imagePitch = evt.detail.pitch;
             imageYaw = evt.detail.yaw;
-//for the last arg, I could pass in leftMode from props, but I think that leftMode might go away in the future...
-            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch, imageYaw, layers, "StreetSmart" )
+            // for the last arg, I could pass in leftMode from props, but I think that
+            // leftMode might go away in the future...
+            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch, imageYaw, layers, "StreetSmart")
 
         };
 

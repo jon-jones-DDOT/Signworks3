@@ -137,10 +137,11 @@ export const actions = {
             layers
         }
     }),
-    newSupport: (support, layers) => ({
+    newSupport: (support,auth, layers) => ({
         type: types.NEW_SUPPORT_S,
         payload: {
             support,
+            auth,
             layers
         }
     }),
