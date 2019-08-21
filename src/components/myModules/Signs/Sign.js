@@ -15,7 +15,9 @@ export default function Sign(props) {
         .serverImagePath
         .substring(0, props.sign.MUTCD.serverImagePath.lastIndexOf("/")) + "/PR-OTHER.png";
     const imgServerDown = window.location.origin+ window.location.pathname  + "/img/PR-OTHER.png";
-
+    console.log('props.sign :', props.sign);
+console.log('props.sign.attributes.SIGNWORKS_LAST_EDITED_BY :', props.sign.feature.attributes.SIGNWORKS_LAST_EDITED_BY);
+console.log('props.sign.attributes.SIGNWORKS_CREATED_BY', props.sign.feature.attributes.SIGNWORKS_CREATED_BY )
 const getSignClass= () =>{
 
     if (props.sign.feature.attributes.SIGNSTATUS === 1){

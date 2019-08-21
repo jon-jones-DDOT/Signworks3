@@ -154,7 +154,9 @@ export default class SignEditor extends Component {
         editedFeature.editBands = [];
         editedFeature.newBands = [];
         editedFeature.deleteBands = [];
-
+     
+        editedFeature.sign.attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
+       
         for (let i = 0; i < this.state.timebands.length; i++) {
 
             switch (this.state.timebands[i].action) {

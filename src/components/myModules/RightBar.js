@@ -93,7 +93,10 @@ class RightBar extends Component {
                 "SIGNORDER": null,
                 "SIGNSTATUS": 1,
                 "ZONE_ID": null,
-                "SUPPORTID": this.props.map.support.attributes.GLOBALID
+                "SUPPORTID": this.props.map.support.attributes.GLOBALID,
+                "SIGNWORKS_CREATED_BY": this.props.auth.user.username,
+                "SIGNWORKS_LAST_EDITED_BY":this.props.auth.user.username
+
             }
         }
 
