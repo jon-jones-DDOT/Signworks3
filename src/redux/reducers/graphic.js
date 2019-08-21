@@ -50,7 +50,8 @@ export const initialState = {
     leftMode: null,
     leftKey: 0,
     initialBearing: null,
-    zoomPoint: null
+    zoomPoint: null,
+    retired:0
 }
 
 export default(state = initialState, action) => {

@@ -214,7 +214,9 @@ class MapView extends Component {
         
                 this
                     .props
-                    .startStreetSmartViewer([this.selPoint], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false, leftKeys.SS_VIEW_FIRST)
+                    .startStreetSmartViewer([this.selPoint], layerURLs(this.props), 4326, 2248,
+                     this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, 
+                     this.props.graphic.view_spatRef, false, leftKeys.SS_VIEW_FIRST, this.props.map.retiredPosts)
             }
            
             this.selPoint.symbol = this.symb;

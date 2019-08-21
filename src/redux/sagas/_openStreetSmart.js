@@ -38,7 +38,7 @@ function * openStreetSmart(action) {
         ])
 
         //get neighboring points from the selected support
-        console.log('action.payload.retired :', action.payload.retired);
+      console.log('(action.payload.retired', action.payload.retired)
         let where = null;
         switch (action.payload.retired) {
             case 0:
@@ -59,7 +59,7 @@ function * openStreetSmart(action) {
 
         
 
-console.log('where', where)
+
         const features = yield call(getSupportByExtent, [localExtent, action.payload.layers.supports, 2248, where]);
 
         const neighborFeatures = features.data.features;
