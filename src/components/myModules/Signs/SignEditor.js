@@ -37,7 +37,8 @@ export default class SignEditor extends Component {
             anc2: zone[3],
             //validation keys
             muttDupe: false,
-            zoneChecked: true
+            zoneChecked: true,
+            speedo: isSpeedLimit(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.SIGNCODE)
         }
         // the action property is just being arbitrarily tacked on here, I will use it
         // to sort the timebands for edits, adds, deletes, and no action
@@ -46,6 +47,8 @@ export default class SignEditor extends Component {
         }
         this.items = this.formattedMuttArray();
     }
+
+   
 
     zoneChangeHandler = (evt) => {
         let Checksky = true;
@@ -154,9 +157,9 @@ export default class SignEditor extends Component {
         editedFeature.editBands = [];
         editedFeature.newBands = [];
         editedFeature.deleteBands = [];
-     
+
         editedFeature.sign.attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
-       
+
         for (let i = 0; i < this.state.timebands.length; i++) {
 
             switch (this.state.timebands[i].action) {
@@ -200,15 +203,9 @@ export default class SignEditor extends Component {
     muttSelectorSaveHandler = () => {
         //
         const result = MutcdDuplicate(this.state.MUTCD.code, this.props.map.signs)
-
+        console.log('this never fires');
         this.setState({paneSelection: 1, muttDupe: result, showInfo: false})
     }
-
-   
-
-   
-
-  
 
     cancelSelectionHandler = (evt) => {
         this.setState({showInfo: false})
@@ -293,7 +290,7 @@ export default class SignEditor extends Component {
     }
 
     renderMuttInput = () => {
-    
+
         return <span
             className={this.state.muttDupe
             ? "InnerMUTCD_error"
@@ -314,7 +311,7 @@ export default class SignEditor extends Component {
     }
 
     mutcdLookUpSelectHandler = (desc) => {
-    
+
         let option = desc
             .name
             .split(':')
@@ -331,7 +328,13 @@ export default class SignEditor extends Component {
 
         const mutt = muttGenerator(chosenOne).next();
 
-        this.setState({MUTCD: mutt.value.payload.args[0][0], muttInput: false, showInfo: true})
+        const newSpeedo = isSpeedLimit(chosenOne.code);
+        console.log('newSpeedo', newSpeedo)
+
+        this.setState({MUTCD: mutt.value.payload.args[0][0], muttInput: false, showInfo: true, speedo: newSpeedo,attributes: {
+            ...this.state.attributes,
+            'SIGNNUMBER': newSpeedo.speedLimit
+        }})
 
     }
 
@@ -343,14 +346,16 @@ export default class SignEditor extends Component {
     cancelLookupHandler = (evt) => {
 
         this.setState({muttInput: false});
-        evt.stopPropagation() 
+        evt.stopPropagation()
 
     }
 
     renderMuttDownshift = () => {
 
         return <Fragment>
-            <label onClick={this.cancelLookupHandler} className="DownshiftLabel"> X </label>
+            <label onClick={this.cancelLookupHandler} className="DownshiftLabel">
+                X
+            </label>
             <Downshift
                 onChange=
                 {(sel) => this.mutcdLookUpSelectHandler(sel)}
@@ -426,7 +431,7 @@ export default class SignEditor extends Component {
     }
 
     MPHSelectHandler = (evt) => {
-
+        console.log('evt.target.value :', evt.target.value);
         this.setState({
             attributes: {
                 ...this.state.attributes,
@@ -434,8 +439,6 @@ export default class SignEditor extends Component {
             }
         });
     }
-
-   
 
     statusChangeHandler = (evt) => {
 
@@ -448,7 +451,7 @@ export default class SignEditor extends Component {
     }
 
     signTextChangeHandler = (evt) => {
-       
+
         this.setState({
             attributes: {
                 ...this.state.attributes,
@@ -467,23 +470,23 @@ export default class SignEditor extends Component {
 
             case 0:
                 bands[index].attributes.STARTDAY = Number(evt.target.value);
-                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             case 1:
                 bands[index].attributes.ENDDAY = Number(evt.target.value);
-                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             case 2:
                 bands[index].attributes.STARTTIME = Number(evt.target.value);
-                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             case 3:
                 bands[index].attributes.ENDTIME = Number(evt.target.value);
-                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             case 4:
                 bands[index].attributes.HOURLIMIT = Number(evt.target.value);
-                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY  = this.props.auth.user.username;
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             default:
                 break;
@@ -527,8 +530,8 @@ export default class SignEditor extends Component {
                 SPACEID: null,
                 STARTDAY: 8,
                 STARTTIME: 0,
-                SIGNWORKS_CREATED_BY : this.props.auth.user.username,
-                SIGNWORKS_LAST_EDITED_BY : this.props.auth.user.username
+                SIGNWORKS_CREATED_BY: this.props.auth.user.username,
+                SIGNWORKS_LAST_EDITED_BY: this.props.auth.user.username
             },
             action: 1
         }
@@ -591,7 +594,9 @@ export default class SignEditor extends Component {
     }
 
     render() {
+        console.log('this.state.speedo, this.state.attributes.SIGNNUMBER :', this.state.speedo, this.state.attributes.SIGNNUMBER);
         const imgServerDown = window.location.origin + window.location.pathname + "/img/PR-OTHER.png"
+
         return (
 
             <ModalWrapper
@@ -635,10 +640,12 @@ export default class SignEditor extends Component {
                     <div className="SignAttributes">
                         <span>MPH:
                             <select
-                                value={this.state.attributes.SIGNNUMBER
-                                ? this.state.attributes.SIGNNUMBER
+                                value={this.state.speedo.speedLimit != null
+                                ? (this.state.speedo.speedLimit != 0
+                                    ?this.state.speedo.speedLimit
+                                    : this.state.attributes.SIGNNUMBER)
                                 : ""}
-                                disabled={isSpeedLimit(this.state.attributes.SIGNCODE)}
+                                disabled={this.state.speedo.disabled}
                                 onChange={this.MPHSelectHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
                             </select>
                         </span>

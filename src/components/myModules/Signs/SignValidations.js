@@ -1,8 +1,8 @@
-import { mphSigns} from "../../../SignworksJSON";
+import {mphSigns} from "../../../SignworksJSON";
 
 // newCode is the mutcd.code that is being checked signs -  an array of signs on
 // the signpost each sign should have a property called MUTCD that has the info
-// from the sign catalog
+// from the sign catalog USE SIGNCODE ATTRIBUTE
 export function MutcdDuplicate(newCode, signs) {
 
     let isDupe = "";
@@ -16,23 +16,37 @@ export function MutcdDuplicate(newCode, signs) {
 }
 
 export function isSpeedLimit(mutt) {
-    mutt = mutt.toUpperCase();
-    const speedy = mphSigns.find((code) => {
 
+    mutt = mutt.toUpperCase();
+
+    const returnObj = {
+        disabled: true,
+        speedLimit: null
+    }
+    const regX = /\(([^)]+)\)/;
+    const speedy = mphSigns.find((code) => {
         if (code === mutt) {
             return mutt;
         }
-        else{
-            return false;
-        }
+
     })
 
+   
     if (speedy) {
-        return ""
-    } else 
-        return "disabled";
-
+        const match = regX.exec(speedy)
+        console.log('match', match);
+        if (match) {
+            returnObj.speedLimit = match[1];
+        }
+        else{
+            returnObj.disabled = false;
+            returnObj.speedLimit = 0;
+            
+        }
     }
+
+    return returnObj;
+}
 
 export function zoneVerify(edState) {
 
@@ -65,9 +79,9 @@ export function zoneVerify(edState) {
 
     }
 
-    //  verify zone with same script as python server side this
-    // algorithm is overly rigorous since unlike the server side, the zone value is
-    // constrained by input controls.  But it should work and might be needed later
+    //  verify zone with same script as python server side this algorithm is overly
+    // rigorous since unlike the server side, the zone value is constrained by
+    // input controls.  But it should work and might be needed later
 
     if (zoneValue === "" || !zoneValue) {
         // this was an error before , but having an empty value is ok above is an old
@@ -155,7 +169,6 @@ export function timebandVerify(timeband) {
     const startTime = timeband.attributes.STARTTIME;
     const endTime = timeband.attributes.ENDTIME;
 
-
     let errorArray = [];
 
     const END_DAY_BEFORE_START_DAY = 1;
@@ -183,10 +196,9 @@ export function timebandVerify(timeband) {
             errorArray.push(END_TIME_INVALID);
         }
         //make sure end time is after start time
-        if(endTime < startTime){
+        if (endTime < startTime) {
             errorArray.push(END_TIME_BEFORE_START_TIME)
         }
-
 
     } else {
         //ANYTIME and so forth
