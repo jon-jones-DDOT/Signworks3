@@ -48,8 +48,6 @@ export default class SignEditor extends Component {
         this.items = this.formattedMuttArray();
     }
 
-   
-
     zoneChangeHandler = (evt) => {
         let Checksky = true;
         switch (evt.target.id) {
@@ -331,10 +329,16 @@ export default class SignEditor extends Component {
         const newSpeedo = isSpeedLimit(chosenOne.code);
         console.log('newSpeedo', newSpeedo)
 
-        this.setState({MUTCD: mutt.value.payload.args[0][0], muttInput: false, showInfo: true, speedo: newSpeedo,attributes: {
-            ...this.state.attributes,
-            'SIGNNUMBER': newSpeedo.speedLimit
-        }})
+        this.setState({
+            MUTCD: mutt.value.payload.args[0][0],
+            muttInput: false,
+            showInfo: true,
+            speedo: newSpeedo,
+            attributes: {
+                ...this.state.attributes,
+                'SIGNNUMBER': newSpeedo.speedLimit
+            }
+        })
 
     }
 
@@ -488,6 +492,18 @@ export default class SignEditor extends Component {
                 bands[index].attributes.HOURLIMIT = Number(evt.target.value);
                 bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
+            case 5:
+                console.log('please write case 5');
+                bands[index].attributes.STARTDAY = Number(evt.target.value);
+                bands[index].attributes.ENDDAY = 0;
+                bands[index].attributes.STARTTIME = 0;
+                bands[index].attributes.ENDTIME = 0;
+                bands[index].attributes.HOURLIMIT = 0;
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
+                break;
+            case 6:
+                console.log('please write case 6');
+                break;
             default:
                 break;
         }
@@ -594,7 +610,6 @@ export default class SignEditor extends Component {
     }
 
     render() {
-        console.log('this.state.speedo, this.state.attributes.SIGNNUMBER :', this.state.speedo, this.state.attributes.SIGNNUMBER);
         const imgServerDown = window.location.origin + window.location.pathname + "/img/PR-OTHER.png"
 
         return (
@@ -642,7 +657,7 @@ export default class SignEditor extends Component {
                             <select
                                 value={this.state.speedo.speedLimit != null
                                 ? (this.state.speedo.speedLimit != 0
-                                    ?this.state.speedo.speedLimit
+                                    ? this.state.speedo.speedLimit
                                     : this.state.attributes.SIGNNUMBER)
                                 : ""}
                                 disabled={this.state.speedo.disabled}
