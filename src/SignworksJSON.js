@@ -1,4 +1,5 @@
 import React from "react"
+import { throws } from "assert";
 
 export class SupportType {
     name = (index, domain) => {
@@ -118,9 +119,11 @@ export class SignType {
         }
         let codedValue = "but";
         switch (domain) {
-            case 'TIMEBAND_DAYS':
-                codedValue = this._codedValuesTimebandDays;
+            case 'TIMEBAND_START_DAYS':
+                codedValue = this._codedValuesTimebandStartDays;
                 break;
+                case'TIMEBAND_END_DAYS':
+                codedValue = this._codedValuesTimebandEndDays;
             case 'TIMEBAND_HOURS':
                 codedValue = this._codedValuesTimebandHours;
                 break;
@@ -142,15 +145,12 @@ export class SignType {
 
             return "coded domain is broken " + domain + " " + index;
         } catch (err) {
-            alert(err.message);
+            alert( 'this error in SignType in SignWorksJSON' + err.message);
         }
     }
 
-    _codedValuesTimebandDays = [
+    _codedValuesTimebandStartDays = [
         {
-            code: 0,
-            name: ""
-        }, {
             "name": "Monday",
             "code": 1
         }, {
@@ -177,6 +177,34 @@ export class SignType {
         }, {
             "name": "Schooldays",
             "code": 9
+        }
+    ]
+
+    _codedValuesTimebandEndDays = [
+        {
+            code: 0,
+            name: ""
+        }, {
+            "name": "Monday",
+            "code": 1
+        }, {
+            "name": "Tuesday",
+            "code": 2
+        }, {
+            "name": "Wednesday",
+            "code": 3
+        }, {
+            "name": "Thursday",
+            "code": 4
+        }, {
+            "name": "Friday",
+            "code": 5
+        }, {
+            "name": "Saturday",
+            "code": 6
+        }, {
+            "name": "Sunday",
+            "code": 7
         }
     ]
 

@@ -16,7 +16,13 @@ export default class TimebandEditor extends Component {
             startTimeErrorClass: "timeband",
             endTimeErrorClass: "timeband",
             anyTimeDisable: false,
-            schoolDayDisable:false
+            schoolDayDisable: false,
+            startDayDisable: false,
+            endDayDisable: false,
+            startTimeDisable: false,
+            endTimeDisable: false,
+            hourLimitDisable: false,
+            errorMessage: ""
         }
 
     }
@@ -25,39 +31,96 @@ export default class TimebandEditor extends Component {
         console.log('this.props', this.props.value.attributes);
         const atts = this.props.value.attributes;
 
-        if (atts.STARTDAY === 8){
-            this.setState({anyTimeDisable:true})
+        if (atts.STARTDAY === 8) {
+            this.setState({anyTimeDisable: true, schoolDayDisable: false})
+        } else if (atts.STARTDAY === 9) {
+            this.setState({anyTimeDisable: false, schoolDayDisable: true})
         }
     }
- 
+
+    timebandDisabler = (code) => {
+        switch (code) {
+            case "anytime":
+                this.setState({startDayDisable: false, endDayDisable: true, startTimeDisable: true, endTimeDisable: true, hourLimitDisable: true});
+                break;
+            case "schooldays":
+                this.setState({startDayDisable: false, endDayDisable: true, startTimeDisable: false, endTimeDisable: false, hourLimitDisable: false});
+                break;
+                case 'hours/limit':
+                    this.setState({startTimeDisable: true, endTimeDisable: true, hourLimitDisable: true});
+                    break;
+            case 'none':
+                this.setState({startDayDisable: false, endDayDisable: false, startTimeDisable: false, endTimeDisable: false, hourLimitDisable: false});
+                break;
+            default:
+                break;
+
+        }
+    }
 
     timebandSelectChangeHandler = (evt, index) => {
         console.log('evt.currentTarget.selectedIndex', 'index', evt.currentTarget.selectedIndex, index)
-        let value;
-        if (evt.currentTarget){
+        console.log('this.state change', this.state);
+        console.log('this.props change', this.props.value.attributes);
+        let value,
+            atts;
+        if (evt.currentTarget) {
             value = evt.currentTarget.selectedIndex;
+            atts = this.props.value.attributes;
         }
-
+        console.log('value , index:', value, index);
         if (index === 0) {
             //Start Day Check for ANYTIME
-            if (value === 8) {
-                this.setState({anyTimeDisable: true, schoolDayDisable:false});
-                this.props.change(evt, this.props.index, 5)
+            if (value === 7) {
+                console.log('validated anytime')
+                this.timebandDisabler('anytime');
+                this
+                    .props
+                    .change(evt, this.props.index, 5)
+            } else if (value === 8) {
+                this.timebandDisabler('schooldays');
+                this
+                    .props
+                    .change(evt, this.props.index, 6)
+            } 
+            else if(value > atts.ENDDAY && atts.ENDDAY > 0){
+                console.log('validated end>start')
+                this.timebandDisabler('hours/limit');
+                this.setState({errorMessage: "Start day is after end day", startDayErrorClass: 'timeband_err', endDayErrorClass: 'timeband_err'})
+                this
+                    .props
+                    .change(evt, this.props.index, 0)
             }
-            else if(value === 9){
-                this.setState({anyTimeDisable:false, schoolDayDisable:true})
-                this.props.change(evt, this.props.index, 6)
+                else {
+                this.timebandDisabler('none');
+                this.setState({errorMessage: "", startDayErrorClass: 'timeband', endDayErrorClass: 'timeband'})
+              
+                this
+                    .props
+                    .change(evt, this.props.index, 0)
+            }
+        } else if (index === 1) {
+
+            if (value < atts.STARTDAY) {
+                this.timebandDisabler('hours/limit');
+                this.setState({errorMessage: "Start day is after end day", startDayErrorClass: 'timeband_err', endDayErrorClass: 'timeband_err'})
+                this
+                    .props
+                    .change(evt, this.props.index, 1)
             }
             else{
-                this.setState({anyTimeDisable:false, schoolDayDisable:false})
-                this.props.change(evt,this.props.index,0)
+                this.timebandDisabler('none');
+                this.setState({errorMessage: "", startDayErrorClass: 'timeband', endDayErrorClass: 'timeband'})
+              
+                this
+                .props
+                .change(evt, this.props.index, 1)
             }
-        }
-        else if (index === 1){
-            console.log('value', value)
+
+            
         }
 
-     //     this.props.change(evt, this.props.index, 0)
+        //     this.props.change(evt, this.props.index, 0)
     }
 
     deleteBand = (evt, index) => {
@@ -79,22 +142,23 @@ export default class TimebandEditor extends Component {
                 </button>
                 <select
                     className={this.state.startDayErrorClass}
+                    disabled = {this.state.startDayDisable}
                     value={this.props.value.attributes.STARTDAY
                     ? this.props.value.attributes.STARTDAY
                     : ""}
                     onChange={(evt) => this.timebandSelectChangeHandler(evt, 0)}>
-                    {addOptionsToSelect(signTypes._codedValuesTimebandDays)}</select>
+                    {addOptionsToSelect(signTypes._codedValuesTimebandStartDays)}</select>
                 <select
                     className={this.state.endDayErrorClass}
-                    disabled = { this.state.anyTimeDisable || this.state.schoolDayDisable}
+                    disabled={this.state.endDayDisable}
                     value={this.props.value.attributes.ENDDAY
                     ? this.props.value.attributes.ENDDAY
                     : ""}
-                    onChange={(evt) =>this.timebandSelectChangeHandler(evt, 1)}>
-                    {addOptionsToSelect(signTypes._codedValuesTimebandDays)}</select>
+                    onChange={(evt) => this.timebandSelectChangeHandler(evt, 1)}>
+                    {addOptionsToSelect(signTypes._codedValuesTimebandEndDays)}</select>
                 <select
                     className={this.state.startTimeErrorClass}
-                    disabled = { this.state.anyTimeDisable}
+                    disabled={this.state.startTimeDisable}
                     value={this.props.value.attributes.STARTTIME
                     ? this.props.value.attributes.STARTTIME
                     : ""}
@@ -102,7 +166,7 @@ export default class TimebandEditor extends Component {
                     {addOptionsToSelect(signTypes._codedValuesTimebandHours)}</select>
                 <select
                     className={this.state.endTimeErrorClass}
-                    disabled = { this.state.anyTimeDisable}
+                    disabled={this.state.endTimeDisable}
                     value={this.props.value.attributes.ENDTIME
                     ? this.props.value.attributes.ENDTIME
                     : ""}
@@ -110,7 +174,7 @@ export default class TimebandEditor extends Component {
                     {addOptionsToSelect(signTypes._codedValuesTimebandHours)}</select>
                 <select
                     className="timeband"
-                    disabled = { this.state.anyTimeDisable}
+                    disabled={this.state.hourLimitDisable}
                     value={this.props.value.attributes.HOURLIMIT
                     ? this.props.value.attributes.HOURLIMIT
                     : ""}

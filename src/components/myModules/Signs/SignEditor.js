@@ -493,7 +493,7 @@ export default class SignEditor extends Component {
                 bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             case 5:
-                console.log('please write case 5');
+             
                 bands[index].attributes.STARTDAY = Number(evt.target.value);
                 bands[index].attributes.ENDDAY = 0;
                 bands[index].attributes.STARTTIME = 0;
@@ -502,7 +502,10 @@ export default class SignEditor extends Component {
                 bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             case 6:
-                console.log('please write case 6');
+        
+                bands[index].attributes.STARTDAY = Number(evt.target.value);
+                bands[index].attributes.ENDDAY = 0;
+                bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             default:
                 break;
