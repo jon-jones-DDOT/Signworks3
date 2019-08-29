@@ -67,42 +67,42 @@ class MapView extends Component {
 
         //view cone needs adjustment
         if (this.props.graphic.coneGraphic !== nextProps.graphic.coneGraphic) {
-            //    console.log('update due to view cone');
+            //    console.lg('update due to view cone');
             return true;
         }
         if (nextState.newSupportClickGeom !== this.state.newSupportClickGeom) {
-            //        console.log('update because map clicked to select target area for new
+            //        console.lg('update because map clicked to select target area for new
             // support')
             return true;
         }
 
         if (this.props.graphic.queryFeatures.length > 0 && this.props.graphic.queryFeatures !== nextProps.graphic.queryFeatures) {
-            //        console.log('update because of query features');
+            //        console.lg('update because of query features');
             return true;
         }
         if (this.props.graphic.needSupRefresh === true) {
-            //       console.log('update to refresh for new support feature added');
+            //       console.lg('update to refresh for new support feature added');
             return true;
         }
 
         if (this.props.graphic.mapClickMode !== nextProps.graphic.mapClickMode) {
-            //        console.log('update because mapClickMode changed.  Not sure this does
+            //        console.lg('update because mapClickMode changed.  Not sure this does
             // anything')
             return true;
         }
 
         if (this.props.map.support !== nextProps.map.support) {
-            //         console.log('update because map.support changed');
+            //         console.lg('update because map.support changed');
             return true
         }
         //removes superQuery results from view based on store
         if (nextProps.graphic.showQuery !== this.props.graphic.showQuery) {
-            //          console.log('update because showQuery has changed');
+            //          console.lg('update because showQuery has changed');
             return true;
         }
 
         if (nextProps.graphic.ssOverlay === null & this.conicLayer.graphics.length > 0) {
-            //     console.log('update because view cone needs to be removed');
+            //     console.lg('update because view cone needs to be removed');
             return true;
         }
 
@@ -113,7 +113,7 @@ class MapView extends Component {
         if (nextProps.map.retiredPosts != this.props.map.retiredPosts) {
             return true;
         }
-        //    console.log('did not update');
+        //    console.lg('did not update');
         return false;
     }
 
@@ -126,7 +126,7 @@ class MapView extends Component {
                 .conicLayer
                 .removeAll();
 
-         //   console.log('unexpected call to cone graphics');
+         //   console.lg('unexpected call to cone graphics');
             this
                 .queryMarkerLayer
                 .removeAll();
@@ -140,14 +140,14 @@ class MapView extends Component {
         }
         // removes all query graphics
         if (this.props.graphic.showQuery === false && this.queryMarkerLayer.graphics.length > 0) {
-            console.log('removing query markers')
+      //      console.lg('removing query markers')
             this
                 .queryMarkerLayer
                 .removeAll();
         }
         //removes cone graphics
         if (this.props.graphic.ssOverlay === null && this.conicLayer.graphics.length > 0) {
-            //      console.log('removing conic graphics')
+            //      console.lg('removing conic graphics')
             this
                 .conicLayer
                 .removeAll();
@@ -155,7 +155,7 @@ class MapView extends Component {
 
         //if there are query features in the store, this block displays them in the view
         if (this.props.graphic.queryFeatures.length > 0) {
-            //       console.log('adding query features');
+            //       console.lg('adding query features');
             const graphics = [...this.props.graphic.queryFeatures]
             // add symbols
             let querySymb = {
@@ -194,7 +194,7 @@ class MapView extends Component {
         //let's see if the support layer has been added to
 
         if (this.props.graphic.needSupRefresh === true) {
-            //       console.log('refershing support layer on map after add')
+            //       console.lg('refershing support layer on map after add')
             this
                 .featureLayer
                 .refresh();
@@ -203,7 +203,7 @@ class MapView extends Component {
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && !this.props.graphic.selSupportGeom) {
-          //  console.log('not even sure why')
+          //  console.lg('not even sure why')
             //   return;
         }
         //changes map graphics when new support is selected
@@ -231,7 +231,7 @@ class MapView extends Component {
 
             this.view.center = this.selPoint.geometry
         } else if (this.props.graphic.mapClickMode === mapModes.ADD_SUPPORT_MODE && prevState.newSupportClickGeom !== this.state.newSupportClickGeom) {
-            // gonna try to keep the selected point in local state console.log('changing add
+            // gonna try to keep the selected point in local state console.lg('changing add
             // support target graphic because of click')
             let addMark = {};
             addMark.geometry = this.state.newSupportClickGeom;
@@ -336,7 +336,7 @@ class MapView extends Component {
                 break;
                 //ok now we are in add support mode
             case mapModes.ADD_SUPPORT_MODE:
-                // we should create a 'fake' feature out of the map click event console.log('map
+                // we should create a 'fake' feature out of the map click event console.lg('map
                 // // click happens here')
 
                 const newSupportFeature = {

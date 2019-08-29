@@ -201,7 +201,7 @@ export default class SignEditor extends Component {
     muttSelectorSaveHandler = () => {
         //
         const result = MutcdDuplicate(this.state.MUTCD.code, this.props.map.signs)
-        console.log('this never fires');
+
         this.setState({paneSelection: 1, muttDupe: result, showInfo: false})
     }
 
@@ -327,7 +327,7 @@ export default class SignEditor extends Component {
         const mutt = muttGenerator(chosenOne).next();
 
         const newSpeedo = isSpeedLimit(chosenOne.code);
-        console.log('newSpeedo', newSpeedo)
+   
 
         this.setState({
             MUTCD: mutt.value.payload.args[0][0],
@@ -435,7 +435,7 @@ export default class SignEditor extends Component {
     }
 
     MPHSelectHandler = (evt) => {
-        console.log('evt.target.value :', evt.target.value);
+ ;
         this.setState({
             attributes: {
                 ...this.state.attributes,

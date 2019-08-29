@@ -146,7 +146,7 @@ define(["esri/layers/FeatureLayer",
                               }
                           },
                           error: function (error) {
-                              console.log(error);
+                   
                           }
                       }); */
             },
@@ -375,7 +375,7 @@ define(["esri/layers/FeatureLayer",
 
                         callbacks.renderSigns(results.data.features, feature.attributes.OBJECTID);
                     } else {
-                        console.log('No Features Returned.');
+                  
                     }
                 }, this.err);
 

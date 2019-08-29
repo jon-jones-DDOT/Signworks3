@@ -585,7 +585,7 @@ export async function getLocation2(args) {
             return results;
         }
     } catch (err) {
-        console.log('err', err)
+  
         console.error('Something went wrong with MAR');
         throw new Error('Bad stuff happened. In MAR');
     }

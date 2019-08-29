@@ -34,7 +34,7 @@ export function isSpeedLimit(mutt) {
    
     if (speedy) {
         const match = regX.exec(speedy)
-        console.log('match', match);
+
         if (match) {
             returnObj.speedLimit = match[1];
         }

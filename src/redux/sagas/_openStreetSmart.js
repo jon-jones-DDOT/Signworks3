@@ -38,7 +38,7 @@ function * openStreetSmart(action) {
         ])
 
         //get neighboring points from the selected support
-      console.log('(action.payload.retired', action.payload.retired)
+
         let where = null;
         switch (action.payload.retired) {
             case 0:
