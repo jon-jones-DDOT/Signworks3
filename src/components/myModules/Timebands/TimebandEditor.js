@@ -32,9 +32,11 @@ export default class TimebandEditor extends Component {
         const atts = this.props.value.attributes;
 
         if (atts.STARTDAY === 8) {
-            this.setState({anyTimeDisable: true, schoolDayDisable: false})
+            console.log('not firing?')
+            this.timebandDisabler('anytime');
+            
         } else if (atts.STARTDAY === 9) {
-            this.setState({anyTimeDisable: false, schoolDayDisable: true})
+            this.timebandDisabler('schooldays');
         }
     }
 
@@ -44,11 +46,14 @@ export default class TimebandEditor extends Component {
                 this.setState({startDayDisable: false, endDayDisable: true, startTimeDisable: true, endTimeDisable: true, hourLimitDisable: true});
                 break;
             case "schooldays":
+                console.log('firing?')
                 this.setState({startDayDisable: false, endDayDisable: true, startTimeDisable: false, endTimeDisable: false, hourLimitDisable: false});
                 break;
                 case 'hours/limit':
                     this.setState({startTimeDisable: true, endTimeDisable: true, hourLimitDisable: true});
                     break;
+                    case 'days/limit':
+                        this.setState({startDayDisable:true,endDayDisable:true, hourLimitDisable:true})
             case 'none':
                 this.setState({startDayDisable: false, endDayDisable: false, startTimeDisable: false, endTimeDisable: false, hourLimitDisable: false});
                 break;
@@ -72,13 +77,18 @@ export default class TimebandEditor extends Component {
         if (index === 0) {
             //Start Day Check for ANYTIME
             if (value === 7) {
-                console.log('validated anytime')
+               
                 this.timebandDisabler('anytime');
+                this.setState({errorMessage: "", startDayErrorClass: 'timeband', endDayErrorClass: 'timeband'
+            , startTimeErrorClass:"timeband", endTimeErrorClass:'timeband'})
+               
                 this
                     .props
                     .change(evt, this.props.index, 5)
             } else if (value === 8) {
                 this.timebandDisabler('schooldays');
+                this.setState({errorMessage: "", startDayErrorClass: 'timeband', endDayErrorClass: 'timeband'
+                , startTimeErrorClass:"timeband", endTimeErrorClass:'timeband'})
                 this
                     .props
                     .change(evt, this.props.index, 6)
@@ -118,6 +128,50 @@ export default class TimebandEditor extends Component {
             }
 
             
+        }
+        else if (index ===2){
+           
+            if (value > atts.ENDTIME && atts.ENDTIME > 0) {
+                console.log(
+                    'end time, start time', atts.ENDTIME, value
+                )
+                this.timebandDisabler('days/limit');
+                this.setState({errorMessage: "Start time is after end time", startTimeErrorClass: 'timeband_err', endTimeErrorClass: 'timeband_err'})
+                this
+                    .props
+                    .change(evt, this.props.index, 2)
+            }
+            else{
+                //don't turn on endday if startday is Schooldays
+                if(atts.STARTDAY ===8){
+                    this.timebandDisabler('schooldays');
+                }else{
+                   this.timebandDisabler('none'); 
+                }
+                
+                this.setState({errorMessage: "", startTimeErrorClass: 'timeband', endTimeErrorClass: 'timeband'})
+              
+                this
+                .props
+                .change(evt, this.props.index, 2)
+            }
+        }
+        else if(index ===3){
+            if (value < atts.STARTTIME) {
+                this.timebandDisabler('days/limit');
+                this.setState({errorMessage: "Start day is after end day", startTimeErrorClass: 'timeband_err', endTimeErrorClass: 'timeband_err'})
+                this
+                    .props
+                    .change(evt, this.props.index, 3)
+            }
+            else{
+                this.timebandDisabler('none');
+                this.setState({errorMessage: "", startTimeErrorClass: 'timeband', endTimeErrorClass: 'timeband'})
+              
+                this
+                .props
+                .change(evt, this.props.index, 3)
+            }
         }
 
         //     this.props.change(evt, this.props.index, 0)
@@ -162,7 +216,7 @@ export default class TimebandEditor extends Component {
                     value={this.props.value.attributes.STARTTIME
                     ? this.props.value.attributes.STARTTIME
                     : ""}
-                    onChange={(evt) => this.props.change(evt, this.props.index, 2)}>
+                    onChange={(evt) => this.timebandSelectChangeHandler(evt, 2)}>
                     {addOptionsToSelect(signTypes._codedValuesTimebandHours)}</select>
                 <select
                     className={this.state.endTimeErrorClass}
@@ -170,7 +224,7 @@ export default class TimebandEditor extends Component {
                     value={this.props.value.attributes.ENDTIME
                     ? this.props.value.attributes.ENDTIME
                     : ""}
-                    onChange={(evt) => this.props.change(evt, this.props.index, 3)}>
+                    onChange={(evt) => this.timebandSelectChangeHandler(evt, 3)}>
                     {addOptionsToSelect(signTypes._codedValuesTimebandHours)}</select>
                 <select
                     className="timeband"
@@ -178,7 +232,7 @@ export default class TimebandEditor extends Component {
                     value={this.props.value.attributes.HOURLIMIT
                     ? this.props.value.attributes.HOURLIMIT
                     : ""}
-                    onChange={(evt) => this.props.change(evt, this.props.index, 4)}>
+                    onChange={(evt) =>this.timebandSelectChangeHandler(evt, 4)}>
                     {addOptionsToSelect(signTypes._codedValuesHourLimits)}</select>
             </div>
         )
