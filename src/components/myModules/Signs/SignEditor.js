@@ -45,7 +45,8 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
             //validation keys
             muttDupe: false,
             zoneChecked: true,
-            speedo: isSpeedLimit(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.SIGNCODE)
+            speedo: isSpeedLimit(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.SIGNCODE),
+            errorMessage:"no error yet"
         }
         // the action property is just being arbitrarily tacked on here, I will use it
         // to sort the timebands for edits, adds, deletes, and no action
@@ -481,12 +482,10 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
         switch (ctrl) {
 
             case 0:
-                    console.log('timeband in props 1', this.props.map.signs[this.props.map.editSignIndex].timebands[index].attributes.STARTDAY)
-                    console.log('timeband in state 1', this.state.timebands[index].attributes.STARTDAY)
+
                 bands[index].attributes.STARTDAY = Number(evt.target.value);
                 bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
-                console.log('timeband in props 2', this.props.map.signs[this.props.map.editSignIndex].timebands[index].attributes.STARTDAY)
-                console.log('timeband in state 2', this.state.timebands[index].attributes.STARTDAY)
+
                 break;
             case 1:
                 bands[index].attributes.ENDDAY = Number(evt.target.value);
@@ -535,6 +534,11 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
         this.setState({
             timebands: [...bands]
         })
+    }
+
+    timebandErrorMessageHandler = (msg)=>{
+        console.log('msg', msg)
+            this.setState({errorMessage:msg})
     }
 
     timebandAddHandler = (signId) => {
@@ -718,6 +722,7 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
                                 change={this.timebandChangeHandler}
                                 add={this.timebandAddHandler}
                                 delete={this.timebandDeleteHandler}
+                                error= {this.timebandErrorMessageHandler}
                                 signId={this.state.feature.attributes.GLOBALID}></Timebands>
                         </div>
                         <div className="SignEditButtonDiv">
@@ -725,6 +730,7 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
                             <button onClick={this.cancelClickHandler}>CANCEL
                             </button>
                         </div>
+                        <div>{this.state.errorMessage}</div>
                     </div>
 
                 </div>

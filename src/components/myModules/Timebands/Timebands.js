@@ -16,6 +16,7 @@ export default function Timebands(props) {
                     class="TimebandEditor"
                     change={props.change}
                     delete={props.delete}
+                    error = {props.error}
                     signId={props.signId}/>))
         } else {
             return props
