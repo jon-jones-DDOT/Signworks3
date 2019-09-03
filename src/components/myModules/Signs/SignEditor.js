@@ -59,6 +59,9 @@ export default class SignEditor extends Component {
         this.items = this.formattedMuttArray();
 
     }
+    componentDidMount (){
+        this.timebandCollisionHandler();
+    }
 
     zoneChangeHandler = (evt) => {
         let Checksky = true;
