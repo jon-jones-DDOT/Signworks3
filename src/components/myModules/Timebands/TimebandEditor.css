@@ -6,7 +6,14 @@
 
 .TimebandEditor_delete{
     margin:auto;
-    border:red solid 1px;
+    border:black solid 1px;
+}
+
+.Timebands_err{
+    border: 3px solid transparent;
+    animation-name: Blinky;
+    animation-duration: .1s;
+    animation-iteration-count: infinite;
 }
 .TimebandSelect{
     width:80px;

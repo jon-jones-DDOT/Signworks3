@@ -23,12 +23,11 @@ export default class SignEditor extends Component {
     constructor(props) {
 
         super(props)
-        
+
         const zone = this.zoneParse(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.ZONE_ID)
 
-const sign = cloneDeep(this.props.map.signs[this.props.map.editSignIndex]);
-const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].feature);
-
+        const sign = cloneDeep(this.props.map.signs[this.props.map.editSignIndex]);
+        const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].feature);
 
         this.state = {
 
@@ -46,16 +45,19 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
             muttDupe: false,
             zoneChecked: true,
             speedo: isSpeedLimit(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.SIGNCODE),
-            errorMessage:"no error yet",
-            cantSave:false
+            errorMessage: "no error yet",
+            collisionMessage:"no collisions yet",
+            cantSave: false,
+            cantAdd: false
         }
         // the action property is just being arbitrarily tacked on here, I will use it
         // to sort the timebands for edits, adds, deletes, and no action
         for (let i = 0; i < this.state.timebands.length; i++) {
             this.state.timebands[i].action = 0;
+            this.state.timebands[i].conflict = false;
         }
         this.items = this.formattedMuttArray();
-     
+
     }
 
     zoneChangeHandler = (evt) => {
@@ -337,7 +339,6 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
         const mutt = muttGenerator(chosenOne).next();
 
         const newSpeedo = isSpeedLimit(chosenOne.code);
-   
 
         this.setState({
             MUTCD: mutt.value.payload.args[0][0],
@@ -444,8 +445,7 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
         )
     }
 
-    MPHSelectHandler = (evt) => {
- ;
+    MPHSelectHandler = (evt) => {;
         this.setState({
             attributes: {
                 ...this.state.attributes,
@@ -505,7 +505,7 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
                 bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             case 5:
-             
+
                 bands[index].attributes.STARTDAY = Number(evt.target.value);
                 bands[index].attributes.ENDDAY = 0;
                 bands[index].attributes.STARTTIME = 0;
@@ -514,7 +514,7 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
                 bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
                 break;
             case 6:
-        
+
                 bands[index].attributes.STARTDAY = Number(evt.target.value);
                 bands[index].attributes.ENDDAY = 0;
                 bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
@@ -537,15 +537,15 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
         })
     }
 
-    timebandErrorMessageHandler = (msg)=>{
-console.log('msg :', msg);
-            this.setState({errorMessage:msg})
-            if( msg == "" ){
-                this.setState({cantSave:false})
-            }
-            else{
-                this.setState({cantSave:true})
-            }
+    timebandErrorMessageHandler = (msg) => {
+
+        this.setState({errorMessage: msg})
+        if (msg == "") {
+            this.setState({cantSave: false},this.timebandCollisionHandler)
+        } else {
+            this.setState({cantSave: true},this.timebandCollisionHandler)
+        }
+        
     }
 
     timebandAddHandler = (signId) => {
@@ -598,6 +598,69 @@ console.log('msg :', msg);
         this.setState({
             timebands: [...bands]
         })
+    }
+
+    timebandComparer = (band1, band2) => {
+ 
+        if( band1.attributes.STARTDAY === 8 || band2.attributes.STARTDAY ===8 ){
+            this.setState({collisionMessage:"Can't have another time restriction with ANYTIME"})
+            return true;
+        }
+        else if(band1.attributes.STARTDAY <= band2.attributes.STARTDAY && band1.attributes.ENDDAY >= band2.attributes.STARTDAY ){
+           if(band1.attributes.STARTTIME < band2.attributes.STARTTIME && band1.attributes.ENDTIME > band2.attributes.STARTTIME){
+               this.setState({collisionMessage:"Timebands Overlap"});
+               return true;
+           }
+           else{
+               this.setState({collisionMessage:""});
+               return false;
+           }
+           
+            
+        }
+      
+        else{
+            this.setState({collisionMessage: ""})
+        }
+        return false;
+    }
+
+    timebandCollisionHandler = () => {
+
+        if (this.state.timebands.length === 1) {
+            if (this.state.timebands[0].attributes.STARTDAY === 8) {
+                this.setState({cantAdd: true})
+            } else {
+                this.setState({cantAdd: false})
+            }
+            return;
+        }
+        if (this.state.timebands.length > 1) {
+            for (let i = 0; i < this.state.timebands.length; i++) {
+                for (let j = 0; j < this.state.timebands.length; j++) {
+                    if(i === j){
+                        continue;
+                    }
+                    if (this.timebandComparer(this.state.timebands[i], this.state.timebands[j])) {
+                        let bandz = [...this.state.timebands];
+                      
+                        bandz[i].conflict= true;
+                        bandz[j].conflict = true;
+                        this.setState({timebands:bandz, cantSave:true});
+                        return;
+                    }
+                    else{
+                      
+                        let bandz = [...this.state.timebands];
+                        bandz[i].conflict= false;
+                        bandz[j].conflict = false;
+                        this.setState({timebands:bandz, cantSave:false});
+                    }
+
+                }
+            }
+        }
+
     }
 
     signTypes = new SignType();
@@ -729,7 +792,8 @@ console.log('msg :', msg);
                                 change={this.timebandChangeHandler}
                                 add={this.timebandAddHandler}
                                 delete={this.timebandDeleteHandler}
-                                error= {this.timebandErrorMessageHandler}
+                                error={this.timebandErrorMessageHandler}
+                                cantAdd={this.state.cantAdd}
                                 signId={this.state.feature.attributes.GLOBALID}></Timebands>
                         </div>
                         <div className="SignEditButtonDiv">
@@ -738,6 +802,7 @@ console.log('msg :', msg);
                             </button>
                         </div>
                         <div>{this.state.errorMessage}</div>
+                        <div> {this.state.collisionMessage}</div>
                     </div>
 
                 </div>

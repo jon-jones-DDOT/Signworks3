@@ -227,12 +227,14 @@ export default class TimebandEditor extends Component {
     }
 
     render() {
+      
         return (
             <div
                 className={this.state.willDelete
                 ? "TimebandEditor_delete"
                 : "TimebandEditor"}>
-                <button onClick= {(evt) => this.deleteBand(evt,this.props.index)}>
+                <button className= { this.props.value.conflict?"Timebands_err":""}
+                 onClick= {(evt) => this.deleteBand(evt,this.props.index)}>
                     <b>X</b>
                 </button>
                 <select

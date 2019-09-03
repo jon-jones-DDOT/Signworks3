@@ -44,7 +44,8 @@ export default function Timebands(props) {
                         <button
                             onClick={() => props.add(props.signId)}
                             title="Add Time Restriction"
-                            className="addBandButton">
+                            className="addBandButton"
+                            disabled ={props.cantAdd}>
                             <b>+</b>
                         </button>
                     </div>
