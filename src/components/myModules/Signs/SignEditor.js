@@ -46,7 +46,8 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
             muttDupe: false,
             zoneChecked: true,
             speedo: isSpeedLimit(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.SIGNCODE),
-            errorMessage:"no error yet"
+            errorMessage:"no error yet",
+            cantSave:false
         }
         // the action property is just being arbitrarily tacked on here, I will use it
         // to sort the timebands for edits, adds, deletes, and no action
@@ -537,8 +538,14 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
     }
 
     timebandErrorMessageHandler = (msg)=>{
-        console.log('msg', msg)
+console.log('msg :', msg);
             this.setState({errorMessage:msg})
+            if( msg == "" ){
+                this.setState({cantSave:false})
+            }
+            else{
+                this.setState({cantSave:true})
+            }
     }
 
     timebandAddHandler = (signId) => {
@@ -726,7 +733,7 @@ const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].fea
                                 signId={this.state.feature.attributes.GLOBALID}></Timebands>
                         </div>
                         <div className="SignEditButtonDiv">
-                            <button onClick={this.saveClickHandler}>SAVE</button>
+                            <button onClick={this.saveClickHandler} disabled={this.state.cantSave}>SAVE</button>
                             <button onClick={this.cancelClickHandler}>CANCEL
                             </button>
                         </div>

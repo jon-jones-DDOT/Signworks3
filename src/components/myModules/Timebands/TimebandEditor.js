@@ -205,10 +205,10 @@ export default class TimebandEditor extends Component {
         }
 
         if ((atts.ENDTIME === 0 || atts.STARTTIME === 0) && atts.STARTDAY < 7) {
-            console.log('need starttime or endtime', atts.STARTTIME, atts.ENDTIME)
+      
             if (atts.STARTTIME === 0) {
                 this.setState({errorMessage: "Start time is zero", startTimeErrorClass: 'timeband_err'});
-                this.props.error("Start time cannot be zero")
+                this.props.error("Start time cannot be zero");
             } else if (atts.ENDTIME === 0) {
                 this.setState({errorMessage: 'End time is zero', endTimeErrorClass: "timeband_err"});
                 this.props.error("End time cannot be zero");

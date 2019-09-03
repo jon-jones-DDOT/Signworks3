@@ -115,7 +115,7 @@ export class SupportType {
 
 export class SignType {
     name = (index, domain) => {
-        console.log('index,domain', index, domain);
+
         if (index === null) {
             return null;
         }

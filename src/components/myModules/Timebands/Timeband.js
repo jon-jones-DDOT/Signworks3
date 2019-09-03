@@ -5,7 +5,7 @@ import {SignType} from './../../../SignworksJSON'
 export default function Timeband(props) {
  
  const domains  = new SignType();
- console.log('end day', domains.name(props.value.attributes.ENDDAY, "TIMEBAND_END_DAYS"));
+
   return (
     <div className= "TimebandRow">
     
