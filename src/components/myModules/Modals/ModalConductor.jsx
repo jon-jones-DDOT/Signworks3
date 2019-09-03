@@ -10,7 +10,7 @@ import SuperQuery from '../SuperQuery'
 import MAR from '../MAR';
 
 function ModalConductor(props) {
- 
+
     switch (props.map.currentModal) {
         case 'SUPPORT':
             return <SupportEditor {...props}/>

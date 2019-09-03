@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react'
+import cloneDeep from 'lodash.clonedeep';
 
 import Img from 'react-image'
 import './SignEditor.css'
@@ -22,11 +23,17 @@ export default class SignEditor extends Component {
     constructor(props) {
 
         super(props)
+        
         const zone = this.zoneParse(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.ZONE_ID)
+
+const sign = cloneDeep(this.props.map.signs[this.props.map.editSignIndex]);
+const feature = cloneDeep(this.props.map.signs[this.props.map.editSignIndex].feature);
+
+
         this.state = {
 
-            ...this.props.map.signs[this.props.map.editSignIndex],
-            ...this.props.map.signs[this.props.map.editSignIndex].feature,
+            ...sign,
+            ...feature,
             paneSelection: 1,
             muttSelected: false,
             showInfo: false,
@@ -46,6 +53,7 @@ export default class SignEditor extends Component {
             this.state.timebands[i].action = 0;
         }
         this.items = this.formattedMuttArray();
+     
     }
 
     zoneChangeHandler = (evt) => {
@@ -468,13 +476,17 @@ export default class SignEditor extends Component {
 
     timebandChangeHandler = (evt, index, ctrl) => {
 
-        let bands = [...this.state.timebands]
+        let bands = this.state.timebands;
 
         switch (ctrl) {
 
             case 0:
+                    console.log('timeband in props 1', this.props.map.signs[this.props.map.editSignIndex].timebands[index].attributes.STARTDAY)
+                    console.log('timeband in state 1', this.state.timebands[index].attributes.STARTDAY)
                 bands[index].attributes.STARTDAY = Number(evt.target.value);
                 bands[index].attributes.SIGNWORKS_LAST_EDITED_BY = this.props.auth.user.username;
+                console.log('timeband in props 2', this.props.map.signs[this.props.map.editSignIndex].timebands[index].attributes.STARTDAY)
+                console.log('timeband in state 2', this.state.timebands[index].attributes.STARTDAY)
                 break;
             case 1:
                 bands[index].attributes.ENDDAY = Number(evt.target.value);
