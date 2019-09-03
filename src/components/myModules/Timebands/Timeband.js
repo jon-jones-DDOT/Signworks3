@@ -11,7 +11,7 @@ export default function Timeband(props) {
     
     
     <span className="timebandElement">{domains.name(props.value.attributes.STARTDAY, "TIMEBAND_START_DAYS")}
-    {props.value.attributes.STARTDAY >7?"":  "-"}</span>
+    {props.value.attributes.STARTDAY >7?" ":  "-"}</span>
     <span className="timebandElement">{domains.name(props.value.attributes.ENDDAY, "TIMEBAND_END_DAYS")}
     {props.value.attributes.STARTDAY >7?"":  " | "}
     </span>

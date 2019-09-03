@@ -81,14 +81,16 @@ export default class TimebandEditor extends Component {
                
                 this
                     .props
-                    .change(evt, this.props.index, 5)
+                    .change(evt, this.props.index, 5, this.state.errorMessage)
+                    return;
             } else if (value === 8) {
                 this.timebandDisabler('schooldays');
                 this.setState({errorMessage: "", startDayErrorClass: 'timeband', endDayErrorClass: 'timeband'
                 , startTimeErrorClass:"timeband", endTimeErrorClass:'timeband'})
                 this
                     .props
-                    .change(evt, this.props.index, 6)
+                    .change(evt, this.props.index, 6, this.state.errorMessage);
+                    return;
             } 
             else if(value > atts.ENDDAY && atts.ENDDAY > 0){
     
@@ -96,7 +98,16 @@ export default class TimebandEditor extends Component {
                 this.setState({errorMessage: "Start day is after end day", startDayErrorClass: 'timeband_err', endDayErrorClass: 'timeband_err'})
                 this
                     .props
-                    .change(evt, this.props.index, 0)
+                    .change(evt, this.props.index, 0, this.state.errorMessage)
+                    return;
+            }
+            else if (atts.ENDDAY === 0 ){
+                this.timebandDisabler('hours/limit');
+                this.setState({errorMessage: "End day cannot be zero", startDayErrorClass: 'timeband', endDayErrorClass: 'timeband_err'})
+                this
+                    .props
+                    .change(evt, this.props.index, 0, this.state.errorMessage)
+                    return;
             }
                 else {
                 this.timebandDisabler('none');
@@ -104,7 +115,7 @@ export default class TimebandEditor extends Component {
               
                 this
                     .props
-                    .change(evt, this.props.index, 0)
+                    .change(evt, this.props.index, 0, this.state.errorMessage)
             }
         } else if (index === 1) {
 
@@ -113,7 +124,7 @@ export default class TimebandEditor extends Component {
                 this.setState({errorMessage: "Start day is after end day", startDayErrorClass: 'timeband_err', endDayErrorClass: 'timeband_err'})
                 this
                     .props
-                    .change(evt, this.props.index, 1)
+                    .change(evt, this.props.index, 1, this.state.errorMessage)
             }
             else{
                 this.timebandDisabler('none');
@@ -121,7 +132,7 @@ export default class TimebandEditor extends Component {
               
                 this
                 .props
-                .change(evt, this.props.index, 1)
+                .change(evt, this.props.index, 1, this.state.errorMessage)
             }
 
             
@@ -134,7 +145,7 @@ export default class TimebandEditor extends Component {
                 this.setState({errorMessage: "Start time is after end time", startTimeErrorClass: 'timeband_err', endTimeErrorClass: 'timeband_err'})
                 this
                     .props
-                    .change(evt, this.props.index, 2)
+                    .change(evt, this.props.index, 2, this.state.errorMessage)
             }
             else{
                 //don't turn on endday if startday is Schooldays
@@ -148,7 +159,7 @@ export default class TimebandEditor extends Component {
               
                 this
                 .props
-                .change(evt, this.props.index, 2)
+                .change(evt, this.props.index, 2, this.state.errorMessage)
             }
         }
         else if(index ===3){
@@ -157,7 +168,7 @@ export default class TimebandEditor extends Component {
                 this.setState({errorMessage: "Start day is after end day", startTimeErrorClass: 'timeband_err', endTimeErrorClass: 'timeband_err'})
                 this
                     .props
-                    .change(evt, this.props.index, 3)
+                    .change(evt, this.props.index, 3, this.state.errorMessage)
             }
             else{
                 this.timebandDisabler('none');
@@ -165,11 +176,26 @@ export default class TimebandEditor extends Component {
               
                 this
                 .props
-                .change(evt, this.props.index, 3)
+                .change(evt, this.props.index, 3, this.state.errorMessage)
+            }
+        }
+        else if(index===4){
+            // don't know any hourlimit validations at the moment
+        }
+
+       
+        if( (atts.ENDTIME ===0  || atts.STARTTIME === 0) && atts.STARTDAY < 7){
+            console.log('need starttime or endtime',atts.STARTTIME, atts.ENDTIME)
+            if(atts.STARTTIME === 0){
+            this.setState({errorMessage: "Start time is zero", startTimeErrorClass: 'timeband_err'})
+            }
+            else if (atts.ENDTIME ===0){
+                this.setState({errorMessage:'End time is zero', endTimeErrorClass:"timeband_err"})
             }
         }
 
         //     this.props.change(evt, this.props.index, 0)
+        console.log('this.state.errorMessage', this.state.errorMessage)
     }
 
     deleteBand = (evt, index) => {
