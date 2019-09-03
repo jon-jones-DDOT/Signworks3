@@ -1,5 +1,5 @@
 import React from "react"
-import { throws } from "assert";
+import {throws} from "assert";
 
 export class SupportType {
     name = (index, domain) => {
@@ -83,7 +83,8 @@ export class SupportType {
         {
             "name": "Active",
             "code": 1
-        },/*
+        },
+        /*
          {
             "name": "Prospective",
             "code": 2
@@ -97,7 +98,8 @@ export class SupportType {
         {
             "name": "Retired",
             "code": 5
-        },/*
+        },
+        /*
          {
             "name": "Requested (New)",
             "code": 6
@@ -113,7 +115,7 @@ export class SupportType {
 
 export class SignType {
     name = (index, domain) => {
-
+        console.log('index,domain', index, domain);
         if (index === null) {
             return null;
         }
@@ -122,8 +124,9 @@ export class SignType {
             case 'TIMEBAND_START_DAYS':
                 codedValue = this._codedValuesTimebandStartDays;
                 break;
-                case'TIMEBAND_END_DAYS':
+            case 'TIMEBAND_END_DAYS':
                 codedValue = this._codedValuesTimebandEndDays;
+                break;
             case 'TIMEBAND_HOURS':
                 codedValue = this._codedValuesTimebandHours;
                 break;
@@ -145,7 +148,7 @@ export class SignType {
 
             return "coded domain is broken " + domain + " " + index;
         } catch (err) {
-            alert( 'this error in SignType in SignWorksJSON' + err.message);
+            alert('this error in SignType in SignWorksJSON' + err.message);
         }
     }
 
@@ -707,13 +710,13 @@ export function addOptionsToSelect(options) {
 }
 
 export const leftKeys = {
-    NO_LEFT_PANE : 0,
-    SS_VIEW_FIRST :1,
-    SS_VIEW_REPEAT:2,
-    SS_ADD_FIRST:3,
-    SS_ADD_REPEAT:4,
-    GOOGLE_FIRST:5,
-    GOOGLE_REPEAT:6
+    NO_LEFT_PANE: 0,
+    SS_VIEW_FIRST: 1,
+    SS_VIEW_REPEAT: 2,
+    SS_ADD_FIRST: 3,
+    SS_ADD_REPEAT: 4,
+    GOOGLE_FIRST: 5,
+    GOOGLE_REPEAT: 6
 
 }
 
