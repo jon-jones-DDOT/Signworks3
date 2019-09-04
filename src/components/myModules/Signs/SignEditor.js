@@ -46,7 +46,7 @@ export default class SignEditor extends Component {
             zoneChecked: true,
             speedo: isSpeedLimit(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.SIGNCODE),
             errorMessage: "",
-            collisionMessage:"",
+            collisionMessage: "",
             cantSave: false,
             cantAdd: false
         }
@@ -59,7 +59,7 @@ export default class SignEditor extends Component {
         this.items = this.formattedMuttArray();
 
     }
-    componentDidMount (){
+    componentDidMount() {
         this.timebandCollisionHandler();
     }
 
@@ -543,12 +543,19 @@ export default class SignEditor extends Component {
     timebandErrorMessageHandler = (msg) => {
 
         this.setState({errorMessage: msg})
+        console.log('msg :', msg);
         if (msg == "") {
-            this.setState({cantSave: false},this.timebandCollisionHandler)
+            this.setState({
+                cantSave: false
+            }, this.timebandCollisionHandler)
+            console.log('set to false with callback');
         } else {
-            this.setState({cantSave: true},this.timebandCollisionHandler)
+            this.setState({
+                cantSave: true
+            }, this.timebandCollisionHandler);
+            console.log('set to true with callback');
         }
-        
+
     }
 
     timebandAddHandler = (signId) => {
@@ -604,60 +611,79 @@ export default class SignEditor extends Component {
     }
 
     timebandComparer = (band1, band2) => {
- 
-        if( band1.attributes.STARTDAY === 8 || band2.attributes.STARTDAY ===8 ){
-            this.setState({collisionMessage:"Can't have another time restriction with ANYTIME"})
+
+        if (band1.attributes.STARTDAY === 8 || band2.attributes.STARTDAY === 8) {
+            this.setState({collisionMessage: "Can't have another time restriction with ANYTIME"})
             return true;
-        }
-        else if(band1.attributes.STARTDAY <= band2.attributes.STARTDAY && band1.attributes.ENDDAY >= band2.attributes.STARTDAY ){
-           if(band1.attributes.STARTTIME < band2.attributes.STARTTIME && band1.attributes.ENDTIME > band2.attributes.STARTTIME){
-               this.setState({collisionMessage:"Timebands Overlap"});
-               return true;
-           }
-           else{
-               this.setState({collisionMessage:""});
-               return false;
-           }
-           
-            
-        }
-      
-        else{
+        } else if (band1.attributes.STARTDAY <= band2.attributes.STARTDAY && band1.attributes.ENDDAY >= band2.attributes.STARTDAY) {
+            if (band1.attributes.STARTTIME < band2.attributes.STARTTIME && band1.attributes.ENDTIME > band2.attributes.STARTTIME) {
+                this.setState({collisionMessage: "Timebands Overlap"});
+                return true;
+            } else {
+                this.setState({collisionMessage: ""});
+                return false;
+            }
+
+        } else {
             this.setState({collisionMessage: ""})
         }
         return false;
     }
 
     timebandCollisionHandler = () => {
-
+      // there is one timeband  
         if (this.state.timebands.length === 1) {
+            // if the STARTDAY is ANYTIME, shut off add button and get out
             if (this.state.timebands[0].attributes.STARTDAY === 8) {
-                this.setState({cantAdd: true})
+                this.setState({cantAdd: true}) 
+                return;
             } else {
+            //else turn add button on and keep testing
                 this.setState({cantAdd: false})
             }
-            return;
+            
         }
+        // turn add button off if there are  error messages, turn on if there are not
+        if (this.state.errorMessage != "" || this.state.collisionMessage != "") {
+            this.setState({cantAdd: true});     
+        }
+        else{
+            this.setState({cantAdd:false})
+        }
+
+        //more than one timeband
         if (this.state.timebands.length > 1) {
+            // gonna walk down the timebands 
             for (let i = 0; i < this.state.timebands.length; i++) {
+                //for each timeband, gonna walk down timebands again
                 for (let j = 0; j < this.state.timebands.length; j++) {
-                    if(i === j){
+                    // do not compare timeband to itself
+                    if (i === j) {
                         continue;
                     }
+                    //timebandComparer returns true if conflict is detected
                     if (this.timebandComparer(this.state.timebands[i], this.state.timebands[j])) {
+                        // there was a conflict
                         let bandz = [...this.state.timebands];
-                      
-                        bandz[i].conflict= true;
+                        bandz[i].conflict = true;
                         bandz[j].conflict = true;
-                        this.setState({timebands:bandz, cantSave:true});
+                        this.setState({timebands: bandz, cantSave: true});
+                        console.log('set to true in collision handler with no callback')
                         return;
-                    }
-                    else{
-                      
+                    } else {
+                        // no conflict
                         let bandz = [...this.state.timebands];
-                        bandz[i].conflict= false;
+                        bandz[i].conflict = false;
                         bandz[j].conflict = false;
-                        this.setState({timebands:bandz, cantSave:false});
+                        // check for error message before enabling add button
+                        if(this.state.errorMessage !=""){
+                            this.setState({timebands: bandz, cantSave: true});
+                        }
+                        else{
+                             this.setState({timebands: bandz, cantSave: false});
+                        }
+                       
+                        console.log( 'set to false in collisdion handler with no callback')
                     }
 
                 }
@@ -804,9 +830,15 @@ export default class SignEditor extends Component {
                             <button onClick={this.cancelClickHandler}>CANCEL
                             </button>
                         </div>
-                        <div>{this.state.errorMessage != "" || this.state.collisionMessage != ""?"Validation Errors:":""}</div>
-                        <div><b>{this.state.errorMessage}</b></div>
-                        <div> <b>{this.state.collisionMessage}</b></div>
+                        <div>{this.state.errorMessage != "" || this.state.collisionMessage != ""
+                                ? "Validation Errors:"
+                                : ""}</div>
+                        <div>
+                            <b>{this.state.errorMessage}</b>
+                        </div>
+                        <div>
+                            <b>{this.state.collisionMessage}</b>
+                        </div>
                     </div>
 
                 </div>
