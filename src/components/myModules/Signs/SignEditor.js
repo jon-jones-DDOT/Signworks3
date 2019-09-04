@@ -45,8 +45,8 @@ export default class SignEditor extends Component {
             muttDupe: false,
             zoneChecked: true,
             speedo: isSpeedLimit(this.props.map.signs[this.props.map.editSignIndex].feature.attributes.SIGNCODE),
-            errorMessage: "no error yet",
-            collisionMessage:"no collisions yet",
+            errorMessage: "",
+            collisionMessage:"",
             cantSave: false,
             cantAdd: false
         }
@@ -804,8 +804,9 @@ export default class SignEditor extends Component {
                             <button onClick={this.cancelClickHandler}>CANCEL
                             </button>
                         </div>
-                        <div>{this.state.errorMessage}</div>
-                        <div> {this.state.collisionMessage}</div>
+                        <div>{this.state.errorMessage != "" || this.state.collisionMessage != ""?"Validation Errors:":""}</div>
+                        <div><b>{this.state.errorMessage}</b></div>
+                        <div> <b>{this.state.collisionMessage}</b></div>
                     </div>
 
                 </div>

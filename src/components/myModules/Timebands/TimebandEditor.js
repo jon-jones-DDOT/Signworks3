@@ -189,7 +189,7 @@ export default class TimebandEditor extends Component {
         } else if (index === 3) {
             if (value < atts.STARTTIME) {
                 this.timebandDisabler('days/limit');
-                this.setState({errorMessage: "Start day is after end day", startTimeErrorClass: 'timeband_err', endTimeErrorClass: 'timeband_err'})
+                this.setState({errorMessage: "Start time is after end time", startTimeErrorClass: 'timeband_err', endTimeErrorClass: 'timeband_err'})
                 this
                     .props
                     .change(evt, this.props.index, 3, this.state.errorMessage);
