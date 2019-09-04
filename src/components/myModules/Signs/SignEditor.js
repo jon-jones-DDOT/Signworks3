@@ -611,15 +611,23 @@ export default class SignEditor extends Component {
     }
 
     timebandComparer = (band1, band2) => {
-
+        
         if (band1.attributes.STARTDAY === 8 || band2.attributes.STARTDAY === 8) {
+            //if either band is anytime, that's a conflict - shouldn't be able to happen but this will catch bad data already
+            //in the database
             this.setState({collisionMessage: "Can't have another time restriction with ANYTIME"})
             return true;
-        } else if (band1.attributes.STARTDAY <= band2.attributes.STARTDAY && band1.attributes.ENDDAY >= band2.attributes.STARTDAY) {
-            if (band1.attributes.STARTTIME < band2.attributes.STARTTIME && band1.attributes.ENDTIME > band2.attributes.STARTTIME) {
-                this.setState({collisionMessage: "Timebands Overlap"});
+        }
+         else if (band1.attributes.STARTDAY <= band2.attributes.STARTDAY && band1.attributes.ENDDAY >= band2.attributes.STARTDAY) {
+            // we got here cuz B1 starts before (or when) B2 starts AND B1 ends after (or when) B2 starts, in regards to days of week
+            if (band1.attributes.STARTTIME <= band2.attributes.STARTTIME && band1.attributes.ENDTIME >= band2.attributes.STARTTIME) {
+               //B1 and B2 overlap on days of week  and B1 starts before (or when) B2 starts AND B1 ends after (or when) B2 starts, on hours
+               console.log('overlap message') 
+               this.setState({collisionMessage: "Timebands Overlap"});
                 return true;
             } else {
+                //all is well
+                console.log('erase overlap message')
                 this.setState({collisionMessage: ""});
                 return false;
             }
