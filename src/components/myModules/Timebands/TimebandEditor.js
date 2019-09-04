@@ -27,15 +27,23 @@ export default class TimebandEditor extends Component {
 
     }
     componentDidMount() {
-
+       
         const atts = this.props.value.attributes;
-
+       console.log('atts.ENDDAY :', atts.ENDDAY);
         if (atts.STARTDAY === 8) {
 
             this.timebandDisabler('anytime');
 
         } else if (atts.STARTDAY === 9) {
             this.timebandDisabler('schooldays');
+        }
+        else if(atts.STARTDAY ===0 && atts.ENDDAY === 0){
+            this.setState({errorMessage: "Start day is after end day",
+             startDayErrorClass: 'timeband_err', endDayErrorClass: 'timeband_err'})                
+            this.timebandDisabler('hours/limit');
+            this
+            .props
+            .error("End day cannot be zero");
         }
     }
 

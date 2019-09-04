@@ -573,7 +573,7 @@ export default class SignEditor extends Component {
                 SIGNID: signId,
                 SPACEARROW: null,
                 SPACEID: null,
-                STARTDAY: 8,
+                STARTDAY: 0,
                 STARTTIME: 0,
                 SIGNWORKS_CREATED_BY: this.props.auth.user.username,
                 SIGNWORKS_LAST_EDITED_BY: this.props.auth.user.username
