@@ -46,7 +46,7 @@ export default class TimebandEditor extends Component {
     }
 
     timebandDisabler = (code) => {
-        console.log('disabler code', code)
+  
         switch (code) {
             case "anytime":
                 this.setState({startDayDisable: false, endDayDisable: true, startTimeDisable: true, endTimeDisable: true, hourLimitDisable: true});
@@ -59,7 +59,7 @@ export default class TimebandEditor extends Component {
                 this.setState({startDayDisable: false, endDayDisable: false, startTimeDisable: true, endTimeDisable: true, hourLimitDisable: true});
                 break;
             case 'days/limit':
-                console.log('days/limit'); 
+          
                 this.setState({startDayDisable: true, endDayDisable: true, hourLimitDisable: true})
             case 'none':
                 this.setState({startDayDisable: false, endDayDisable: false, startTimeDisable: false, endTimeDisable: false, hourLimitDisable: false});

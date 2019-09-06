@@ -31,8 +31,8 @@ function * getCone(action) {
       
         }
 
-   
-        const triangle = yield call(createTriangle, [projPoint, action.payload.pitch, action.payload.yaw, action.payload.source])
+ 
+        const triangle = yield call(createTriangle, [projPoint, action.payload.pitch, action.payload.yaw, action.payload.hFov,action.payload.source])
 
         yield put({
             type: graphicTypes.SET_NEW_CONE_RG,

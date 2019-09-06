@@ -91,7 +91,8 @@ class StreetSmart extends Component {
         const ciao = this.props.setMapClickMode;
         const bye = this.ssCancel;
         let imagePitch,
-            imageYaw;
+            imageYaw,
+            imagehFov;
 
         const PointsSLD = ' <?xml version="1.0"  encoding="ISO-8859-1"?><StyledLayerDescriptor  version="1.' +
                 '0.0"             xsi:schemaLocation="http://www.opengis.net/sld  StyledLayerDesc' +
@@ -140,7 +141,7 @@ class StreetSmart extends Component {
                 return;
             }
 
-                save(result, auth ,layers);
+            save(result, auth, layers);
 
             window
                 .StreetSmartApi
@@ -151,14 +152,19 @@ class StreetSmart extends Component {
 
         };
 
+        const surfaceCursorChangeHandler = (evt) => {
+          
+        }
+
         const changeView = function (evt) {
             // view cone stuff
-
+       
+            imagehFov = evt.detail.hFov;
             imagePitch = evt.detail.pitch;
             imageYaw = evt.detail.yaw;
             // for the last arg, I could pass in leftMode from props, but I think that
             // leftMode might go away in the future...
-            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch, imageYaw, layers, "StreetSmart")
+            coneCode(window.panoramaViewer._panoramaViewer._activeRecording.xyz, imagePitch, imageYaw, imagehFov, layers, "StreetSmart")
 
         };
 
@@ -225,6 +231,9 @@ class StreetSmart extends Component {
                                 window
                                     .panoramaViewer
                                     .on(window.StreetSmartApi.Events.panoramaViewer.VIEW_LOAD_END, loadViewEnd);
+                                window
+                                    .panoramaViewer
+                                    .on(window.StreetSmartApi.Events.panoramaViewer.FEATURE_CLICK, surfaceCursorChangeHandler);
 
                                 for (let o in options) {
                                     window

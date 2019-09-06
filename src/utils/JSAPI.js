@@ -423,11 +423,17 @@ export function calculateBearingPoints(args) {
 }
 
 export function createTriangle(args) {
+   
     const point1 = args[0][0];
     
     const imagePitch = args[1];
     const imageYaw = args[2];
-    const source = args[3];
+    let hFov = args[3];
+    const source = args[4];
+if(source === "StreetSmart"){
+    hFov /= 2;
+}
+
     let sourceColor;
     if (source ==="StreetSmart"){
         sourceColor = "blue";
@@ -473,12 +479,12 @@ export function createTriangle(args) {
 
                 let bob = new LatLon(point2.y, point2.x);
                
-
-                let portAzimuth = imageYaw - 55;
+                    console.log('hFov :', hFov);
+                let portAzimuth = imageYaw - hFov;
                 if (portAzimuth < 0) {
                     portAzimuth += 360;
                 }
-                let starboardAzimuth = imageYaw + 55;
+                let starboardAzimuth = imageYaw + hFov;
                 if (starboardAzimuth > 360) {
                     starboardAzimuth -= 360;
                 }
