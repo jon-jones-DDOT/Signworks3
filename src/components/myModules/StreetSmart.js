@@ -213,6 +213,7 @@ class StreetSmart extends Component {
 
                                     window.panoramaViewer = result[i];
                                 }
+                                window.panoramaViewer.toggleNavbarExpanded(false);
 
                                 if (editMode) {
                                     window
