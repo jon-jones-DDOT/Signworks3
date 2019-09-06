@@ -543,17 +543,15 @@ export default class SignEditor extends Component {
     timebandErrorMessageHandler = (msg) => {
 
         this.setState({errorMessage: msg})
-        console.log('msg :', msg);
+     
         if (msg == "") {
             this.setState({
                 cantSave: false
             }, this.timebandCollisionHandler)
-            console.log('set to false with callback');
         } else {
             this.setState({
                 cantSave: true
             }, this.timebandCollisionHandler);
-            console.log('set to true with callback');
         }
 
     }
@@ -622,12 +620,12 @@ export default class SignEditor extends Component {
             // we got here cuz B1 starts before (or when) B2 starts AND B1 ends after (or when) B2 starts, in regards to days of week
             if (band1.attributes.STARTTIME <= band2.attributes.STARTTIME && band1.attributes.ENDTIME >= band2.attributes.STARTTIME) {
                //B1 and B2 overlap on days of week  and B1 starts before (or when) B2 starts AND B1 ends after (or when) B2 starts, on hours
-               console.log('overlap message') 
+            
                this.setState({collisionMessage: "Timebands Overlap"});
                 return true;
             } else {
                 //all is well
-                console.log('erase overlap message')
+           
                 this.setState({collisionMessage: ""});
                 return false;
             }
@@ -676,7 +674,6 @@ export default class SignEditor extends Component {
                         bandz[i].conflict = true;
                         bandz[j].conflict = true;
                         this.setState({timebands: bandz, cantSave: true});
-                        console.log('set to true in collision handler with no callback')
                         return;
                     } else {
                         // no conflict
@@ -691,7 +688,7 @@ export default class SignEditor extends Component {
                              this.setState({timebands: bandz, cantSave: false});
                         }
                        
-                        console.log( 'set to false in collisdion handler with no callback')
+                    
                     }
 
                 }
