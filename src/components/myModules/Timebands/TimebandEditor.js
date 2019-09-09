@@ -267,8 +267,8 @@ render() {
             : "TimebandEditor"}>
             <button
                 className={this.props.value.conflict
-                ? "Timebands_err"
-                : ""}
+                ? "deleteButton_err"
+                : "deleteButton"}
                 onClick=
                 {(evt) => this.deleteBand(evt,this.props.index)}>
                 <b>X</b>
