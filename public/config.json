@@ -11,7 +11,7 @@
 
     "appId": "8z9QZSIF39R2lBVl",
     "dontUse": "hkdtqXBMmZ8JJ5tD",
-    "release": "prod",
+    "release": "dev",
 
     "mapConfig": {
         "basemap": "streets",

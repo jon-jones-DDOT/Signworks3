@@ -152,13 +152,11 @@ class StreetSmart extends Component {
 
         };
 
-        const surfaceCursorChangeHandler = (evt) => {
-          
-        }
+        const surfaceCursorChangeHandler = (evt) => {}
 
         const changeView = function (evt) {
             // view cone stuff
-       
+
             imagehFov = evt.detail.hFov;
             imagePitch = evt.detail.pitch;
             imageYaw = evt.detail.yaw;
@@ -172,8 +170,10 @@ class StreetSmart extends Component {
 
             window
                 .panoramaViewer
-                .rotateLeft(1);
-
+                .rotateLeft(.01);
+            window
+                .panoramaViewer
+                .toggleSidebarVisible(false);
         };
 
         window
@@ -213,7 +213,9 @@ class StreetSmart extends Component {
 
                                     window.panoramaViewer = result[i];
                                 }
-                                window.panoramaViewer.toggleNavbarExpanded(false);
+                                window
+                                    .panoramaViewer
+                                    .toggleNavbarExpanded(false);
 
                                 if (editMode) {
                                     window
@@ -224,6 +226,9 @@ class StreetSmart extends Component {
                                         .StreetSmartApi
                                         .on(msEvents.MEASUREMENT_CHANGED, clkMap);
 
+                                    window
+                                        .panoramaViewer
+                                        .toggleNavbarVisible(false);
                                 }
                                 window.panoramaViewer.closable = false;
                                 window
