@@ -8,12 +8,8 @@
     left: 57%;
     transform: translate(-50%,-50%);
     z-index: 9;
-   
-
-    /* z-index: 6;  */
 }
 .SignEditorOver {
-
     position: fixed;
     background: lightgrey;
     width: 25%;
@@ -25,12 +21,13 @@
     font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
 }
 
+/*--------------------------------------------------------------------*/
+
 .TypeAheadDiv {
     position: relative;
-    width:90%;
+    width: 90%;
     top: 15px;
-   margin-left:25px;
-
+    margin-left: 25px;
 }
 
 .MutcdInfoDiv {
@@ -39,11 +36,11 @@
     min-width: 90%;
     height: 50px;
     margin: 20px;
-  
+
 }
 .MutcdInfoDiv_hidden {
     visibility: hidden;
-    height: 0px;
+    height: 0;
 }
 
 .SignEditCancel {
@@ -62,53 +59,84 @@
     padding: 5px;
 
 }
-.EditorMuttCode {
-
-    flex: 100px;
-    font-weight: bold;
-}
-.EditorMuteDesc {
-
-    flex: 100px;
-    font-size: 11px;
-    font-weight: bold;
-}
-
+/*---------------------------------------------------------------------*/
 .SignEditorImage {
-
     width: 80px;
     height: 80px;
-    
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 1px;
-    padding-bottom: 1px;
-
+    padding: 1px 15px;
+}
+@media screen and (max-width:1300px) {
+    .SignEditorImage {
+        width: 50px;
+        height: 50px;
+        padding: 1px 15px;
+    }
 }
 
+
+/*---------------------------------------------------------------------*/
 .SignEditButtonDiv {
     position: relative;
     text-align: center;
-    padding : 15px;
-
+    padding: 15px;
 }
-.InnerMUTCD {
 
+/*---------------------------------------------------------------------*/
+.InnerMUTCD {
     left: 2px;
     bottom: 3px;
     width: 50%;
     margin-right: 30px;
     margin-top: 5px;
-
-
 }
 
 .InnerMUTCD_error {
     position: relative;
     left: 20px;
     bottom: 30px;
+}
+.EditorMuttCode {
+
+    flex: 100px;
+    font-weight: bold;
 
 }
+.EditorMuttDesc {
+
+    flex: 100px;
+    font-size: 11px;
+    font-weight: bold;
+}
+@media screen and (max-width:1300px) {
+    .InnerMUTCD {
+        left: 1px;
+        bottom: 3px;
+        width: 100%;
+        margin-right: 4px;
+        margin-top: 5px;
+        font: 10px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+    }
+
+    .InnerMUTCD_error {
+        position: relative;
+        left: 20px;
+        bottom: 30px;
+    }
+    .EditorMuttCode {
+
+        flex: 100px;
+        font-weight: bold;
+
+    }
+    .EditorMuttDesc {
+
+        flex: 100px;
+        font-size: 8px;
+        font-weight: bold;
+    }
+}
+
+/*------------------------------------------------------------------------*/
 
 .SignDirectionArrow {
 
@@ -130,23 +158,29 @@
     height: 110px;
     width: 90%;
     top: 150px;
-    left:20px;
+    left: 20px;
     text-align: left;
     margin-left: 15px;
-   
 
 }
-
+/*--------------------------------------------------------------------*/
 .EditorHorizontalBar {
     margin: 25px;
     position: absolute;
     z-index: -1;
-    top:100px;
-    width:430px;
- 
-
+    top: 100px;
+    width: 430px;
 }
-
+@media screen and (max-width:1300px) {
+    .EditorHorizontalBar {
+        margin: 15px;
+        position: absolute;
+        z-index: -1;
+        top: 100px;
+        width: 270px;
+    }
+}
+/*-------------------------------------------------------------------*/
 .ZoneSpan {
     padding-left: 155px;
 
@@ -159,14 +193,12 @@
 
 .SignTextSpan {
     padding-left: 75px;
-  
 
 }
 
 .SignText {
     resize: none;
-    width:120px;
-    
+    width: 120px;
 
 }
 
@@ -179,24 +211,21 @@
     padding-top: 10px;
 }
 
-
-
 .typeahead-selector {
-  
+
     border-style: solid;
     border-width: 1px 2px 2px 1px;
     background-color: lightgrey;
     font-size: smaller;
-  }
+}
 
-  .TimebandDiv{
-     
-      padding-top:20px;
-  }
-  
-  .DownshiftLabel{
-      border : solid grey 1px;
-      height:18px;
-  
+.TimebandDiv {
 
-  }
+    padding-top: 20px;
+}
+
+.DownshiftLabel {
+    border: solid grey 1px;
+    height: 18px;
+
+}

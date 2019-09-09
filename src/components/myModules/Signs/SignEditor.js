@@ -315,7 +315,7 @@ export default class SignEditor extends Component {
                     .name
                     .toUpperCase()}:
             </div>
-            <div className="EditorMuteDesc">
+            <div className="EditorMuttDesc">
                 {this.state.MUTCD.name}
             </div>
 
