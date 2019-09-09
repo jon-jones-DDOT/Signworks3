@@ -1,6 +1,6 @@
 .Sign {
     height: 100%;
-    border: 2px solid darkgray;
+    border: 2px solid rgb(132, 133, 131);
     padding: 10px;
     background-color: lightgray;
     display: block;
@@ -69,4 +69,83 @@ font-size:11px;
     background-color: green;
     color:white;
     width:100px;
+}
+
+
+@media screen and (max-width:1300px){
+    .Sign {
+        height: 100%;
+        border: 2px solid rgb(132, 133, 131);
+        padding: 10px;
+        background-color: lightgray;
+        display: block;
+        font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+    
+    }
+    .SignRetired_Hidden{
+        display:none;
+    }
+    .SignRetired_Visible{
+        height: 100%;
+        border: 2px solid darkgray;
+        padding: 10px;
+        background-color: rgb(110, 126, 136);
+        display: block;
+        font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+    }
+    
+    .SignMUTCDdiv {
+        display: flex;
+        text-align: left;
+        font-size: 16px;
+        
+    }
+    .SignMUTCDdiv_comp {
+        display: flex;
+        text-align: left;
+        font-size: 14px;
+        
+    }
+    
+    .SignMutcdText{
+        flex:100px;
+        font-weight: bold;
+    }
+    
+    .SignMUTCDdesc{
+    flex:100px;
+    font-size:11px;
+    padding-right: 3px;
+    }
+
+    .SignMUTCDdesc_comp{
+        flex:100px;
+        font-size:9px;
+        padding-right: 3px;
+        }
+    
+    .SignImage {
+        height: 40px;
+        width: 40px;
+        margin-right:10px;
+        
+        
+    }
+    .SignArrowImage {
+        height: 30px;
+        width: 40px;
+        position:relative;
+        
+    }
+    
+    .SignEditButton{
+       padding-bottom:5px;
+      float:right;
+    }
+    
+    .SignZoneDiv{
+        background-color: green;
+        color:white;
+        width:100px;
+    }
 }
