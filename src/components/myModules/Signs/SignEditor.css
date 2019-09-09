@@ -20,6 +20,30 @@
     z-index: 10;
     font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
 }
+@media screen and (max-width:1300px) {
+    .SignEditorUnder {
+
+        position: fixed;
+        background: lightgray;
+        width: 25%;
+        height: 60%;
+        top: 50%;
+        left: 60%;
+        transform: translate(-50%,-50%);
+        z-index: 9;
+    }
+    .SignEditorOver {
+        position: fixed;
+        background: lightgrey;
+        width: 25%;
+        height: 60%;
+        top: 50%;
+        left: 60%;
+        transform: translate(-50%,-50%);
+        z-index: 10;
+        font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+    }
+}
 
 /*--------------------------------------------------------------------*/
 
@@ -72,7 +96,6 @@
         padding: 1px 15px;
     }
 }
-
 
 /*---------------------------------------------------------------------*/
 .SignEditButtonDiv {
@@ -151,7 +174,7 @@
 
     margin: auto;
 }
-
+/*----------------------------------------------------------------------*/
 .SignAttributes {
     position: absolute;
     z-index: -1;
@@ -161,8 +184,61 @@
     left: 20px;
     text-align: left;
     margin-left: 15px;
+   
+}
+.ZoneSpan {
+    padding-left: 165px;
 
 }
+
+.ZoneSpan_error {
+    padding-left: 155px;
+    border: 1px red solid;
+}
+
+.SignTextSpan {
+    padding-left: 230px;
+
+}
+
+.SignText {
+    resize: none;
+    width: 120px;
+
+}
+@media screen and (max-width:1300px) {
+    .SignAttributes {
+        position: absolute;
+        z-index: -1;
+        height: 100px;
+        width: 90%;
+        top: 130px;
+        left: 10px;
+        text-align: left;
+        margin-left: 1px;
+   
+    }
+    .ZoneSpan {
+        padding-left: 25px;
+        
+
+    }
+
+    .ZoneSpan_error {
+        padding-left: 155px;
+        border: 1px red solid;
+    }
+
+    .SignTextSpan {
+        padding-left: 115px;
+    }
+
+    .SignText {
+        resize: none;
+        width: 95px;
+    }
+}
+
 /*--------------------------------------------------------------------*/
 .EditorHorizontalBar {
     margin: 25px;
@@ -181,26 +257,6 @@
     }
 }
 /*-------------------------------------------------------------------*/
-.ZoneSpan {
-    padding-left: 155px;
-
-}
-
-.ZoneSpan_error {
-    padding-left: 155px;
-    border: 1px red solid;
-}
-
-.SignTextSpan {
-    padding-left: 75px;
-
-}
-
-.SignText {
-    resize: none;
-    width: 120px;
-
-}
 
 .StatusSelect {
     padding-right: 20px;

@@ -807,7 +807,7 @@ export default class SignEditor extends Component {
                                     {addOptionsToSelect(this.signTypes._codedValuesSignStatus)}</select>
 
                             </span>
-                            <span className="SignTextSpan">
+                            <div className="SignTextSpan">
                                 Sign Text:
                                 <textarea
                                     value={this.state.attributes.SIGNTEXT === null
@@ -816,7 +816,7 @@ export default class SignEditor extends Component {
                                     onChange={this.signTextChangeHandler}
                                     rows="4"
                                     className="SignText"></textarea>
-                            </span>
+                            </div>
 
                         </div>
                         <div className="TimebandDiv">
