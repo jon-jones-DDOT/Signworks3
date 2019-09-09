@@ -41,10 +41,11 @@ const getZone = ()=>{
         return "Zone " + zone
     }
 }
-    
+
     return (
+        
         <div className={getSignClass()}>
-            <div className="SignMUTCDdiv">
+            <div className={props.leftOpen?"SignMUTCDdiv_comp":"SignMUTCDdiv"}>
                 <Img
                     src={[props.sign.MUTCD.serverImagePath, imgErrorPath, imgServerDown]}
                     className="SignImage"
@@ -54,7 +55,7 @@ const getZone = ()=>{
                 <div className="SignMutcdText">
                     {props.sign.feature.attributes.SIGNCODE}
                     <br></br>
-                    <div className="SignMUTCDdesc">{props.sign.MUTCD.name}
+                    <div className={props.leftOpen?"SignMUTCDdesc_comp":"SignMUTCDdesc"}>{props.sign.MUTCD.name}
                     </div>
                 </div>
 

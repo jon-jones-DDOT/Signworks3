@@ -9,13 +9,13 @@ import {layerURLs} from "../../../utils/JSAPI"
 import { layer } from '@fortawesome/fontawesome-svg-core';
 
 let editClicker = null
-const SortableItem = SortableElement(({value, index, canEdit,showRet}) => <Sign sign={value} index = {index}
- canEdit={canEdit} showRetired = {showRet} editClick={editClicker}></Sign>);
-const SortableList = SortableContainer(({items,canEdit,showSigns}) => {
+const SortableItem = SortableElement(({value, index, canEdit,showRet, leftOpen}) => <Sign sign={value} index = {index}
+ canEdit={canEdit} showRetired = {showRet} editClick={editClicker} leftOpen={leftOpen} ></Sign>);
+const SortableList = SortableContainer(({items,canEdit,showSigns,leftOpen}) => {
 
     return (
         <div>
-            {items.map((value, index) => (<SortableItem key={`item-${index}`} showRet={showSigns}
+            {items.map((value, index) => (<SortableItem key={`item-${index}`} leftOpen = {leftOpen} showRet={showSigns}
              canEdit={canEdit}  index={index} value={value}/>))}
         </div>
 
@@ -44,7 +44,7 @@ class Signs extends Component {
 
     render() {
         editClicker = this.props.editClick;
-     
+    
 
         if (this.props.signs) {
 
@@ -54,13 +54,14 @@ class Signs extends Component {
                 distance={10}
                 canEdit={this.props.auth.isEditor}
                 showSigns = { this.props.map.retiredSigns}
+                leftOpen={this.props.graphic.leftVisible}
                 />;
         } else 
             return <p></p>
     }
 }
 
-const mapStateToProps = state => ({map: state.map, config: state.config, auth:state.auth});
+const mapStateToProps = state => ({map: state.map, config: state.config,graphic:state.graphic, auth:state.auth});
 
 const mapDispatchToProps = function (dispatch) {
     return bindActionCreators({
