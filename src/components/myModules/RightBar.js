@@ -126,7 +126,8 @@ class RightBar extends Component {
                     GsClick={this.googleStreetsClickHandler}
                     retCheck={this.toggleShowRetiredSignsHandler}
                     canEdit={this.props.auth.isEditor}
-                    showRet={this.props.map.retiredSigns}></Support>
+                    showRet={this.props.map.retiredSigns}
+                    leftOpen = {this.props.graphic.leftVisible}></Support>
                 <Signs
                     signs={this.props.map.signs}
                     editClick={this.handleModalClicked}

@@ -25,9 +25,9 @@ export default function Support(props) {
 
             return (
 
-                <div className="Support">
+                <div className={props.leftOpen?"Support_comp":"Support"}>
 
-                    <Img src={[myImage, errImage]} alt="support" className="SupportImage"/>
+                    <Img src={[myImage, errImage]} alt="support" className={props.leftOpen?"SupportImage_comp":"SupportImage"}/>
                     <p>
                         Sign Type: {props.sel
                             ? SBT.name(props.sel.attributes.SUPPORTTYPE, "SUPPORTTYPE")
@@ -45,7 +45,7 @@ export default function Support(props) {
 
                     </p>
                     <div>
-                    <label><input type= "checkbox" checked={props.showRet} onChange={(evt) =>props.retCheck(evt)} ></input> Show Retired Signs</label>    
+                    <label className={props.leftOpen?"showRetired_comp":"showRetired"}><input type= "checkbox" checked={props.showRet} onChange={(evt) =>props.retCheck(evt)} ></input> Show Retired Signs</label>    
                     </div>
                 </div>
             )

@@ -1,19 +1,81 @@
 .Support{
-
     height: 120px;
     padding:10px ;
   color:white;
    background-color: rgb(224, 80, 80);
    font-weight:bold;
-   font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
-    
+   font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;    
+}
+.Support_comp{
+    height: 120px;
+    padding:10px ;
+  color:white;
+   background-color: rgb(224, 80, 80);
+   font-weight:bold;
+   font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;    
 }
 
 .SupportImage{
     height:75px;
     width:75px;
-    margin-left: 2px;
-    
+    margin-left: 2px;    
     float:left;
+}
 
+.SupportImage_comp{
+    height:75px;
+    width:75px;
+    margin-left: 2px;    
+    float:left;
+}
+
+.showRetired{
+    margin:auto;
+}
+
+.showRetired_comp{
+    margin:auto;
+}
+
+@media screen and (max-width:1300px){
+
+    .Support{
+        height: 120px;
+        padding:10px ;
+      color:white;
+       background-color: rgb(224, 80, 80);
+       font-weight:bold;
+       font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;    
+    }
+    .Support_comp{
+        height: 120px;
+        padding:10px ;
+      color:white;
+       background-color: rgb(224, 80, 80);
+       font-weight:bold;
+       font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;    
+    }
+    
+    .SupportImage{
+        height:75px;
+        width:75px;
+        margin-left: 2px;    
+        float:left;
+    }
+    
+    .SupportImage_comp{
+        height:45px;
+        width:45px;
+        margin-left: 2px;    
+        float:left;
+    }
+    
+    .showRetired{
+        margin:auto;
+    }
+    
+    .showRetired_comp{
+        margin:auto;
+        font: 8px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;   
+    }
 }
