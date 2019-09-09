@@ -171,9 +171,12 @@ class StreetSmart extends Component {
             window
                 .panoramaViewer
                 .rotateLeft(.01);
-            window
+        if(editMode){
+                window
                 .panoramaViewer
                 .toggleSidebarVisible(false);
+        }
+        
         };
 
         window
