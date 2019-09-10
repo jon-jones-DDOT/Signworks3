@@ -35,10 +35,10 @@ export default function Support(props) {
                     </p>
 
                     <p>
-                        <button onClick={(evt) => props.SsClick(evt, props.sel)}><FontAwesomeIcon icon={faBinoculars} title="StreetSmart"/></button>
-                        <button onClick={(evt) => props.GsClick(evt, props.sel)}><FontAwesomeIcon icon={faGoogle} title="Google Street View"/></button>
+                        <button onClick={(evt) => props.SsClick(evt, props.sel)} className="supportButton"><FontAwesomeIcon icon={faBinoculars} title="StreetSmart"/></button>
+                        <button onClick={(evt) => props.GsClick(evt, props.sel)}className="supportButton"><FontAwesomeIcon icon={faGoogle} title="Google Street View"/></button>
                         {props.canEdit
-                            ? <button onClick= {(evt) => props.editClick(evt, 'SUPPORT')}>
+                            ? <button onClick= {(evt) => props.editClick(evt, 'SUPPORT')}className="supportButton">
                                     <FontAwesomeIcon icon={faUserEdit} title="Edit Support"/>
                                 </button>
                             : null}
