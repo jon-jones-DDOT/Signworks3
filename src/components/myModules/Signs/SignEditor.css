@@ -241,21 +241,13 @@
 
 /*--------------------------------------------------------------------*/
 .EditorHorizontalBar {
-    margin: 25px;
+   margin:5%;
     position: absolute;
     z-index: -1;
     top: 100px;
-    width: 430px;
+    width: 90%;
 }
-@media screen and (max-width:1300px) {
-    .EditorHorizontalBar {
-        margin: 15px;
-        position: absolute;
-        z-index: -1;
-        top: 100px;
-        width: 270px;
-    }
-}
+
 /*-------------------------------------------------------------------*/
 
 .StatusSelect {

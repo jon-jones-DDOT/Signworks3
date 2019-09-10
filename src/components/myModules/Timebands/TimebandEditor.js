@@ -229,6 +229,9 @@ export default class TimebandEditor extends Component {
     } else if (index === 4) {
         // don't know any hourlimit validations at the moment
         this
+        .props
+        .change(evt, this.props.index, 4, this.state.errorMessage);
+        this
             .props
             .error("");
     }

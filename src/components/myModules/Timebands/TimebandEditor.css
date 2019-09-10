@@ -42,6 +42,10 @@
 }
 .deleteButton_err{
     font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+    border: 3px solid transparent;
+    animation-name: Blinky;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
 }
 
 .timeband{
@@ -79,6 +83,10 @@
     }
     .deleteButton_err{
         font: 8px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+        border: 1px solid transparent;
+        animation-name: Blinky;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
     }
     .TimebandEditor_delete{
         margin:auto;
