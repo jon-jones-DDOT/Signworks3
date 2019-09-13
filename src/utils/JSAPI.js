@@ -19,7 +19,8 @@ export function getGroups(args) {
 }
 
 export function layerURLs(props) {
-
+console.log('props.auth', props.auth)
+console.log('props.config', props.config)
     if (props.auth.isDev) {
 
         return props.config.featureURLs_dev_edit;

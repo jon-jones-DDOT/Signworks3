@@ -22,7 +22,11 @@
 .addBandButton{
     font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif; 
 }
-
+@media screen and (max-width:1600px){
+    .addBandButton{
+        font: 10px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif; 
+    } 
+}
 @media screen and (max-width:1300px) {
     .addBandDiv{  
         text-align: left;

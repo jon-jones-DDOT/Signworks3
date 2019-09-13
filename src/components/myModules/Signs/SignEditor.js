@@ -776,7 +776,7 @@ export default class SignEditor extends Component {
                     </div>
 
                     <div className="SignAttributes">
-                        <span>MPH:
+                        <span className="mph">MPH:
                             <select
                                 value={this.state.speedo.speedLimit != null
                                 ? (this.state.speedo.speedLimit != 0

@@ -71,7 +71,7 @@ export default class SuperQuery extends Component {
         const where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND SIGNCODE='" + this.state.selectedMutt + "'";
         const extent = this.props.map.extent;
         const layer = layerURLs(this.props).superquery;
-
+console.log('layer', layer)
         this
             .props
             .querySuperQuery(where, extent, layer)
