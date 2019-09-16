@@ -49,7 +49,7 @@
 }
 
 .timeband{
-    width:70px;
+    width:18%;
    
 }
 
@@ -74,7 +74,7 @@
 }
 @media screen and (max-width:1600px){
     .timeband{
-        width:60px;
+       
         font: 9px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
     }
     .deleteButton{
@@ -115,7 +115,7 @@
 @media screen and (max-width:1300px){
 
     .timeband{
-        width:53px;
+     
         font: 9px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
     }
     .deleteButton{
