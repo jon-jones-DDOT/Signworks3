@@ -64,7 +64,7 @@ export class GoogleMaps extends Component {
     }
 
     povChangeHandler = (pov) => {
-console.log('pov :', pov);
+
         this
             .props
             .getNewCone(this.pos, pov.pitch, pov.heading, 60/pov.zoom, layerURLs(this.props), "Google")

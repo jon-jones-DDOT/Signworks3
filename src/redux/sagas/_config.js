@@ -18,7 +18,7 @@ function* fetchConfig (action) {
     try {
         // call API to fetch config
         const config = yield call(getAppConfig);
-       console.log('config', config)
+   
         // Put config in store
         yield put({
             type: configTypes.SET_CONFIG,
