@@ -39,11 +39,14 @@ function * addNewSupport(action) {
             STREETSEGID_ALT: null,
             SUBBASE: null,
             SUBBLOCKID:null,
+            SUBBLOCKKEY:null,
             SUPPORTHEIGHT: null,
             SUPPORTSTATUS: 1,
             SUPPORTTYPE: 14,
             TODATE: null,
             Z: null,
+            POINT_X:null,
+            POINT_Y:null,
             SIGNWORKS_CREATED_BY:action.payload.auth.user.username,
             SIGNWORKS_LAST_EDITED_BY: action.payload.auth.user.username
         }
@@ -65,12 +68,19 @@ function * addNewSupport(action) {
 
         const lrsResults = yield call(getPointOnRouteLRS, [newSupport, action.payload.layers.LRS_Service, 2248,26985]);
         const lrsInfo = lrsResults.data.pointOnRoutes[0];
-
-        newSupport.attributes.ROUTEID = lrsInfo.routeID;
+        console.log('lrsInfo', lrsInfo)
+        newSupport.attributes.ROUTEID = lrsInfo.routeId;
         newSupport.attributes.MEASURE = lrsInfo.measureInMeters;
-        newSupport.attributes.STREETSEGID = lrsInfo.streetSegID;
         newSupport.attributes.BLOCKID = lrsInfo.blockId;
         newSupport.attributes.SUBBLOCKID = lrsInfo.subBlockId;
+        newSupport.attributes.SUBBLOCKKEY = lrsInfo.roadData.segmentations.subBlock.subBlockKey;
+        newSupport.attributes.POINT_X = lrsInfo.geometry.x;
+        newSupport.attributes.POINT_Y = lrsInfo.geometry.y;
+        newSupport.attributes.ANGLE = lrsInfo.tangentOnRoute.tangentHorizontalAngle;
+
+        console.log('newSupport.attributes', newSupport.attributes)
+
+
 
 
         //now let's project its geometry to its native preference
