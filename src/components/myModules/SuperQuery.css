@@ -19,11 +19,57 @@
   margin-right: 5px;
   cursor: pointer;
 }
+.queryTabRow{
+ display:table;
+ width:100%;
+ table-layout: fixed;
+ height:6%;
+ margin-top:3%;
+}
+.queryTabSelect{
+  border-top : 1px black solid;
+  border-left : 1px black solid;
+  border-right : 1px black solid;
+  margin-top: 3%;
+  display: table-cell;
+  width:31%;
+  height:6%;
+  border-radius:10px 10px 0px 0px;
+}
+.queryTab{
+  border : 1px black solid;
+  margin-top: 3%;
+  display: table-cell;
+  width:31%;
+  height:6%;
+  border-radius:10px 10px 0px 0px;
+}
+.queryTabContent{
+  display:none;
+}
+.queryTabContentSelected{
+ 
+  height: 60%;
+}
 
 .bottomDiv{
-  position: absolute;
+ 
   top:150px;
   left:40px;
+  margin-top:5%;
  text-align:center;
   z-index: -1;
+}
+
+.selectedMUTCD{
+  margin-top: 2%;
+  
+}
+.selectedSupportId{
+  border: red 1px solid;
+  width: 60%;
+}
+.selectedSignId{
+  border: blue 1px solid;
+  width: 60%;
 }

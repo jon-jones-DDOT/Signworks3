@@ -774,8 +774,10 @@ export default class SignEditor extends Component {
                     <div>
                         <hr className="EditorHorizontalBar"/>
                     </div>
+                   
 
                     <div className="SignAttributes">
+                    <p> ID: {this.state.attributes.GLOBALID}</p>
                         <span className="mph">MPH:
                             <select
                                 value={this.state.speedo.speedLimit != null
@@ -819,6 +821,7 @@ export default class SignEditor extends Component {
                             </div>
 
                         </div>
+                        
                         <div className="TimebandDiv">
                             <Timebands
                                 bands={this.state.timebands}

@@ -72,8 +72,8 @@ export default class SupportEditor extends Component {
                         className="SignEditCancel"
                         title="Close Window"
                         onClick={this.cancelClickHandler}>X</div>
-                    <p>{this.state.OBJECTID}</p>
-                    <p>{this.state.SIDE}</p>
+                    <p> ID: {this.state.GLOBALID}</p>
+                    
                     <p>Support Type:<select value={this.state.SUPPORTTYPE} onChange={this.supportTypeChangeHandler}>
                     {addOptionsToSelect(this.supportTypes._codedValuesSupportType)}</select>
                     </p>
