@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import './SuperQuery.css'
 import ModalWrapper from './Modals/ModalWrapper';
-import {layerURLs} from '../../utils/JSAPI'
-import Downshift from 'downshift'
+import {layerURLs} from '../../utils/JSAPI';
+import Downshift from 'downshift';
+import {SupportType,SignType, addOptionsToSelect} from '../../SignworksJSON';
 
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
 
@@ -15,7 +16,10 @@ export default class SuperQuery extends Component {
         this.state = {
             selectedMutt: "",
             selectedSupportId: "",
-            selectedSignId : "",
+            selectedSignId: "",
+            selectedSupportType: 0,
+            selectedSupportStatus: 1,
+            selectedMph:"",
             selected: false,
             ready: true,
             tab1select: true,
@@ -41,6 +45,9 @@ export default class SuperQuery extends Component {
             listStyle: 'none'
         }
     };
+
+    supportTypes = new SupportType();
+    signTypes = new SignType();
 
     formattedMuttArray = () => {
 
@@ -87,7 +94,7 @@ export default class SuperQuery extends Component {
 
     whereConcatHandler = () => {
         let complex = false;
-        let where = "SUPPORTSTATUS = 1 AND SIGNSTATUS = 1 AND ";
+        let where = "";
         if (this.state.selectedMutt) {
             where = "SIGNCODE='" + this.state.selectedMutt + "'";
             complex = true;
@@ -104,7 +111,24 @@ export default class SuperQuery extends Component {
                 : "") + " SIGNID='" + this.state.selectedSignId + "'";
             complex = true;
         }
-        return where;
+        if (this.state.selectedSupportType > 0) {
+            where += (complex
+                ? ' AND '
+                : "") + " SUPPORTTYPE=" + this.state.selectedSupportType;
+            complex = true;
+        }
+        if (this.state.selectedSupportStatus >-1) {
+            where += (complex
+                ? ' AND '
+                : "") + " SUPPORTSTATUS=" + this.state.selectedSupportStatus ;
+            complex = true;
+        }
+        if(this.state.selectedMph > 0 ){
+            where += (complex
+                ? ' AND '
+                : "") + " SIGNNUMBER='" + this.state.selectedMph + "'" ;
+            complex = true;
+        }        return where;
     }
 
     searchClickHandler = (evt) => {
@@ -137,11 +161,39 @@ export default class SuperQuery extends Component {
     }
 
     supportIdChangeHandler = (evt) => {
-        this.setState({selectedSupportId: evt.target.value.trim()})
+        this.setState({
+            selectedSupportId: evt
+                .target
+                .value
+                .trim()
+        })
     }
 
-    signIdChangeHandler = (evt) =>{
-        this.setState({selectedSignId:evt.target.value.trim()});
+    signIdChangeHandler = (evt) => {
+        this.setState({
+            selectedSignId: evt
+                .target
+                .value
+                .trim()
+        });
+    }
+
+    supportTypeChangeHandler = (evt) => {
+        this.setState({
+            selectedSupportType: Number(evt.target.value)
+        })
+    }
+
+    supportStatusChangeHandler = (evt) => {
+        this.setState({
+            selectedSupportStatus: Number(evt.target.value)
+        })
+    }
+
+    mphChangeHandler = (evt) =>{
+        this.setState({
+            selectedMph:Number(evt.target.value)
+        })
     }
 
     render() {
@@ -219,10 +271,32 @@ export default class SuperQuery extends Component {
                         </Downshift>
 
                     </div>
+
                     <div
                         className={this.state.tab2select
                         ? "queryTabContentSelected"
                         : "queryTabContent"}>
+                        <div>
+                            <label>SUPPORT TYPE</label>
+                            <select
+                                value={this.state.selectedSupportType}
+                                onChange={this.supportTypeChangeHandler}>
+                                {addOptionsToSelect(this.supportTypes._codedValuesSupportType0)}</select>
+                        </div>
+                        <div>
+                            <label>SUPPORT STATUS</label>
+                            <select
+                            value={this.state.SUPPORTSTATUS}
+                            onChange={this.supportStatusChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportStatus)}</select>
+                        </div>
+                       <div>
+                           <label>MPH:</label>
+                           <select
+                                value={this.state.selectedMph}
+                               
+                                onChange={this.mphChangeHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
+                            </select>
+                       </div>
                         <div>
                             <label>MUTCD:</label>
                             <input
@@ -235,7 +309,7 @@ export default class SuperQuery extends Component {
                             <label>SUPPORT ID</label>
                             <input
                                 type="text"
-                                className = "selectedSupportId"
+                                className="selectedSupportId"
                                 value={this.state.selectedObjId}
                                 onChange={this.supportIdChangeHandler}></input>
                         </div>
@@ -243,7 +317,7 @@ export default class SuperQuery extends Component {
                             <label>SIGN ID</label>
                             <input
                                 type="text"
-                                className = "selectedSignId"
+                                className="selectedSignId"
                                 value={this.state.selectedSignId}
                                 onChange={this.signIdChangeHandler}></input>
                         </div>
