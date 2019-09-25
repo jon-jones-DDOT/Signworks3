@@ -1,4 +1,4 @@
-.SuperQuery{
+.SuperQuery {
     position: fixed;
     background: lightgrey;
     width: 25%;
@@ -11,65 +11,97 @@
     /*  z-index: 5  */
 }
 
-.SuperQueryCancel{
-    
-  width: 10px;
-  height: 10px;
-  float: right;
-  margin-right: 5px;
-  cursor: pointer;
+.SuperQueryCancel {
+
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
 }
-.queryTabRow{
- display:table;
- width:100%;
- table-layout: fixed;
- height:6%;
- margin-top:3%;
+.queryTabRow {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    height: 6%;
+    margin-top: 3%;
 }
-.queryTabSelect{
-  border-top : 1px black solid;
-  border-left : 1px black solid;
-  border-right : 1px black solid;
-  margin-top: 3%;
-  display: table-cell;
-  width:31%;
-  height:6%;
-  border-radius:10px 10px 0px 0px;
+.queryTabSelect {
+    border-top: 1px black solid;
+    border-left: 1px black solid;
+    border-right: 1px black solid;
+    margin-top: 3%;
+    display: table-cell;
+    width: 31%;
+    height: 6%;
+    border-radius: 10px 10px 0 0;
 }
-.queryTab{
-  border : 1px black solid;
-  margin-top: 3%;
-  display: table-cell;
-  width:31%;
-  height:6%;
-  border-radius:10px 10px 0px 0px;
+.queryTab {
+    border: 1px black solid;
+    margin-top: 3%;
+    display: table-cell;
+    width: 31%;
+    height: 6%;
+    border-radius: 10px 10px 0 0;
 }
-.queryTabContent{
-  display:none;
+.queryTabContent {
+    display: none;
 }
-.queryTabContentSelected{
- 
-  height: 60%;
+.queryTabContentSelected {
+
+    height: 60%;
 }
 
-.bottomDiv{
- 
-  top:150px;
-  left:40px;
-  margin-top:5%;
- text-align:center;
-  z-index: -1;
+.bottomDiv {
+
+    top: 150px;
+    left: 40px;
+    margin-top: 5%;
+    text-align: center;
+    z-index: -1;
 }
 
-.selectedMUTCD{
-  margin-top: 2%;
-  
+.selectedMUTCD {
+    margin-top: 2%;
+    margin-left: 39%;
+    width: 30%;
+
 }
-.selectedSupportId{
-  border: red 1px solid;
-  width: 60%;
+.selectedMPH {
+    margin-left: 65%;
+    margin-top: 1%;
 }
-.selectedSignId{
-  border: blue 1px solid;
-  width: 60%;
+
+.selectedSubblockKey {
+    margin-top: 1%;
+    margin-left: 8%;
+    width:50%;
+}
+
+.selectedSupportType {
+    margin-top: 1%;
+    margin-left: 15%;
+}
+
+.selectedSupportStatus {
+  margin-top: 1%;
+  margin-left: 40.5%;
+}
+
+.selectedSupportId {
+    width: 60%;
+    margin-top: 1%;
+    margin-left:2%;
+}
+
+
+.selectedSignStatus {
+    margin-top: 1%;
+    margin-left: 48%;
+}
+
+.selectedSignId {
+margin-left:9%;
+    width: 60%;
+    margin-top: 2%;
 }

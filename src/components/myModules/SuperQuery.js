@@ -19,7 +19,9 @@ export default class SuperQuery extends Component {
             selectedSignId: "",
             selectedSupportType: 0,
             selectedSupportStatus: 1,
+            selectedSignStatus:1,
             selectedMph:"",
+            selectedSubblockKey:"",
             selected: false,
             ready: true,
             tab1select: true,
@@ -123,12 +125,26 @@ export default class SuperQuery extends Component {
                 : "") + " SUPPORTSTATUS=" + this.state.selectedSupportStatus ;
             complex = true;
         }
+        if (this.state.selectedSignStatus >-1) {
+            where += (complex
+                ? ' AND '
+                : "") + " SIGNSTATUS=" + this.state.selectedSignStatus ;
+            complex = true;
+        }
         if(this.state.selectedMph > 0 ){
             where += (complex
                 ? ' AND '
                 : "") + " SIGNNUMBER='" + this.state.selectedMph + "'" ;
             complex = true;
-        }        return where;
+        } 
+        if(this.state.selectedSubblockKey ){
+            where += (complex
+                ? ' AND '
+                : "") + " SUBBLOCKKEY='" + this.state.selectedSubblockKey + "'";
+            complex = true;
+        }
+
+        return where;
     }
 
     searchClickHandler = (evt) => {
@@ -194,6 +210,13 @@ export default class SuperQuery extends Component {
         this.setState({
             selectedMph:Number(evt.target.value)
         })
+    }
+
+    signStatusChangeHandler = (evt) =>{
+        this.setState({selectedSignStatus:Number(evt.target.value)})
+    }
+    subblockKeyChangeHandler = (evt) =>{
+        this.setState({selectedSubblockKey:evt.target.value.trim()})
     }
 
     render() {
@@ -276,28 +299,7 @@ export default class SuperQuery extends Component {
                         className={this.state.tab2select
                         ? "queryTabContentSelected"
                         : "queryTabContent"}>
-                        <div>
-                            <label>SUPPORT TYPE</label>
-                            <select
-                                value={this.state.selectedSupportType}
-                                onChange={this.supportTypeChangeHandler}>
-                                {addOptionsToSelect(this.supportTypes._codedValuesSupportType0)}</select>
-                        </div>
-                        <div>
-                            <label>SUPPORT STATUS</label>
-                            <select
-                            value={this.state.SUPPORTSTATUS}
-                            onChange={this.supportStatusChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportStatus)}</select>
-                        </div>
-                       <div>
-                           <label>MPH:</label>
-                           <select
-                                value={this.state.selectedMph}
-                               
-                                onChange={this.mphChangeHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
-                            </select>
-                       </div>
-                        <div>
+                              <div>
                             <label>MUTCD:</label>
                             <input
                                 type="text"
@@ -305,16 +307,57 @@ export default class SuperQuery extends Component {
                                 value={this.state.selectedMutt}
                                 className="selectedMUTCD"></input>
                         </div>
+                                           
+                       <div>
+                           <label>MPH:</label>
+                           <select className="selectedMPH"
+                                value={this.state.selectedMph}
+                               
+                                onChange={this.mphChangeHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
+                            </select>
+                       </div>
+                       <div>
+                            <label>SUBBLOCK KEY:</label>
+                            <input
+                                type="text"
+                                className="selectedSubblockKey"
+                                value={this.state.selectedSubblockKey}
+                                onChange={this.subblockKeyChangeHandler}></input>
+                        </div>
+                        <hr></hr>
                         <div>
-                            <label>SUPPORT ID</label>
+                            <label>SUPPORT STATUS:</label>
+                            <select className="selectedSupportStatus"
+                            value={this.state.SUPPORTSTATUS}
+                            onChange={this.supportStatusChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportStatus)}</select>
+                        </div>
+                                              <div>
+                            <label>SUPPORT TYPE:</label>
+                            <select className="selectedSupportType"
+                                value={this.state.selectedSupportType}
+                                onChange={this.supportTypeChangeHandler}>
+                                {addOptionsToSelect(this.supportTypes._codedValuesSupportType0)}</select>
+                        </div>
+                      
+                        <div>
+                            <label>SUPPORT ID:</label>
                             <input
                                 type="text"
                                 className="selectedSupportId"
                                 value={this.state.selectedObjId}
                                 onChange={this.supportIdChangeHandler}></input>
                         </div>
+                        <hr></hr>
                         <div>
-                            <label>SIGN ID</label>
+                                <label>SIGN STATUS:</label>
+                                <select
+                                    className="selectedSignStatus"
+                                    value={this.state.selectedSignStatus}
+                                    onChange={this.signStatusChangeHandler}>
+                                    {addOptionsToSelect(this.signTypes._codedValuesSignStatus)}</select>
+                            </div>
+                        <div>
+                            <label>SIGN ID:</label>
                             <input
                                 type="text"
                                 className="selectedSignId"
