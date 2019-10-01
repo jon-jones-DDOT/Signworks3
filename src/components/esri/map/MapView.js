@@ -145,6 +145,7 @@ class MapView extends Component {
             this
                 .queryMarkerLayer
                 .removeAll();
+               this.drawExtentLayer.removeAll();
         }
         //removes cone graphics
         if (this.props.graphic.ssOverlay === null && this.conicLayer.graphics.length > 0) {
@@ -398,26 +399,22 @@ class MapView extends Component {
                     // PolygonDrawAction.vertex-add Fires when user clicks, or presses the "F" key.
                     // Can also be triggered when the "R" key is pressed to redo.
                     action.on("vertex-add", function (evt) {
-                        console.log('add', evt)
                         createPolygonGraphic(evt.vertices);
                     });
                     // PolygonDrawAction.vertex-remove Fires when the "Z" key is pressed to undo the
                     // last added vertex
                     action.on("vertex-remove", function (evt) {
-                        console.log('remove', evt.vertices)
                         createPolygonGraphic(evt.vertices);
                     });
                     // Fires when the pointer moves over the view
                     action.on("cursor-update", function (evt) {
-                        console.log( 'update', evt)
                         createPolygonGraphic(evt.vertices);
                     });
                     // Add a graphic representing the completed polygon when user double-clicks on
                     // the view or presses the "C" key
                     action.on("draw-complete", function (evt) {
-                        console.log('complete', evt)
                         const rslt = createPolygonGraphic(evt.vertices);
-                        console.log('rslt', rslt)
+                      
                         setExtent(rslt.geometry);
                        setMode(mapModes.SELECT_SUPPORT_MODE, 'default');
                         
