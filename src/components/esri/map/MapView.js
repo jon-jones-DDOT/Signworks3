@@ -146,7 +146,7 @@ class MapView extends Component {
             this
                 .queryMarkerLayer
                 .removeAll();
-               this.drawExtentLayer.removeAll();
+           //    this.drawExtentLayer.removeAll();
         }
         //removes cone graphics
         if (this.props.graphic.ssOverlay === null && this.conicLayer.graphics.length > 0) {
