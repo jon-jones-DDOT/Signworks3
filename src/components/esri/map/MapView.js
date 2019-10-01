@@ -142,6 +142,7 @@ class MapView extends Component {
         // removes all query graphics
         if (this.props.graphic.showQuery === false && this.queryMarkerLayer.graphics.length > 0) {
             //      console.lg('removing query markers')
+         
             this
                 .queryMarkerLayer
                 .removeAll();

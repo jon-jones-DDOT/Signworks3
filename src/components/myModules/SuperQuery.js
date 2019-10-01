@@ -5,7 +5,9 @@ import {layerURLs} from '../../utils/JSAPI';
 import Downshift from 'downshift';
 import {SupportType, SignType, addOptionsToSelect} from '../../SignworksJSON';
 import {mapModes} from "../../redux/reducers/graphic"
-import {runInThisContext} from 'vm';
+import {faDrawPolygon} from '@fortawesome/free-solid-svg-icons';
+import Loader from 'react-loader-spinner';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
 
@@ -15,6 +17,7 @@ export default class SuperQuery extends Component {
         super(props)
 
         this.myRef = React.createRef();
+        this.yourRef = React.createRef();
         this.state = {
             selectedMutt: "",
             selectedSupportId: "",
@@ -159,19 +162,17 @@ export default class SuperQuery extends Component {
             .props
             .removeQueryGraphics();
 
-
         let extent = null;
         if (this.state.selectedExtent === 1) {
             extent = this.props.map.extent;
         } else if (this.state.selectedExtent === 2) {
             extent = null;
         } else if (this.state.selectedExtent === 3) {
-           if (this.props.graphic.queryCustExt){
-               extent = this.props.graphic.queryCustExt;
-           }
-           else{
-               alert( 'No custom extent was drawn.')
-           }
+            if (this.props.graphic.queryCustExt) {
+                extent = this.props.graphic.queryCustExt;
+            } else {
+                alert('No custom extent was drawn.')
+            }
         } else {
             alert('you have no extent selected, somehow')
         }
@@ -261,13 +262,17 @@ export default class SuperQuery extends Component {
     }
 
     extentChangeHandler = (evt) => {
+ 
         this.setState({
             selectedExtent: Number(evt.target.value)
         })
     }
 
     drawButtonClickHandler = (evt) => {
-
+      console.log('this.yourRef', this.yourRef)
+     this.yourRef.current.checked = true;
+     let fakeEvent = {target:{value:3}}
+     this.extentChangeHandler(fakeEvent);
         this
             .props
             .setMapClickMode(mapModes.DRAW_MODE, 'default')
@@ -434,7 +439,10 @@ export default class SuperQuery extends Component {
                                 defaultChecked
                                 className="queryRadioButton"
                                 onChange={this.extentChangeHandler}></input>
-                            Map Extent - Will search the general area shown on the map.
+                                <div className="extentTextDiv">
+                                     Map Extent - Will search the general area shown on the map.
+                                </div>
+                           
                         </div>
                         <hr></hr>
                         <div className="queryRadioDiv">
@@ -444,9 +452,12 @@ export default class SuperQuery extends Component {
                                 value="2"
                                 className="queryRadioButton"
                                 onChange={this.extentChangeHandler}></input>
-                            City Extent - Will search the entire area of the District. Primarily for use
+                                <div className="extentTextDiv">
+                                City Extent - Will search the entire area of the District. Primarily for use
                             with IDs, using this option for a MUTCD may result in queries that are too big
                             to be useful.
+                                </div>
+                           
                         </div>
                         <hr></hr>
                         <div className="queryRadioDiv">
@@ -454,19 +465,23 @@ export default class SuperQuery extends Component {
                                 type='radio'
                                 name="extent"
                                 value="3"
+                                ref={this.yourRef}
                                 className="queryRadioButton"
-                                onChange={this.extentChangeHandler}></input>
-                            Custom Extent - Use the Draw Tool to make a search extent.
-                            <button className="drawButton" onClick={this.drawButtonClickHandler}></button>
+                                onClick={this.extentChangeHandler}></input>
+                            <div className="extentTextDiv">
+                                Custom Extent - Use the Draw Tool to make a search extent.
+                            </div>
+                            <button className="drawButton" onClick={this.drawButtonClickHandler}>
+                                <FontAwesomeIcon icon={faDrawPolygon} title="Edit Sign"/></button>
                         </div>
 
                     </div>
                     <div className="bottomDiv">
                         <div >
-                            {this.props.graphic.queryCount}
-                            &nbsp; features found</div>
-                        <p>
-                            The Extent for the query will be the extent of the displayed map</p>
+                         <p> {this.props.graphic.queryCount===0?"Press SEARCH to query map":this.props.graphic.queryCount + " features found"  }
+                             </p>  
+                           </div>
+                       
                         <button onClick={this.clearAttribHandler} disabled={!this.state.tab2select}>CLEAR</button>
                         < button ref={this.myRef} onClick={this.searchClickHandler} disabled={this.selected}>
                             SEARCH</button>

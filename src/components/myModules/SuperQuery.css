@@ -112,14 +112,23 @@ margin-left:9%;
 
 .queryRadioButton{
 justify-content: left; 
-  margin-top:2%;
+
 }
 .queryRadioDiv{
  margin-top:4%;
   display:flex;
+
+  padding-bottom:2%;
 }
 
 .drawButton{
-  width:10px;
-  height: 10px;
+  width:30px;
+  height: 25px;
+  margin-right:2%;
+
+}
+
+.extentTextDiv{
+   
+    margin:  1% 12% 1% 12%;
 }
