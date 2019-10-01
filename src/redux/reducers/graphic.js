@@ -4,6 +4,7 @@ export const types = {
     SET_SUPPORT_MARKER_RG: "SET_SUPPORT_MARKER_RG",
     QUERY_SUPERQUERY_S: "QUERY_SUPERQUERY_S",
     SET_QUERY_RESULTS_RG: "SET_QUERY_RESULTS_RG",
+    SET_QUERY_CUSTOM_EXTENT: "SET_QUERY_CUSTOM_EXTENT",
     REMOVE_QUERY_RESULTS_RG: "REMOVE_QUERY_RESULTS_RG",
     REMOVE_QUERY_GRAPHICS_RG: 'REMOVE_QUERY_GRAPHICS_RG',
     QUERY_MAR_S: "QUERY_MAR_S",
@@ -33,6 +34,7 @@ export const initialState = {
     selSupportGeom: null,
     queryFeatures: [],
     queryCount: 0,
+    queryCustExt: null,
     marResults: null,
     showQuery: false,
     leftVisible: false,
@@ -51,7 +53,7 @@ export const initialState = {
     leftKey: 0,
     initialBearing: null,
     zoomPoint: null,
-    retired:0
+    retired: 0
 }
 
 export default(state = initialState, action) => {
@@ -72,7 +74,7 @@ export default(state = initialState, action) => {
             return {
                 ...state,
                 queryFeatures: [],
-                marResults:null
+                marResults: null
 
             }
         case types.REMOVE_QUERY_GRAPHICS_RG:
@@ -131,6 +133,11 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
+        case types.SET_QUERY_CUSTOM_EXTENT:
+            return {
+                ...state,
+                ...action.payload
+            }
         default:
             return state;
     }
@@ -161,13 +168,19 @@ export const actions = {
             view_spatRef
         }
     }),
+    setQueryCustomExtent: (queryCustExt) => ({
+        type: types.SET_QUERY_CUSTOM_EXTENT,
+        payload: {
+            queryCustExt
+        }
+    }),
 
     removeQueryGraphics: () => ({
         type: types.REMOVE_QUERY_GRAPHICS_RG,
         payload: {
             showQuery: false,
             removed: true,
-            queryCount:0
+            queryCount: 0
         }
     }),
     querySuperQuery: (where, extent, layer) => ({

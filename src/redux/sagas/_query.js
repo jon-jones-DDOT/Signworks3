@@ -8,10 +8,10 @@ import {superQuery} from '../../utils/JSAPI'
 
 function * query(action) {
     try{
-     
+     console.log('action.payload.extent', action.payload.extent)
        const queryResult =   yield call(superQuery, [action.payload.where, action.payload.extent,action.payload.layer]);
-       
-       const features = queryResult.data.features;
+       console.log('queryResult', queryResult)
+       const features = queryResult.features;
        
        yield put({
         type: graphicTypes.SET_QUERY_RESULTS_RG,

@@ -46,6 +46,7 @@ class MapView extends Component {
     queryMarkerLayer = null;
     featureLayer = null;
     conicLayer = null;
+    drawExtentLayer = null;
     symb = null;
     addSymb = null;
     marSymb = null;
@@ -126,7 +127,7 @@ class MapView extends Component {
                 .conicLayer
                 .removeAll();
 
-         //   console.lg('unexpected call to cone graphics');
+            //   console.lg('unexpected call to cone graphics');
             this
                 .queryMarkerLayer
                 .removeAll();
@@ -140,7 +141,7 @@ class MapView extends Component {
         }
         // removes all query graphics
         if (this.props.graphic.showQuery === false && this.queryMarkerLayer.graphics.length > 0) {
-      //      console.lg('removing query markers')
+            //      console.lg('removing query markers')
             this
                 .queryMarkerLayer
                 .removeAll();
@@ -203,22 +204,19 @@ class MapView extends Component {
         // updates marker use nextProps or this.props for the map clicks?  if bugs come
         // up , check this part
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && !this.props.graphic.selSupportGeom) {
-          //  console.lg('not even sure why')
-            //   return;
+            //  console.lg('not even sure why')   return;
         }
         //changes map graphics when new support is selected
         if (this.props.graphic.mapClickMode === mapModes.SELECT_SUPPORT_MODE && this.props.map.support !== prevProps.map.support) {
-          
+
             this.selPoint.geometry = this.props.graphic.selSupportGeom;
             if (this.props.graphic.leftKey === 1 || this.props.graphic.leftKey === leftKeys.SS_VIEW_REPEAT) {
-        
+
                 this
                     .props
-                    .startStreetSmartViewer([this.selPoint], layerURLs(this.props), 4326, 2248,
-                     this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, 
-                     this.props.graphic.view_spatRef, false, leftKeys.SS_VIEW_FIRST, this.props.map.retiredPosts)
+                    .startStreetSmartViewer([this.selPoint], layerURLs(this.props), 4326, 2248, this.props.graphic.viewWidth, this.props.graphic.viewExtentWidth, this.props.graphic.view_spatRef, false, leftKeys.SS_VIEW_FIRST, this.props.map.retiredPosts)
             }
-           
+
             this.selPoint.symbol = this.symb;
             this
                 .markerLayer
@@ -358,6 +356,76 @@ class MapView extends Component {
                     .setMapClickMode(mapModes.SELECT_SUPPORT_MODE, 'default');
                 this.view.surface.style.cursor = "default";
                 break;
+            case mapModes.DRAW_MODE:
+                let draw,
+                    action;
+                const drawLayer = this.drawExtentLayer;
+                const setMode = this
+                .props
+                .setMapClickMode;
+                const setExtent = this.props.setQueryCustomExtent;
+                const spatRef = this.view.spatialReference;
+
+                loadModules(['esri/views/draw/Draw', "esri/Graphic"]).then(([Draw, Graphic]) => {
+
+                    const createPolygonGraphic = function (vertices) {
+                        drawLayer.removeAll();
+
+                        var polygon = {
+                            type: "polygon", // autocasts as Polygon
+                            rings: vertices,
+                            spatialReference: spatRef
+                        };
+
+                        var graphic = new Graphic({
+                            geometry: polygon,
+                            symbol: {
+                                type: "simple-fill", // autocasts as SimpleFillSymbol
+                                color: "purple",
+                                style: "none",
+                                outline: { // autocasts as SimpleLineSymbol
+                                    color: "black",
+                                    width: 1
+                                }
+                            }
+                        });
+                        drawLayer.add(graphic);
+                        return graphic;
+                    }
+
+                    draw = new Draw({view: this.view});
+                    action = draw.create("polygon", {mode: "hybrid"});
+                    // PolygonDrawAction.vertex-add Fires when user clicks, or presses the "F" key.
+                    // Can also be triggered when the "R" key is pressed to redo.
+                    action.on("vertex-add", function (evt) {
+                        console.log('add', evt)
+                        createPolygonGraphic(evt.vertices);
+                    });
+                    // PolygonDrawAction.vertex-remove Fires when the "Z" key is pressed to undo the
+                    // last added vertex
+                    action.on("vertex-remove", function (evt) {
+                        console.log('remove', evt.vertices)
+                        createPolygonGraphic(evt.vertices);
+                    });
+                    // Fires when the pointer moves over the view
+                    action.on("cursor-update", function (evt) {
+                        console.log( 'update', evt)
+                        createPolygonGraphic(evt.vertices);
+                    });
+                    // Add a graphic representing the completed polygon when user double-clicks on
+                    // the view or presses the "C" key
+                    action.on("draw-complete", function (evt) {
+                        console.log('complete', evt)
+                        const rslt = createPolygonGraphic(evt.vertices);
+                        console.log('rslt', rslt)
+                        setExtent(rslt.geometry);
+                       setMode(mapModes.SELECT_SUPPORT_MODE, 'default');
+                        
+                    });
+
+                });
+
+                break;
             default:
                 return
 
@@ -389,11 +457,12 @@ class MapView extends Component {
             this.queryMarkerLayer = new GraphicsLayer();
             this.markerLayer = new GraphicsLayer();
             this.conicLayer = new GraphicsLayer();
+            this.drawExtentLayer = new GraphicsLayer();
 
             //     this.map.basemap = baseMap;
             this
                 .map
-                .addMany([this.featureLayer, this.queryMarkerLayer, this.markerLayer, this.conicLayer]);
+                .addMany([this.featureLayer, this.queryMarkerLayer, this.markerLayer, this.conicLayer, this.drawExtentLayer]);
             this
                 .view
                 .on("click", this.mapClickHandler);

@@ -68,7 +68,6 @@ function * addNewSupport(action) {
 
         const lrsResults = yield call(getPointOnRouteLRS, [newSupport, action.payload.layers.LRS_Service, 2248,26985]);
         const lrsInfo = lrsResults.data.pointOnRoutes[0];
-        console.log('lrsInfo', lrsInfo)
         newSupport.attributes.ROUTEID = lrsInfo.routeId;
         newSupport.attributes.MEASURE = lrsInfo.measureInMeters;
         newSupport.attributes.BLOCKID = lrsInfo.blockId;
@@ -78,7 +77,7 @@ function * addNewSupport(action) {
         newSupport.attributes.POINT_Y = lrsInfo.geometry.y;
         newSupport.attributes.ANGLE = lrsInfo.tangentOnRoute.tangentHorizontalAngle;
 
-        console.log('newSupport.attributes', newSupport.attributes)
+
 
 
 

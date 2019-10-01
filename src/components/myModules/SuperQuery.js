@@ -3,7 +3,9 @@ import './SuperQuery.css'
 import ModalWrapper from './Modals/ModalWrapper';
 import {layerURLs} from '../../utils/JSAPI';
 import Downshift from 'downshift';
-import {SupportType,SignType, addOptionsToSelect} from '../../SignworksJSON';
+import {SupportType, SignType, addOptionsToSelect} from '../../SignworksJSON';
+import {mapModes} from "../../redux/reducers/graphic"
+import {runInThisContext} from 'vm';
 
 //import {SupportType, addOptionsToSelect} from '../../../SignworksJSON';
 
@@ -19,14 +21,17 @@ export default class SuperQuery extends Component {
             selectedSignId: "",
             selectedSupportType: 0,
             selectedSupportStatus: 1,
-            selectedSignStatus:1,
-            selectedMph:"",
-            selectedSubblockKey:"",
+            selectedSignStatus: 1,
+            selectedMph: "",
+            selectedSubblockKey: "",
             selected: false,
             ready: true,
+            hidden: false,
             tab1select: true,
             tab2select: false,
-            tab3select: false
+            tab3select: false,
+            selectedExtent: 1,
+            customExtent: null
         }
         //  this.items = this.getOptions();
         this.items = this.formattedMuttArray();
@@ -119,25 +124,25 @@ export default class SuperQuery extends Component {
                 : "") + " SUPPORTTYPE=" + this.state.selectedSupportType;
             complex = true;
         }
-        if (this.state.selectedSupportStatus >-1) {
+        if (this.state.selectedSupportStatus > -1) {
             where += (complex
                 ? ' AND '
-                : "") + " SUPPORTSTATUS=" + this.state.selectedSupportStatus ;
+                : "") + " SUPPORTSTATUS=" + this.state.selectedSupportStatus;
             complex = true;
         }
-        if (this.state.selectedSignStatus >-1) {
+        if (this.state.selectedSignStatus > -1) {
             where += (complex
                 ? ' AND '
-                : "") + " SIGNSTATUS=" + this.state.selectedSignStatus ;
+                : "") + " SIGNSTATUS=" + this.state.selectedSignStatus;
             complex = true;
         }
-        if(this.state.selectedMph > 0 ){
+        if (this.state.selectedMph > 0) {
             where += (complex
                 ? ' AND '
-                : "") + " SIGNNUMBER='" + this.state.selectedMph + "'" ;
+                : "") + " SIGNNUMBER='" + this.state.selectedMph + "'";
             complex = true;
-        } 
-        if(this.state.selectedSubblockKey ){
+        }
+        if (this.state.selectedSubblockKey) {
             where += (complex
                 ? ' AND '
                 : "") + " SUBBLOCKKEY='" + this.state.selectedSubblockKey + "'";
@@ -154,8 +159,22 @@ export default class SuperQuery extends Component {
             .props
             .removeQueryGraphics();
 
-        console.log('where', where)
-        const extent = this.props.map.extent;
+
+        let extent = null;
+        if (this.state.selectedExtent === 1) {
+            extent = this.props.map.extent;
+        } else if (this.state.selectedExtent === 2) {
+            extent = null;
+        } else if (this.state.selectedExtent === 3) {
+           if (this.props.graphic.queryCustExt){
+               extent = this.props.graphic.queryCustExt;
+           }
+           else{
+               alert( 'No custom extent was drawn.')
+           }
+        } else {
+            alert('you have no extent selected, somehow')
+        }
         const layer = layerURLs(this.props).superquery;
 
         this
@@ -206,20 +225,56 @@ export default class SuperQuery extends Component {
         })
     }
 
-    mphChangeHandler = (evt) =>{
+    mphChangeHandler = (evt) => {
         this.setState({
-            selectedMph:Number(evt.target.value)
+            selectedMph: Number(evt.target.value)
         })
     }
 
-    signStatusChangeHandler = (evt) =>{
-        this.setState({selectedSignStatus:Number(evt.target.value)})
+    signStatusChangeHandler = (evt) => {
+        this.setState({
+            selectedSignStatus: Number(evt.target.value)
+        })
     }
-    subblockKeyChangeHandler = (evt) =>{
-        this.setState({selectedSubblockKey:evt.target.value.trim()})
+
+    subblockKeyChangeHandler = (evt) => {
+        this.setState({
+            selectedSubblockKey: evt
+                .target
+                .value
+                .trim()
+        })
+    }
+
+    clearAttribHandler = () => {
+        this.setState({
+            selectedSupportId: "",
+            selectedSignId: "",
+            selectedSupportType: 0,
+            selectedSupportStatus: 1,
+            selectedSignStatus: 1,
+            selectedMph: "",
+            selectedSubblockKey: "",
+            selected: false,
+            ready: true
+        })
+    }
+
+    extentChangeHandler = (evt) => {
+        this.setState({
+            selectedExtent: Number(evt.target.value)
+        })
+    }
+
+    drawButtonClickHandler = (evt) => {
+
+        this
+            .props
+            .setMapClickMode(mapModes.DRAW_MODE, 'default')
     }
 
     render() {
+
         return (
 
             <ModalWrapper
@@ -299,7 +354,7 @@ export default class SuperQuery extends Component {
                         className={this.state.tab2select
                         ? "queryTabContentSelected"
                         : "queryTabContent"}>
-                              <div>
+                        <div>
                             <label>MUTCD:</label>
                             <input
                                 type="text"
@@ -307,16 +362,16 @@ export default class SuperQuery extends Component {
                                 value={this.state.selectedMutt}
                                 className="selectedMUTCD"></input>
                         </div>
-                                           
-                       <div>
-                           <label>MPH:</label>
-                           <select className="selectedMPH"
+
+                        <div>
+                            <label>MPH:</label>
+                            <select
+                                className="selectedMPH"
                                 value={this.state.selectedMph}
-                               
                                 onChange={this.mphChangeHandler}>{addOptionsToSelect(this.signTypes._codedValuesSpeedLimit)}
                             </select>
-                       </div>
-                       <div>
+                        </div>
+                        <div>
                             <label>SUBBLOCK KEY:</label>
                             <input
                                 type="text"
@@ -327,35 +382,37 @@ export default class SuperQuery extends Component {
                         <hr></hr>
                         <div>
                             <label>SUPPORT STATUS:</label>
-                            <select className="selectedSupportStatus"
-                            value={this.state.SUPPORTSTATUS}
-                            onChange={this.supportStatusChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportStatus)}</select>
+                            <select
+                                className="selectedSupportStatus"
+                                value={this.state.selectedSupportStatus}
+                                onChange={this.supportStatusChangeHandler}>{addOptionsToSelect(this.supportTypes._codedValuesSupportStatus)}</select>
                         </div>
-                                              <div>
+                        <div>
                             <label>SUPPORT TYPE:</label>
-                            <select className="selectedSupportType"
+                            <select
+                                className="selectedSupportType"
                                 value={this.state.selectedSupportType}
                                 onChange={this.supportTypeChangeHandler}>
                                 {addOptionsToSelect(this.supportTypes._codedValuesSupportType0)}</select>
                         </div>
-                      
+
                         <div>
                             <label>SUPPORT ID:</label>
                             <input
                                 type="text"
                                 className="selectedSupportId"
-                                value={this.state.selectedObjId}
+                                value={this.state.selectedSupportId}
                                 onChange={this.supportIdChangeHandler}></input>
                         </div>
                         <hr></hr>
                         <div>
-                                <label>SIGN STATUS:</label>
-                                <select
-                                    className="selectedSignStatus"
-                                    value={this.state.selectedSignStatus}
-                                    onChange={this.signStatusChangeHandler}>
-                                    {addOptionsToSelect(this.signTypes._codedValuesSignStatus)}</select>
-                            </div>
+                            <label>SIGN STATUS:</label>
+                            <select
+                                className="selectedSignStatus"
+                                value={this.state.selectedSignStatus}
+                                onChange={this.signStatusChangeHandler}>
+                                {addOptionsToSelect(this.signTypes._codedValuesSignStatus)}</select>
+                        </div>
                         <div>
                             <label>SIGN ID:</label>
                             <input
@@ -368,13 +425,49 @@ export default class SuperQuery extends Component {
                     <div
                         className={this.state.tab3select
                         ? "queryTabContentSelected"
-                        : "queryTabContent"}>I'm the third panel</div>
+                        : "queryTabContent"}>
+                        <div className="queryRadioDiv">
+                            <input
+                                type='radio'
+                                name="extent"
+                                value="1"
+                                defaultChecked
+                                className="queryRadioButton"
+                                onChange={this.extentChangeHandler}></input>
+                            Map Extent - Will search the general area shown on the map.
+                        </div>
+                        <hr></hr>
+                        <div className="queryRadioDiv">
+                            <input
+                                type='radio'
+                                name="extent"
+                                value="2"
+                                className="queryRadioButton"
+                                onChange={this.extentChangeHandler}></input>
+                            City Extent - Will search the entire area of the District. Primarily for use
+                            with IDs, using this option for a MUTCD may result in queries that are too big
+                            to be useful.
+                        </div>
+                        <hr></hr>
+                        <div className="queryRadioDiv">
+                            <input
+                                type='radio'
+                                name="extent"
+                                value="3"
+                                className="queryRadioButton"
+                                onChange={this.extentChangeHandler}></input>
+                            Custom Extent - Use the Draw Tool to make a search extent.
+                            <button className="drawButton" onClick={this.drawButtonClickHandler}></button>
+                        </div>
+
+                    </div>
                     <div className="bottomDiv">
                         <div >
                             {this.props.graphic.queryCount}
                             &nbsp; features found</div>
                         <p>
                             The Extent for the query will be the extent of the displayed map</p>
+                        <button onClick={this.clearAttribHandler} disabled={!this.state.tab2select}>CLEAR</button>
                         < button ref={this.myRef} onClick={this.searchClickHandler} disabled={this.selected}>
                             SEARCH</button>
                     </div>

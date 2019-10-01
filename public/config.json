@@ -4,7 +4,7 @@
     "apiUrl": "api",
     "loginUrl": "api/auth/arcgis",
     "logoutUrl": "api/logout",
-    "jsapiUrl": "https://js.arcgis.com/4.11/",
+    "jsapiUrl": "https://js.arcgis.com/4.12/",
     "jsapiV4": true,
     "loginWithPopup": false,
     "portalUrl": "https://dcgis.maps.arcgis.com",
@@ -33,7 +33,7 @@
         "supports": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/0",
         "signs": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/1",
         "timebands": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/2",
-        "superquery": "https://ddotgisdev:6443/arcgis/rest/services/Signs/SignPoints_TEMP/FeatureServer/0",
+        "superquery": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
         "geometryService": "http://maps2.dcgis.dc.gov/dcgis/rest/services/Utilities/Geometry/GeometryServer",
         "LRS_Service": "https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/RoadwayBlocks/MapServer/exts/DdotLrsExtensions",
         "MAR_Service": "https://citizenatlas.dc.gov/newwebservices/locationverifier.asmx"
@@ -44,7 +44,7 @@
         "supports": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/0",
         "signs": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/1",
         "timebands": "https://utility.arcgis.com/usrsvcs/servers/8148a95f0ee6430a9c7252d12badc47d/rest/services/DDOT/Signworks_Secure/FeatureServer/2",
-        "superquery": "https://ddotgisdev:6443/arcgis/rest/services/Signs/SignPoints_TEMP/FeatureServer/0",
+        "superquery": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DDOT/Signworks/FeatureServer/1",
         "geometryService": "http://maps2.dcgis.dc.gov/dcgis/rest/services/Utilities/Geometry/GeometryServer",
         "LRS_Service":"https://rh.dcgis.dc.gov/dcgis/rest/services/DDOT/RoadwayBlocks/MapServer/exts/DdotLrsExtensions",
         "MAR_Service": "https://citizenatlas.dc.gov/newwebservices/locationverifier.asmx"
