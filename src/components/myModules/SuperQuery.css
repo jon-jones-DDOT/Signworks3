@@ -31,9 +31,9 @@
     margin-top: 3%;
 }
 .queryTabSelect {
-    border-top: 1px black solid;
-    border-left: 1px black solid;
-    border-right: 1px black solid;
+    border-top: 2px black solid;
+    border-left: 2px black solid;
+    border-right: 2px black solid;
     margin-top: 3%;
     display: table-cell;
     width: 31%;
@@ -41,7 +41,7 @@
     border-radius: 10px 10px 0 0;
 }
 .queryTab {
-    border: 1px black solid;
+    border: 2px grey solid;
     margin-top: 3%;
     display: table-cell;
     width: 31%;

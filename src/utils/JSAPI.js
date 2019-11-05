@@ -241,8 +241,6 @@ export function superQuery(args) {
     const geom = args[1];
 
 
-    console.log('geom', geom)
-    console.log('JSON.stringify(geom)', JSON.stringify(geom))
     const layer = args[2];
 
 
@@ -256,7 +254,6 @@ const featureLayer = new FeatureLayer({url:layer})
             q.where = where;
             q.geometry = geom;
             q.returnGeometry = true;
-            console.log('q', q)
 featureLayer.queryFeatures(q).then(resp => resolve(resp), error => reject(error))
 
             
@@ -495,7 +492,6 @@ if(source === "StreetSmart"){
 
                 let bob = new LatLon(point2.y, point2.x);
                
-                    console.log('hFov :', hFov);
                 let portAzimuth = imageYaw - hFov;
                 if (portAzimuth < 0) {
                     portAzimuth += 360;
@@ -574,7 +570,7 @@ export async function getMUTCDS(args) {
 }
 
 export async function getAllMUTCDS() {
-    const baseUrl = "http://ddotgisapp01/SignCatalog/api/mutcd"
+    const baseUrl = "http://ddotgisapp01/SignCatalog/api/ActiveMutcd"
 
     try {
         const response = await fetch(baseUrl);

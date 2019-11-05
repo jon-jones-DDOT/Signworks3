@@ -98,7 +98,7 @@ class MapView extends Component {
         }
         //removes superQuery results from view based on store
         if (nextProps.graphic.showQuery !== this.props.graphic.showQuery) {
-            //          console.lg('update because showQuery has changed');
+          
             return true;
         }
 
@@ -144,9 +144,10 @@ class MapView extends Component {
             //      console.lg('removing query markers')
          
             this
-                .queryMarkerLayer
-                .removeAll();
-           //    this.drawExtentLayer.removeAll();
+               .queryMarkerLayer.removeAll();
+
+               this.drawExtentLayer.removeAll();
+             
         }
         //removes cone graphics
         if (this.props.graphic.ssOverlay === null && this.conicLayer.graphics.length > 0) {
@@ -396,7 +397,7 @@ class MapView extends Component {
                     }
 
                     draw = new Draw({view: this.view});
-                    action = draw.create("polygon", {mode: "hybrid"});
+                    action = draw.create("polygon", {mode: "click"});
                     // PolygonDrawAction.vertex-add Fires when user clicks, or presses the "F" key.
                     // Can also be triggered when the "R" key is pressed to redo.
                     action.on("vertex-add", function (evt) {

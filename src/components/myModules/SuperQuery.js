@@ -269,7 +269,6 @@ export default class SuperQuery extends Component {
     }
 
     drawButtonClickHandler = (evt) => {
-      console.log('this.yourRef', this.yourRef)
      this.yourRef.current.checked = true;
      let fakeEvent = {target:{value:3}}
      this.extentChangeHandler(fakeEvent);
@@ -471,7 +470,7 @@ export default class SuperQuery extends Component {
                             <div className="extentTextDiv">
                                 Custom Extent - Use the Draw Tool to make a search extent.
                             </div>
-                            <button className="drawButton" onClick={this.drawButtonClickHandler}>
+                            <button className="drawButton" onClick={this.drawButtonClickHandler} disabled = {this.state.selectedExtent!=3}>
                                 <FontAwesomeIcon icon={faDrawPolygon} title="Edit Sign"/></button>
                         </div>
 
