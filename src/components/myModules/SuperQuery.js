@@ -27,6 +27,7 @@ export default class SuperQuery extends Component {
             selectedSignStatus: 1,
             selectedMph: "",
             selectedSubblockKey: "",
+            selectedSignText:"",
             selected: false,
             ready: true,
             hidden: false,
@@ -151,7 +152,13 @@ export default class SuperQuery extends Component {
                 : "") + " SUBBLOCKKEY='" + this.state.selectedSubblockKey + "'";
             complex = true;
         }
-
+        if (this.state.selectedSignText){
+            where += (complex
+                ? ' AND '
+                : "") + " SIGNTEXT LIKE '%" + this.state.selectedSignText + "%'";
+            complex = true;
+        }
+alert(where)
         return where;
     }
 
@@ -206,11 +213,20 @@ export default class SuperQuery extends Component {
     }
 
     signIdChangeHandler = (evt) => {
+        console.log(evt.target.value)
         this.setState({
             selectedSignId: evt
                 .target
                 .value
                 .trim()
+        });
+    }
+
+    signTextChangeHandler = (evt) =>{
+        this.setState({
+            selectedSignText: evt
+                .target
+                .value
         });
     }
 
@@ -424,6 +440,14 @@ export default class SuperQuery extends Component {
                                 className="selectedSignId"
                                 value={this.state.selectedSignId}
                                 onChange={this.signIdChangeHandler}></input>
+                        </div>
+                        <div>
+                            <label>SIGN TEXT:</label>
+                            <input
+                                type="text"
+                                className="selectedSignId"
+                                value={this.state.selectedSignText}
+                                onChange={this.signTextChangeHandler}></input>
                         </div>
                     </div>
                     <div
