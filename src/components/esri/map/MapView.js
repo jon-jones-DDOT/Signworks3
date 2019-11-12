@@ -161,6 +161,14 @@ class MapView extends Component {
         if (this.props.graphic.queryFeatures.length > 0) {
             //       console.lg('adding query features');
             const graphics = [...this.props.graphic.queryFeatures]
+            console.log( 'feature',graphics[0].geometry.spatialReference)
+            console.log('view', this.view)
+            if (graphics.length === 1){
+                this.view.center = graphics[0].geometry;
+            }
+            else{
+                this.view.extent = { spatialReference:{wkid:102100} ,xmax:-8551670.291734042, xmin:-8608119.037122568, ymax:4723978.545678767,ymin:4688091.360898926}
+            }
             // add symbols
             let querySymb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()  NEVER TRUST AUTOCAST
@@ -433,6 +441,7 @@ class MapView extends Component {
     }
 
     mapMoveHandler = (evt) => {
+      
         this
             .props
             .onMapChanged(this.view.extent);

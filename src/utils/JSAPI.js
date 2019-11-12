@@ -254,6 +254,7 @@ const featureLayer = new FeatureLayer({url:layer})
             q.where = where;
             q.geometry = geom;
             q.returnGeometry = true;
+            q.outSpatialReference = {'wkid':102100}
 featureLayer.queryFeatures(q).then(resp => resolve(resp), error => reject(error))
 
             
