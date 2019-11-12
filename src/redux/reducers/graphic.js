@@ -179,7 +179,7 @@ export const actions = {
         type: types.REMOVE_QUERY_GRAPHICS_RG,
         payload: {
             showQuery: false,
-            removed: true,
+           
             queryCount: 0
         }
     }),

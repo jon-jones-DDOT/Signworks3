@@ -278,7 +278,9 @@ alert(where)
     }
 
     extentChangeHandler = (evt) => {
- 
+    this.props.removeQueryGraphics();
+    this.props.setQueryCustomExtent(null);
+
         this.setState({
             selectedExtent: Number(evt.target.value)
         })
@@ -505,8 +507,8 @@ alert(where)
                              </p>  
                            </div>
                        
-                        <button onClick={this.clearAttribHandler} disabled={!this.state.tab2select}>CLEAR</button>
-                        < button ref={this.myRef} onClick={this.searchClickHandler} disabled={this.selected}>
+                        <button onClick={this.clearAttribHandler} disabled={!this.state.tab2select} className="queryButtons">CLEAR</button>
+                        < button ref={this.myRef} onClick={this.searchClickHandler} disabled={this.selected} className="queryButtons">
                             SEARCH</button>
                     </div>
 
