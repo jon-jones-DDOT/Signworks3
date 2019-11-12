@@ -33,7 +33,7 @@ export const mapModes = {
 export const initialState = {
     selSupportGeom: null,
     queryFeatures: [],
-    queryCount: 0,
+    queryCount: -1,
     queryCustExt: null,
     marResults: null,
     showQuery: false,
@@ -180,7 +180,7 @@ export const actions = {
         payload: {
             showQuery: false,
            
-            queryCount: 0
+            queryCount: -1
         }
     }),
     querySuperQuery: (where, extent, layer) => ({

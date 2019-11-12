@@ -84,7 +84,7 @@ export default class SuperQuery extends Component {
     }
 
     mutcdLookUpSelectHandler = (desc) => {
-
+this.props.removeQueryGraphics()
         let option = desc
             .name
             .split(':')
@@ -158,7 +158,7 @@ export default class SuperQuery extends Component {
                 : "") + " SIGNTEXT LIKE '%" + this.state.selectedSignText + "%'";
             complex = true;
         }
-alert(where)
+
         return where;
     }
 
@@ -503,7 +503,7 @@ alert(where)
                     </div>
                     <div className="bottomDiv">
                         <div >
-                         <p> {this.props.graphic.queryCount===0?"Press SEARCH to query map":this.props.graphic.queryCount + " features found"  }
+                         <p> {this.props.graphic.queryCount <0?"Press SEARCH to query map":this.props.graphic.queryCount + " features found"  }
                              </p>  
                            </div>
                        
