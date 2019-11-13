@@ -4,7 +4,8 @@ export const types = {
     SET_SUPPORT_MARKER_RG: "SET_SUPPORT_MARKER_RG",
     QUERY_SUPERQUERY_S: "QUERY_SUPERQUERY_S",
     SET_QUERY_RESULTS_RG: "SET_QUERY_RESULTS_RG",
-    SET_QUERY_CUSTOM_EXTENT: "SET_QUERY_CUSTOM_EXTENT",
+    SET_QUERY_RESULTS_EXTENT_RG:"SET_QUERY_RESULTS_EXTENT_RG",
+    SET_QUERY_CUSTOM_EXTENT_RG: "SET_QUERY_CUSTOM_EXTENT_RG",
     REMOVE_QUERY_RESULTS_RG: "REMOVE_QUERY_RESULTS_RG",
     REMOVE_QUERY_GRAPHICS_RG: 'REMOVE_QUERY_GRAPHICS_RG',
     QUERY_MAR_S: "QUERY_MAR_S",
@@ -35,6 +36,7 @@ export const initialState = {
     queryFeatures: [],
     queryCount: -1,
     queryCustExt: null,
+    queryResultsExt:null,
     marResults: null,
     showQuery: false,
     leftVisible: false,
@@ -133,11 +135,16 @@ export default(state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
-        case types.SET_QUERY_CUSTOM_EXTENT:
+        case types.SET_QUERY_CUSTOM_EXTENT_RG:
             return {
                 ...state,
                 ...action.payload
             }
+            case types.SET_QUERY_RESULTS_EXTENT_RG:
+                return {
+                    ...state,
+                    ...action.payload
+                }
         default:
             return state;
     }
@@ -169,7 +176,7 @@ export const actions = {
         }
     }),
     setQueryCustomExtent: (queryCustExt) => ({
-        type: types.SET_QUERY_CUSTOM_EXTENT,
+        type: types.SET_QUERY_CUSTOM_EXTENT_RG,
         payload: {
             queryCustExt
         }

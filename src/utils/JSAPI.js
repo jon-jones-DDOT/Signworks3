@@ -236,6 +236,43 @@ export function saveSign(args) {
 
 } // end of function
 
+export function superExtent(args){
+    const where = args[0];
+    const geom = args[1];
+    const layer = args[2];
+    
+    return new Promise((resolve, reject) => {
+
+        loadModules(["esri/layers/FeatureLayer"]).then(([FeatureLayer]) => {
+
+const featureLayer = new FeatureLayer({url:layer})
+
+            const q = featureLayer.createQuery();
+            q.where = where;
+            q.geometry = geom;
+            q.returnGeometry = true;
+            q.outSpatialReference = {'wkid':102100}
+featureLayer.queryExtent(q).then(resp => resolve(resp), error => reject(error))
+
+            
+            /*
+            esriRequest(layer + '/query', {
+                query: {
+                    geometry:geom,
+                                        where: where,
+                    returnGeometry: true,
+                    outFields: '*', // attribute fields to return
+                    token: null, // token
+                    f: "json", // format
+                    outSR: 4326
+                }
+            }).then(resp => resolve(resp), error => reject(error)) */
+
+        }); 
+
+    })
+}
+
 export function superQuery(args) {
     const where = args[0];
     const geom = args[1];

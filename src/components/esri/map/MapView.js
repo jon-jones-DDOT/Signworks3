@@ -167,7 +167,11 @@ class MapView extends Component {
                 this.view.center = graphics[0].geometry;
             }
             else{
-                this.view.extent = { spatialReference:{wkid:102100} ,xmax:-8551670.291734042, xmin:-8608119.037122568, ymax:4723978.545678767,ymin:4688091.360898926}
+            //    this.view.extent = { spatialReference:{wkid:102100} ,xmax:-8551670.291734042, xmin:-8608119.037122568, ymax:4723978.545678767,ymin:4688091.360898926}
+       
+            this.view.extent = this.props.graphic.queryResultsExt;
+           
+            
             }
             // add symbols
             let querySymb = {
@@ -322,6 +326,7 @@ class MapView extends Component {
             .onMapClicked(expandedMapPoint, layerURLs(this.props));
 
     }
+
 
     mapClickHandler = (evt) => {
         // this redux call moves info about the view into the store so that an extent
@@ -480,7 +485,8 @@ class MapView extends Component {
                 .on("pointer-up", this.mapMoveHandler);
             this
                 .view
-                .on('mouse-wheel', this.mapMoveHandler)
+                .on('mouse-wheel', this.mapMoveHandler);
+                this.view.on("resize", this.mapMoveHandler)
 
             this.symb = {
                 type: "simple-marker", // autocasts as new SimpleMarkerSymbol()

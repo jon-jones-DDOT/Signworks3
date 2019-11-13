@@ -1,6 +1,7 @@
 import {call, put,takeLatest} from 'redux-saga/effects';
 import {types as graphicTypes} from '../reducers/graphic';
-import {superQuery} from '../../utils/JSAPI'
+
+import {superQuery, superExtent} from '../../utils/JSAPI'
 
 
 
@@ -8,19 +9,45 @@ import {superQuery} from '../../utils/JSAPI'
 
 function * query(action) {
     try{
-     console.log('action.payload.extent', action.payload.extent)
+
        const queryResult =   yield call(superQuery, [action.payload.where, action.payload.extent,action.payload.layer]);
-       console.log('queryResult', queryResult)
+       console.log('extent should be null',  action.payload.extent)
+       let extent = yield call(superExtent, [action.payload.where, action.payload.extent,action.payload.layer]);
+        extent = extent.extent;
+       console.log('custom extent', extent);
+       let xmax = extent.xmax;
+       let xmin = extent.xmin;
+       let ymax = extent.ymax;
+       let ymin = extent.ymin;
+
+       let w1 = xmax - xmin;
+       let h1 = ymax - ymin;
+        let w2 = w1 * .1;
+        let h2 = h1 * .1;
+
+        extent.xmax = extent.xmax + w2;
+        extent.xmin = extent.xmin - w2;
+        extent.ymax = extent.ymax + h2;
+        extent.ymin = extent.ymin - h2;
+
+
        const features = queryResult.features;
        
        yield put({
         type: graphicTypes.SET_QUERY_RESULTS_RG,
         payload: {
             queryFeatures:features,
-            queryCount: features.length
+            queryCount: features.length,
+            queryResultsExt: extent
         }
     });
+
+   /* yield put({
+        type:graphicTypes. SET_QUERY_RESULTS_EXTENT_RG,
+        payload:{ queryResultsExt: extent}
         
+        }); */
+    
     }
     
     catch (e) {
