@@ -1,0 +1,140 @@
+.SuperQuery {
+    position: fixed;
+    background: lightgrey;
+    width: 25%;
+    height: 46%;
+    top: 50%;
+    left: 57%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    font: 12px Myriad,Helvetica,Tahoma,Arial,clean,sans-serif;
+    /*  z-index: 5  */
+}
+
+.SuperQueryHidden{
+  display:none;
+}
+
+.SuperQueryCancel {
+
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.queryTabRow {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    height: 6%;
+    margin-top: 3%;
+}
+.queryTabSelect {
+    border-top: 2px black solid;
+    border-left: 2px black solid;
+    border-right: 2px black solid;
+    margin-top: 3%;
+    display: table-cell;
+    width: 31%;
+    height: 6%;
+    border-radius: 10px 10px 0 0;
+}
+.queryTab {
+    border: 2px grey solid;
+    margin-top: 3%;
+    display: table-cell;
+    width: 31%;
+    height: 6%;
+    border-radius: 10px 10px 0 0;
+}
+.queryTabContent {
+    display: none;
+}
+.queryTabContentSelected {
+
+    height: 60%;
+}
+
+.queryButtons{
+  
+  position: relative;
+}
+
+.bottomDiv {
+
+    top: 150px;
+    left: 40px;
+    margin-top: 5%;
+    text-align: center;
+    z-index: -1;
+    position:sticky;
+}
+
+.selectedMUTCD {
+    margin-top: 2%;
+    margin-left: 39%;
+    width: 30%;
+
+}
+.selectedMPH {
+    margin-left: 65%;
+    margin-top: 1%;
+}
+
+.selectedSubblockKey {
+    margin-top: 1%;
+    margin-left: 8%;
+    width:50%;
+}
+
+.selectedSupportType {
+    margin-top: 1%;
+    margin-left: 15%;
+}
+
+.selectedSupportStatus {
+  margin-top: 1%;
+  margin-left: 40.5%;
+}
+
+.selectedSupportId {
+    width: 60%;
+    margin-top: 1%;
+    margin-left:2%;
+}
+
+
+.selectedSignStatus {
+    margin-top: 1%;
+    margin-left: 48%;
+}
+
+.selectedSignId {
+margin-left:9%;
+    width: 60%;
+    margin-top: 2%;
+}
+
+.queryRadioButton{
+justify-content: left; 
+
+}
+.queryRadioDiv{
+ margin-top:4%;
+  display:flex;
+
+  padding-bottom:2%;
+}
+
+.drawButton{
+  width:30px;
+  height: 25px;
+  margin-right:2%;
+
+}
+
+.extentTextDiv{
+   
+    margin:  1% 12% 1% 12%;
+}

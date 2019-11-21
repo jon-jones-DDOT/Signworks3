@@ -1,0 +1,35 @@
+.Banner{
+display:flex;
+flex-direction: row;
+background-color: #1C2F5A;   
+}
+
+.UserAccount{
+   display: inline;   
+}
+
+.AppLogo{
+   display: block;
+   margin-left: 175px;
+   margin-top:5px;
+   margin-bottom:3px;
+}
+
+.AppTools{
+    display: flex;
+   flex-grow:7;   
+}
+
+.ActionSelect{
+   display:flex;
+   margin-top:50px;   
+}
+
+@media screen and (max-width:900px){
+   .AppLogo{
+      display: block;
+      margin-left: 125px;
+      margin-top:5px;
+      margin-bottom:3px;
+   }
+}

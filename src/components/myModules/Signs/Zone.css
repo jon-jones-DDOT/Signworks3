@@ -1,0 +1,19 @@
+
+.ZoneElement{
+    width: 30px;
+    height: 20px;
+}
+
+@media screen and (max-width:1600px){
+    .ZoneElement{
+        
+        width: 30px;
+        height: 20px;
+    }
+}
+@media screen and (max-width:1300px) {
+    .ZoneElement{
+        width: 30px;
+        height: 20px;
+    }
+}
